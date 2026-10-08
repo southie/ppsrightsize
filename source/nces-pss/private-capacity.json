@@ -7,7 +7,7 @@
   "2021-22",
   "2023-24"
  ],
- "rule": "Private school capacity and enrollment trend by PPS enrollment area, for comparable schools, from five waves of the\nNCES Private School Universe Survey (2015-16, 2017-18, 2019-20, 2021-22, 2023-24; source/nces-pss/pss*_pu_csv.zip).\n\nSchools: the private schools on the explorer (source/nces-pss/private-schools-pss.json: inside PPS or within 2 miles,\nreported in 2019-20 or later), matched across waves by PPIN. Schools outside PPS (the 2-mile border) count only if the\nexplorer already lists them near a PPS school: as a private alternative within an affected school's relocation\ndistance in Scenario A or B, or as its nearest (source/nces-pss/private-listed-near-pps.json, from the page). Areas:\nthe PPS high school attendance area (shared zones assigned to the region of the nearest PPS school by road); border\nschools go to the region of the closest PPS school that lists them. Comparable: regular schools (PSS typology 1-7: Catholic,\nother religious, nonsectarian regular), excluding special program emphasis (8) and special education (9) schools.\nEnrollment by grade band (K-5 with transitional K and 1st, 6-8, 9-12; pre-K excluded) from the PSS grade counts\n(P160-P180 kindergarten, P190-P300 grades 1-12).\n\nPer school: capacity = its peak total K-12 enrollment in the five waves (demonstrated capacity), split across its grade\nbands in proportion to its latest enrollment by band (so a K-8 or K-12 school is not credited with each band's own\npeak from different years); a school serving one band keeps that band's peak. Per band: open seats = capacity -\nlatest enrollment. Per area and band: enrollment in each wave (a school's missing waves between two reports are\nfilled by straight line; before its first report it counts as not yet open, 0), and the trend: a log-linear fit of\narea enrollment on survey year, as an average percent change per year.",
+ "rule": "Private school capacity and enrollment trend by PPS enrollment area, for comparable schools, from five waves of the\nNCES Private School Universe Survey (2015-16, 2017-18, 2019-20, 2021-22, 2023-24; source/nces-pss/pss*_pu_csv.zip).\n\nSchools: the private schools on the explorer (source/nces-pss/private-schools-pss.json: inside PPS or within 2 miles,\nreported in 2019-20 or later), matched across waves by PPIN. Schools outside PPS (the 2-mile border) count if they are\nwithin BORDER_MI miles by road of a PPS school, or if the explorer lists them as a private alternative for a PPS school\nin Scenario A or B (source/nces-pss/private-listed-near-pps.json, from the page). Areas: the PPS high school attendance\narea (shared zones assigned to the region of the nearest PPS school by road); border schools go to the region of the\nclosest PPS school that lists them, otherwise of their nearest PPS school. Comparable: regular schools (PSS typology 1-7: Catholic,\nother religious, nonsectarian regular), excluding special program emphasis (8) and special education (9) schools.\nEnrollment by grade band (K-5 with transitional K and 1st, 6-8, 9-12; pre-K excluded) from the PSS grade counts\n(P160-P180 kindergarten, P190-P300 grades 1-12).\n\nPer school: capacity = its peak total K-12 enrollment in the five waves (demonstrated capacity), split across its grade\nbands in proportion to its latest enrollment by band (so a K-8 or K-12 school is not credited with each band's own\npeak from different years); a school serving one band keeps that band's peak. Per band: open seats = capacity -\nlatest enrollment. Per area and band: enrollment in each wave (a school's missing waves between two reports are\nfilled by straight line; before its first report it counts as not yet open, 0), and the trend: a log-linear fit of\narea enrollment on survey year, as an average percent change per year.",
  "areas": [
   {
    "region": "Cleveland / Franklin",
@@ -333,23 +333,39 @@
   },
   {
    "region": "Cleveland / Franklin",
-   "area": "Near the PPS border (listed as an alternative)",
+   "area": "Near the PPS border",
    "bands": {
     "k5": {
-     "schools": 1,
+     "schools": 4,
      "excluded_noncomparable": 1,
-     "latest": 81,
-     "capacity": 119,
-     "open_seats": 38,
+     "latest": 306,
+     "capacity": 365,
+     "open_seats": 59,
      "series": [
-      120,
-      110,
-      103,
-      143,
-      81
+      286,
+      253,
+      305,
+      358,
+      306
      ],
-     "trend_pct_per_year": -2.6,
+     "trend_pct_per_year": 2.4,
      "detail": [
+      {
+       "name": "Christ the King Catholic School",
+       "latest": 157,
+       "latest_wave": "2021-22",
+       "peak": 178,
+       "open": 21,
+       "series": [
+        166,
+        143,
+        161,
+        157,
+        157
+       ],
+       "trend": -0.1,
+       "typology": 1
+      },
       {
        "name": "St John the Baptist Catholic School",
        "latest": 81,
@@ -365,23 +381,55 @@
        ],
        "trend": -2.6,
        "typology": 2
+      },
+      {
+       "name": "Slavic Christian Academy",
+       "latest": 61,
+       "latest_wave": "2023-24",
+       "peak": 61,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        41,
+        51,
+        61
+       ],
+       "trend": 10.4,
+       "typology": 5
+      },
+      {
+       "name": "Beautiful Savior Lutheran Preschool",
+       "latest": 7,
+       "latest_wave": "2021-22",
+       "peak": 7,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        7,
+        7
+       ],
+       "trend": null,
+       "typology": 6
       }
      ]
     },
     "68": {
-     "schools": 1,
+     "schools": 3,
      "excluded_noncomparable": 1,
-     "latest": 65,
-     "capacity": 95,
-     "open_seats": 30,
+     "latest": 141,
+     "capacity": 179,
+     "open_seats": 38,
      "series": [
-      58,
-      57,
-      55,
-      71,
-      65
+      142,
+      147,
+      139,
+      147,
+      141
      ],
-     "trend_pct_per_year": 2.3,
+     "trend_pct_per_year": -0.1,
      "detail": [
       {
        "name": "St John the Baptist Catholic School",
@@ -398,24 +446,73 @@
        ],
        "trend": 2.3,
        "typology": 2
+      },
+      {
+       "name": "Christ the King Catholic School",
+       "latest": 64,
+       "latest_wave": "2021-22",
+       "peak": 72,
+       "open": 8,
+       "series": [
+        84,
+        90,
+        72,
+        64,
+        64
+       ],
+       "trend": -4.3,
+       "typology": 1
+      },
+      {
+       "name": "Slavic Christian Academy",
+       "latest": 12,
+       "latest_wave": "2023-24",
+       "peak": 12,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        12,
+        12,
+        12
+       ],
+       "trend": -0.0,
+       "typology": 5
       }
      ]
     },
     "912": {
-     "schools": 0,
+     "schools": 1,
      "excluded_noncomparable": 1,
-     "latest": 0,
-     "capacity": 0,
-     "open_seats": 0,
+     "latest": 659,
+     "capacity": 706,
+     "open_seats": 47,
      "series": [
-      0,
-      0,
-      0,
-      0,
-      0
+      683,
+      706,
+      702,
+      680,
+      659
      ],
-     "trend_pct_per_year": null,
-     "detail": []
+     "trend_pct_per_year": -0.5,
+     "detail": [
+      {
+       "name": "La Salle Catholic College Preparatory",
+       "latest": 659,
+       "latest_wave": "2023-24",
+       "peak": 706,
+       "open": 47,
+       "series": [
+        683,
+        706,
+        702,
+        680,
+        659
+       ],
+       "trend": -0.5,
+       "typology": 3
+      }
+     ]
     }
    }
   },
@@ -893,6 +990,191 @@
         84
        ],
        "trend": -6.1,
+       "typology": 4
+      }
+     ]
+    }
+   }
+  },
+  {
+   "region": "Grant / McDaniel",
+   "area": "Near the PPS border",
+   "bands": {
+    "k5": {
+     "schools": 4,
+     "excluded_noncomparable": 2,
+     "latest": 922,
+     "capacity": 947,
+     "open_seats": 25,
+     "series": [
+      321,
+      405,
+      384,
+      375,
+      922
+     ],
+     "trend_pct_per_year": 10.7,
+     "detail": [
+      {
+       "name": "Portland Christian Schools",
+       "latest": 322,
+       "latest_wave": "2023-24",
+       "peak": 322,
+       "open": 0,
+       "series": [
+        0,
+        283,
+        281,
+        251,
+        322
+       ],
+       "trend": 1.4,
+       "typology": 4
+      },
+      {
+       "name": "Portland Christian Elementary School",
+       "latest": 322,
+       "latest_wave": "2023-24",
+       "peak": 322,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        0,
+        322
+       ],
+       "trend": null,
+       "typology": 4
+      },
+      {
+       "name": "Franciscan Montessori Earth School",
+       "latest": 160,
+       "latest_wave": "2023-24",
+       "peak": 181,
+       "open": 21,
+       "series": [
+        189,
+        0,
+        0,
+        0,
+        160
+       ],
+       "trend": null,
+       "typology": 3
+      },
+      {
+       "name": "St Therese Catholic School",
+       "latest": 118,
+       "latest_wave": "2023-24",
+       "peak": 122,
+       "open": 4,
+       "series": [
+        132,
+        122,
+        103,
+        124,
+        118
+       ],
+       "trend": -1.0,
+       "typology": 2
+      }
+     ]
+    },
+    "68": {
+     "schools": 3,
+     "excluded_noncomparable": 1,
+     "latest": 312,
+     "capacity": 324,
+     "open_seats": 12,
+     "series": [
+      238,
+      189,
+      173,
+      198,
+      312
+     ],
+     "trend_pct_per_year": 3.0,
+     "detail": [
+      {
+       "name": "Portland Christian Schools",
+       "latest": 167,
+       "latest_wave": "2023-24",
+       "peak": 167,
+       "open": 0,
+       "series": [
+        99,
+        115,
+        113,
+        137,
+        167
+       ],
+       "trend": 6.3,
+       "typology": 4
+      },
+      {
+       "name": "St Therese Catholic School",
+       "latest": 77,
+       "latest_wave": "2023-24",
+       "peak": 80,
+       "open": 3,
+       "series": [
+        70,
+        74,
+        60,
+        61,
+        77
+       ],
+       "trend": -0.0,
+       "typology": 2
+      },
+      {
+       "name": "Franciscan Montessori Earth School",
+       "latest": 68,
+       "latest_wave": "2023-24",
+       "peak": 77,
+       "open": 9,
+       "series": [
+        69,
+        0,
+        0,
+        0,
+        68
+       ],
+       "trend": null,
+       "typology": 3
+      }
+     ]
+    },
+    "912": {
+     "schools": 1,
+     "excluded_noncomparable": 0,
+     "latest": 139,
+     "capacity": 139,
+     "open_seats": 0,
+     "series": [
+      178,
+      178,
+      155,
+      123,
+      139
+     ],
+     "trend_pct_per_year": -4.2,
+     "detail": [
+      {
+       "name": "Portland Christian Schools",
+       "latest": 139,
+       "latest_wave": "2023-24",
+       "peak": 139,
+       "open": 0,
+       "series": [
+        178,
+        178,
+        155,
+        123,
+        139
+       ],
+       "trend": -4.2,
        "typology": 4
       }
      ]
@@ -1414,23 +1696,71 @@
   },
   {
    "region": "Ida B. Wells / Lincoln",
-   "area": "Near the PPS border (listed as an alternative)",
+   "area": "Near the PPS border",
    "bands": {
     "k5": {
-     "schools": 1,
-     "excluded_noncomparable": 2,
-     "latest": 54,
-     "capacity": 54,
-     "open_seats": 0,
+     "schools": 8,
+     "excluded_noncomparable": 10,
+     "latest": 1034,
+     "capacity": 1049,
+     "open_seats": 15,
      "series": [
-      0,
-      0,
-      0,
-      0,
-      54
+      879,
+      919,
+      948,
+      970,
+      1034
      ],
-     "trend_pct_per_year": null,
+     "trend_pct_per_year": 1.9,
      "detail": [
+      {
+       "name": "St Pius X School",
+       "latest": 333,
+       "latest_wave": "2023-24",
+       "peak": 333,
+       "open": 0,
+       "series": [
+        274,
+        313,
+        304,
+        317,
+        333
+       ],
+       "trend": 2.0,
+       "typology": 2
+      },
+      {
+       "name": "Oregon Episcopal School",
+       "latest": 328,
+       "latest_wave": "2021-22",
+       "peak": 330,
+       "open": 2,
+       "series": [
+        325,
+        325,
+        334,
+        328,
+        328
+       ],
+       "trend": 0.1,
+       "typology": 5
+      },
+      {
+       "name": "Catlin Gabel School",
+       "latest": 252,
+       "latest_wave": "2023-24",
+       "peak": 252,
+       "open": 0,
+       "series": [
+        240,
+        243,
+        246,
+        249,
+        252
+       ],
+       "trend": 0.6,
+       "typology": 7
+      },
       {
        "name": "Maayan Torah Day School",
        "latest": 54,
@@ -1446,24 +1776,136 @@
        ],
        "trend": null,
        "typology": 6
+      },
+      {
+       "name": "Prince of Peace School",
+       "latest": 30,
+       "latest_wave": "2023-24",
+       "peak": 42,
+       "open": 12,
+       "series": [
+        31,
+        30,
+        42,
+        40,
+        30
+       ],
+       "trend": 1.1,
+       "typology": 6
+      },
+      {
+       "name": "Cedar Hills Kindergarten and Preschool",
+       "latest": 16,
+       "latest_wave": "2023-24",
+       "peak": 16,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        16,
+        16
+       ],
+       "trend": null,
+       "typology": 7
+      },
+      {
+       "name": "Sonshine Express Preschool",
+       "latest": 13,
+       "latest_wave": "2023-24",
+       "peak": 14,
+       "open": 1,
+       "series": [
+        9,
+        8,
+        14,
+        12,
+        13
+       ],
+       "trend": 5.9,
+       "typology": 6
+      },
+      {
+       "name": "Barnes-Miller Child Development Center",
+       "latest": 8,
+       "latest_wave": "2019-20",
+       "peak": 8,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        8,
+        8,
+        8
+       ],
+       "trend": 0.0,
+       "typology": 7
       }
      ]
     },
     "68": {
-     "schools": 1,
-     "excluded_noncomparable": 0,
-     "latest": 8,
-     "capacity": 8,
-     "open_seats": 0,
+     "schools": 4,
+     "excluded_noncomparable": 3,
+     "latest": 599,
+     "capacity": 600,
+     "open_seats": 1,
      "series": [
-      0,
-      0,
-      0,
-      0,
-      8
+      518,
+      572,
+      582,
+      590,
+      599
      ],
-     "trend_pct_per_year": null,
+     "trend_pct_per_year": 1.6,
      "detail": [
+      {
+       "name": "Oregon Episcopal School",
+       "latest": 215,
+       "latest_wave": "2021-22",
+       "peak": 216,
+       "open": 1,
+       "series": [
+        207,
+        208,
+        210,
+        215,
+        215
+       ],
+       "trend": 0.5,
+       "typology": 5
+      },
+      {
+       "name": "Catlin Gabel School",
+       "latest": 196,
+       "latest_wave": "2023-24",
+       "peak": 196,
+       "open": 0,
+       "series": [
+        187,
+        189,
+        192,
+        194,
+        196
+       ],
+       "trend": 0.6,
+       "typology": 7
+      },
+      {
+       "name": "St Pius X School",
+       "latest": 180,
+       "latest_wave": "2023-24",
+       "peak": 180,
+       "open": 0,
+       "series": [
+        124,
+        175,
+        180,
+        181,
+        180
+       ],
+       "trend": 4.0,
+       "typology": 2
+      },
       {
        "name": "Maayan Torah Day School",
        "latest": 8,
@@ -1483,20 +1925,84 @@
      ]
     },
     "912": {
-     "schools": 1,
-     "excluded_noncomparable": 0,
-     "latest": 1,
-     "capacity": 1,
-     "open_seats": 0,
+     "schools": 5,
+     "excluded_noncomparable": 2,
+     "latest": 2168,
+     "capacity": 2190,
+     "open_seats": 22,
      "series": [
-      0,
-      0,
-      0,
-      0,
-      1
+      2139,
+      2113,
+      2087,
+      2166,
+      2168
      ],
-     "trend_pct_per_year": null,
+     "trend_pct_per_year": 0.3,
      "detail": [
+      {
+       "name": "Jesuit High School",
+       "latest": 1279,
+       "latest_wave": "2023-24",
+       "peak": 1300,
+       "open": 21,
+       "series": [
+        1300,
+        1268,
+        1275,
+        1281,
+        1279
+       ],
+       "trend": -0.1,
+       "typology": 3
+      },
+      {
+       "name": "Catlin Gabel School",
+       "latest": 319,
+       "latest_wave": "2023-24",
+       "peak": 319,
+       "open": 0,
+       "series": [
+        307,
+        310,
+        313,
+        316,
+        319
+       ],
+       "trend": 0.5,
+       "typology": 7
+      },
+      {
+       "name": "Oregon Episcopal School",
+       "latest": 311,
+       "latest_wave": "2021-22",
+       "peak": 312,
+       "open": 1,
+       "series": [
+        314,
+        317,
+        314,
+        311,
+        311
+       ],
+       "trend": -0.2,
+       "typology": 5
+      },
+      {
+       "name": "Westside Christian High School",
+       "latest": 258,
+       "latest_wave": "2021-22",
+       "peak": 258,
+       "open": 0,
+       "series": [
+        218,
+        218,
+        185,
+        258,
+        258
+       ],
+       "trend": 2.6,
+       "typology": 4
+      },
       {
        "name": "Maayan Torah Day School",
        "latest": 1,
@@ -2050,6 +2556,272 @@
    "typology": 2
   },
   {
+   "name": "Barnes-Miller Child Development Center",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Near the PPS border",
+   "character": "Private",
+   "grades_served": "PK, K",
+   "latest_wave": "2019-20",
+   "peak_total": 8,
+   "latest": [
+    8,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    8.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     8,
+     8,
+     8
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "Beautiful Savior Lutheran Preschool",
+   "region": "Cleveland / Franklin",
+   "area": "Near the PPS border",
+   "character": "Private, Lutheran",
+   "grades_served": "PK, K",
+   "latest_wave": "2021-22",
+   "peak_total": 7,
+   "latest": [
+    7,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    7.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     7,
+     7
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 6
+  },
+  {
    "name": "Cathedral School",
    "region": "Ida B. Wells / Lincoln",
    "area": "Lincoln",
@@ -2183,6 +2955,272 @@
    "typology": 1
   },
   {
+   "name": "Catlin Gabel School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Near the PPS border",
+   "character": "Private",
+   "grades_served": "PK, K-12",
+   "latest_wave": "2023-24",
+   "peak_total": 767,
+   "latest": [
+    38,
+    39,
+    43,
+    40,
+    46,
+    46,
+    62,
+    67,
+    67,
+    80,
+    85,
+    81,
+    73
+   ],
+   "capacity": [
+    38.0,
+    39.0,
+    43.0,
+    40.0,
+    46.0,
+    46.0,
+    62.0,
+    67.0,
+    67.0,
+    80.0,
+    85.0,
+    81.0,
+    73.0
+   ],
+   "series": [
+    [
+     36,
+     36.5,
+     37.0,
+     37.5,
+     38
+    ],
+    [
+     38,
+     38.2,
+     38.5,
+     38.8,
+     39
+    ],
+    [
+     40,
+     40.8,
+     41.5,
+     42.2,
+     43
+    ],
+    [
+     41,
+     40.8,
+     40.5,
+     40.2,
+     40
+    ],
+    [
+     42,
+     43.0,
+     44.0,
+     45.0,
+     46
+    ],
+    [
+     43,
+     43.8,
+     44.5,
+     45.2,
+     46
+    ],
+    [
+     57,
+     58.2,
+     59.5,
+     60.8,
+     62
+    ],
+    [
+     66,
+     66.2,
+     66.5,
+     66.8,
+     67
+    ],
+    [
+     64,
+     64.8,
+     65.5,
+     66.2,
+     67
+    ],
+    [
+     77,
+     77.8,
+     78.5,
+     79.2,
+     80
+    ],
+    [
+     76,
+     78.2,
+     80.5,
+     82.8,
+     85
+    ],
+    [
+     77,
+     78.0,
+     79.0,
+     80.0,
+     81
+    ],
+    [
+     77,
+     76.0,
+     75.0,
+     74.0,
+     73
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "Cedar Hills Kindergarten and Preschool",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Near the PPS border",
+   "character": "Private",
+   "grades_served": "PK, K",
+   "latest_wave": "2023-24",
+   "peak_total": 16,
+   "latest": [
+    16,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    16.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     16,
+     16
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 7
+  },
+  {
    "name": "Central Catholic High School",
    "region": "Cleveland / Franklin",
    "area": "Franklin",
@@ -2314,6 +3352,139 @@
     ]
    ],
    "typology": 2
+  },
+  {
+   "name": "Christ the King Catholic School",
+   "region": "Cleveland / Franklin",
+   "area": "Near the PPS border",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2021-22",
+   "peak_total": 250,
+   "latest": [
+    21,
+    26,
+    30,
+    30,
+    28,
+    22,
+    21,
+    26,
+    17,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    23.8,
+    29.4,
+    33.9,
+    33.9,
+    31.7,
+    24.9,
+    23.8,
+    29.4,
+    19.2,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     25,
+     24,
+     27,
+     21,
+     21
+    ],
+    [
+     30,
+     16,
+     22,
+     26,
+     26
+    ],
+    [
+     26,
+     24,
+     30,
+     30,
+     30
+    ],
+    [
+     30,
+     30,
+     24,
+     30,
+     30
+    ],
+    [
+     30,
+     24,
+     29,
+     28,
+     28
+    ],
+    [
+     25,
+     25,
+     29,
+     22,
+     22
+    ],
+    [
+     28,
+     30,
+     24,
+     21,
+     21
+    ],
+    [
+     28,
+     30,
+     26,
+     26,
+     26
+    ],
+    [
+     28,
+     30,
+     22,
+     17,
+     17
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 1
   },
   {
    "name": "Class Academy",
@@ -2843,6 +4014,139 @@
      59,
      64,
      59
+    ]
+   ],
+   "typology": 3
+  },
+  {
+   "name": "Franciscan Montessori Earth School",
+   "region": "Grant / McDaniel",
+   "area": "Near the PPS border",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 258,
+   "latest": [
+    31,
+    27,
+    21,
+    23,
+    33,
+    25,
+    20,
+    25,
+    23,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    35.1,
+    30.6,
+    23.8,
+    26.0,
+    37.3,
+    28.3,
+    22.6,
+    28.3,
+    26.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     37,
+     0,
+     0,
+     0,
+     31
+    ],
+    [
+     33,
+     0,
+     0,
+     0,
+     27
+    ],
+    [
+     32,
+     0,
+     0,
+     0,
+     21
+    ],
+    [
+     30,
+     0,
+     0,
+     0,
+     23
+    ],
+    [
+     36,
+     0,
+     0,
+     0,
+     33
+    ],
+    [
+     21,
+     0,
+     0,
+     0,
+     25
+    ],
+    [
+     21,
+     0,
+     0,
+     0,
+     20
+    ],
+    [
+     17,
+     0,
+     0,
+     0,
+     25
+    ],
+    [
+     31,
+     0,
+     0,
+     0,
+     23
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "typology": 3
@@ -3912,6 +5216,272 @@
    "typology": 6
   },
   {
+   "name": "Jesuit High School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Near the PPS border",
+   "character": "Private, Catholic",
+   "grades_served": "9-12",
+   "latest_wave": "2023-24",
+   "peak_total": 1300,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    331,
+    324,
+    312,
+    312
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    336.4,
+    329.3,
+    317.1,
+    317.1
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     322,
+     325,
+     336,
+     325,
+     331
+    ],
+    [
+     317,
+     324,
+     324,
+     328,
+     324
+    ],
+    [
+     345,
+     316,
+     306,
+     317,
+     312
+    ],
+    [
+     316,
+     303,
+     309,
+     311,
+     312
+    ]
+   ],
+   "typology": 3
+  },
+  {
+   "name": "La Salle Catholic College Preparatory",
+   "region": "Cleveland / Franklin",
+   "area": "Near the PPS border",
+   "character": "Private, Catholic",
+   "grades_served": "9-12",
+   "latest_wave": "2023-24",
+   "peak_total": 706,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    182,
+    178,
+    144,
+    155
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    195.0,
+    190.7,
+    154.3,
+    166.1
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     191,
+     201,
+     163,
+     172.5,
+     182
+    ],
+    [
+     159,
+     186,
+     173,
+     175.5,
+     178
+    ],
+    [
+     181,
+     174,
+     185,
+     164.5,
+     144
+    ],
+    [
+     152,
+     145,
+     181,
+     168.0,
+     155
+    ]
+   ],
+   "typology": 3
+  },
+  {
    "name": "Lindamood-Bell Learning Processes Portland",
    "region": "Ida B. Wells / Lincoln",
    "area": "Lincoln",
@@ -4047,7 +5617,7 @@
   {
    "name": "Maayan Torah Day School",
    "region": "Ida B. Wells / Lincoln",
-   "area": "Near the PPS border (listed as an alternative)",
+   "area": "Near the PPS border",
    "character": "Private, Jewish",
    "grades_served": "K-10",
    "latest_wave": "2023-24",
@@ -4444,6 +6014,139 @@
    "typology": 7
   },
   {
+   "name": "Oregon Episcopal School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Near the PPS border",
+   "character": "Private, Episcopal",
+   "grades_served": "PK, K-12",
+   "latest_wave": "2021-22",
+   "peak_total": 858,
+   "latest": [
+    56,
+    54,
+    54,
+    51,
+    54,
+    59,
+    71,
+    73,
+    71,
+    79,
+    80,
+    74,
+    78
+   ],
+   "capacity": [
+    56.3,
+    54.3,
+    54.3,
+    51.2,
+    54.3,
+    59.3,
+    71.3,
+    73.3,
+    71.3,
+    79.4,
+    80.4,
+    74.3,
+    78.4
+   ],
+   "series": [
+    [
+     52,
+     58,
+     66,
+     56,
+     56
+    ],
+    [
+     57,
+     51,
+     53,
+     54,
+     54
+    ],
+    [
+     55,
+     54,
+     53,
+     54,
+     54
+    ],
+    [
+     54,
+     54,
+     54,
+     51,
+     51
+    ],
+    [
+     53,
+     54,
+     54,
+     54,
+     54
+    ],
+    [
+     54,
+     54,
+     54,
+     59,
+     59
+    ],
+    [
+     68,
+     67,
+     70,
+     71,
+     71
+    ],
+    [
+     70,
+     69,
+     71,
+     73,
+     73
+    ],
+    [
+     69,
+     72,
+     69,
+     71,
+     71
+    ],
+    [
+     77,
+     76,
+     76,
+     79,
+     79
+    ],
+    [
+     82,
+     81,
+     81,
+     80,
+     80
+    ],
+    [
+     75,
+     80,
+     79,
+     74,
+     74
+    ],
+    [
+     80,
+     80,
+     78,
+     78,
+     78
+    ]
+   ],
+   "typology": 5
+  },
+  {
    "name": "Pacific Crest Community School",
    "region": "Cleveland / Franklin",
    "area": "Cleveland",
@@ -4710,6 +6413,272 @@
    "typology": 5
   },
   {
+   "name": "Portland Christian Elementary School",
+   "region": "Grant / McDaniel",
+   "area": "Near the PPS border",
+   "character": "Private, Christian (General)",
+   "grades_served": "PK, K-5",
+   "latest_wave": "2023-24",
+   "peak_total": 322,
+   "latest": [
+    60,
+    65,
+    60,
+    40,
+    46,
+    51,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    60.0,
+    65.0,
+    60.0,
+    40.0,
+    46.0,
+    51.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     60
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     65
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     60
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     40
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     46
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     51
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 4
+  },
+  {
+   "name": "Portland Christian Schools",
+   "region": "Grant / McDaniel",
+   "area": "Near the PPS border",
+   "character": "Private, Christian (General)",
+   "grades_served": "PK, K-12",
+   "latest_wave": "2023-24",
+   "peak_total": 628,
+   "latest": [
+    60,
+    65,
+    60,
+    40,
+    46,
+    51,
+    59,
+    53,
+    55,
+    42,
+    34,
+    42,
+    21
+   ],
+   "capacity": [
+    60.0,
+    65.0,
+    60.0,
+    40.0,
+    46.0,
+    51.0,
+    59.0,
+    53.0,
+    55.0,
+    42.0,
+    34.0,
+    42.0,
+    21.0
+   ],
+   "series": [
+    [
+     0,
+     53,
+     52,
+     49,
+     60
+    ],
+    [
+     0,
+     50,
+     51,
+     37,
+     65
+    ],
+    [
+     0,
+     44,
+     45,
+     37,
+     60
+    ],
+    [
+     0,
+     52,
+     39,
+     42,
+     40
+    ],
+    [
+     0,
+     41,
+     47,
+     45,
+     46
+    ],
+    [
+     0,
+     43,
+     47,
+     41,
+     51
+    ],
+    [
+     34,
+     37,
+     38,
+     51,
+     59
+    ],
+    [
+     31,
+     34,
+     41,
+     43,
+     53
+    ],
+    [
+     34,
+     44,
+     34,
+     43,
+     55
+    ],
+    [
+     33,
+     34,
+     36,
+     35,
+     42
+    ],
+    [
+     59,
+     49,
+     42,
+     25,
+     34
+    ],
+    [
+     45,
+     41,
+     35,
+     33,
+     42
+    ],
+    [
+     41,
+     54,
+     42,
+     30,
+     21
+    ]
+   ],
+   "typology": 4
+  },
+  {
    "name": "Portland Jewish Academy",
    "region": "Ida B. Wells / Lincoln",
    "area": "Ida B. Wells",
@@ -4843,6 +6812,139 @@
    "typology": 5
   },
   {
+   "name": "Prince of Peace School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Near the PPS border",
+   "character": "Private, Lutheran",
+   "grades_served": "PK, K",
+   "latest_wave": "2023-24",
+   "peak_total": 42,
+   "latest": [
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    42.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     31,
+     30,
+     42,
+     40,
+     30
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 6
+  },
+  {
    "name": "Rosemary Anderson Middle School",
    "region": "Jefferson / Roosevelt",
    "area": "Roosevelt",
@@ -4974,6 +7076,272 @@
     ]
    ],
    "typology": 7
+  },
+  {
+   "name": "Slavic Christian Academy",
+   "region": "Cleveland / Franklin",
+   "area": "Near the PPS border",
+   "character": "Private, Christian (General)",
+   "grades_served": "K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 73,
+   "latest": [
+    10,
+    9,
+    12,
+    12,
+    10,
+    8,
+    8,
+    2,
+    2,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    10.0,
+    9.0,
+    12.0,
+    12.0,
+    10.0,
+    8.0,
+    8.0,
+    2.0,
+    2.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     8,
+     9.0,
+     10
+    ],
+    [
+     0,
+     0,
+     8,
+     8.5,
+     9
+    ],
+    [
+     0,
+     0,
+     6,
+     9.0,
+     12
+    ],
+    [
+     0,
+     0,
+     7,
+     9.5,
+     12
+    ],
+    [
+     0,
+     0,
+     8,
+     9.0,
+     10
+    ],
+    [
+     0,
+     0,
+     4,
+     6.0,
+     8
+    ],
+    [
+     0,
+     0,
+     5,
+     6.5,
+     8
+    ],
+    [
+     0,
+     0,
+     3,
+     2.5,
+     2
+    ],
+    [
+     0,
+     0,
+     4,
+     3.0,
+     2
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ]
+   ],
+   "typology": 5
+  },
+  {
+   "name": "Sonshine Express Preschool",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Near the PPS border",
+   "character": "Private, Christian (General)",
+   "grades_served": "PK, K",
+   "latest_wave": "2023-24",
+   "peak_total": 14,
+   "latest": [
+    13,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    14.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     9,
+     8,
+     14,
+     12,
+     13
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 6
   },
   {
    "name": "St Agatha Catholic School",
@@ -5776,7 +8144,7 @@
   {
    "name": "St John the Baptist Catholic School",
    "region": "Cleveland / Franklin",
-   "area": "Near the PPS border (listed as an alternative)",
+   "area": "Near the PPS border",
    "character": "Private, Catholic",
    "grades_served": "PK, K-8",
    "latest_wave": "2023-24",
@@ -6040,6 +8408,139 @@
    "typology": 3
   },
   {
+   "name": "St Pius X School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Near the PPS border",
+   "character": "Private, Catholic",
+   "grades_served": "K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 513,
+   "latest": [
+    54,
+    58,
+    54,
+    57,
+    54,
+    56,
+    59,
+    60,
+    61,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    54.0,
+    58.0,
+    54.0,
+    57.0,
+    54.0,
+    56.0,
+    59.0,
+    60.0,
+    61.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     38,
+     44,
+     50,
+     54
+    ],
+    [
+     56,
+     56,
+     30,
+     50,
+     58
+    ],
+    [
+     50,
+     59,
+     55,
+     54,
+     54
+    ],
+    [
+     57,
+     55,
+     55,
+     49,
+     57
+    ],
+    [
+     55,
+     49,
+     62,
+     58,
+     54
+    ],
+    [
+     56,
+     56,
+     58,
+     56,
+     56
+    ],
+    [
+     60,
+     56,
+     60,
+     62,
+     59
+    ],
+    [
+     32,
+     58,
+     60,
+     59,
+     60
+    ],
+    [
+     32,
+     61,
+     60,
+     60,
+     61
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 2
+  },
+  {
    "name": "St Rose School",
    "region": "Grant / McDaniel",
    "area": "Grant",
@@ -6171,6 +8672,139 @@
     ]
    ],
    "typology": 1
+  },
+  {
+   "name": "St Therese Catholic School",
+   "region": "Grant / McDaniel",
+   "area": "Near the PPS border",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 202,
+   "latest": [
+    20,
+    19,
+    14,
+    20,
+    19,
+    26,
+    23,
+    31,
+    23,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    20.7,
+    19.7,
+    14.5,
+    20.7,
+    19.7,
+    26.9,
+    23.8,
+    32.1,
+    23.8,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     18,
+     14,
+     14,
+     11,
+     20
+    ],
+    [
+     30,
+     18,
+     23,
+     20,
+     19
+    ],
+    [
+     17,
+     23,
+     12,
+     23,
+     14
+    ],
+    [
+     23,
+     23,
+     21,
+     22,
+     20
+    ],
+    [
+     24,
+     22,
+     16,
+     19,
+     19
+    ],
+    [
+     20,
+     22,
+     17,
+     29,
+     26
+    ],
+    [
+     22,
+     25,
+     19,
+     26,
+     23
+    ],
+    [
+     21,
+     27,
+     17,
+     17,
+     31
+    ],
+    [
+     27,
+     22,
+     24,
+     18,
+     23
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 2
   },
   {
    "name": "St Thomas More School",
@@ -7232,6 +9866,139 @@
      0.0,
      0.0,
      0
+    ]
+   ],
+   "typology": 4
+  },
+  {
+   "name": "Westside Christian High School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Near the PPS border",
+   "character": "Private, Christian (General)",
+   "grades_served": "9-12",
+   "latest_wave": "2021-22",
+   "peak_total": 258,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    75,
+    65,
+    63,
+    55
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    75.0,
+    65.0,
+    63.0,
+    55.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     51,
+     51,
+     41,
+     75,
+     75
+    ],
+    [
+     58,
+     58,
+     44,
+     65,
+     65
+    ],
+    [
+     56,
+     56,
+     49,
+     63,
+     63
+    ],
+    [
+     53,
+     53,
+     51,
+     55,
+     55
     ]
    ],
    "typology": 4

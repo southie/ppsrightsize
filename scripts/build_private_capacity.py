@@ -2,11 +2,11 @@
 NCES Private School Universe Survey (2015-16, 2017-18, 2019-20, 2021-22, 2023-24; source/nces-pss/pss*_pu_csv.zip).
 
 Schools: the private schools on the explorer (source/nces-pss/private-schools-pss.json: inside PPS or within 2 miles,
-reported in 2019-20 or later), matched across waves by PPIN. Schools outside PPS (the 2-mile border) count only if the
-explorer already lists them near a PPS school: as a private alternative within an affected school's relocation
-distance in Scenario A or B, or as its nearest (source/nces-pss/private-listed-near-pps.json, from the page). Areas:
-the PPS high school attendance area (shared zones assigned to the region of the nearest PPS school by road); border
-schools go to the region of the closest PPS school that lists them. Comparable: regular schools (PSS typology 1-7: Catholic,
+reported in 2019-20 or later), matched across waves by PPIN. Schools outside PPS (the 2-mile border) count if they are
+within BORDER_MI miles by road of a PPS school, or if the explorer lists them as a private alternative for a PPS school
+in Scenario A or B (source/nces-pss/private-listed-near-pps.json, from the page). Areas: the PPS high school attendance
+area (shared zones assigned to the region of the nearest PPS school by road); border schools go to the region of the
+closest PPS school that lists them, otherwise of their nearest PPS school. Comparable: regular schools (PSS typology 1-7: Catholic,
 other religious, nonsectarian regular), excluding special program emphasis (8) and special education (9) schools.
 Enrollment by grade band (K-5 with transitional K and 1st, 6-8, 9-12; pre-K excluded) from the PSS grade counts
 (P160-P180 kindergarten, P190-P300 grades 1-12).
@@ -28,6 +28,7 @@ PSS = os.path.join(ROOT, 'source', 'nces-pss')
 WAVES = [('1516', '2015-16', 2015.75), ('1718', '2017-18', 2017.75), ('1920', '2019-20', 2019.75), ('2122', '2021-22', 2021.75), ('2324', '2023-24', 2023.75)]
 BANDS = {'k5': ['P160', 'P170', 'P180', 'P190', 'P200', 'P210', 'P220', 'P230'], '68': ['P240', 'P250', 'P260'], '912': ['P270', 'P280', 'P290', 'P300']}
 COMPARABLE = {1, 2, 3, 4, 5, 6, 7}
+BORDER_MI = 3.5   # border schools within this many miles by road of a PPS school (Catlin Gabel is 3.1, OES 2.7)
 GRADES = [['P160', 'P170', 'P180']] + [[f'P{c}'] for c in range(190, 301, 10)]   # K (with transitional K and 1st), grades 1-12
 
 S = json.load(open(os.path.join(PSS, 'private-schools-pss.json'), encoding='utf-8'))['schools']
@@ -36,9 +37,10 @@ def place(s):
     # (region, area) for a school, or None for a border school no PPS school lists
     if s.get('pps_hs_area'):
         return (s.get('pps_region') or L['nearest'][s['name']]['region'], s['pps_hs_area'])
-    lst = L['listed'].get(s['name'])
-    if not lst: return None
-    return (min(lst, key=lambda x: x['mi'])['region'], 'Near the PPS border (listed as an alternative)')
+    lst, near = L['listed'].get(s['name']), L['nearest'].get(s['name'])
+    if lst: return (min(lst, key=lambda x: x['mi'])['region'], 'Near the PPS border')
+    if near and near['mi'] <= BORDER_MI: return (near['region'], 'Near the PPS border')
+    return None
 S = [s for s in S if place(s)]
 by_ppin = {s['pss_ppin']: s for s in S if s.get('pss_ppin')}
 # merged listings can carry several PPINs ('A, B'); map each to the school
@@ -61,7 +63,7 @@ for code, label, _ in WAVES:
         gw = d.setdefault('grades', {}).setdefault(label, [0] * 13)
         for i, cols in enumerate(GRADES): gw[i] += sum(num(c) for c in cols)
         d['typology'] = int(float(r.get('TYPOLOGY') or 0)) or d['typology']   # newest wave read last wins
-print(f'{len(data)} of {len(S)} private schools (inside PPS, or border schools listed near a PPS school) found in the PSS files')
+print(f'{len(data)} of {len(S)} private schools (inside PPS, or border schools near a PPS school) found in the PSS files')
 
 labels = [w[1] for w in WAVES]; years = np.array([w[2] for w in WAVES])
 def series(d, b):
