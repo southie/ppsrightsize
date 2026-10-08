@@ -2246,14 +2246,16 @@ function renderClassSizes() {
       cells((v, i) => `<td title="${esc(`${n0(ours(i))} students at the schools on this page in grade ${CS_GRADES[i]}, of ${n0(v)} in the district forecast`)}">${pc(ours(i) / v)}</td>`) + '</tr>';
     // students the forecast counts at schools this page does not model: Table 5.2 minus this page, by grade
     const oth = Object.entries(D.forecast_other?.schools || {}).map(([n, v]) => [n, v[csYear]]).filter(([, v]) => v).sort((a, b) => b[1] - a[1]);
-    h += `<tr class="csfc"><td>Schools not on this page<span class="cssub">${oth.map(([n, v]) => `${esc(n)} ${n0(v)}`).join(' &middot; ')}</span></td><td>${n0(ft - dist.E)}</td>` +
-      cells((v, i) => `<td title="${esc(`grade ${CS_GRADES[i]}: ${n0(v)} in the forecast, ${n0(ours(i))} at the schools on this page`)}">${n0(v - ours(i))}</td>`) + '</tr>';
+    const oshare = a => `<span class="cssub">${100 - Math.round(100 * a)}% of Table 5.2</span>`;   // from this page's rounded share, so the two add to 100
+    h += `<tr class="csfc"><td>Schools not on this page<span class="cssub">${oth.map(([n, v]) => `${esc(n)} ${n0(v)}`).join(' &middot; ')}</span></td><td>${n0(ft - dist.E)}${oshare(dist.E / ft)}</td>` +
+      cells((v, i) => `<td title="${esc(`grade ${CS_GRADES[i]}: ${n0(v)} in the forecast, ${n0(ours(i))} at the schools on this page`)}">${n0(v - ours(i))}${oshare(ours(i) / v)}</td>`) + '</tr>';
     h += `<tr class="csfc"><td>PPS forecast, Table 5.2<span class="cssub">medium scenario, all PPS schools (this page + schools not on it)</span></td><td>${n0(ft)}</td>` +
       cells(v => `<td>${n0(v)}</td>`) + '</tr>';
     // each part's share of Table 5.2: this page + not on this page = 100%
-    const two = (a) => `<span class="cssplit">${pc(a)}<span class="cssub">+ ${100 - Math.round(100 * a)}% = 100%</span></span>`;   // second share from the rounded first, so they add to 100
-    h += `<tr class="csfc cstotal"><td>Share of Table 5.2<span class="cssub">this page + schools not on this page</span></td><td>${two(dist.E / ft, 1 - dist.E / ft)}</td>` +
-      cells((v, i) => `<td title="${esc(`grade ${CS_GRADES[i]}: ${pc(ours(i) / v)} at the schools on this page, ${pc(1 - ours(i) / v)} at schools not on it`)}">${two(ours(i) / v, 1 - ours(i) / v)}</td>`) + '</tr>';
+    // total share of Table 5.2: these schools' share + schools not on this page = 100%
+    const tot = x => `<span class="main">100%</span><span class="cssub">${Math.round(100 * x)}% + ${100 - Math.round(100 * x)}%</span>`;
+    h += `<tr class="csfc cstotal"><td>Share of Table 5.2<span class="cssub">these schools' share + schools not on this page</span></td><td>${tot(dist.E / ft)}</td>` +
+      cells((v, i) => `<td title="${esc(`grade ${CS_GRADES[i]}: ${pc(ours(i) / v)} at the schools on this page + ${100 - Math.round(100 * ours(i) / v)}% at schools not on it = 100%`)}">${tot(ours(i) / v)}</td>`) + '</tr>';
   }
   host.innerHTML = h + '</tbody></table>';
   host.querySelectorAll('.cs-x').forEach(b => b.onclick = () => { const r = b.dataset.r; csOpen.has(r) ? csOpen.delete(r) : csOpen.add(r); renderClassSizes(); });
