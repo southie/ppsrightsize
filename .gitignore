@@ -4,3 +4,11 @@
 /pps-data/
 scripts/__pycache__/
 *.tmp
+# Large regenerable downloads (GitHub rejects files over 100 MB): rebuild with scripts/fetch_osm_streets.py,
+# and download or2020.dhc.zip / 2020_dhc_sas_example.zip as described in scripts/extract_block_ages.py
+/source/osm/
+/source/census-dhc/*.zip
+# Raw PPS bus route PDFs (re-download with scripts/fetch_pps_bus.py; the parsed routes and stops are kept)
+/source/pps-bus/pdf/
+# Local page backups made before each patch (rightsizing-scenario-explorer.backup-before-*.html)
+*.backup-*.html

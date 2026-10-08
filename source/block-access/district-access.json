@@ -1,0 +1,210 @@
+{
+ "method": "Walking, biking and driving distance / time from every populated 2020 Census block to every PPS school, over the\nOpenStreetMap street network, and who lives beyond Oregon's bus-eligibility distances under Status Quo and\nScenarios A and B.\n\nMethod\n  Residents   2020 Census blocks (source/census-blocks) spread evenly over a GRID_M grid of points inside each block\n              (a block smaller than a grid cell is one point at its centre). Each point carries its share of the\n              block's total population and of its school-age counts by age (source/census-dhc/block-ages.csv, from\n              scripts/extract_block_ages.py).\n  Network     OpenStreetMap ways (source/osm/streets.json, from scripts/fetch_osm_streets.py) turned into three graphs:\n                walk  every street and path pedestrians may use (no freeways, no foot=no), both directions, WALK_MPH\n                bike  streets, paths and cycleways (no freeways, no steps, footways only where bikes are allowed),\n                      one-way streets respected unless bikes are exempt, BIKE_MPH, flat (hills ignored)\n                drive streets cars may use, one-way streets respected, posted speed limit or a default by street\n                      class; free-flow (no traffic, no signal delay) then scaled by one factor fitted so that\n                      school-to-school drive times match the OSRM matrix the explorer already uses\n  Distances   one shortest-path search per school per mode, run backwards over the graph, gives the travel time from\n              every intersection to that school; each resident point takes the time at its nearest intersection plus\n              the straight-line walk to it.\n  Assignment  each point's school per scenario and grade band comes from the attendance-area layers\n              (source/pps-explorer-boundaries: k5, 68, 912 for sq / a / b). K-8 schools appear in both the K-5 and\n              6-8 layers.\n  Ages        K-5 = ages 5-9 + 1/5 of 10-14; 6-8 = 3/5 of 10-14; 9-12 = 1/5 of 10-14 + 15-17 (single years spread\n              evenly). These are all school-age residents, not PPS students: some attend private, charter or\n              focus-option schools or are home-schooled.\n  Bus         Oregon (ORS 327.043) reimburses transportation for elementary students who live more than 1 mile from\n              school and secondary students more than 1.5 miles. Distances here are walking-route distances. Grades\n              6-8 are reported at both 1.0 and 1.5 miles. PPS gives high school students TriMet passes rather than\n              yellow buses, so 9-12 counts are students who would need transit, not yellow-bus riders.",
+ "built": "2026-10-08",
+ "walk_mph": 3.0,
+ "bike_mph": 10.0,
+ "drive_factor_vs_osrm": 1.237,
+ "hist_min": [
+  5,
+  10,
+  15,
+  20,
+  30,
+  45,
+  60
+ ],
+ "bus_headline_miles": {
+  "k5": 1.0,
+  "68": 1.5,
+  "912": 1.5
+ },
+ "grid_m": 40,
+ "district": {
+  "SQ": {
+   "k5": {
+    "residents": 28212,
+    "mean_walk_mi": 0.87,
+    "nearest_is_assigned_share": 0.736,
+    "beyond_1mi": 8100,
+    "beyond_1mi_share": 0.287,
+    "beyond_1mi_walkmi": 13283,
+    "walk_15min_share": 0.546,
+    "bike_15min_share": 0.967,
+    "drive_15min_share": 0.998
+   },
+   "68": {
+    "residents": 13754,
+    "mean_walk_mi": 1.61,
+    "nearest_is_assigned_share": 0.642,
+    "beyond_1mi": 8756,
+    "beyond_1mi_share": 0.637,
+    "beyond_1.5mi": 5899,
+    "beyond_1.5mi_share": 0.429,
+    "beyond_1mi_walkmi": 19069,
+    "beyond_1.5mi_walkmi": 15489,
+    "walk_15min_share": 0.24,
+    "bike_15min_share": 0.846,
+    "drive_15min_share": 0.974
+   },
+   "912": {
+    "residents": 18122,
+    "mean_walk_mi": 2.06,
+    "nearest_is_assigned_share": 0.828,
+    "beyond_1.5mi": 10407,
+    "beyond_1.5mi_share": 0.574,
+    "beyond_1.5mi_walkmi": 29793,
+    "walk_15min_share": 0.108,
+    "bike_15min_share": 0.707,
+    "drive_15min_share": 0.971
+   }
+  },
+  "A": {
+   "k5": {
+    "residents": 28371,
+    "mean_walk_mi": 1.0,
+    "nearest_is_assigned_share": 0.739,
+    "beyond_1mi": 11656,
+    "beyond_1mi_share": 0.411,
+    "beyond_1mi_walkmi": 18499,
+    "walk_15min_share": 0.416,
+    "bike_15min_share": 0.965,
+    "drive_15min_share": 0.998,
+    "vs_SQ": {
+     "residents": 159,
+     "mean_walk_mi": 0.13,
+     "nearest_is_assigned_share": 0.003,
+     "beyond_1mi": 3556,
+     "beyond_1mi_share": 0.124,
+     "beyond_1mi_walkmi": 5216,
+     "walk_15min_share": -0.13,
+     "bike_15min_share": -0.002,
+     "drive_15min_share": 0.0
+    }
+   },
+   "68": {
+    "residents": 13875,
+    "mean_walk_mi": 1.78,
+    "nearest_is_assigned_share": 0.694,
+    "beyond_1mi": 9807,
+    "beyond_1mi_share": 0.707,
+    "beyond_1.5mi": 6568,
+    "beyond_1.5mi_share": 0.473,
+    "beyond_1mi_walkmi": 21922,
+    "beyond_1.5mi_walkmi": 17866,
+    "walk_15min_share": 0.17,
+    "bike_15min_share": 0.784,
+    "drive_15min_share": 0.975,
+    "vs_SQ": {
+     "residents": 121,
+     "mean_walk_mi": 0.17,
+     "nearest_is_assigned_share": 0.052,
+     "beyond_1mi": 1051,
+     "beyond_1mi_share": 0.07,
+     "beyond_1.5mi": 669,
+     "beyond_1.5mi_share": 0.044,
+     "beyond_1mi_walkmi": 2853,
+     "beyond_1.5mi_walkmi": 2377,
+     "walk_15min_share": -0.07,
+     "bike_15min_share": -0.062,
+     "drive_15min_share": 0.001
+    }
+   },
+   "912": {
+    "residents": 18123,
+    "mean_walk_mi": 1.99,
+    "nearest_is_assigned_share": 0.864,
+    "beyond_1.5mi": 10376,
+    "beyond_1.5mi_share": 0.573,
+    "beyond_1.5mi_walkmi": 28494,
+    "walk_15min_share": 0.108,
+    "bike_15min_share": 0.715,
+    "drive_15min_share": 0.974,
+    "vs_SQ": {
+     "residents": 1,
+     "mean_walk_mi": -0.07,
+     "nearest_is_assigned_share": 0.036,
+     "beyond_1.5mi": -31,
+     "beyond_1.5mi_share": -0.001,
+     "beyond_1.5mi_walkmi": -1299,
+     "walk_15min_share": 0.0,
+     "bike_15min_share": 0.008,
+     "drive_15min_share": 0.003
+    }
+   }
+  },
+  "B": {
+   "k5": {
+    "residents": 28371,
+    "mean_walk_mi": 0.97,
+    "nearest_is_assigned_share": 0.727,
+    "beyond_1mi": 10809,
+    "beyond_1mi_share": 0.381,
+    "beyond_1mi_walkmi": 17234,
+    "walk_15min_share": 0.445,
+    "bike_15min_share": 0.966,
+    "drive_15min_share": 0.998,
+    "vs_SQ": {
+     "residents": 159,
+     "mean_walk_mi": 0.1,
+     "nearest_is_assigned_share": -0.009,
+     "beyond_1mi": 2709,
+     "beyond_1mi_share": 0.094,
+     "beyond_1mi_walkmi": 3951,
+     "walk_15min_share": -0.101,
+     "bike_15min_share": -0.001,
+     "drive_15min_share": 0.0
+    }
+   },
+   "68": {
+    "residents": 13870,
+    "mean_walk_mi": 1.77,
+    "nearest_is_assigned_share": 0.7,
+    "beyond_1mi": 9802,
+    "beyond_1mi_share": 0.707,
+    "beyond_1.5mi": 6563,
+    "beyond_1.5mi_share": 0.473,
+    "beyond_1mi_walkmi": 21847,
+    "beyond_1.5mi_walkmi": 17791,
+    "walk_15min_share": 0.17,
+    "bike_15min_share": 0.784,
+    "drive_15min_share": 0.975,
+    "vs_SQ": {
+     "residents": 116,
+     "mean_walk_mi": 0.16,
+     "nearest_is_assigned_share": 0.058,
+     "beyond_1mi": 1046,
+     "beyond_1mi_share": 0.07,
+     "beyond_1.5mi": 664,
+     "beyond_1.5mi_share": 0.044,
+     "beyond_1mi_walkmi": 2778,
+     "beyond_1.5mi_walkmi": 2302,
+     "walk_15min_share": -0.07,
+     "bike_15min_share": -0.062,
+     "drive_15min_share": 0.001
+    }
+   },
+   "912": {
+    "residents": 18123,
+    "mean_walk_mi": 2.0,
+    "nearest_is_assigned_share": 0.854,
+    "beyond_1.5mi": 10376,
+    "beyond_1.5mi_share": 0.573,
+    "beyond_1.5mi_walkmi": 28662,
+    "walk_15min_share": 0.108,
+    "bike_15min_share": 0.712,
+    "drive_15min_share": 0.974,
+    "vs_SQ": {
+     "residents": 1,
+     "mean_walk_mi": -0.06,
+     "nearest_is_assigned_share": 0.026,
+     "beyond_1.5mi": -31,
+     "beyond_1.5mi_share": -0.001,
+     "beyond_1.5mi_walkmi": -1131,
+     "walk_15min_share": 0.0,
+     "bike_15min_share": 0.005,
+     "drive_15min_share": 0.003
+    }
+   }
+  }
+ }
+}

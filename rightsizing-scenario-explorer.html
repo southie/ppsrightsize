@@ -77,6 +77,15 @@ h2 { font-size: 18px; margin: 0 0 4px; }
 tr.srow.closed td:first-child { opacity: 1; } tr.srow.closed td:first-child > * { opacity: .8; }
 .commutetable td, .commutetable th { white-space: nowrap; } .commutetable td .main { font-size: 14px; font-weight: 600; }
 #commute table { scroll-margin-top: 72px; }
+.commutetable td.cmh.go { cursor: pointer; } .commutetable td.cmh.go:hover svg, .commutetable td.cmh.go:focus-visible svg { outline: 2px solid var(--change); outline-offset: 2px; border-radius: 3px; }
+.commutetable td.cmh.go:focus-visible { outline: none; }
+.cmpane .cmmodes { margin: 10px 0 6px; display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.cmpane .cmmodes button { font: inherit; font-size: 12.5px; border: 0; background: var(--surface-1); color: var(--text-primary); padding: 3px 12px; cursor: pointer; }
+.cmpane .cmmodes button + button { border-left: 1px solid var(--line); } .cmpane .cmmodes button[aria-pressed="true"] { background: #1c3557; color: #fff; }
+ .cmpane svg.cmbig { width: 100%; height: auto; display: block; margin: 4px 0; }
+.cmpane .cmleg { font-size: 11.5px; } .cmpane .cmleg .sw { display: inline-block; width: 10px; height: 10px; margin: 0 3px 0 8px; vertical-align: -1px; }
+.cmpane table.cmstat { min-width: 0; width: 100%; font-size: 12.5px; } .cmpane .cmstat td, .cmpane .cmstat th { padding: 4px 6px; }
+.cmpane .cmup { color: var(--up); font-weight: 600; } .cmpane .cmdown { color: var(--down); font-weight: 600; } .cmpane .cmnote { font-size: 11.5px; margin-top: 8px; }
 .buscost { margin-top: 18px; } .buscost h3 { margin: 0 0 6px; font-size: 15px; }
 .bctable { min-width: 560px; } .bctable td, .bctable th { white-space: nowrap; }
 .bcdet { margin: 10px 0 0; font-size: 13px; line-height: 1.45; } .bcdet summary { cursor: pointer; font-weight: 600; }
@@ -293,6 +302,15 @@ try { scen = localStorage.getItem('rsScen') || 'A'; } catch (e) {}
 const tip = document.getElementById('tip');
 const showTip = (ev, h) => { tip.innerHTML = h; tip.style.opacity = 1; tip.style.left = Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8) + 'px'; tip.style.top = (ev.clientY + 14) + 'px'; };
 const hideTip = () => tip.style.opacity = 0;
+// scrolling moves content under a still mouse without a mouseleave: clear the tooltip and any chart highlight
+function clearHovers() {
+  if (tip.style.opacity === '0') return;
+  hideTip();
+  document.querySelectorAll('#panels svg').forEach(s => s._hoverReset?.());
+  if (typeof setBHover === 'function') setBHover(null);
+}
+addEventListener('scroll', clearHovers, { capture: true, passive: true });
+addEventListener('wheel', clearHovers, { passive: true });
 const RENAMED = { 'Lane': 'Brentwood (Lane)', 'Lee': 'Sunrise (Lee)' };
 const short = n => { const b = n.replace(/ (Elementary|Middle|High) School$/, '').replace(/ K-8 School$/, '').replace(/ School$/, '').replace(/ Program \(K-8\)$/, '').trim(); return RENAMED[b] || b; };
 const byKey = Object.fromEntries(D.schools.map(s => [s.key, s]));
@@ -771,12 +789,13 @@ const GROUPS = ['poverty', 'underserved', 'sped', 'ml'];
 // Counts are students: each school's projected enrollment in cmYear (D.series), K-8 schools split by the district's
 // K-5 share; the census shares and distributions of its attendance area are applied to them. Custom scenarios use
 // their own enrollment with their starting scenario's attendance areas.
-const CM_YEARS = ['2027-28', '2031-32'];
+const CM_YEARS = D.years;   // 2025-26 actual, later years projected
 let cmYear = '2031-32';
 try { const y = localStorage.getItem('rsCmYear'); if (CM_YEARS.includes(y)) cmYear = y; } catch (e) {}
 function cmStu(sc, k, b) {
   const v = D.series[sc]?.[k]?.[D.years.indexOf(cmYear)]; if (!v) return 0;
-  const t = D.types[sc]?.[k] || D.types.SQ[k], f = D.k5_share[cmYear];
+  const pre = D.years.indexOf(cmYear) < D.years.indexOf(D.impl_year);   // scenarios not yet in effect: Status Quo grade spans
+  const t = (pre ? D.types.SQ[k] : D.types[sc]?.[k]) || D.types.SQ[k], f = D.k5_share[cmYear];
   if (b === 'k5') return t === 'ES' ? v : t === 'K8' ? v * f : 0;
   if (b === '68') return t === 'MS' ? v : t === 'K8' ? v * (1 - f) : 0;
   return t === 'HS' ? v : 0;
@@ -786,10 +805,12 @@ let cmBand = 'all';
 try { cmBand = localStorage.getItem('rsCmBand') || 'all'; } catch (e) {}
 const cmOpen = new Set();
 function cmAgg(sc, keys, band) {
-  const S = D.commute.S[sc === 'C' ? custom.base : sc] || {};
+  // before the scenarios take effect (D.impl_year) every scenario still has Status Quo's attendance areas
+  const Sc = D.years.indexOf(cmYear) < D.years.indexOf(D.impl_year) ? 'SQ' : sc === 'C' ? custom.base : sc;
+  const S = D.commute.S[Sc] || {};
   const bands = band === 'all' ? ['k5', '68', '912'] : [band];
   const nb = D.commute.hist_min.length + 1;
-  const MB = D.buscost?.M?.[sc === 'C' ? custom.base : sc] || {};   // eligible K-8 walking miles per area (bus columns)
+  const MB = D.buscost?.M?.[Sc] || {};   // eligible K-8 walking miles per area (bus columns)
   const o = { r: 0, beyond: 0, wmi: 0, wmin: 0, bmin: 0, dmin: 0, w15: 0, b15: 0, d15: 0, near: 0, n: 0, bm: 0, bn: 0,
     h: { walk: Array(nb).fill(0), bike: Array(nb).fill(0), drive: Array(nb).fill(0) } };
   for (const k of keys) for (const b of bands) {
@@ -812,7 +833,7 @@ function cmD(v, s, fmt, good) {
 }
 const cmN = v => Math.round(v).toLocaleString(), cmP = v => Math.round(100 * v) + '%', cmPt = v => Math.round(100 * v) + ' pts';
 // travel-time histogram: share of residents per time bin; darker bars are within 15 minutes; outline = Status Quo
-function cmHist(c, q, m) {
+function cmHist(c, q, m, ri = -1) {
   const E = D.commute.hist_min, nb = E.length + 1, W = 120, H = 34, bw = W / nb;
   const sh = o => o && o.r ? o.h[m].map(x => x / Math.max(1, o.h[m].reduce((a, y) => a + y, 0))) : null;
   const cs = sh(c), qs = sh(q), top = Math.max(...cs, ...(qs || [0]), 0.01);
@@ -829,9 +850,10 @@ function cmHist(c, q, m) {
     `<text x="0" y="${H + 10}" font-size="9" fill="var(--text-muted)">0</text>` +
     [15, 30, 60].map(v => `<text x="${ix(v)}" y="${H + 10}" font-size="9" fill="var(--text-muted)" text-anchor="middle">${v}${v === 60 ? '+' : ''}</text>`).join('') +
     `<line x1="${ix(15)}" x2="${ix(15)}" y1="0" y2="${H}" stroke="var(--text-muted)" stroke-dasharray="2 2"/>`;
-  return `<td class="cmh"><svg width="${W}" height="${H + 12}" viewBox="0 0 ${W} ${H + 12}" role="img" aria-label="${m} time histogram">${g}${ax}</svg></td>`;
+  return `<td class="cmh${ri >= 0 ? ' go' : ''}"${ri >= 0 ? ` data-ri="${ri}" data-m="${m}" tabindex="0" role="button" title="Show ${m} times in detail"` : ''}><svg width="${W}" height="${H + 12}" viewBox="0 0 ${W} ${H + 12}" role="img" aria-label="${m} time histogram">${g}${ax}</svg></td>`;
 }
-function cmCells(c, q) {   // c = this scenario, q = Status Quo (same rows)
+function cmCells(c, q, row) {   // c = this scenario, q = Status Quo (same rows), row = {keys, label} for the detail pane
+  const ri = row ? CM_ROWS.push(row) - 1 : -1;
   if (!c.r) return '<td class="muted">&mdash;</td>'.repeat(9);
   const w15 = [['w15', 'Walk'], ['b15', 'Bike'], ['d15', 'Drive']].map(([f, l]) => {
     const dv = q ? Math.round(100 * c[f]) - Math.round(100 * q[f]) : 0;
@@ -839,7 +861,7 @@ function cmCells(c, q) {   // c = this scenario, q = Status Quo (same rows)
   }).join('<br>');
   return `<td><span class="main">${cmN(c.r)}</span>${cmD(c.r, q?.r, cmN, 'flat')}</td>` +
     `<td><span class="main">${cmN(c.beyond)}</span><span class="muted" style="display:block;font-size:11px">${cmP(c.beyond / c.r)} of students</span>${cmD(c.beyond, q?.beyond, cmN, 'down')}</td>` +
-    cmBus(c, q) + `<td class="reach">${w15}</td>` + cmHist(c, q, 'walk') + cmHist(c, q, 'bike') + cmHist(c, q, 'drive') +
+    cmBus(c, q) + `<td class="reach">${w15}</td>` + cmHist(c, q, 'walk', ri) + cmHist(c, q, 'bike', ri) + cmHist(c, q, 'drive', ri) +
     `<td><span class="main">${cmP(c.near)}</span>${cmD(c.near, q?.near, cmPt, 'up')}</td>`;
 }
 function commuteKPI() {
@@ -855,11 +877,87 @@ function commuteKPI() {
     `<div class="s">${line('k5', 'K-5')}<br>${line('68', '6-8')}<br>${line('912', '9-12 (TriMet)')}<br>` +
     `Within a 15-minute walk: <b>${cmP(c.w15)}</b>${isSQ || !wd ? '' : ` <span class="pcs">(${wd > 0 ? '+' : '&minus;'}${Math.abs(wd)} pts)</span>`}${busLine()}</div></div>`;
 }
+// ---------- histogram detail pane ----------
+let CM_ROWS = [], cmPaneSel = null;   // rows of the current table; the pane's {keys, label, m}
+const CM_MODE = { walk: ['Walk', 'wmin'], bike: ['Bike', 'bmin'], drive: ['Drive', 'dmin'] };
+function cmOpenPane(row, m) {
+  cmPaneSel = { ...row, m };
+  const fn = () => cmPaneHtml(); fn.cmPane = true;
+  openDock(fn, null, null);
+}
+function cmPaneMode(m) { if (!cmPaneSel) return; cmPaneSel.m = m; document.getElementById('dockbody').innerHTML = cmPaneHtml(); }
+// share of students in each time band; percentile p (0-1) by straight-line interpolation inside its band
+function cmShares(o, m) { const h = o.h[m], t = h.reduce((a, y) => a + y, 0); return t ? h.map(y => y / t) : null; }
+function cmPct(sh, p) {
+  const E = D.commute.hist_min; let cum = 0;
+  for (let i = 0; i < sh.length; i++) {
+    if (cum + sh[i] >= p - 1e-9 && sh[i] > 0) {
+      if (i === sh.length - 1) return { v: E[E.length - 1], open: true };
+      const lo = i ? E[i - 1] : 0; return { v: lo + (p - cum) / sh[i] * (E[i] - lo), open: false };
+    }
+    cum += sh[i];
+  }
+  return { v: E[E.length - 1], open: true };
+}
+function cmWithin(sh, x) { const i = D.commute.hist_min.indexOf(x); return sh.slice(0, i + 1).reduce((a, y) => a + y, 0); }
+function cmPaneHtml() {
+  const s = cmPaneSel; if (!s) return '';
+  const c = cmAgg(scen, s.keys, cmBand), isSQ = scen === 'SQ', q = isSQ ? null : cmAgg('SQ', s.keys, cmBand), m = s.m;
+  const band = CM_BANDS.find(([v]) => v === cmBand)[1];
+  let h = `<div class="pop cmpane"><b>${esc(s.label)}</b><div class="muted">${LABEL[scen]}${isSQ ? '' : ' vs Status Quo'} &middot; ${band} &middot; ${cmYear}</div>` +
+    `<div class="seg2 cmmodes">${Object.entries(CM_MODE).map(([k, [l]]) => `<button type="button" aria-pressed="${k === m}" onclick="cmPaneMode('${k}')">${l}</button>`).join('')}</div>`;
+  const cs = c.r ? cmShares(c, m) : null, qs = q?.r ? cmShares(q, m) : null;
+  if (!cs) return h + `<p class="muted">No students in these grades here in this scenario${qs ? ` (Status Quo: ${cmN(q.r)})` : ''}.</p></div>`;
+  // chart
+  const E = D.commute.hist_min, nb = E.length + 1, W = 320, H = 150, L0 = 30, B0 = 34, bw = (W - L0) / nb;
+  const lab = i => i === 0 ? `<${E[0]}` : i === nb - 1 ? `${E[nb - 2]}+` : `${E[i - 1]}-${E[i]}`;
+  const T0 = 14, top = Math.ceil(Math.max(...cs, ...(qs || [0]), 0.05) * 10) / 10, y = v => T0 + (H - T0) * (1 - v / top);
+  let g = '';
+  for (let t = 0; t <= top + 1e-9; t += top > 0.5 ? 0.2 : 0.1)
+    g += `<line x1="${L0}" x2="${W}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${L0 - 4}" y="${y(t) + 3}" font-size="9" text-anchor="end" fill="var(--text-muted)">${Math.round(100 * t)}%</text>`;
+  for (let i = 0; i < nb; i++) {
+    const x = L0 + i * bw + 2, w = bw - 4, tip = `${lab(i)} min: ${Math.round(100 * cs[i])}% (${cmN(c.h[m][i])} students)${qs ? `; Status Quo ${Math.round(100 * qs[i])}% (${cmN(q.h[m][i])})` : ''}`;
+    g += `<rect x="${x}" y="${y(cs[i])}" width="${w}" height="${Math.max(H - y(cs[i]), .5)}" fill="var(--text-secondary)" opacity="${E[i] <= 15 ? .85 : .3}"><title>${tip}</title></rect>`;
+    if (qs) g += `<rect x="${x}" y="${y(qs[i])}" width="${w}" height="${Math.max(H - y(qs[i]), .5)}" fill="none" stroke="var(--change)" stroke-width="1.5" pointer-events="none"/>`;
+    g += `<text x="${x + w / 2}" y="${y(cs[i]) - 3}" font-size="9" text-anchor="middle" fill="var(--text-primary)">${Math.round(100 * cs[i])}</text>` +
+      `<text x="${x + w / 2}" y="${H + 12}" font-size="9" text-anchor="middle" fill="var(--text-muted)">${lab(i)}</text>`;
+  }
+  const x15 = L0 + (E.indexOf(15) + 1) * bw;
+  g += `<line x1="${x15}" x2="${x15}" y1="${T0}" y2="${H}" stroke="var(--text-muted)" stroke-dasharray="3 3"/><text x="${x15 + 3}" y="${T0 - 4}" font-size="9" fill="var(--text-muted)">15 min</text>` +
+    `<text x="${L0 + (W - L0) / 2}" y="${H + 27}" font-size="10" text-anchor="middle" fill="var(--text-muted)">minutes (${CM_MODE[m][0].toLowerCase()}, home to school)</text>`;
+  h += `<svg class="cmbig" viewBox="0 0 ${W} ${H + B0}" role="img" aria-label="${CM_MODE[m][0]} time histogram">${g}</svg>` +
+    `<div class="muted cmleg"><span class="sw" style="background:var(--text-secondary);opacity:.85"></span>${LABEL[scen]}, within 15 min <span class="sw" style="background:var(--text-secondary);opacity:.3"></span>over 15 min` +
+    (qs ? ` <span class="sw" style="border:1.5px solid var(--change)"></span>Status Quo` : '') + '</div>';
+  // statistics
+  const pc = (sh, p) => { const r = cmPct(sh, p); return r.open ? `${r.v}+ min` : `${r.v.toFixed(1)} min`; };
+  const pcD = (p) => { const a = cmPct(cs, p), b = cmPct(qs, p); return a.open || b.open ? '' : cmDelta(a.v - b.v, ' min', 1); };
+  const mean = o => o[CM_MODE[m][1]];
+  const rows = [
+    ['Students', cmN(c.r), qs ? cmN(q.r) : '', qs ? cmDelta(c.r - q.r, '', 0, true) : ''],
+    ['Mean time', mean(c).toFixed(1) + ' min', qs ? mean(q).toFixed(1) + ' min' : '', qs ? cmDelta(mean(c) - mean(q), ' min', 1) : ''],
+    ['Median time', pc(cs, .5), qs ? pc(qs, .5) : '', qs ? pcD(.5) : ''],
+    ['75th percentile', pc(cs, .75), qs ? pc(qs, .75) : '', qs ? pcD(.75) : ''],
+    ['90th percentile', pc(cs, .9), qs ? pc(qs, .9) : '', qs ? pcD(.9) : ''],
+    ...[5, 10, 15, 20, 30, 45].map(x => [`Within ${x} min`, cmP(cmWithin(cs, x)), qs ? cmP(cmWithin(qs, x)) : '',
+      qs ? cmDelta(100 * (cmWithin(cs, x) - cmWithin(qs, x)), ' pts', 0, false, true) : ''])];
+  h += `<h4>Summary statistics</h4><table class="cmstat"><thead><tr><th></th><th>${isSQ ? 'Status Quo' : LABEL[scen]}</th>${qs ? '<th>Status Quo</th><th>Change</th>' : ''}</tr></thead><tbody>` +
+    rows.map(r => `<tr><td>${r[0]}</td><td><b>${r[1]}</b></td>${qs ? `<td>${r[2]}</td><td>${r[3]}</td>` : ''}</tr>`).join('') + '</tbody></table>' +
+    `<p class="muted cmnote">Students are ${cmYear} enrollment (${cmYear === D.years[0] ? 'actual' : 'projected'}); where they live, and so their travel times, comes from the 2020 Census school-age residents of each attendance area. ` +
+    `Mean is exact; median and percentiles are interpolated within the time bands shown. ${CM_MODE[m][0]} times are along the OpenStreetMap network at ${m === 'walk' ? D.commute.walk_mph + ' mph' : m === 'bike' ? D.commute.bike_mph + ' mph' : 'free-flow speeds (no traffic)'}.</p></div>`;
+  return h;
+}
+// signed change; up = higher is better (green), otherwise higher is worse (red); neutral = grey
+function cmDelta(d, unit, dp, neutral = false, up = false) {
+  const r = Number(d.toFixed(dp)); if (!r) return '<span class="muted">&plusmn;0</span>';
+  const cls = neutral ? 'muted' : (r > 0) === up ? 'cmup' : 'cmdown';
+  return `<span class="${cls}">${r > 0 ? '+' : '&minus;'}${Math.abs(r).toFixed(dp).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}${unit}</span>`;
+}
 function renderCommute() {
   const host = document.getElementById('commute'); if (!host) return;
+  CM_ROWS = [];
   const ysel = document.getElementById('cm-year');
   if (!ysel.options.length) {
-    ysel.innerHTML = CM_YEARS.map(y => `<option>${y}</option>`).join('');
+    ysel.innerHTML = CM_YEARS.map(y => `<option value="${y}">${y}${y === D.years[0] ? ' (actual)' : y === D.impl_year ? ' (scenarios take effect)' : ''}</option>`).join('');
     ysel.onchange = () => { cmYear = ysel.value; try { localStorage.setItem('rsCmYear', cmYear); } catch (e) {} renderKPIs(); renderCommute(); };
   }
   ysel.value = cmYear;
@@ -871,7 +969,7 @@ function renderCommute() {
   sel.value = cmBand;
   const keysOf = rn => Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn);
   const B = D.commute.bus, thr = cmBand === 'all' ? `K-5 over ${B.k5} mi, 6-12 over ${B['912']} mi` : `over ${B[cmBand]} ${B[cmBand] === 1 ? 'mile' : 'miles'}`;
-  let h = `<table class="commutetable"><thead><tr><th>Region</th><th>Students<br><span style="font-weight:400">(${cmYear} enrollment, projected)</span></th>` +
+  let h = `<table class="commutetable"><thead><tr><th>Region</th><th>Students<br><span style="font-weight:400">(${cmYear} enrollment, ${cmYear === D.years[0] ? 'actual' : 'projected'})</span></th>` +
     `<th>Beyond bus distance<br><span style="font-weight:400">(walking route, ${thr})</span></th>` +
     `<th>Bus student-miles a day<br><span style="font-weight:400">(eligible K-8 students, est.)</span></th>` +
     `<th>Yellow-bus cost a year<br><span style="font-weight:400">(est., ${bcD(BC.box.central)} per daily student-mile)</span></th>` +
@@ -881,7 +979,7 @@ function renderCommute() {
   for (const rn of [...D.region_order, 'District']) {
     const keys = keysOf(rn), isReg = rn !== 'District', open = cmOpen.has(rn);
     h += `<tr class="${isReg ? '' : 'dist'}"><td>${isReg ? `<button class="xbtn cm-x" data-r="${esc(rn)}" aria-expanded="${open}"><span class="car">&#9656;</span><span>${esc(rn)}</span></button>` : esc(rn)}</td>` +
-      cmCells(cmAgg(scen, keys, cmBand), scen === 'SQ' ? null : cmAgg('SQ', keys, cmBand)) + '</tr>';
+      cmCells(cmAgg(scen, keys, cmBand), scen === 'SQ' ? null : cmAgg('SQ', keys, cmBand), { keys, label: rn }) + '</tr>';
     if (isReg && open) for (const k of keys.sort(byStatusName)) {
       const c = cmAgg(scen, [k], cmBand), q = cmAgg('SQ', [k], cmBand), closed = D.detail[scen]?.[k]?.closed;
       if (!c.r && !q.r) continue;
@@ -891,10 +989,15 @@ function renderCommute() {
           `${closed ? 'its students are assigned to other schools' : 'no students in these grades in this scenario'}${q.r ? ` (Status Quo: ${cmN(q.r)} students, ${cmN(q.beyond)} beyond bus distance)` : ''}</span></td></tr>`;
         continue;
       }
-      h += `<tr class="srow"><td>${nm}</td>${cmCells(c, scen === 'SQ' ? null : (q.r ? q : null))}</tr>`;
+      h += `<tr class="srow"><td>${nm}</td>${cmCells(c, scen === 'SQ' ? null : (q.r ? q : null), { keys: [k], label: short(byKey[k].name) })}</tr>`;
     }
   }
   host.innerHTML = h + '</tbody></table>';
+  host.querySelectorAll('td.cmh.go').forEach(td => {
+    const open = () => { const r = CM_ROWS[+td.dataset.ri]; if (r) cmOpenPane(r, td.dataset.m); };
+    td.onclick = open; td.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } };
+  });
+  if (dockFn?.cmPane) document.getElementById('dockbody').innerHTML = dockFn();   // band or year changed
   host.querySelectorAll('.cm-x').forEach(b => b.onclick = () => { const r = b.dataset.r; cmOpen.has(r) ? cmOpen.delete(r) : cmOpen.add(r); renderCommute(); });
   const keys = keysOf('District'), c = cmAgg(scen, keys, 'all'), q = cmAgg('SQ', keys, 'all');
   renderBusCost();
@@ -1254,7 +1357,8 @@ function renderLines() {
         (scen !== 'SQ' ? `<br><span class="k">${{ closes: 'Closes', receives: 'Receives students', other: 'Other change', none: 'No change' }[rl]}</span>` : '') +
         (capOf(best) ? `<br>${v > capOf(best) ? '<span class="tri"></span><b>Over capacity:</b> ' : '<span class="k">Utilization:</span> '}${Math.round(100 * v / capOf(best))}% of ${capOf(best).toLocaleString()} seats (2021)` : ''));
     });
-    hit.addEventListener('mouseleave', () => { if (hot && paths[hot]) paths[hot].setAttribute('stroke-width', 1.6); hot = null; dot.setAttribute('opacity', 0); hideTip(); });
+    const reset = () => { if (hot && paths[hot]) paths[hot].setAttribute('stroke-width', 1.6); hot = null; dot.setAttribute('opacity', 0); hideTip(); };
+    hit.addEventListener('mouseleave', reset); svg._hoverReset = reset;
   }
   // list of over-capacity school-years
   const rowsOver = Object.keys(ser).filter(n => (!rsel || D.region_of[n] === rsel) && byKey[n]?.fc).map(n => {
@@ -1288,7 +1392,7 @@ const NOTES = [
   ...D.assumptions.map(a => a.replace(/ \(K-5 share[^)]*\)/, ' (K-5 share of K-8 grades district-wide, Table 5.2, for each year)')),
   'Functional capacity: PPS 2021 Long-Range Facility Plan, Vol. 1, Projected Utilization tables (PDF pp. 53, 57, 60, 63); verified against the pps-data extraction. Beverly Cleary = Fernwood + Hollyrood campuses; Odyssey = East Sylvan building; Harrison Park uses the LRFP figure (PPS\'s operational model differs).',
   'Attendance boundaries: K-5, 6-8 and 9-12 areas for Status Quo, Scenario A and Scenario B in 2027-28, from Jason Brown\'s PPS attendance-boundary explorer (pps-explorer.codedaily.workers.dev), which traces them from the vector paths in PPS\'s October 6, 2026 scenario maps; its Status Quo areas match the City of Portland\'s school boundary data for 98% of the district at K-5 and 9-12. Shaded areas are the parts of the district that change school. A custom scenario shows its starting scenario\'s boundaries; custom closures are not redrawn. Embedded by scripts/patch_boundaries.py.',
-  "Getting to school: walking, biking and driving routes from where people live to their assigned school, over the OpenStreetMap street and path network (one shortest-path search per school and mode). Counts are students: each school's projected enrollment in the selected year (2027-28 or 2031-32; K-8 schools split into K-5 and 6-8 by the district's K-5 share). Where they live comes from the 2020 Census: school-age residents of each attendance area, from blocks spread over a 40 m grid of points, give the share beyond bus distance, travel times and their spread, which are applied to the school's students. School-age residents by grade band come from the Census age table (P12): K-5 = ages 5-9 plus a fifth of 10-14, 6-8 = three fifths of 10-14, 9-12 = a fifth of 10-14 plus 15-17. Walking is 3 mph, biking 10 mph on streets, paths and bike-legal footways (one-way streets respected, hills ignored), driving at posted or typical speeds scaled by 1.24 so school-to-school times match the OSRM driving matrix used elsewhere on this page. Bus distance follows ORS 327.043 (state-reimbursed transportation beyond 1 mile for elementary and 1.5 miles for secondary students), measured along the walking route; grades 6-8 use 1.5 miles (at 1 mile, about 2,900 more 6-8 residents would count under Status Quo). Hazard-based busing is not modeled. Assignment uses the K-5, 6-8 and 9-12 attendance-area layers, so K-8 schools count in both K-5 and 6-8. A custom scenario uses its starting scenario's attendance areas. Block-level results are in source/block-access; built by scripts/build_block_access.py and embedded by scripts/patch_commute.py.",
+  "Getting to school: walking, biking and driving routes from where people live to their assigned school, over the OpenStreetMap street and path network (one shortest-path search per school and mode). Counts are students: each school's enrollment in the selected year (2025-26 actual, or projected to 2035-36; scenarios take effect in 2027-28; K-8 schools split into K-5 and 6-8 by the district's K-5 share). Where they live comes from the 2020 Census: school-age residents of each attendance area, from blocks spread over a 40 m grid of points, give the share beyond bus distance, travel times and their spread, which are applied to the school's students. School-age residents by grade band come from the Census age table (P12): K-5 = ages 5-9 plus a fifth of 10-14, 6-8 = three fifths of 10-14, 9-12 = a fifth of 10-14 plus 15-17. Walking is 3 mph, biking 10 mph on streets, paths and bike-legal footways (one-way streets respected, hills ignored), driving at posted or typical speeds scaled by 1.24 so school-to-school times match the OSRM driving matrix used elsewhere on this page. Bus distance follows ORS 327.043 (state-reimbursed transportation beyond 1 mile for elementary and 1.5 miles for secondary students), measured along the walking route; grades 6-8 use 1.5 miles (at 1 mile, about 2,900 more 6-8 residents would count under Status Quo). Hazard-based busing is not modeled. Assignment uses the K-5, 6-8 and 9-12 attendance-area layers, so K-8 schools count in both K-5 and 6-8. A custom scenario uses its starting scenario's attendance areas. Block-level results are in source/block-access; built by scripts/build_block_access.py and embedded by scripts/patch_commute.py.",
   "Busing cost: estimated cost of PPS's general (home-to-school) yellow-bus routes and the added cost of each scenario. The 2026-27 Student Transportation budget (function 2550), less the TriMet high school pass payment (8.3% of transportation in the 2018-19 adopted budget, or 11.3% adjusted for enrollment since), is split to general routes by buses needed (peak simultaneous runs from PPS's posted schedules) over all bus routes (293 in 2023-24). The rate divides that by riders x measured stop-to-school ride miles x 2 trips, giving an annual cost per daily student-mile (no school-year length needed); ridership is not published and is assumed (35-65% of bus-eligible PPS K-8 students: 2025-26 enrollment x the census share beyond bus distance). Scenario cost, in the selected year = change in bus-eligible K-8 students' walking miles (projected enrollment x census walking miles per resident) x the measured ride-to-walk ratio x the annual cost per daily student-mile. Bus utilization is unknown: added riders may fit on existing runs (lower cost) or need new buses (higher). Built by scripts/estimate_bus_cost.py; embedded by scripts/patch_buscost.py.",
   'Travel time: with Walk, Bike or Drive selected, clicking a school shades everywhere within 10 and 15 minutes of it. Isochrones are from openrouteservice on the OpenStreetMap road and path network (foot-walking, cycling-regular and driving-car profiles; driving is free-flow with no traffic); where the openrouteservice free-tier quota ran out, the public Valhalla server (same OpenStreetMap data) was used and the legend says so. Built by pps-data/scripts/isochrones.py and embedded by scripts/patch_isochrones.py.',
   'Building costs (2026 dollars): must-fix = deferred maintenance + remaining seismic retrofit; full modernization = replacement value. Replacement value is building area times the 2021 Long-Range Facility Plan regional cost per square foot (elementary and K-8 $510, middle $540, high $590); deferred maintenance is the plan facility condition index (FCI, repair cost over replacement value) times that value; seismic retrofit is the Holmes 2024 complete remaining cost for the campus, which already includes the unreinforced-masonry (URM) work (shown in each school tooltip, not added again). Escalated with the Turner Building Cost Index (2Q 2021 1187, 2Q 2024 1421, 2Q 2026 1552). Kellogg, Lincoln and McDaniel were new or rebuilt and have no FCI; Forest Park has no seismic estimate. Costs avoided are the totals for buildings a scenario closes; receiving schools may need added space, which is not counted. Built by scripts/extract_lrfp_fci.py and scripts/patch_costs.py.',

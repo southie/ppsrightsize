@@ -17,6 +17,9 @@ BLOCKS = os.path.join(ROOT, 'source', 'census-blocks', 'blocks_2020.geojson')
 GRID_M = 40
 NEWLINE = '\r\n'   # the page is kept with CRLF line endings
 CHECK = '--check' in sys.argv[1:]
+html_now = open(PAGE, encoding='utf-8').read()
+if 'function renderCommute' in html_now:
+    sys.exit('superseded: the 15-minute column was replaced by the Getting to school table (scripts/patch_commute.py)')
 html = open(PAGE, encoding='utf-8').read()
 m = re.search(r'const D = (\{.*?\});\nconst esc', html, re.S)
 D = json.loads(m.group(1))

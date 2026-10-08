@@ -1,0 +1,692 @@
+{
+ "built": "2026-10-08",
+ "assumptions": {
+  "budget_2550": 47647560,
+  "budget_2550_prior": 44125736,
+  "all_bus_routes": 293,
+  "buffer_min": 10,
+  "trimet_2018": 2114332,
+  "transport_2018": 25458264,
+  "trimet_shares": {
+   "budget ratio": 0.0831,
+   "enrollment-adjusted": 0.1131
+  },
+  "enrollment": {
+   "hs_2018": 10978,
+   "hs_2526": 11965,
+   "k8_2018": 31177,
+   "k8_2526": 24128
+  },
+  "ride_share": {
+   "low": 0.35,
+   "central": 0.5,
+   "high": 0.65
+  },
+  "rate_year": "2025-26"
+ },
+ "routes": {
+  "runs": 449,
+  "runs_measured": 413,
+  "measured_route_miles": 2439,
+  "runs_skipped": {
+   "no school match": 30,
+   "stops not located": 6
+  },
+  "schools_served": 60,
+  "buses_estimated": 129,
+  "daily_route_miles": 2652,
+  "mean_run_miles": 5.91,
+  "mean_ride_miles": 4.14,
+  "median_ride_miles": 3.23,
+  "eligible_students": 7415,
+  "eligible_mean_walk_miles": 2.09,
+  "ride_to_walk_ratio": 1.978
+ },
+ "cost": {
+  "budget ratio": {
+   "trimet_estimate_2026_27": 3957173,
+   "general_routes_share": 0.44,
+   "general_routes_cost": 19235699,
+   "per_daily_bus_mile": 7255,
+   "per_bus": 149114
+  },
+  "enrollment-adjusted": {
+   "trimet_estimate_2026_27": 5390190,
+   "general_routes_share": 0.44,
+   "general_routes_cost": 18604780,
+   "per_daily_bus_mile": 7017,
+   "per_bus": 144223
+  }
+ },
+ "cases": {
+  "low": {
+   "riders": 2595,
+   "riders_per_run": 11.6,
+   "daily_student_miles": 21480,
+   "per_daily_student_mile": {
+    "budget ratio": 896,
+    "enrollment-adjusted": 866
+   },
+   "per_rider_year": {
+    "budget ratio": 7412,
+    "enrollment-adjusted": 7169
+   }
+  },
+  "central": {
+   "riders": 3708,
+   "riders_per_run": 16.5,
+   "daily_student_miles": 30686,
+   "per_daily_student_mile": {
+    "budget ratio": 627,
+    "enrollment-adjusted": 606
+   },
+   "per_rider_year": {
+    "budget ratio": 5188,
+    "enrollment-adjusted": 5018
+   }
+  },
+  "high": {
+   "riders": 4820,
+   "riders_per_run": 21.5,
+   "daily_student_miles": 39892,
+   "per_daily_student_mile": {
+    "budget ratio": 482,
+    "enrollment-adjusted": 466
+   },
+   "per_rider_year": {
+    "budget ratio": 3991,
+    "enrollment-adjusted": 3860
+   }
+  }
+ },
+ "box_per_daily_student_mile": {
+  "low": 466,
+  "central": 616,
+  "high": 896
+ },
+ "scenarios": {
+  "2025-26": {
+   "SQ": {
+    "eligible_students": 7651,
+    "eligible_walk_miles": 15913,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "A": {
+    "eligible_students": 7651,
+    "eligible_walk_miles": 15913,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "B": {
+    "eligible_students": 7651,
+    "eligible_walk_miles": 15913,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   }
+  },
+  "2026-27": {
+   "SQ": {
+    "eligible_students": 7551,
+    "eligible_walk_miles": 15686,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "A": {
+    "eligible_students": 7551,
+    "eligible_walk_miles": 15686,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "B": {
+    "eligible_students": 7551,
+    "eligible_walk_miles": 15686,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   }
+  },
+  "2027-28": {
+   "SQ": {
+    "eligible_students": 7457,
+    "eligible_walk_miles": 15580,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "A": {
+    "eligible_students": 9245,
+    "eligible_walk_miles": 18859,
+    "change_eligible": 1788,
+    "change_eligible_pct": 0.24,
+    "change_walk_miles_pct": 0.21,
+    "added_daily_student_miles_central": 6484,
+    "added_cost": {
+     "budget ratio": 4064689,
+     "enrollment-adjusted": 3931370
+    },
+    "added_cost_box": {
+     "low": 3931370,
+     "high": 4064689,
+     "central": 3998030
+    }
+   },
+   "B": {
+    "eligible_students": 8926,
+    "eligible_walk_miles": 18401,
+    "change_eligible": 1469,
+    "change_eligible_pct": 0.197,
+    "change_walk_miles_pct": 0.181,
+    "added_daily_student_miles_central": 5579,
+    "added_cost": {
+     "budget ratio": 3497479,
+     "enrollment-adjusted": 3382764
+    },
+    "added_cost_box": {
+     "low": 3382764,
+     "high": 3497479,
+     "central": 3440122
+    }
+   }
+  },
+  "2028-29": {
+   "SQ": {
+    "eligible_students": 7365,
+    "eligible_walk_miles": 15272,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "A": {
+    "eligible_students": 9121,
+    "eligible_walk_miles": 18469,
+    "change_eligible": 1756,
+    "change_eligible_pct": 0.238,
+    "change_walk_miles_pct": 0.209,
+    "added_daily_student_miles_central": 6322,
+    "added_cost": {
+     "budget ratio": 3962956,
+     "enrollment-adjusted": 3832973
+    },
+    "added_cost_box": {
+     "low": 3832973,
+     "high": 3962956,
+     "central": 3897964
+    }
+   },
+   "B": {
+    "eligible_students": 8819,
+    "eligible_walk_miles": 18042,
+    "change_eligible": 1453,
+    "change_eligible_pct": 0.197,
+    "change_walk_miles_pct": 0.181,
+    "added_daily_student_miles_central": 5477,
+    "added_cost": {
+     "budget ratio": 3433448,
+     "enrollment-adjusted": 3320833
+    },
+    "added_cost_box": {
+     "low": 3320833,
+     "high": 3433448,
+     "central": 3377140
+    }
+   }
+  },
+  "2029-30": {
+   "SQ": {
+    "eligible_students": 7280,
+    "eligible_walk_miles": 15134,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "A": {
+    "eligible_students": 9048,
+    "eligible_walk_miles": 18345,
+    "change_eligible": 1768,
+    "change_eligible_pct": 0.243,
+    "change_walk_miles_pct": 0.212,
+    "added_daily_student_miles_central": 6349,
+    "added_cost": {
+     "budget ratio": 3980134,
+     "enrollment-adjusted": 3849588
+    },
+    "added_cost_box": {
+     "low": 3849588,
+     "high": 3980134,
+     "central": 3914861
+    }
+   },
+   "B": {
+    "eligible_students": 8743,
+    "eligible_walk_miles": 17918,
+    "change_eligible": 1463,
+    "change_eligible_pct": 0.201,
+    "change_walk_miles_pct": 0.184,
+    "added_daily_student_miles_central": 5506,
+    "added_cost": {
+     "budget ratio": 3451282,
+     "enrollment-adjusted": 3338082
+    },
+    "added_cost_box": {
+     "low": 3338082,
+     "high": 3451282,
+     "central": 3394682
+    }
+   }
+  },
+  "2030-31": {
+   "SQ": {
+    "eligible_students": 7098,
+    "eligible_walk_miles": 14685,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "A": {
+    "eligible_students": 8858,
+    "eligible_walk_miles": 17864,
+    "change_eligible": 1759,
+    "change_eligible_pct": 0.248,
+    "change_walk_miles_pct": 0.217,
+    "added_daily_student_miles_central": 6288,
+    "added_cost": {
+     "budget ratio": 3941891,
+     "enrollment-adjusted": 3812600
+    },
+    "added_cost_box": {
+     "low": 3812600,
+     "high": 3941891,
+     "central": 3877246
+    }
+   },
+   "B": {
+    "eligible_students": 8554,
+    "eligible_walk_miles": 17436,
+    "change_eligible": 1455,
+    "change_eligible_pct": 0.205,
+    "change_walk_miles_pct": 0.187,
+    "added_daily_student_miles_central": 5441,
+    "added_cost": {
+     "budget ratio": 3410578,
+     "enrollment-adjusted": 3298713
+    },
+    "added_cost_box": {
+     "low": 3298713,
+     "high": 3410578,
+     "central": 3354646
+    }
+   }
+  },
+  "2031-32": {
+   "SQ": {
+    "eligible_students": 6993,
+    "eligible_walk_miles": 14414,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "A": {
+    "eligible_students": 8743,
+    "eligible_walk_miles": 17585,
+    "change_eligible": 1750,
+    "change_eligible_pct": 0.25,
+    "change_walk_miles_pct": 0.22,
+    "added_daily_student_miles_central": 6271,
+    "added_cost": {
+     "budget ratio": 3931211,
+     "enrollment-adjusted": 3802270
+    },
+    "added_cost_box": {
+     "low": 3802270,
+     "high": 3931211,
+     "central": 3866740
+    }
+   },
+   "B": {
+    "eligible_students": 8436,
+    "eligible_walk_miles": 17149,
+    "change_eligible": 1443,
+    "change_eligible_pct": 0.206,
+    "change_walk_miles_pct": 0.19,
+    "added_daily_student_miles_central": 5408,
+    "added_cost": {
+     "budget ratio": 3390108,
+     "enrollment-adjusted": 3278914
+    },
+    "added_cost_box": {
+     "low": 3278914,
+     "high": 3390108,
+     "central": 3334511
+    }
+   }
+  },
+  "2032-33": {
+   "SQ": {
+    "eligible_students": 6897,
+    "eligible_walk_miles": 14169,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "A": {
+    "eligible_students": 8628,
+    "eligible_walk_miles": 17307,
+    "change_eligible": 1731,
+    "change_eligible_pct": 0.251,
+    "change_walk_miles_pct": 0.221,
+    "added_daily_student_miles_central": 6206,
+    "added_cost": {
+     "budget ratio": 3890176,
+     "enrollment-adjusted": 3762581
+    },
+    "added_cost_box": {
+     "low": 3762581,
+     "high": 3890176,
+     "central": 3826378
+    }
+   },
+   "B": {
+    "eligible_students": 8324,
+    "eligible_walk_miles": 16876,
+    "change_eligible": 1427,
+    "change_eligible_pct": 0.207,
+    "change_walk_miles_pct": 0.191,
+    "added_daily_student_miles_central": 5353,
+    "added_cost": {
+     "budget ratio": 3355332,
+     "enrollment-adjusted": 3245280
+    },
+    "added_cost_box": {
+     "low": 3245280,
+     "high": 3355332,
+     "central": 3300306
+    }
+   }
+  },
+  "2033-34": {
+   "SQ": {
+    "eligible_students": 6886,
+    "eligible_walk_miles": 14197,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "A": {
+    "eligible_students": 8587,
+    "eligible_walk_miles": 17299,
+    "change_eligible": 1701,
+    "change_eligible_pct": 0.247,
+    "change_walk_miles_pct": 0.219,
+    "added_daily_student_miles_central": 6135,
+    "added_cost": {
+     "budget ratio": 3845809,
+     "enrollment-adjusted": 3719669
+    },
+    "added_cost_box": {
+     "low": 3719669,
+     "high": 3845809,
+     "central": 3782739
+    }
+   },
+   "B": {
+    "eligible_students": 8289,
+    "eligible_walk_miles": 16876,
+    "change_eligible": 1403,
+    "change_eligible_pct": 0.204,
+    "change_walk_miles_pct": 0.189,
+    "added_daily_student_miles_central": 5299,
+    "added_cost": {
+     "budget ratio": 3321935,
+     "enrollment-adjusted": 3212978
+    },
+    "added_cost_box": {
+     "low": 3212978,
+     "high": 3321935,
+     "central": 3267456
+    }
+   }
+  },
+  "2034-35": {
+   "SQ": {
+    "eligible_students": 6874,
+    "eligible_walk_miles": 14337,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "A": {
+    "eligible_students": 8535,
+    "eligible_walk_miles": 17387,
+    "change_eligible": 1661,
+    "change_eligible_pct": 0.242,
+    "change_walk_miles_pct": 0.213,
+    "added_daily_student_miles_central": 6031,
+    "added_cost": {
+     "budget ratio": 3780512,
+     "enrollment-adjusted": 3656513
+    },
+    "added_cost_box": {
+     "low": 3656513,
+     "high": 3780512,
+     "central": 3718512
+    }
+   },
+   "B": {
+    "eligible_students": 8248,
+    "eligible_walk_miles": 16983,
+    "change_eligible": 1374,
+    "change_eligible_pct": 0.2,
+    "change_walk_miles_pct": 0.185,
+    "added_daily_student_miles_central": 5232,
+    "added_cost": {
+     "budget ratio": 3279767,
+     "enrollment-adjusted": 3172193
+    },
+    "added_cost_box": {
+     "low": 3172193,
+     "high": 3279767,
+     "central": 3225980
+    }
+   }
+  },
+  "2035-36": {
+   "SQ": {
+    "eligible_students": 6806,
+    "eligible_walk_miles": 14215,
+    "change_eligible": 0,
+    "change_eligible_pct": 0.0,
+    "change_walk_miles_pct": 0.0,
+    "added_daily_student_miles_central": 0,
+    "added_cost": {
+     "budget ratio": 0,
+     "enrollment-adjusted": 0
+    },
+    "added_cost_box": {
+     "low": 0,
+     "high": 0,
+     "central": 0
+    }
+   },
+   "A": {
+    "eligible_students": 8439,
+    "eligible_walk_miles": 17224,
+    "change_eligible": 1633,
+    "change_eligible_pct": 0.24,
+    "change_walk_miles_pct": 0.212,
+    "added_daily_student_miles_central": 5951,
+    "added_cost": {
+     "budget ratio": 3730477,
+     "enrollment-adjusted": 3608120
+    },
+    "added_cost_box": {
+     "low": 3608120,
+     "high": 3730477,
+     "central": 3669298
+    }
+   },
+   "B": {
+    "eligible_students": 8158,
+    "eligible_walk_miles": 16829,
+    "change_eligible": 1353,
+    "change_eligible_pct": 0.199,
+    "change_walk_miles_pct": 0.184,
+    "added_daily_student_miles_central": 5170,
+    "added_cost": {
+     "budget ratio": 3241026,
+     "enrollment-adjusted": 3134722
+    },
+    "added_cost_box": {
+     "low": 3134722,
+     "high": 3241026,
+     "central": 3187874
+    }
+   }
+  }
+ }
+}
