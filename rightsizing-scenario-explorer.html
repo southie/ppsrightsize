@@ -803,18 +803,22 @@ function staffCell(keys) {
 }
 function staffKPI() {
   const s = staffDelta(D.schools.map(x => x.key));
-  // two-way split: administration (principals, assistant/vice principals, office) vs teachers and direct student support
+  // headline: positions (licensed-equivalent FTE); split administration vs teachers and direct student support; dollars secondary
   const pos = v => staffUSD(Math.abs(v)).replace('&minus;', '');
+  const f1 = v => Math.abs(v).toFixed(1);
   if (scen === 'SQ') {
-    const sh = v => `${Math.round(100 * v / s.base.fte)}% of positions`;
-    return `<div class="kpi"><div class="v">${staffUSD(s.base.usd)}</div><div class="l">School staffing per year under PPS's formula, ${staffYear} (salary + benefits, 2026-27 $)</div>` +
-      `<div class="s">Administration: <b>${s.base.aFte.toFixed(1)}</b> FTE &middot; <b>${pos(s.base.aUsd)}</b> <span class="pcs">(${sh(s.base.aFte)})</span><br>` +
-      `Teachers &amp; direct support: <b>${s.base.tFte.toFixed(1)}</b> FTE &middot; <b>${pos(s.base.tUsd)}</b> <span class="pcs">(${sh(s.base.tFte)})</span></div></div>`;
+    const sh = v => `${Math.round(100 * v / s.base.fte)}%`;
+    return `<div class="kpi"><div class="v">${Math.round(s.base.fte).toLocaleString()}<span class="d" style="color:var(--text-muted)">positions</span></div>` +
+      `<div class="l">School positions under PPS's staffing formula, ${staffYear} (licensed-equivalent FTE)</div>` +
+      `<div class="s">Administration: <b>${f1(s.base.aFte)}</b> <span class="pcs">(${sh(s.base.aFte)})</span><br>` +
+      `Teachers &amp; direct support: <b>${f1(s.base.tFte)}</b> <span class="pcs">(${sh(s.base.tFte)})</span><br>` +
+      `Cost: <b>${pos(s.base.usd)}</b> a year (salary + benefits, 2026-27 $)</div></div>`;
   }
-  const line = (label, fte, usd, bF, bU) => `${label}: <b>${Math.abs(fte).toFixed(1)}</b> FTE${pcS(fte, bF)} &middot; <b>${pos(usd)}</b>${pcS(usd, bU)}`;
-  return `<div class="kpi"><div class="v">${pos(s.usd)}<span class="d" style="color:var(--text-muted)">${pctOf(s.usd, s.base.usd)} vs SQ</span></div>` +
-    `<div class="l">School staffing no longer needed per year under PPS's formula, ${staffYear} vs Status Quo (salary + benefits, 2026-27 $): <b>${Math.abs(s.fte).toFixed(1)}</b> FTE${pcS(s.fte, s.base.fte)}</div>` +
-    `<div class="s">${line('Administration', s.aFte, s.aUsd, s.base.aFte, s.base.aUsd)}<br>${line('Teachers &amp; direct support', s.tFte, s.tUsd, s.base.tFte, s.base.tUsd)}</div></div>`;
+  return `<div class="kpi"><div class="v">${Math.round(Math.abs(s.fte))}<span class="d" style="color:var(--text-muted)">positions &middot; ${pctOf(s.fte, s.base.fte)} vs SQ</span></div>` +
+    `<div class="l">School positions no longer needed under PPS's staffing formula, ${staffYear} vs Status Quo (licensed-equivalent FTE)</div>` +
+    `<div class="s">Administration: <b>${f1(s.aFte)}</b>${pcS(s.aFte, s.base.aFte)}<br>` +
+    `Teachers &amp; direct support: <b>${f1(s.tFte)}</b>${pcS(s.tFte, s.base.tFte)}<br>` +
+    `Cost: about <b>${pos(s.usd)}</b> a year${pcS(s.usd, s.base.usd)} (salary + benefits, 2026-27 $)</div></div>`;
 }
 function schoolRows(rn) {
   const det = D.detail[scen], sqd = D.detail.SQ;
@@ -1476,7 +1480,7 @@ function renderStaffing() {
   const teach = (dsq.homeroom + dsq.t68 + dsq.t912) - (dist.homeroom + dist.t68 + dist.t912);
   document.getElementById('staffsum').innerHTML = isSQ
     ? `Status Quo in ${staffYear}: the formula allocates <b>${dsq.total.toFixed(0)}</b> licensed-equivalent FTE to these ${dsq.open} schools. Pick Scenario A, B or Custom to see positions no longer needed.`
-    : `${LABEL[scen]} in ${staffYear}, compared with Status Quo the same year: about <b>${staffUSD(staffCost(dsq) - staffCost(dist)).replace('&minus;', '')}</b> a year in formula staffing (2026-27 dollars, salary plus benefits), from about <b>${(dsq.total - dist.total).toFixed(0)}</b> fewer formula positions (licensed-equivalent FTE): <b>${(dsq.principal - dist.principal).toFixed(0)}</b> principals, <b>${(dsq.ap - dist.ap).toFixed(0)}</b> assistant/vice principals and <b>${(dsq.office - dist.office).toFixed(1)}</b> office FTE (administration ${admin.toFixed(1)} in all), and <b>${teach.toFixed(1)}</b> classroom teachers, of which <b>${(dsq.homeroom - dist.homeroom).toFixed(0)}</b> are K-5 homerooms freed when students fill open seats at receiving schools.`;
+    : `${LABEL[scen]} in ${staffYear}, compared with Status Quo the same year: about <b>${(dsq.total - dist.total).toFixed(0)}</b> formula positions no longer needed (licensed-equivalent FTE), about <b>${staffUSD(staffCost(dsq) - staffCost(dist)).replace('&minus;', '')}</b> a year in salary plus benefits (2026-27 dollars): <b>${(dsq.principal - dist.principal).toFixed(0)}</b> principals, <b>${(dsq.ap - dist.ap).toFixed(0)}</b> assistant/vice principals and <b>${(dsq.office - dist.office).toFixed(1)}</b> office FTE (administration ${admin.toFixed(1)} in all), and <b>${teach.toFixed(1)}</b> classroom teachers, of which <b>${(dsq.homeroom - dist.homeroom).toFixed(0)}</b> are K-5 homerooms freed when students fill open seats at receiving schools.`;
   host.innerHTML = h;
   // wiring
   document.getElementById('st-year').onchange = e => { staffYear = e.target.value; staffChanged(); };
