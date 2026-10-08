@@ -22,6 +22,7 @@ if 'function renderHomeschool' not in html:
     rep("""    <div class="tablewrap" id="privcap"></div>
   </section>""", """    <div class="tablewrap" id="privcap"></div>
     <h3 class="cshead">Homeschooling</h3>
+    <p class="hsdisclaimer"><b>Data quality: self-reported and low quality.</b> These are registrations families submit to Multnomah ESD themselves. There is no verification and no requirement to report when a child stops homeschooling, moves away or returns to school, and families who do not know the rule never appear. Counts can be stale, can drop sharply when records are cleaned up, and are not broken down by grade or age. Treat them as rough indications of direction, not counts of students homeschooling now.</p>
     <p class="sub">Families homeschooling in Multnomah County register with Multnomah ESD when they start; they are not required to report when they stop, so the registered totals can overcount (and drop sharply when records are cleaned up), and families unaware of the rule are not counted. Registration applies from age 6, so this is roughly grades 1-12. MESD did not publish registered totals by district before November 2023 (about 3,700 county-wide on June 1, 2022).</p>
     <div class="tablewrap"><table class="hstable" id="homeschool"></table></div>
   </section>""")
@@ -41,7 +42,7 @@ function renderHomeschool() {
 }
 function renderAll() {""")
     rep("renderLines(); renderClassSizes(); renderPrivCap(); }", "renderLines(); renderClassSizes(); renderPrivCap(); renderHomeschool(); }")
-    rep(".pctable td, .pctable th { white-space: nowrap; }", ".hstable { min-width: 640px; } .hstable .cssub { display: block; font-size: 11px; color: var(--text-muted); }\n.pctable td, .pctable th { white-space: nowrap; }")
+    rep(".pctable td, .pctable th { white-space: nowrap; }", ".hsdisclaimer { margin: 6px 0 10px; padding: 8px 12px; border-left: 4px solid var(--over); border-radius: 4px; background: color-mix(in srgb, var(--over) 18%, transparent); font-size: 13px; line-height: 1.45; }\n.hstable { min-width: 640px; } .hstable .cssub { display: block; font-size: 11px; color: var(--text-muted); }\n.pctable td, .pctable th { white-space: nowrap; }")
 if 'function renderHsDistricts' not in html:
     rep("""    <div class="tablewrap"><table class="hstable" id="homeschool"></table></div>
   </section>""", """    <div class="tablewrap"><table class="hstable" id="homeschool"></table></div>
