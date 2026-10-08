@@ -198,9 +198,12 @@ for r in R:
     keep = [(s, p) for s, p in zip(st, pts) if p]
     seq = [node_at(p[0], p[1]) for _, p in keep]; sn = node_at(sch['lng'], sch['lat'])
     times = [mins(s['time']) for s in r['stops']]
+    # scheduled time at the school's loading zone: arrival (morning, after the stops) or departure (afternoon, before)
+    lz = [mins(s['time']) for s in r['stops'] if s['loading_zone']]
+    school_t = (max(lz) if r['period'] == 'morning' else min(lz)) if lz else None
     runs.append(dict(route=r['route'], period=r['period'], school=sch['key'], stops=[s['location'] for s, _ in keep],
                      nodes=(seq + [sn]) if r['period'] == 'morning' else ([sn] + seq), n_missing=len(st) - len(keep),
-                     start=min(times), end=max(times)))
+                     start=min(times), end=max(times), school_t=school_t, stop_t=[mins(s['time']) for s, _ in keep]))
 log(f'{len(runs)} runs measured; skipped {skipped}')
 
 legs = {(a, b) for x in runs for a, b in zip(x['nodes'][:-1], x['nodes'][1:]) if a != b}
@@ -238,6 +241,18 @@ daily_runs = len(ALL_RUNS); measured_miles = sum(x['miles'] for x in runs)
 daily_bus_miles = measured_miles * daily_runs / len(runs)   # unmeasured runs assumed to be average length
 stop_rides = [v for x in runs for v in x['ride_mi']]
 avg_ride = float(np.mean(stop_rides)); med_ride = float(np.median(stop_rides))
+# scheduled ride time of each stop's students (stop to school in the morning, school to stop in the afternoon) against
+# its measured ride distance: minutes per bus-mile for a riding student
+ride_pairs = []
+for x in runs:
+    if x['school_t'] is None: continue
+    for mi, t in zip(x['ride_mi'], x['stop_t']):
+        mn = x['school_t'] - t if x['period'] == 'morning' else t - x['school_t']
+        if mi > 0.1 and 0 < mn < 120: ride_pairs.append((mi, mn))
+rp_mi, rp_mn = np.array([p[0] for p in ride_pairs]), np.array([p[1] for p in ride_pairs])
+MIN_PER_MILE = float(rp_mn.sum() / rp_mi.sum())
+log(f'scheduled rides: {len(ride_pairs):,} stops; mean ride {rp_mn.mean():.1f} min for {rp_mi.mean():.2f} mi -> {MIN_PER_MILE:.2f} min per bus-mile '
+    f'({60 / MIN_PER_MILE:.1f} mph); per-stop median {np.median(rp_mn / rp_mi):.2f} min/mi')
 log(f'peak runs under way: morning {peak("morning")}, afternoon {peak("afternoon")} -> about {buses} buses')
 log(f'{daily_bus_miles:,.0f} route miles a day; mean run {daily_bus_miles / daily_runs:.1f} mi; stop-to-school ride mean {avg_ride:.2f} mi, median {med_ride:.2f} mi')
 
@@ -279,7 +294,9 @@ out = dict(built=time.strftime('%Y-%m-%d'), assumptions=dict(
     ride_share=RIDE_SHARE, rate_year=RATE_YEAR),
     routes=dict(runs=daily_runs, runs_measured=len(runs), measured_route_miles=round(measured_miles), runs_skipped=skipped, schools_served=len(served), buses_estimated=buses,
                 daily_route_miles=round(daily_bus_miles),
-                mean_run_miles=round(daily_bus_miles / daily_runs, 2), mean_ride_miles=round(avg_ride, 2), median_ride_miles=round(med_ride, 2)),
+                mean_run_miles=round(daily_bus_miles / daily_runs, 2), mean_ride_miles=round(avg_ride, 2), median_ride_miles=round(med_ride, 2),
+                min_per_bus_mile=round(MIN_PER_MILE, 2), ride_time_stops=len(ride_pairs), mean_ride_min=round(float(rp_mn.mean()), 1),
+                median_ride_min_per_mile=round(float(np.median(rp_mn / rp_mi)), 2)),
     cost={v: dict(removed=REMOVED[v], general_routes_share=round(buses / ALL_BUS_ROUTES, 3),
                   general_routes_cost=round(g), per_daily_bus_mile=round(g / daily_bus_miles), per_bus=round(g / buses))
           for v, g in GT.items()},

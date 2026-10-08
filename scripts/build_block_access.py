@@ -57,6 +57,7 @@ MILE = 1609.344
 BUS_MI = {'k5': [1.0], '68': [1.0, 1.5], '912': [1.5]}   # distances reported per band
 BUS_HEADLINE = {'k5': 1.0, '68': 1.5, '912': 1.5}
 HIST_MIN = [5, 10, 15, 20, 30, 45, 60]   # travel-time histogram bin edges (minutes); last bin is 60+
+BH_MI = [round(0.25 * i, 2) for i in range(1, 25)]   # bus-eligible students by walking miles: 0.25-mile bins, last 6+ (bus ride time)
 T0 = time.time()
 def log(msg): print(f'[{time.time() - T0:6.0f}s] {msg}')
 
@@ -308,6 +309,9 @@ for sc in SCENS:
             for m in TT:   # residents per travel-time bin, ';'-separated
                 h = np.bincount(np.searchsorted(HIST_MIN, np.nan_to_num(tmin[m][sel], posinf=999), 'right'), w, len(HIST_MIN) + 1)
                 row[f'{m}_hist'] = ';'.join(str(int(round(x))) for x in h)
+            # bus-eligible residents (beyond the band's bus distance) by walking miles, for the bus ride time histogram
+            eb = w * (wm[sel] > thr)
+            row['beyond_mi_hist'] = ';'.join(f'{x:.1f}' for x in np.bincount(np.searchsorted(BH_MI, wm[sel] / MILE, 'right'), eb, len(BH_MI) + 1))
             school_rows.append(row)
             # ---- this area's residents travelling to each other school in the region that could take these grades
             # (for custom closures: moved students still live in their old school's area) ----
@@ -318,7 +322,8 @@ for sc in SCENS:
                         *[round(np.average(tj[m], weights=w), 1) for m in TT], *[round(w[tj[m] <= 15].sum() / ws, 3) for m in TT],
                         round(w[nearest[sel] == j].sum() / ws, 3),
                         *[[int(round(x)) for x in np.bincount(np.searchsorted(HIST_MIN, tj[m], 'right'), w, len(HIST_MIN) + 1)] for m in TT],
-                        round(float((w * wmj)[wmj > thr].sum()) / MILE)]
+                        round(float((w * wmj)[wmj > thr].sum()) / MILE),
+                        [round(float(x), 1) for x in np.bincount(np.searchsorted(BH_MI, wmj / MILE, 'right'), w * (wmj > thr), len(BH_MI) + 1)]]
             for r in TAKERS[band]:
                 if r != k and D['region_of'].get(r) == D['region_of'].get(k):
                     PAIRS.setdefault(sc, {}).setdefault(k, {}).setdefault(band, {})[r] = stats(sidx[r])
@@ -347,10 +352,11 @@ with open(os.path.join(OUT, 'school-access.csv'), 'w', newline='', encoding='utf
     w = csv.DictWriter(fh, cols); w.writeheader(); w.writerows(school_rows)
 # area -> other school travel, same layout as the explorer's per-area arrays plus their walking miles beyond bus distance
 json.dump(dict(layout='residents, beyond share, mean walk mi, mean walk/bike/drive min, within 15 min walk/bike/drive, '
-                      'nearest share, walk/bike/drive histogram, walking miles beyond bus distance', pairs=PAIRS),
+                      'nearest share, walk/bike/drive histogram, walking miles beyond bus distance, '
+                      'bus-eligible residents by walking miles (bins edged at bh_mi)', bh_mi=BH_MI, pairs=PAIRS),
           open(os.path.join(OUT, 'school-pairs.json'), 'w', encoding='utf-8'), separators=(',', ':'))
 json.dump(dict(method=__doc__.split('Outputs')[0].strip(), built=time.strftime('%Y-%m-%d'), walk_mph=WALK_MPH, bike_mph=BIKE_MPH,
-               drive_factor_vs_osrm=round(DRIVE_FACTOR, 3), hist_min=HIST_MIN, bus_headline_miles=BUS_HEADLINE, grid_m=GRID_M, district=district),
+               drive_factor_vs_osrm=round(DRIVE_FACTOR, 3), hist_min=HIST_MIN, bh_mi=BH_MI, bus_headline_miles=BUS_HEADLINE, grid_m=GRID_M, district=district),
           open(os.path.join(OUT, 'district-access.json'), 'w', encoding='utf-8'), indent=1)
 # block x school matrix, resident-weighted mean minutes per block (for custom scenarios)
 wsum = np.bincount(PB, PW[:, 0], NB)

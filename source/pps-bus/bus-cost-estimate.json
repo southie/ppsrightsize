@@ -37,6 +37,10 @@
   "mean_run_miles": 5.91,
   "mean_ride_miles": 4.14,
   "median_ride_miles": 3.23,
+  "min_per_bus_mile": 6.47,
+  "ride_time_stops": 3279,
+  "mean_ride_min": 26.0,
+  "median_ride_min_per_mile": 6.81,
   "eligible_students": 7415,
   "eligible_mean_walk_miles": 2.09,
   "ride_to_walk_ratio": 1.978

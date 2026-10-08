@@ -27,6 +27,7 @@ D['buscost'] = dict(
     runs=R['runs'], runs_measured=R['runs_measured'], buses=R['buses_estimated'], schools=R['schools_served'],
     daily_miles=R['daily_route_miles'], mean_ride=R['mean_ride_miles'],
     median_ride=R['median_ride_miles'], walk_mean=R['eligible_mean_walk_miles'], ratio=R['ride_to_walk_ratio'],
+    min_per_mile=R['min_per_bus_mile'], ride_stops=R['ride_time_stops'], mean_ride_min=R['mean_ride_min'],
     gt=[E['cost'][v]['general_routes_cost'] for v in V],
     per_mile=[E['cost'][v]['per_daily_bus_mile'] for v in V],
     cases={k: dict(riders=c['riders'], per_run=c['riders_per_run'], psm=[c['per_daily_student_mile'][v] for v in V],
