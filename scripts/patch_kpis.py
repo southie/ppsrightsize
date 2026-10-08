@@ -33,7 +33,7 @@ function extraKPIs() {
   const ov = overSchoolYears(scen), ovSq = overSchoolYears('SQ');
   const keys = Object.keys(D.region_of), r = reachRoll(scen, keys), rs = reachRoll('SQ', keys);
   const sub = (m, l) => r[m] == null ? '' : `${l} <b>${r[m]}%</b>${scen !== 'SQ' && rs[m] != null && r[m] !== rs[m] ? ` (${r[m] > rs[m] ? '+' : '&minus;'}${Math.abs(r[m] - rs[m])})` : ''}`;
-  return `<div class="kpi"><div class="v">${ov}${delta(ov - ovSq, ' vs SQ', true)}</div>` +
+  return `<div class="kpi"><div class="v">${ov}${delta(ov - ovSq, ' vs SQ', true)}${scen !== 'SQ' && ovSq && ov !== ovSq ? `<span class="d" style="color:${ov > ovSq ? 'var(--down)' : 'var(--up)'}">(${ov > ovSq ? '+' : '&minus;'}${Math.abs(Math.round(100 * (ov - ovSq) / ovSq))}%)</span>` : ''}</div>` +
       `<div class="l">School-years over 2021 functional capacity, ${D.years[0]} to ${D.years[D.years.length - 1]}</div></div>` +
     `<div class="kpi"><div class="v">${r.w == null ? '&mdash;' : r.w + '%'}${r.w != null && rs.w != null ? delta(r.w - rs.w, ' pts', false) : ''}</div>` +
       `<div class="l">District: attendance-area residents within a 15-minute walk of their school</div>` +
