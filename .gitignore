@@ -12,3 +12,5 @@ scripts/__pycache__/
 /source/pps-bus/pdf/
 # Local page backups made before each patch (rightsizing-scenario-explorer.backup-before-*.html)
 *.backup-*.html
+# Mapbox token for local testing (the published page uses a URL-restricted token)
+mapbox-token.local.json

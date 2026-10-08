@@ -139,6 +139,10 @@ tr.srow.closed td:first-child { opacity: 1; } tr.srow.closed td:first-child > * 
 .dock { position: fixed; left: 16px; top: 16px; width: 360px; max-height: calc(100vh - 32px); z-index: 1002; background: var(--surface-1); color: var(--text-primary);
   border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 10px 32px rgba(0,0,0,.22); overflow-y: auto; padding: 18px 18px 22px; font-size: 13.5px; line-height: 1.45; }
 .dock[hidden] { display: none; }
+.dock .mbx { display: inline-flex; align-items: center; vertical-align: -3px; margin-left: 4px; padding: 1px 3px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface-1); color: var(--text-secondary); cursor: pointer; }
+.dock .mbx:hover, .dock .mbx:focus-visible { color: var(--text-primary); border-color: var(--text-secondary); } .dock .mbx:disabled { opacity: .5; cursor: progress; }
+.dock .mbres { display: block; margin: 2px 0 2px 2px; font-size: 12px; color: var(--text-primary); } .dock .mbres .mbwhy { display: block; font-size: 11px; color: var(--text-muted); } .dock .pop .mbres b { display: inline; font-size: inherit; margin: 0; } .dock .mbres.err { color: var(--text-muted); }
+.dock .mbattr { font-size: 10.5px; color: var(--text-muted); margin-left: 4px; white-space: nowrap; } .dock .mbattr a { color: inherit; }
 .dock .dock-x { position: sticky; top: 0; float: right; margin: -6px -6px 0 8px; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 8px;
   background: var(--surface-1); color: var(--text-primary); font-size: 20px; line-height: 1; cursor: pointer; }
 .dock .pop b { font-size: 16px; margin-bottom: 4px; }
@@ -642,13 +646,83 @@ function ensureHatch() {
   defs.innerHTML = `<pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="${css('--change')}"/><line x1="0" y1="0" x2="0" y2="6" stroke="#ffffff" stroke-width="2.6"/></pattern>`;
   svg.insertBefore(defs, svg.firstChild);
 }
+// ---------- Mapbox drive time in traffic (weekday 7:30 am) ----------
+// The listed drive times are free-flow (OSRM, no traffic). The car button asks the Mapbox Directions API
+// (driving-traffic profile, depart_at = next weekday 7:30 am Portland time, i.e. typical traffic then) for the same
+// trip and shows the result in line with Mapbox / OpenStreetMap attribution.
+// Published pages use a Mapbox token restricted to this site's URLs. A restricted token cannot allow localhost, so on a
+// local test server the page uses the token in mapbox-token.local.json ({"token": "pk..."}), which is git-ignored.
+let MAPBOX_TOKEN = 'pk.eyJ1IjoibXNvdXRod29ydGgiLCJhIjoiY211end3czdkMDBmbzJ3cHN0NWluZnRrdCJ9.-cxIWvBRaLVGM8UnexvslA';
+if (['localhost', '127.0.0.1', '[::1]'].includes(location.hostname))
+  fetch('mapbox-token.local.json').then(r => r.ok ? r.json() : null).then(j => { if (j?.token) MAPBOX_TOKEN = j.token; }).catch(() => {});
+const MB_CACHE = new Map();
+const MB_CAR = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M5 11l1.6-4.4A2 2 0 0 1 8.5 5.3h7a2 2 0 0 1 1.9 1.3L19 11a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1h-1a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H4a1 1 0 0 1-1-1v-4a2 2 0 0 1 2-2zm1.2 0h11.6l-1.3-3.6a.7.7 0 0 0-.6-.4H8.1a.7.7 0 0 0-.6.4zM6.5 13.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zm11 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg>';
+// PPS 2026-27 start times by school level (PPS communications via PDX Parent, Aug 12, 2026; the last morning bus on
+// PPS's posted routes reaches every elementary, K-8 and middle school 10 minutes before these). Trips depart 30
+// minutes before the start time of the PPS school in the trip: the destination when it is a PPS school, otherwise the
+// origin (private schools' start times are not published). A school's level follows the selected scenario.
+const MB_START = { ES: 8 * 60, K8: 8 * 60 + 45, MS: 9 * 60 + 15, HS: 8 * 60 + 30 }, MB_LEAD = 30;
+const mbClock = m => `${(Math.floor(m / 60) + 11) % 12 + 1}:${String(m % 60).padStart(2, '0')} ${m < 720 ? 'am' : 'pm'}`;
+function mbPlan(a, b) {
+  const pps = [b, a].find(x => x?.key && byKey[x.key]); if (!pps) return null;
+  const t = D.types[scen]?.[pps.key] || D.types.SQ[pps.key], start = MB_START[t]; if (start == null) return null;
+  return { dep: start - MB_LEAD, start, school: short(pps.name), dest: pps === b };
+}
+// the next weekday whose departure time is still ahead, Portland time, as Mapbox's local depart_at (YYYY-MM-DDThh:mm)
+function mbDepart(dep) {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+    .formatToParts(new Date()).map(x => [x.type, x.value]));
+  const d = new Date(Date.UTC(+p.year, +p.month - 1, +p.day));
+  if (+p.hour * 60 + +p.minute >= dep - 5) d.setUTCDate(d.getUTCDate() + 1);   // leave a few minutes: must be in the future
+  while (d.getUTCDay() === 0 || d.getUTCDay() === 6) d.setUTCDate(d.getUTCDate() + 1);
+  return { at: `${d.toISOString().slice(0, 10)}T${String(Math.floor(dep / 60)).padStart(2, '0')}:${String(dep % 60).padStart(2, '0')}`,
+    day: d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }) };
+}
+const MB_ATTR = '<span class="mbattr">&copy; <a href="https://www.mapbox.com/about/maps/" target="_blank" rel="noopener">Mapbox</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></span>';
+const mbCoords = (a, b) => `${a.lng.toFixed(5)},${a.lat.toFixed(5)};${b.lng.toFixed(5)},${b.lat.toFixed(5)}`;
+function mbResult(r) {
+  if (!r) return '';
+  if (r.err) return `<span class="mbres err">Mapbox traffic time unavailable (${esc(r.err)})</span>`;
+  return `<span class="mbres">In traffic, leaving ${esc(r.day)} ${mbClock(r.dep)}: <b>${Math.round(r.min)} min</b> (${r.mi.toFixed(1)} mi)` +
+    `<span class="mbwhy">${r.dep === undefined ? '' : `${MB_LEAD} min before ${esc(r.school)}'s ${mbClock(r.start)} start${r.dest ? '' : ' (private start times not published)'}`}</span> ${MB_ATTR}</span>`;
+}
+function mbLink(a, b) {
+  if (!a || !b || a.lat == null || b.lat == null) return '';
+  const pl = mbPlan(a, b); if (!pl) return '';
+  const c = mbCoords(a, b), k = `${c}@${pl.dep}`, r = MB_CACHE.get(k);
+  const tt = `Drive time in typical weekday traffic, leaving ${mbClock(pl.dep)} (${MB_LEAD} min before ${pl.school}'s ${mbClock(pl.start)} start; Mapbox)`;
+  return ` <button type="button" class="mbx" data-k="${k}" data-c="${c}" data-dep="${pl.dep}" data-start="${pl.start}" data-school="${esc(pl.school)}" data-dest="${pl.dest ? 1 : ''}" title="${esc(tt)}" aria-label="${esc(tt)}">${MB_CAR}</button>${r && !r.pending ? mbResult(r) : ''}`;
+}
+async function mbFetch(btn) {
+  const k = btn.dataset.k, dep = +btn.dataset.dep, when = mbDepart(dep);
+  const meta = { dep, start: +btn.dataset.start, school: btn.dataset.school, dest: !!btn.dataset.dest, day: when.day };
+  MB_CACHE.set(k, { pending: true });
+  try {
+    const u = `https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${btn.dataset.c}?depart_at=${when.at}&overview=false&access_token=${MAPBOX_TOKEN}`;
+    const res = await fetch(u), j = await res.json();
+    if (!res.ok || j.code !== 'Ok' || !j.routes?.length) throw new Error(j.message || j.code || res.status);
+    MB_CACHE.set(k, { ...meta, min: j.routes[0].duration / 60, mi: j.routes[0].distance / 1609.344 });
+  } catch (e) { MB_CACHE.set(k, { err: String(e.message || e).slice(0, 60) }); }
+  return MB_CACHE.get(k);
+}
+document.getElementById('dockbody').addEventListener('click', async e => {
+  const btn = e.target.closest('.mbx'); if (!btn) return;
+  e.preventDefault();
+  const k = btn.dataset.k, done = MB_CACHE.get(k);
+  const put = (b, h) => { b.nextElementSibling?.classList.contains('mbres') && b.nextElementSibling.remove(); b.insertAdjacentHTML('afterend', h); };
+  if (done && !done.pending && !done.err) return put(btn, mbResult(done));
+  put(btn, '<span class="mbres">loading&hellip;</span>'); btn.disabled = true;
+  const r = await mbFetch(btn);
+  btn.disabled = false;
+  document.querySelectorAll('#dockbody .mbx').forEach(b => { if (b.dataset.k === k) put(b, mbResult(r)); });
+});
 function altSection(s) {
   const a = alternatives(s, scen); if (!a) return '';
   const dm = (d, m) => `${d.toFixed(1)} mi${m != null ? ` / ${Math.round(m)} min` : ''}`;
-  const head = `<h4>Private alternatives, ${a.r.label}</h4><div class="row near"><span>Within the PPS relocation distance: ${dm(a.r.d, a.r.min)} to ${esc(short(a.r.to.name))}${a.r.kind === 'grades' ? ' (grades 6-8)' : ''}, ${a.r.driving ? 'by road' : 'straight-line'}</span></div>`;
-  if (!a.within.length) return head + `<div class="row near">None within ${a.r.d.toFixed(1)} mi.${a.nearest ? ` Nearest: ${esc(a.nearest.x.name)}, ${dm(a.nearest.d, a.nearest.min)}` : ''}</div>`;
+  const head = `<h4>Private alternatives, ${a.r.label}</h4><div class="row near"><span>Within the PPS relocation distance: ${dm(a.r.d, a.r.min)} to ${esc(short(a.r.to.name))}${a.r.kind === 'grades' ? ' (grades 6-8)' : ''}, ${a.r.driving ? 'by road' : 'straight-line'}</span>${a.r.driving ? mbLink(s, a.r.to) : ''}</div>`;
+  if (!a.within.length) return head + `<div class="row near">None within ${a.r.d.toFixed(1)} mi.${a.nearest ? ` Nearest: ${esc(a.nearest.x.name)}, ${dm(a.nearest.d, a.nearest.min)}${mbLink(s, a.nearest.x)}` : ''}</div>`;
   const shown = a.within.slice(0, 8);
-  return head + shown.map(n => `<div class="row near">${esc(n.x.name)} <span>&middot; ${dm(n.d, n.min)} &middot; ${esc(n.x.grades_served || '')}${n.x.pps_hs_area ? '' : ' &middot; outside PPS'}</span></div>`).join('') +
+  return head + shown.map(n => `<div class="row near">${esc(n.x.name)} <span>&middot; ${dm(n.d, n.min)} &middot; ${esc(n.x.grades_served || '')}${n.x.pps_hs_area ? '' : ' &middot; outside PPS'}</span>${mbLink(s, n.x)}</div>`).join('') +
     (a.within.length > shown.length ? `<div class="row near"><span>and ${a.within.length - shown.length} more</span></div>` : '');
 }
 function popup(s) {
@@ -672,10 +746,10 @@ function privPopup(x) {
   const fate = scen === 'SQ' ? '' : rl === 'closes' ? ` &middot; <b style="color:#c2410c">closes in ${LABEL[scen]}</b>` : '';
   return `<div class="pop"><b>${esc(x.name)}</b><span class="tag" style="color:#4a3aa7">Private</span> <span style="color:#57606a">${esc(x.genus || '')}</span>` +
     `<h4>School</h4><div class="row">${esc(x.character || '')}</div><div class="row">Grades: ${esc(x.grades_served || 'n/a')}</div>` +
-    `<div class="row">Students: ${x.students != null ? x.students.toLocaleString() : 'n/a'}${x.pss_year ? ` (K-12, ${x.pss_year} survey)` : ''}${x.pss_year ? ` (K-12, ${x.pss_year} survey)` : ''}${x.pss_year ? ` (K-12, ${x.pss_year} survey)` : ''}${x.ratio ? ` &middot; ${x.ratio}:1 student-teacher` : ''}</div>` +
+    `<div class="row">Students: ${x.students != null ? x.students.toLocaleString() : 'n/a'}${x.pss_year ? ` (K-12, ${x.pss_year} survey)` : ''}${x.ratio ? ` &middot; ${x.ratio}:1 student-teacher` : ''}</div>` +
     `<h4>Location</h4><div class="row">${esc(x.city || '')}</div>` +
     `<div class="row">${x.pps_hs_area ? `Inside PPS: ${esc(x.pps_hs_area)} high school area${x.pps_hs_area.includes('/') ? ' (2024-25 shared zone)' : ''}` : 'Outside the PPS district'}</div>` +
-    `<div class="row">Nearest PPS school: ${esc(short(n.s.name))}, ${n.road ? `${n.d.toFixed(1)} mi / ${Math.round(n.min)} min by road` : `${n.d.toFixed(1)} mi straight-line`}${fate}</div>` +
+    `<div class="row">Nearest PPS school: ${esc(short(n.s.name))}, ${n.road ? `${n.d.toFixed(1)} mi / ${Math.round(n.min)} min by road` : `${n.d.toFixed(1)} mi straight-line`}${fate}${n.road ? mbLink(n.s, x) : ''}</div>` +
     '</div>';
 }
 function renderAlts() {
@@ -1394,6 +1468,7 @@ const NOTES = [
   'Attendance boundaries: K-5, 6-8 and 9-12 areas for Status Quo, Scenario A and Scenario B in 2027-28, from Jason Brown\'s PPS attendance-boundary explorer (pps-explorer.codedaily.workers.dev), which traces them from the vector paths in PPS\'s October 6, 2026 scenario maps; its Status Quo areas match the City of Portland\'s school boundary data for 98% of the district at K-5 and 9-12. Shaded areas are the parts of the district that change school. A custom scenario shows its starting scenario\'s boundaries; custom closures are not redrawn. Embedded by scripts/patch_boundaries.py.',
   "Getting to school: walking, biking and driving routes from where people live to their assigned school, over the OpenStreetMap street and path network (one shortest-path search per school and mode). Counts are students: each school's enrollment in the selected year (2025-26 actual, or projected to 2035-36; scenarios take effect in 2027-28; K-8 schools split into K-5 and 6-8 by the district's K-5 share). Where they live comes from the 2020 Census: school-age residents of each attendance area, from blocks spread over a 40 m grid of points, give the share beyond bus distance, travel times and their spread, which are applied to the school's students. School-age residents by grade band come from the Census age table (P12): K-5 = ages 5-9 plus a fifth of 10-14, 6-8 = three fifths of 10-14, 9-12 = a fifth of 10-14 plus 15-17. Walking is 3 mph, biking 10 mph on streets, paths and bike-legal footways (one-way streets respected, hills ignored), driving at posted or typical speeds scaled by 1.24 so school-to-school times match the OSRM driving matrix used elsewhere on this page. Bus distance follows ORS 327.043 (state-reimbursed transportation beyond 1 mile for elementary and 1.5 miles for secondary students), measured along the walking route; grades 6-8 use 1.5 miles (at 1 mile, about 2,900 more 6-8 residents would count under Status Quo). Hazard-based busing is not modeled. Assignment uses the K-5, 6-8 and 9-12 attendance-area layers, so K-8 schools count in both K-5 and 6-8. A custom scenario uses its starting scenario's attendance areas. Block-level results are in source/block-access; built by scripts/build_block_access.py and embedded by scripts/patch_commute.py.",
   "Busing cost: estimated cost of PPS's general (home-to-school) yellow-bus routes and the added cost of each scenario. The 2026-27 Student Transportation budget (function 2550), less the TriMet high school pass payment (8.3% of transportation in the 2018-19 adopted budget, or 11.3% adjusted for enrollment since), is split to general routes by buses needed (peak simultaneous runs from PPS's posted schedules) over all bus routes (293 in 2023-24). The rate divides that by riders x measured stop-to-school ride miles x 2 trips, giving an annual cost per daily student-mile (no school-year length needed); ridership is not published and is assumed (35-65% of bus-eligible PPS K-8 students: 2025-26 enrollment x the census share beyond bus distance). Scenario cost, in the selected year = change in bus-eligible K-8 students' walking miles (projected enrollment x census walking miles per resident) x the measured ride-to-walk ratio x the annual cost per daily student-mile. Bus utilization is unknown: added riders may fit on existing runs (lower cost) or need new buses (higher). Built by scripts/estimate_bus_cost.py; embedded by scripts/patch_buscost.py.",
+  "Traffic drive times: the drive times listed in the school panes are free-flow (OSRM, no traffic). The car button next to each asks the Mapbox Directions API (driving-traffic profile) for the same trip on the next weekday, leaving 30 minutes before the start time of the PPS school in the trip (the destination when it is a PPS school, otherwise the origin; PPS 2026-27 start times: elementary 8:00, K-8 8:45, middle 9:15, high 8:30, as reported by PDX Parent from PPS, Aug 12, 2026), which reflects typical traffic for that time; results are shown with Mapbox and OpenStreetMap attribution and kept for the visit. Added by scripts/patch_mapbox_drive.py.",
   'Travel time: with Walk, Bike or Drive selected, clicking a school shades everywhere within 10 and 15 minutes of it. Isochrones are from openrouteservice on the OpenStreetMap road and path network (foot-walking, cycling-regular and driving-car profiles; driving is free-flow with no traffic); where the openrouteservice free-tier quota ran out, the public Valhalla server (same OpenStreetMap data) was used and the legend says so. Built by pps-data/scripts/isochrones.py and embedded by scripts/patch_isochrones.py.',
   'Building costs (2026 dollars): must-fix = deferred maintenance + remaining seismic retrofit; full modernization = replacement value. Replacement value is building area times the 2021 Long-Range Facility Plan regional cost per square foot (elementary and K-8 $510, middle $540, high $590); deferred maintenance is the plan facility condition index (FCI, repair cost over replacement value) times that value; seismic retrofit is the Holmes 2024 complete remaining cost for the campus, which already includes the unreinforced-masonry (URM) work (shown in each school tooltip, not added again). Escalated with the Turner Building Cost Index (2Q 2021 1187, 2Q 2024 1421, 2Q 2026 1552). Kellogg, Lincoln and McDaniel were new or rebuilt and have no FCI; Forest Park has no seismic estimate. Costs avoided are the totals for buildings a scenario closes; receiving schools may need added space, which is not counted. Built by scripts/extract_lrfp_fci.py and scripts/patch_costs.py.',
   'Land value: Multnomah County assessor real market value (RMV) from the 2025 assessment roll, via the county public tax-lot service. A school site is every district-owned tax lot within 200 m of the school, each lot counted for its nearest school. School property is tax-exempt, so its assessed value is zero, but the assessor still records market value; values for exempt property may not be kept as current as taxable property, so treat them as a rough guide, not an appraisal. Land value is the better guide to what a buyer would pay; building value reflects the existing structure, which may add little. A sale would be one-time revenue and is not added to avoided building costs. West Sylvan is in Washington County and has no value here; Rosa Parks owns condominium units on a shared campus, so it shows building value but no land. Built by scripts/fetch_land_values.py and scripts/patch_land.py.',
@@ -1407,7 +1482,7 @@ const NOTES = [
 ];
 const NOTE_GROUPS = [
   ['Enrollment, regions and published measures', ['Published measures', 'Status Quo enrollment', 'Scenario enrollment', 'Region assignment', 'Student-group']],
-  ['Map, boundaries and travel time', ['Map:', 'Attendance boundaries', 'Getting to school', 'Travel time']],
+  ['Map, boundaries and travel time', ['Map:', 'Attendance boundaries', 'Getting to school', 'Travel time', 'Traffic drive times']],
   ['Buildings, costs and land', ['Functional capacity', 'Building costs', 'Building operating cost', 'Land value']],
   ['Busing cost', ['Busing cost']],
   ['Staffing', ['Staffing']],
