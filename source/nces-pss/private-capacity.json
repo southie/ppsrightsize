@@ -1,0 +1,7240 @@
+{
+ "source": "NCES Private School Universe Survey, 2015-16 to 2023-24 (five waves)",
+ "waves": [
+  "2015-16",
+  "2017-18",
+  "2019-20",
+  "2021-22",
+  "2023-24"
+ ],
+ "rule": "Private school capacity and enrollment trend by PPS enrollment area, for comparable schools, from five waves of the\nNCES Private School Universe Survey (2015-16, 2017-18, 2019-20, 2021-22, 2023-24; source/nces-pss/pss*_pu_csv.zip).\n\nSchools: the private schools on the explorer (source/nces-pss/private-schools-pss.json: inside PPS or within 2 miles,\nreported in 2019-20 or later), matched across waves by PPIN. Schools outside PPS (the 2-mile border) count only if the\nexplorer already lists them near a PPS school: as a private alternative within an affected school's relocation\ndistance in Scenario A or B, or as its nearest (source/nces-pss/private-listed-near-pps.json, from the page). Areas:\nthe PPS high school attendance area (shared zones assigned to the region of the nearest PPS school by road); border\nschools go to the region of the closest PPS school that lists them. Comparable: regular schools (PSS typology 1-7: Catholic,\nother religious, nonsectarian regular), excluding special program emphasis (8) and special education (9) schools.\nEnrollment by grade band (K-5 with transitional K and 1st, 6-8, 9-12; pre-K excluded) from the PSS grade counts\n(P160-P180 kindergarten, P190-P300 grades 1-12).\n\nPer school: capacity = its peak total K-12 enrollment in the five waves (demonstrated capacity), split across its grade\nbands in proportion to its latest enrollment by band (so a K-8 or K-12 school is not credited with each band's own\npeak from different years); a school serving one band keeps that band's peak. Per band: open seats = capacity -\nlatest enrollment. Per area and band: enrollment in each wave (a school's missing waves between two reports are\nfilled by straight line; before its first report it counts as not yet open, 0), and the trend: a log-linear fit of\narea enrollment on survey year, as an average percent change per year.",
+ "areas": [
+  {
+   "region": "Cleveland / Franklin",
+   "area": "Cleveland",
+   "bands": {
+    "68": {
+     "schools": 4,
+     "excluded_noncomparable": 2,
+     "latest": 154,
+     "capacity": 189,
+     "open_seats": 35,
+     "series": [
+      105,
+      100,
+      101,
+      170,
+      154
+     ],
+     "trend_pct_per_year": 6.7,
+     "detail": [
+      {
+       "name": "Holy Family School",
+       "latest": 78,
+       "latest_wave": "2023-24",
+       "peak": 93,
+       "open": 15,
+       "series": [
+        0,
+        0,
+        0,
+        85,
+        78
+       ],
+       "trend": null,
+       "typology": 2
+      },
+      {
+       "name": "St Agatha Catholic School",
+       "latest": 40,
+       "latest_wave": "2023-24",
+       "peak": 57,
+       "open": 17,
+       "series": [
+        75,
+        59,
+        59,
+        50,
+        40
+       ],
+       "trend": -6.9,
+       "typology": 2
+      },
+      {
+       "name": "Pacific Crest Community School",
+       "latest": 35,
+       "latest_wave": "2021-22",
+       "peak": 38,
+       "open": 3,
+       "series": [
+        30,
+        34,
+        39,
+        35,
+        35
+       ],
+       "trend": 1.7,
+       "typology": 7
+      },
+      {
+       "name": "Venn Academy",
+       "latest": 1,
+       "latest_wave": "2021-22",
+       "peak": 1,
+       "open": 0,
+       "series": [
+        0,
+        7,
+        3,
+        1,
+        1
+       ],
+       "trend": -29.3,
+       "typology": 7
+      }
+     ]
+    },
+    "912": {
+     "schools": 1,
+     "excluded_noncomparable": 0,
+     "latest": 50,
+     "capacity": 55,
+     "open_seats": 5,
+     "series": [
+      63,
+      59,
+      51,
+      50,
+      50
+     ],
+     "trend_pct_per_year": -3.1,
+     "detail": [
+      {
+       "name": "Pacific Crest Community School",
+       "latest": 50,
+       "latest_wave": "2021-22",
+       "peak": 55,
+       "open": 5,
+       "series": [
+        63,
+        59,
+        51,
+        50,
+        50
+       ],
+       "trend": -3.1,
+       "typology": 7
+      }
+     ]
+    },
+    "k5": {
+     "schools": 5,
+     "excluded_noncomparable": 5,
+     "latest": 275,
+     "capacity": 350,
+     "open_seats": 75,
+     "series": [
+      178,
+      169,
+      168,
+      304,
+      275
+     ],
+     "trend_pct_per_year": 7.6,
+     "detail": [
+      {
+       "name": "St Agatha Catholic School",
+       "latest": 98,
+       "latest_wave": "2023-24",
+       "peak": 141,
+       "open": 43,
+       "series": [
+        123,
+        111,
+        113,
+        106,
+        98
+       ],
+       "trend": -2.5,
+       "typology": 2
+      },
+      {
+       "name": "Holy Family School",
+       "latest": 97,
+       "latest_wave": "2023-24",
+       "peak": 115,
+       "open": 18,
+       "series": [
+        0,
+        0,
+        0,
+        123,
+        97
+       ],
+       "trend": null,
+       "typology": 2
+      },
+      {
+       "name": "Tucker Maxon School",
+       "latest": 48,
+       "latest_wave": "2023-24",
+       "peak": 62,
+       "open": 14,
+       "series": [
+        55,
+        53,
+        45,
+        62,
+        48
+       ],
+       "trend": -0.6,
+       "typology": 7
+      },
+      {
+       "name": "Activate School",
+       "latest": 18,
+       "latest_wave": "2023-24",
+       "peak": 18,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        0,
+        18
+       ],
+       "trend": null,
+       "typology": 7
+      },
+      {
+       "name": "Venn Academy",
+       "latest": 14,
+       "latest_wave": "2021-22",
+       "peak": 14,
+       "open": 0,
+       "series": [
+        0,
+        5,
+        10,
+        14,
+        14
+       ],
+       "trend": 18.7,
+       "typology": 7
+      }
+     ]
+    }
+   }
+  },
+  {
+   "region": "Cleveland / Franklin",
+   "area": "Franklin",
+   "bands": {
+    "912": {
+     "schools": 1,
+     "excluded_noncomparable": 2,
+     "latest": 865,
+     "capacity": 913,
+     "open_seats": 48,
+     "series": [
+      913,
+      878,
+      844,
+      845,
+      865
+     ],
+     "trend_pct_per_year": -0.7,
+     "detail": [
+      {
+       "name": "Central Catholic High School",
+       "latest": 865,
+       "latest_wave": "2023-24",
+       "peak": 913,
+       "open": 48,
+       "series": [
+        913,
+        878,
+        844,
+        845,
+        865
+       ],
+       "trend": -0.7,
+       "typology": 2
+      }
+     ]
+    },
+    "68": {
+     "schools": 1,
+     "excluded_noncomparable": 2,
+     "latest": 82,
+     "capacity": 91,
+     "open_seats": 9,
+     "series": [
+      77,
+      77,
+      91,
+      97,
+      82
+     ],
+     "trend_pct_per_year": 1.8,
+     "detail": [
+      {
+       "name": "St Ignatius School",
+       "latest": 82,
+       "latest_wave": "2023-24",
+       "peak": 91,
+       "open": 9,
+       "series": [
+        77,
+        77,
+        91,
+        97,
+        82
+       ],
+       "trend": 1.8,
+       "typology": 2
+      }
+     ]
+    },
+    "k5": {
+     "schools": 1,
+     "excluded_noncomparable": 2,
+     "latest": 114,
+     "capacity": 127,
+     "open_seats": 13,
+     "series": [
+      141,
+      141,
+      126,
+      116,
+      114
+     ],
+     "trend_pct_per_year": -3.1,
+     "detail": [
+      {
+       "name": "St Ignatius School",
+       "latest": 114,
+       "latest_wave": "2023-24",
+       "peak": 127,
+       "open": 13,
+       "series": [
+        141,
+        141,
+        126,
+        116,
+        114
+       ],
+       "trend": -3.1,
+       "typology": 2
+      }
+     ]
+    }
+   }
+  },
+  {
+   "region": "Cleveland / Franklin",
+   "area": "Near the PPS border (listed as an alternative)",
+   "bands": {
+    "k5": {
+     "schools": 1,
+     "excluded_noncomparable": 1,
+     "latest": 81,
+     "capacity": 119,
+     "open_seats": 38,
+     "series": [
+      120,
+      110,
+      103,
+      143,
+      81
+     ],
+     "trend_pct_per_year": -2.6,
+     "detail": [
+      {
+       "name": "St John the Baptist Catholic School",
+       "latest": 81,
+       "latest_wave": "2023-24",
+       "peak": 119,
+       "open": 38,
+       "series": [
+        120,
+        110,
+        103,
+        143,
+        81
+       ],
+       "trend": -2.6,
+       "typology": 2
+      }
+     ]
+    },
+    "68": {
+     "schools": 1,
+     "excluded_noncomparable": 1,
+     "latest": 65,
+     "capacity": 95,
+     "open_seats": 30,
+     "series": [
+      58,
+      57,
+      55,
+      71,
+      65
+     ],
+     "trend_pct_per_year": 2.3,
+     "detail": [
+      {
+       "name": "St John the Baptist Catholic School",
+       "latest": 65,
+       "latest_wave": "2023-24",
+       "peak": 95,
+       "open": 30,
+       "series": [
+        58,
+        57,
+        55,
+        71,
+        65
+       ],
+       "trend": 2.3,
+       "typology": 2
+      }
+     ]
+    },
+    "912": {
+     "schools": 0,
+     "excluded_noncomparable": 1,
+     "latest": 0,
+     "capacity": 0,
+     "open_seats": 0,
+     "series": [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "trend_pct_per_year": null,
+     "detail": []
+    }
+   }
+  },
+  {
+   "region": "Grant / McDaniel",
+   "area": "Grant",
+   "bands": {
+    "k5": {
+     "schools": 2,
+     "excluded_noncomparable": 0,
+     "latest": 381,
+     "capacity": 418,
+     "open_seats": 37,
+     "series": [
+      440,
+      448,
+      436,
+      425,
+      381
+     ],
+     "trend_pct_per_year": -1.7,
+     "detail": [
+      {
+       "name": "All Saints School",
+       "latest": 269,
+       "latest_wave": "2021-22",
+       "peak": 277,
+       "open": 8,
+       "series": [
+        315,
+        300,
+        284,
+        269,
+        269
+       ],
+       "trend": -2.1,
+       "typology": 2
+      },
+      {
+       "name": "St Rose School",
+       "latest": 112,
+       "latest_wave": "2023-24",
+       "peak": 141,
+       "open": 29,
+       "series": [
+        125,
+        148,
+        152,
+        156,
+        112
+       ],
+       "trend": -0.8,
+       "typology": 1
+      }
+     ]
+    },
+    "68": {
+     "schools": 2,
+     "excluded_noncomparable": 0,
+     "latest": 261,
+     "capacity": 287,
+     "open_seats": 26,
+     "series": [
+      203,
+      229,
+      248,
+      267,
+      261
+     ],
+     "trend_pct_per_year": 3.3,
+     "detail": [
+      {
+       "name": "All Saints School",
+       "latest": 179,
+       "latest_wave": "2021-22",
+       "peak": 184,
+       "open": 5,
+       "series": [
+        146,
+        157,
+        168,
+        179,
+        179
+       ],
+       "trend": 2.7,
+       "typology": 2
+      },
+      {
+       "name": "St Rose School",
+       "latest": 82,
+       "latest_wave": "2023-24",
+       "peak": 103,
+       "open": 21,
+       "series": [
+        57,
+        72,
+        80,
+        88,
+        82
+       ],
+       "trend": 4.7,
+       "typology": 1
+      }
+     ]
+    }
+   }
+  },
+  {
+   "region": "Grant / McDaniel",
+   "area": "Jefferson / Grant",
+   "bands": {
+    "k5": {
+     "schools": 1,
+     "excluded_noncomparable": 0,
+     "latest": 169,
+     "capacity": 178,
+     "open_seats": 9,
+     "series": [
+      171,
+      173,
+      174,
+      180,
+      169
+     ],
+     "trend_pct_per_year": 0.1,
+     "detail": [
+      {
+       "name": "The Madeleine Elementary School",
+       "latest": 169,
+       "latest_wave": "2023-24",
+       "peak": 178,
+       "open": 9,
+       "series": [
+        171,
+        173,
+        174,
+        180,
+        169
+       ],
+       "trend": 0.1,
+       "typology": 2
+      }
+     ]
+    },
+    "68": {
+     "schools": 1,
+     "excluded_noncomparable": 0,
+     "latest": 87,
+     "capacity": 92,
+     "open_seats": 5,
+     "series": [
+      87,
+      90,
+      90,
+      90,
+      87
+     ],
+     "trend_pct_per_year": 0.0,
+     "detail": [
+      {
+       "name": "The Madeleine Elementary School",
+       "latest": 87,
+       "latest_wave": "2023-24",
+       "peak": 92,
+       "open": 5,
+       "series": [
+        87,
+        90,
+        90,
+        90,
+        87
+       ],
+       "trend": 0.0,
+       "typology": 2
+      }
+     ]
+    }
+   }
+  },
+  {
+   "region": "Grant / McDaniel",
+   "area": "Jefferson / McDaniel",
+   "bands": {
+    "912": {
+     "schools": 1,
+     "excluded_noncomparable": 1,
+     "latest": 220,
+     "capacity": 313,
+     "open_seats": 93,
+     "series": [
+      313,
+      292,
+      277,
+      274,
+      220
+     ],
+     "trend_pct_per_year": -3.8,
+     "detail": [
+      {
+       "name": "De La Salle North Catholic High School",
+       "latest": 220,
+       "latest_wave": "2023-24",
+       "peak": 313,
+       "open": 93,
+       "series": [
+        313,
+        292,
+        277,
+        274,
+        220
+       ],
+       "trend": -3.8,
+       "typology": 3
+      }
+     ]
+    },
+    "k5": {
+     "schools": 0,
+     "excluded_noncomparable": 1,
+     "latest": 0,
+     "capacity": 0,
+     "open_seats": 0,
+     "series": [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "trend_pct_per_year": null,
+     "detail": []
+    },
+    "68": {
+     "schools": 0,
+     "excluded_noncomparable": 1,
+     "latest": 0,
+     "capacity": 0,
+     "open_seats": 0,
+     "series": [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "trend_pct_per_year": null,
+     "detail": []
+    }
+   }
+  },
+  {
+   "region": "Grant / McDaniel",
+   "area": "McDaniel",
+   "bands": {
+    "k5": {
+     "schools": 5,
+     "excluded_noncomparable": 0,
+     "latest": 310,
+     "capacity": 348,
+     "open_seats": 38,
+     "series": [
+      322,
+      295,
+      280,
+      283,
+      310
+     ],
+     "trend_pct_per_year": -0.6,
+     "detail": [
+      {
+       "name": "Columbia Christian Schools",
+       "latest": 148,
+       "latest_wave": "2023-24",
+       "peak": 148,
+       "open": 0,
+       "series": [
+        133,
+        124,
+        102,
+        131,
+        148
+       ],
+       "trend": 1.4,
+       "typology": 4
+      },
+      {
+       "name": "Community Transitional School",
+       "latest": 63,
+       "latest_wave": "2023-24",
+       "peak": 77,
+       "open": 14,
+       "series": [
+        67,
+        70,
+        67,
+        42,
+        63
+       ],
+       "trend": -3.1,
+       "typology": 7
+      },
+      {
+       "name": "Grace Lutheran School",
+       "latest": 60,
+       "latest_wave": "2023-24",
+       "peak": 64,
+       "open": 4,
+       "series": [
+        61,
+        58,
+        60,
+        62,
+        60
+       ],
+       "trend": 0.2,
+       "typology": 6
+      },
+      {
+       "name": "Trinity Lutheran School",
+       "latest": 32,
+       "latest_wave": "2023-24",
+       "peak": 49,
+       "open": 17,
+       "series": [
+        52,
+        37,
+        41,
+        42,
+        32
+       ],
+       "trend": -4.1,
+       "typology": 5
+      },
+      {
+       "name": "Happy Day Christian Child Care",
+       "latest": 7,
+       "latest_wave": "2023-24",
+       "peak": 10,
+       "open": 3,
+       "series": [
+        9,
+        6,
+        10,
+        6,
+        7
+       ],
+       "trend": -2.5,
+       "typology": 4
+      }
+     ]
+    },
+    "68": {
+     "schools": 4,
+     "excluded_noncomparable": 0,
+     "latest": 144,
+     "capacity": 159,
+     "open_seats": 15,
+     "series": [
+      141,
+      142,
+      126,
+      126,
+      144
+     ],
+     "trend_pct_per_year": -0.4,
+     "detail": [
+      {
+       "name": "Columbia Christian Schools",
+       "latest": 90,
+       "latest_wave": "2023-24",
+       "peak": 90,
+       "open": 0,
+       "series": [
+        70,
+        69,
+        56,
+        80,
+        90
+       ],
+       "trend": 3.3,
+       "typology": 4
+      },
+      {
+       "name": "Grace Lutheran School",
+       "latest": 23,
+       "latest_wave": "2023-24",
+       "peak": 25,
+       "open": 2,
+       "series": [
+        24,
+        24,
+        29,
+        11,
+        23
+       ],
+       "trend": -4.2,
+       "typology": 6
+      },
+      {
+       "name": "Trinity Lutheran School",
+       "latest": 18,
+       "latest_wave": "2023-24",
+       "peak": 28,
+       "open": 10,
+       "series": [
+        25,
+        26,
+        22,
+        17,
+        18
+       ],
+       "trend": -5.3,
+       "typology": 5
+      },
+      {
+       "name": "Community Transitional School",
+       "latest": 13,
+       "latest_wave": "2023-24",
+       "peak": 16,
+       "open": 3,
+       "series": [
+        22,
+        23,
+        19,
+        18,
+        13
+       ],
+       "trend": -6.3,
+       "typology": 7
+      }
+     ]
+    },
+    "912": {
+     "schools": 2,
+     "excluded_noncomparable": 0,
+     "latest": 277,
+     "capacity": 369,
+     "open_seats": 92,
+     "series": [
+      399,
+      379,
+      303,
+      215,
+      277
+     ],
+     "trend_pct_per_year": -6.3,
+     "detail": [
+      {
+       "name": "Portland Adventist Academy",
+       "latest": 193,
+       "latest_wave": "2023-24",
+       "peak": 285,
+       "open": 92,
+       "series": [
+        285,
+        261,
+        217,
+        153,
+        193
+       ],
+       "trend": -6.4,
+       "typology": 5
+      },
+      {
+       "name": "Columbia Christian Schools",
+       "latest": 84,
+       "latest_wave": "2023-24",
+       "peak": 84,
+       "open": 0,
+       "series": [
+        114,
+        118,
+        86,
+        62,
+        84
+       ],
+       "trend": -6.1,
+       "typology": 4
+      }
+     ]
+    }
+   }
+  },
+  {
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Ida B. Wells",
+   "bands": {
+    "k5": {
+     "schools": 7,
+     "excluded_noncomparable": 6,
+     "latest": 637,
+     "capacity": 774,
+     "open_seats": 137,
+     "series": [
+      810,
+      694,
+      669,
+      681,
+      637
+     ],
+     "trend_pct_per_year": -2.5,
+     "detail": [
+      {
+       "name": "West Hills Christian School",
+       "latest": 184,
+       "latest_wave": "2023-24",
+       "peak": 243,
+       "open": 59,
+       "series": [
+        267,
+        223,
+        210,
+        197,
+        184
+       ],
+       "trend": -4.3,
+       "typology": 4
+      },
+      {
+       "name": "St Clare School",
+       "latest": 144,
+       "latest_wave": "2023-24",
+       "peak": 145,
+       "open": 1,
+       "series": [
+        146,
+        126,
+        131,
+        152,
+        144
+       ],
+       "trend": 0.8,
+       "typology": 2
+      },
+      {
+       "name": "St John Fisher",
+       "latest": 129,
+       "latest_wave": "2023-24",
+       "peak": 139,
+       "open": 10,
+       "series": [
+        133,
+        140,
+        136,
+        141,
+        129
+       ],
+       "trend": -0.3,
+       "typology": 1
+      },
+      {
+       "name": "Portland Jewish Academy",
+       "latest": 98,
+       "latest_wave": "2023-24",
+       "peak": 110,
+       "open": 12,
+       "series": [
+        133,
+        129,
+        111,
+        109,
+        98
+       ],
+       "trend": -3.8,
+       "typology": 5
+      },
+      {
+       "name": "Islamic School of Portland",
+       "latest": 47,
+       "latest_wave": "2019-20",
+       "peak": 47,
+       "open": 0,
+       "series": [
+        53,
+        44,
+        47,
+        47,
+        47
+       ],
+       "trend": -0.9,
+       "typology": 6
+      },
+      {
+       "name": "Maimonides Jewish Day School",
+       "latest": 25,
+       "latest_wave": "2021-22",
+       "peak": 39,
+       "open": 14,
+       "series": [
+        27,
+        22,
+        27,
+        25,
+        25
+       ],
+       "trend": -0.1,
+       "typology": 6
+      },
+      {
+       "name": "Hilltop Early Learning Academy",
+       "latest": 10,
+       "latest_wave": "2021-22",
+       "peak": 51,
+       "open": 41,
+       "series": [
+        51,
+        10,
+        7,
+        10,
+        10
+       ],
+       "trend": -15.0,
+       "typology": 4
+      }
+     ]
+    },
+    "68": {
+     "schools": 6,
+     "excluded_noncomparable": 2,
+     "latest": 396,
+     "capacity": 455,
+     "open_seats": 59,
+     "series": [
+      394,
+      389,
+      410,
+      401,
+      396
+     ],
+     "trend_pct_per_year": 0.2,
+     "detail": [
+      {
+       "name": "West Hills Christian School",
+       "latest": 138,
+       "latest_wave": "2023-24",
+       "peak": 182,
+       "open": 44,
+       "series": [
+        158,
+        154,
+        149,
+        143,
+        138
+       ],
+       "trend": -1.7,
+       "typology": 4
+      },
+      {
+       "name": "St Clare School",
+       "latest": 84,
+       "latest_wave": "2023-24",
+       "peak": 85,
+       "open": 1,
+       "series": [
+        78,
+        76,
+        78,
+        78,
+        84
+       ],
+       "trend": 0.9,
+       "typology": 2
+      },
+      {
+       "name": "St John Fisher",
+       "latest": 75,
+       "latest_wave": "2023-24",
+       "peak": 81,
+       "open": 6,
+       "series": [
+        87,
+        74,
+        65,
+        75,
+        75
+       ],
+       "trend": -1.4,
+       "typology": 1
+      },
+      {
+       "name": "Portland Jewish Academy",
+       "latest": 71,
+       "latest_wave": "2023-24",
+       "peak": 79,
+       "open": 8,
+       "series": [
+        47,
+        56,
+        78,
+        77,
+        71
+       ],
+       "trend": 5.9,
+       "typology": 5
+      },
+      {
+       "name": "Islamic School of Portland",
+       "latest": 28,
+       "latest_wave": "2019-20",
+       "peak": 28,
+       "open": 0,
+       "series": [
+        21,
+        23,
+        28,
+        28,
+        28
+       ],
+       "trend": 3.9,
+       "typology": 6
+      },
+      {
+       "name": "Maimonides Jewish Day School",
+       "latest": 0,
+       "latest_wave": "2021-22",
+       "peak": 0,
+       "open": 0,
+       "series": [
+        3,
+        6,
+        12,
+        0,
+        0
+       ],
+       "trend": 41.4,
+       "typology": 6
+      }
+     ]
+    }
+   }
+  },
+  {
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Lincoln",
+   "bands": {
+    "k5": {
+     "schools": 6,
+     "excluded_noncomparable": 4,
+     "latest": 680,
+     "capacity": 816,
+     "open_seats": 136,
+     "series": [
+      774,
+      623,
+      689,
+      681,
+      680
+     ],
+     "trend_pct_per_year": -0.8,
+     "detail": [
+      {
+       "name": "International School of Portland",
+       "latest": 290,
+       "latest_wave": "2023-24",
+       "peak": 371,
+       "open": 81,
+       "series": [
+        371,
+        331,
+        278,
+        286,
+        290
+       ],
+       "trend": -3.1,
+       "typology": 7
+      },
+      {
+       "name": "Cathedral School",
+       "latest": 137,
+       "latest_wave": "2019-20",
+       "peak": 138,
+       "open": 1,
+       "series": [
+        147,
+        147,
+        137,
+        137,
+        137
+       ],
+       "trend": -1.1,
+       "typology": 1
+      },
+      {
+       "name": "St Thomas More School",
+       "latest": 121,
+       "latest_wave": "2023-24",
+       "peak": 139,
+       "open": 18,
+       "series": [
+        141,
+        20,
+        132,
+        142,
+        121
+       ],
+       "trend": 8.6,
+       "typology": 2
+      },
+      {
+       "name": "Class Academy",
+       "latest": 120,
+       "latest_wave": "2023-24",
+       "peak": 146,
+       "open": 26,
+       "series": [
+        101,
+        111,
+        122,
+        104,
+        120
+       ],
+       "trend": 1.4,
+       "typology": 7
+      },
+      {
+       "name": "St James Child Development Center",
+       "latest": 10,
+       "latest_wave": "2021-22",
+       "peak": 20,
+       "open": 10,
+       "series": [
+        14,
+        14,
+        20,
+        10,
+        10
+       ],
+       "trend": -4.9,
+       "typology": 5
+      },
+      {
+       "name": "Lindamood-Bell Learning Processes Portland",
+       "latest": 2,
+       "latest_wave": "2021-22",
+       "peak": 2,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        2,
+        2
+       ],
+       "trend": null,
+       "typology": 7
+      }
+     ]
+    },
+    "68": {
+     "schools": 5,
+     "excluded_noncomparable": 4,
+     "latest": 299,
+     "capacity": 311,
+     "open_seats": 12,
+     "series": [
+      282,
+      231,
+      327,
+      320,
+      299
+     ],
+     "trend_pct_per_year": 2.2,
+     "detail": [
+      {
+       "name": "Northwest Academy",
+       "latest": 136,
+       "latest_wave": "2021-22",
+       "peak": 136,
+       "open": 0,
+       "series": [
+        107,
+        127,
+        136,
+        136,
+        136
+       ],
+       "trend": 2.8,
+       "typology": 7
+      },
+      {
+       "name": "Cathedral School",
+       "latest": 88,
+       "latest_wave": "2019-20",
+       "peak": 89,
+       "open": 1,
+       "series": [
+        80,
+        80,
+        88,
+        88,
+        88
+       ],
+       "trend": 1.4,
+       "typology": 1
+      },
+      {
+       "name": "St Thomas More School",
+       "latest": 72,
+       "latest_wave": "2023-24",
+       "peak": 83,
+       "open": 11,
+       "series": [
+        79,
+        0,
+        79,
+        80,
+        72
+       ],
+       "trend": -0.9,
+       "typology": 2
+      },
+      {
+       "name": "Lindamood-Bell Learning Processes Portland",
+       "latest": 3,
+       "latest_wave": "2021-22",
+       "peak": 3,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        3,
+        3
+       ],
+       "trend": null,
+       "typology": 7
+      },
+      {
+       "name": "Class Academy",
+       "latest": 0,
+       "latest_wave": "2023-24",
+       "peak": 0,
+       "open": 0,
+       "series": [
+        16,
+        24,
+        24,
+        13,
+        0
+       ],
+       "trend": -3.1,
+       "typology": 7
+      }
+     ]
+    },
+    "912": {
+     "schools": 2,
+     "excluded_noncomparable": 2,
+     "latest": 709,
+     "capacity": 823,
+     "open_seats": 114,
+     "series": [
+      825,
+      793,
+      473,
+      591,
+      709
+     ],
+     "trend_pct_per_year": -2.9,
+     "detail": [
+      {
+       "name": "St Marys Academy",
+       "latest": 606,
+       "latest_wave": "2023-24",
+       "peak": 720,
+       "open": 114,
+       "series": [
+        720,
+        695,
+        370,
+        488,
+        606
+       ],
+       "trend": -3.4,
+       "typology": 3
+      },
+      {
+       "name": "Northwest Academy",
+       "latest": 103,
+       "latest_wave": "2021-22",
+       "peak": 103,
+       "open": 0,
+       "series": [
+        105,
+        98,
+        103,
+        103,
+        103
+       ],
+       "trend": 0.1,
+       "typology": 7
+      }
+     ]
+    }
+   }
+  },
+  {
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Near the PPS border (listed as an alternative)",
+   "bands": {
+    "k5": {
+     "schools": 1,
+     "excluded_noncomparable": 2,
+     "latest": 54,
+     "capacity": 54,
+     "open_seats": 0,
+     "series": [
+      0,
+      0,
+      0,
+      0,
+      54
+     ],
+     "trend_pct_per_year": null,
+     "detail": [
+      {
+       "name": "Maayan Torah Day School",
+       "latest": 54,
+       "latest_wave": "2023-24",
+       "peak": 54,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        0,
+        54
+       ],
+       "trend": null,
+       "typology": 6
+      }
+     ]
+    },
+    "68": {
+     "schools": 1,
+     "excluded_noncomparable": 0,
+     "latest": 8,
+     "capacity": 8,
+     "open_seats": 0,
+     "series": [
+      0,
+      0,
+      0,
+      0,
+      8
+     ],
+     "trend_pct_per_year": null,
+     "detail": [
+      {
+       "name": "Maayan Torah Day School",
+       "latest": 8,
+       "latest_wave": "2023-24",
+       "peak": 8,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        0,
+        8
+       ],
+       "trend": null,
+       "typology": 6
+      }
+     ]
+    },
+    "912": {
+     "schools": 1,
+     "excluded_noncomparable": 0,
+     "latest": 1,
+     "capacity": 1,
+     "open_seats": 0,
+     "series": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "trend_pct_per_year": null,
+     "detail": [
+      {
+       "name": "Maayan Torah Day School",
+       "latest": 1,
+       "latest_wave": "2023-24",
+       "peak": 1,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        0,
+        1
+       ],
+       "trend": null,
+       "typology": 6
+      }
+     ]
+    }
+   }
+  },
+  {
+   "region": "Jefferson / Roosevelt",
+   "area": "Jefferson / Grant",
+   "bands": {
+    "68": {
+     "schools": 1,
+     "excluded_noncomparable": 0,
+     "latest": 81,
+     "capacity": 83,
+     "open_seats": 2,
+     "series": [
+      83,
+      83,
+      80,
+      83,
+      81
+     ],
+     "trend_pct_per_year": -0.2,
+     "detail": [
+      {
+       "name": "St Andrew Nativity School",
+       "latest": 81,
+       "latest_wave": "2023-24",
+       "peak": 83,
+       "open": 2,
+       "series": [
+        83,
+        83,
+        80,
+        83,
+        81
+       ],
+       "trend": -0.2,
+       "typology": 3
+      }
+     ]
+    }
+   }
+  },
+  {
+   "region": "Jefferson / Roosevelt",
+   "area": "Jefferson / Roosevelt",
+   "bands": {
+    "k5": {
+     "schools": 1,
+     "excluded_noncomparable": 1,
+     "latest": 152,
+     "capacity": 170,
+     "open_seats": 18,
+     "series": [
+      172,
+      171,
+      169,
+      154,
+      152
+     ],
+     "trend_pct_per_year": -1.7,
+     "detail": [
+      {
+       "name": "Holy Redeemer Catholic School",
+       "latest": 152,
+       "latest_wave": "2023-24",
+       "peak": 170,
+       "open": 18,
+       "series": [
+        172,
+        171,
+        169,
+        154,
+        152
+       ],
+       "trend": -1.7,
+       "typology": 2
+      }
+     ]
+    },
+    "68": {
+     "schools": 2,
+     "excluded_noncomparable": 1,
+     "latest": 138,
+     "capacity": 147,
+     "open_seats": 9,
+     "series": [
+      83,
+      79,
+      86,
+      139,
+      138
+     ],
+     "trend_pct_per_year": 8.2,
+     "detail": [
+      {
+       "name": "Holy Redeemer Catholic School",
+       "latest": 76,
+       "latest_wave": "2023-24",
+       "peak": 85,
+       "open": 9,
+       "series": [
+        83,
+        79,
+        86,
+        82,
+        76
+       ],
+       "trend": -0.7,
+       "typology": 2
+      },
+      {
+       "name": "Trinity Academy",
+       "latest": 62,
+       "latest_wave": "2023-24",
+       "peak": 62,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        57,
+        62
+       ],
+       "trend": null,
+       "typology": 6
+      }
+     ]
+    },
+    "912": {
+     "schools": 1,
+     "excluded_noncomparable": 2,
+     "latest": 64,
+     "capacity": 64,
+     "open_seats": 0,
+     "series": [
+      0,
+      0,
+      0,
+      47,
+      64
+     ],
+     "trend_pct_per_year": null,
+     "detail": [
+      {
+       "name": "Trinity Academy",
+       "latest": 64,
+       "latest_wave": "2023-24",
+       "peak": 64,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        47,
+        64
+       ],
+       "trend": null,
+       "typology": 6
+      }
+     ]
+    }
+   }
+  },
+  {
+   "region": "Jefferson / Roosevelt",
+   "area": "Roosevelt",
+   "bands": {
+    "k5": {
+     "schools": 2,
+     "excluded_noncomparable": 1,
+     "latest": 132,
+     "capacity": 143,
+     "open_seats": 11,
+     "series": [
+      142,
+      146,
+      149,
+      130,
+      132
+     ],
+     "trend_pct_per_year": -1.3,
+     "detail": [
+      {
+       "name": "Holy Cross Catholic School",
+       "latest": 130,
+       "latest_wave": "2023-24",
+       "peak": 141,
+       "open": 11,
+       "series": [
+        142,
+        146,
+        149,
+        128,
+        130
+       ],
+       "trend": -1.5,
+       "typology": 1
+      },
+      {
+       "name": "The Montessori House of St Johns",
+       "latest": 2,
+       "latest_wave": "2021-22",
+       "peak": 2,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        2,
+        2
+       ],
+       "trend": null,
+       "typology": 7
+      }
+     ]
+    },
+    "68": {
+     "schools": 2,
+     "excluded_noncomparable": 1,
+     "latest": 116,
+     "capacity": 123,
+     "open_seats": 7,
+     "series": [
+      63,
+      61,
+      84,
+      71,
+      116
+     ],
+     "trend_pct_per_year": 7.1,
+     "detail": [
+      {
+       "name": "Holy Cross Catholic School",
+       "latest": 85,
+       "latest_wave": "2023-24",
+       "peak": 92,
+       "open": 7,
+       "series": [
+        63,
+        61,
+        84,
+        71,
+        85
+       ],
+       "trend": 3.8,
+       "typology": 1
+      },
+      {
+       "name": "Rosemary Anderson Middle School",
+       "latest": 31,
+       "latest_wave": "2023-24",
+       "peak": 31,
+       "open": 0,
+       "series": [
+        0,
+        0,
+        0,
+        0,
+        31
+       ],
+       "trend": null,
+       "typology": 7
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "schools": [
+  {
+   "name": "Activate School",
+   "region": "Cleveland / Franklin",
+   "area": "Cleveland",
+   "character": "Private",
+   "grades_served": "3-5",
+   "latest_wave": "2023-24",
+   "peak_total": 18,
+   "latest": [
+    0,
+    0,
+    0,
+    6,
+    6,
+    6,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    6.0,
+    6.0,
+    6.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     6
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     6
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     6
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "All Saints School",
+   "region": "Grant / McDaniel",
+   "area": "Grant",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2021-22",
+   "peak_total": 461,
+   "latest": [
+    37,
+    40,
+    42,
+    50,
+    50,
+    50,
+    50,
+    50,
+    79,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    38.1,
+    41.2,
+    43.2,
+    51.5,
+    51.5,
+    51.5,
+    51.5,
+    51.5,
+    81.3,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     56,
+     49.7,
+     43.3,
+     37,
+     37
+    ],
+    [
+     45,
+     43.3,
+     41.7,
+     40,
+     40
+    ],
+    [
+     73,
+     62.7,
+     52.3,
+     42,
+     42
+    ],
+    [
+     44,
+     46.0,
+     48.0,
+     50,
+     50
+    ],
+    [
+     45,
+     46.7,
+     48.3,
+     50,
+     50
+    ],
+    [
+     52,
+     51.3,
+     50.7,
+     50,
+     50
+    ],
+    [
+     49,
+     49.3,
+     49.7,
+     50,
+     50
+    ],
+    [
+     47,
+     48.0,
+     49.0,
+     50,
+     50
+    ],
+    [
+     50,
+     59.7,
+     69.3,
+     79,
+     79
+    ],
+    [
+     0,
+     0.0,
+     0.0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     0.0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     0.0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     0.0,
+     0,
+     0
+    ]
+   ],
+   "typology": 2
+  },
+  {
+   "name": "Cathedral School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Lincoln",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2019-20",
+   "peak_total": 227,
+   "latest": [
+    21,
+    23,
+    18,
+    20,
+    26,
+    29,
+    30,
+    30,
+    28,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    21.2,
+    23.2,
+    18.2,
+    20.2,
+    26.2,
+    29.3,
+    30.3,
+    30.3,
+    28.2,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     18,
+     18,
+     21,
+     21,
+     21
+    ],
+    [
+     26,
+     26,
+     23,
+     23,
+     23
+    ],
+    [
+     24,
+     24,
+     18,
+     18,
+     18
+    ],
+    [
+     27,
+     27,
+     20,
+     20,
+     20
+    ],
+    [
+     26,
+     26,
+     26,
+     26,
+     26
+    ],
+    [
+     26,
+     26,
+     29,
+     29,
+     29
+    ],
+    [
+     28,
+     28,
+     30,
+     30,
+     30
+    ],
+    [
+     28,
+     28,
+     30,
+     30,
+     30
+    ],
+    [
+     24,
+     24,
+     28,
+     28,
+     28
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 1
+  },
+  {
+   "name": "Central Catholic High School",
+   "region": "Cleveland / Franklin",
+   "area": "Franklin",
+   "character": "Private, Catholic",
+   "grades_served": "9-12",
+   "latest_wave": "2023-24",
+   "peak_total": 913,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    214,
+    230,
+    213,
+    208
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    225.9,
+    242.8,
+    224.8,
+    219.5
+   ],
+   "series": [
+    [
+     0,
+     0.0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     0,
+     0,
+     0
+    ],
+    [
+     235,
+     211.5,
+     188,
+     233,
+     214
+    ],
+    [
+     230,
+     221.5,
+     213,
+     220,
+     230
+    ],
+    [
+     237,
+     215.5,
+     194,
+     187,
+     213
+    ],
+    [
+     211,
+     230.0,
+     249,
+     205,
+     208
+    ]
+   ],
+   "typology": 2
+  },
+  {
+   "name": "Class Academy",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Lincoln",
+   "character": "Private",
+   "grades_served": "PK, K-5",
+   "latest_wave": "2023-24",
+   "peak_total": 146,
+   "latest": [
+    31,
+    10,
+    26,
+    22,
+    21,
+    10,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    37.7,
+    12.2,
+    31.6,
+    26.8,
+    25.6,
+    12.2,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     12,
+     39,
+     30,
+     11,
+     31
+    ],
+    [
+     22,
+     16,
+     20,
+     21,
+     10
+    ],
+    [
+     26,
+     22,
+     25,
+     21,
+     26
+    ],
+    [
+     17,
+     8,
+     15,
+     21,
+     22
+    ],
+    [
+     13,
+     11,
+     17,
+     20,
+     21
+    ],
+    [
+     11,
+     15,
+     15,
+     10,
+     10
+    ],
+    [
+     11,
+     12,
+     10,
+     6,
+     0
+    ],
+    [
+     5,
+     6,
+     7,
+     7,
+     0
+    ],
+    [
+     0,
+     6,
+     7,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "Columbia Christian Schools",
+   "region": "Grant / McDaniel",
+   "area": "McDaniel",
+   "character": "Private, Church of Christ",
+   "grades_served": "PK, K-12",
+   "latest_wave": "2023-24",
+   "peak_total": 322,
+   "latest": [
+    27,
+    18,
+    21,
+    34,
+    21,
+    27,
+    36,
+    32,
+    22,
+    27,
+    23,
+    19,
+    15
+   ],
+   "capacity": [
+    27.0,
+    18.0,
+    21.0,
+    34.0,
+    21.0,
+    27.0,
+    36.0,
+    32.0,
+    22.0,
+    27.0,
+    23.0,
+    19.0,
+    15.0
+   ],
+   "series": [
+    [
+     19,
+     18,
+     14,
+     19,
+     27
+    ],
+    [
+     19,
+     19,
+     12,
+     30,
+     18
+    ],
+    [
+     23,
+     19,
+     21,
+     12,
+     21
+    ],
+    [
+     26,
+     21,
+     19,
+     23,
+     34
+    ],
+    [
+     25,
+     22,
+     17,
+     24,
+     21
+    ],
+    [
+     21,
+     25,
+     19,
+     23,
+     27
+    ],
+    [
+     19,
+     23,
+     25,
+     29,
+     36
+    ],
+    [
+     26,
+     26,
+     16,
+     26,
+     32
+    ],
+    [
+     25,
+     20,
+     15,
+     25,
+     22
+    ],
+    [
+     27,
+     29,
+     17,
+     19,
+     27
+    ],
+    [
+     34,
+     31,
+     17,
+     17,
+     23
+    ],
+    [
+     30,
+     35,
+     28,
+     15,
+     19
+    ],
+    [
+     23,
+     23,
+     24,
+     11,
+     15
+    ]
+   ],
+   "typology": 4
+  },
+  {
+   "name": "Community Transitional School",
+   "region": "Grant / McDaniel",
+   "area": "McDaniel",
+   "character": "Private",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 93,
+   "latest": [
+    9,
+    8,
+    13,
+    10,
+    13,
+    10,
+    6,
+    2,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    11.0,
+    9.8,
+    15.9,
+    12.2,
+    15.9,
+    12.2,
+    7.3,
+    2.4,
+    6.1,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     8,
+     15,
+     12,
+     13,
+     9
+    ],
+    [
+     14,
+     12,
+     16,
+     8,
+     8
+    ],
+    [
+     16,
+     15,
+     14,
+     7,
+     13
+    ],
+    [
+     11,
+     9,
+     7,
+     7,
+     10
+    ],
+    [
+     8,
+     11,
+     8,
+     4,
+     13
+    ],
+    [
+     10,
+     8,
+     10,
+     3,
+     10
+    ],
+    [
+     11,
+     7,
+     9,
+     4,
+     6
+    ],
+    [
+     8,
+     8,
+     6,
+     6,
+     2
+    ],
+    [
+     3,
+     8,
+     4,
+     8,
+     5
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "De La Salle North Catholic High School",
+   "region": "Grant / McDaniel",
+   "area": "Jefferson / McDaniel",
+   "character": "Private, Catholic",
+   "grades_served": "9-12",
+   "latest_wave": "2023-24",
+   "peak_total": 313,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    55,
+    54,
+    52,
+    59
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    78.2,
+    76.8,
+    74.0,
+    83.9
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     98,
+     74,
+     82,
+     60,
+     55
+    ],
+    [
+     90,
+     88,
+     71,
+     81,
+     54
+    ],
+    [
+     61,
+     62,
+     65,
+     69,
+     52
+    ],
+    [
+     64,
+     68,
+     59,
+     64,
+     59
+    ]
+   ],
+   "typology": 3
+  },
+  {
+   "name": "Grace Lutheran School",
+   "region": "Grant / McDaniel",
+   "area": "McDaniel",
+   "character": "Private, Lutheran",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 89,
+   "latest": [
+    11,
+    6,
+    9,
+    14,
+    9,
+    11,
+    9,
+    10,
+    4,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    11.8,
+    6.4,
+    9.7,
+    15.0,
+    9.7,
+    11.8,
+    9.7,
+    10.7,
+    4.3,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     11,
+     15,
+     14,
+     9,
+     11
+    ],
+    [
+     10,
+     9,
+     13,
+     12,
+     6
+    ],
+    [
+     11,
+     7,
+     9,
+     10,
+     9
+    ],
+    [
+     8,
+     11,
+     9,
+     11,
+     14
+    ],
+    [
+     11,
+     7,
+     6,
+     9,
+     9
+    ],
+    [
+     10,
+     9,
+     9,
+     11,
+     11
+    ],
+    [
+     10,
+     11,
+     9,
+     3,
+     9
+    ],
+    [
+     7,
+     4,
+     12,
+     8,
+     10
+    ],
+    [
+     7,
+     9,
+     8,
+     0,
+     4
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 6
+  },
+  {
+   "name": "Happy Day Christian Child Care",
+   "region": "Grant / McDaniel",
+   "area": "McDaniel",
+   "character": "Private, Christian (General)",
+   "grades_served": "PK, K",
+   "latest_wave": "2023-24",
+   "peak_total": 10,
+   "latest": [
+    7,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    10.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     9,
+     6,
+     10,
+     6,
+     7
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 4
+  },
+  {
+   "name": "Hilltop Early Learning Academy",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Ida B. Wells",
+   "character": "Private, Assembly of God",
+   "grades_served": "PK, K",
+   "latest_wave": "2021-22",
+   "peak_total": 51,
+   "latest": [
+    10,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    51.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     51,
+     10,
+     7,
+     10,
+     10
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 4
+  },
+  {
+   "name": "Holy Cross Catholic School",
+   "region": "Jefferson / Roosevelt",
+   "area": "Roosevelt",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 233,
+   "latest": [
+    14,
+    19,
+    24,
+    27,
+    25,
+    21,
+    25,
+    30,
+    30,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    15.2,
+    20.6,
+    26.0,
+    29.3,
+    27.1,
+    22.8,
+    27.1,
+    32.5,
+    32.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     26,
+     23,
+     24,
+     22,
+     14
+    ],
+    [
+     26,
+     22,
+     21,
+     21,
+     19
+    ],
+    [
+     26,
+     26,
+     22,
+     23,
+     24
+    ],
+    [
+     19,
+     28,
+     26,
+     16,
+     27
+    ],
+    [
+     29,
+     26,
+     28,
+     20,
+     25
+    ],
+    [
+     16,
+     21,
+     28,
+     26,
+     21
+    ],
+    [
+     15,
+     26,
+     28,
+     23,
+     25
+    ],
+    [
+     30,
+     20,
+     28,
+     24,
+     30
+    ],
+    [
+     18,
+     15,
+     28,
+     24,
+     30
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 1
+  },
+  {
+   "name": "Holy Family School",
+   "region": "Cleveland / Franklin",
+   "area": "Cleveland",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 208,
+   "latest": [
+    0,
+    13,
+    19,
+    16,
+    24,
+    25,
+    28,
+    27,
+    23,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    0.0,
+    15.5,
+    22.6,
+    19.0,
+    28.5,
+    29.7,
+    33.3,
+    32.1,
+    27.3,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     16,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     17,
+     13
+    ],
+    [
+     0,
+     0,
+     0,
+     18,
+     19
+    ],
+    [
+     0,
+     0,
+     0,
+     24,
+     16
+    ],
+    [
+     0,
+     0,
+     0,
+     24,
+     24
+    ],
+    [
+     0,
+     0,
+     0,
+     24,
+     25
+    ],
+    [
+     0,
+     0,
+     0,
+     27,
+     28
+    ],
+    [
+     0,
+     0,
+     0,
+     29,
+     27
+    ],
+    [
+     0,
+     0,
+     0,
+     29,
+     23
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 2
+  },
+  {
+   "name": "Holy Redeemer Catholic School",
+   "region": "Jefferson / Roosevelt",
+   "area": "Jefferson / Roosevelt",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 255,
+   "latest": [
+    20,
+    24,
+    23,
+    29,
+    27,
+    29,
+    29,
+    24,
+    23,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    22.4,
+    26.8,
+    25.7,
+    32.4,
+    30.2,
+    32.4,
+    32.4,
+    26.8,
+    25.7,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     28,
+     30,
+     32,
+     23,
+     20
+    ],
+    [
+     30,
+     29,
+     27,
+     27,
+     24
+    ],
+    [
+     29,
+     24,
+     30,
+     23,
+     23
+    ],
+    [
+     30,
+     29,
+     29,
+     21,
+     29
+    ],
+    [
+     30,
+     29,
+     23,
+     30,
+     27
+    ],
+    [
+     25,
+     30,
+     28,
+     30,
+     29
+    ],
+    [
+     27,
+     31,
+     30,
+     24,
+     29
+    ],
+    [
+     29,
+     22,
+     29,
+     30,
+     24
+    ],
+    [
+     27,
+     26,
+     27,
+     28,
+     23
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 2
+  },
+  {
+   "name": "International School of Portland",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Lincoln",
+   "character": "Private",
+   "grades_served": "PK, K-5",
+   "latest_wave": "2023-24",
+   "peak_total": 371,
+   "latest": [
+    72,
+    51,
+    54,
+    51,
+    35,
+    27,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    92.1,
+    65.2,
+    69.1,
+    65.2,
+    44.8,
+    34.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     63,
+     51,
+     48,
+     68,
+     72
+    ],
+    [
+     63,
+     65,
+     44,
+     61,
+     51
+    ],
+    [
+     73,
+     52,
+     51,
+     40,
+     54
+    ],
+    [
+     67,
+     49,
+     53,
+     35,
+     51
+    ],
+    [
+     61,
+     62,
+     44,
+     41,
+     35
+    ],
+    [
+     44,
+     52,
+     38,
+     41,
+     27
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "Islamic School of Portland",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Ida B. Wells",
+   "character": "Private, Islamic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2019-20",
+   "peak_total": 75,
+   "latest": [
+    8,
+    7,
+    8,
+    9,
+    5,
+    10,
+    12,
+    7,
+    9,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    8.0,
+    7.0,
+    8.0,
+    9.0,
+    5.0,
+    10.0,
+    12.0,
+    7.0,
+    9.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     8,
+     6,
+     8,
+     8,
+     8
+    ],
+    [
+     11,
+     8,
+     7,
+     7,
+     7
+    ],
+    [
+     9,
+     6,
+     8,
+     8,
+     8
+    ],
+    [
+     7,
+     8,
+     9,
+     9,
+     9
+    ],
+    [
+     9,
+     10,
+     5,
+     5,
+     5
+    ],
+    [
+     9,
+     6,
+     10,
+     10,
+     10
+    ],
+    [
+     7,
+     10,
+     12,
+     12,
+     12
+    ],
+    [
+     7,
+     7,
+     7,
+     7,
+     7
+    ],
+    [
+     7,
+     6,
+     9,
+     9,
+     9
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 6
+  },
+  {
+   "name": "Lindamood-Bell Learning Processes Portland",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Lincoln",
+   "character": "Private",
+   "grades_served": "4-7",
+   "latest_wave": "2021-22",
+   "peak_total": 5,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    2,
+    0,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    2.0,
+    0.0,
+    2.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     2,
+     2
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     2,
+     2
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     1
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "Maayan Torah Day School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Near the PPS border (listed as an alternative)",
+   "character": "Private, Jewish",
+   "grades_served": "K-10",
+   "latest_wave": "2023-24",
+   "peak_total": 63,
+   "latest": [
+    7,
+    10,
+    8,
+    11,
+    8,
+    10,
+    2,
+    4,
+    2,
+    0,
+    1,
+    0,
+    0
+   ],
+   "capacity": [
+    7.0,
+    10.0,
+    8.0,
+    11.0,
+    8.0,
+    10.0,
+    2.0,
+    4.0,
+    2.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     7
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     10
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     8
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     11
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     8
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     10
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     4
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 6
+  },
+  {
+   "name": "Maimonides Jewish Day School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Ida B. Wells",
+   "character": "Private, Jewish",
+   "grades_served": "K-5",
+   "latest_wave": "2021-22",
+   "peak_total": 39,
+   "latest": [
+    3,
+    8,
+    4,
+    6,
+    3,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    4.7,
+    12.5,
+    6.2,
+    9.4,
+    4.7,
+    1.6,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     6,
+     3,
+     5,
+     3,
+     3
+    ],
+    [
+     5,
+     6,
+     9,
+     8,
+     8
+    ],
+    [
+     5,
+     3,
+     3,
+     4,
+     4
+    ],
+    [
+     4,
+     4,
+     2,
+     6,
+     6
+    ],
+    [
+     4,
+     4,
+     5,
+     3,
+     3
+    ],
+    [
+     3,
+     2,
+     3,
+     1,
+     1
+    ],
+    [
+     3,
+     2,
+     4,
+     0,
+     0
+    ],
+    [
+     0,
+     2,
+     3,
+     0,
+     0
+    ],
+    [
+     0,
+     2,
+     5,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 6
+  },
+  {
+   "name": "Northwest Academy",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Lincoln",
+   "character": "Private",
+   "grades_served": "6-12",
+   "latest_wave": "2021-22",
+   "peak_total": 239,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    36,
+    51,
+    49,
+    27,
+    26,
+    28,
+    22
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    36.0,
+    51.0,
+    49.0,
+    27.0,
+    26.0,
+    28.0,
+    22.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     30,
+     36,
+     36,
+     36,
+     36
+    ],
+    [
+     37,
+     51,
+     51,
+     51,
+     51
+    ],
+    [
+     40,
+     40,
+     49,
+     49,
+     49
+    ],
+    [
+     31,
+     30,
+     27,
+     27,
+     27
+    ],
+    [
+     32,
+     23,
+     26,
+     26,
+     26
+    ],
+    [
+     27,
+     19,
+     28,
+     28,
+     28
+    ],
+    [
+     15,
+     26,
+     22,
+     22,
+     22
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "Pacific Crest Community School",
+   "region": "Cleveland / Franklin",
+   "area": "Cleveland",
+   "character": "Private",
+   "grades_served": "6-12",
+   "latest_wave": "2021-22",
+   "peak_total": 93,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    11,
+    12,
+    12,
+    15,
+    16,
+    10,
+    9
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    12.0,
+    13.1,
+    13.1,
+    16.4,
+    17.5,
+    10.9,
+    9.8
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     11,
+     9,
+     14,
+     11,
+     11
+    ],
+    [
+     7,
+     9,
+     13,
+     12,
+     12
+    ],
+    [
+     12,
+     16,
+     12,
+     12,
+     12
+    ],
+    [
+     18,
+     11,
+     14,
+     15,
+     15
+    ],
+    [
+     19,
+     19,
+     13,
+     16,
+     16
+    ],
+    [
+     14,
+     16,
+     11,
+     10,
+     10
+    ],
+    [
+     12,
+     13,
+     13,
+     9,
+     9
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "Portland Adventist Academy",
+   "region": "Grant / McDaniel",
+   "area": "McDaniel",
+   "character": "Private, Seventh-Day Adventist",
+   "grades_served": "9-12",
+   "latest_wave": "2023-24",
+   "peak_total": 285,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    57,
+    54,
+    42,
+    40
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    84.2,
+    79.7,
+    62.0,
+    59.1
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     77,
+     63,
+     51,
+     38,
+     57
+    ],
+    [
+     60,
+     66,
+     50,
+     37,
+     54
+    ],
+    [
+     69,
+     73,
+     69,
+     44,
+     42
+    ],
+    [
+     79,
+     59,
+     47,
+     34,
+     40
+    ]
+   ],
+   "typology": 5
+  },
+  {
+   "name": "Portland Jewish Academy",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Ida B. Wells",
+   "character": "Private, Jewish",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 189,
+   "latest": [
+    15,
+    16,
+    11,
+    18,
+    17,
+    21,
+    20,
+    27,
+    24,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    16.8,
+    17.9,
+    12.3,
+    20.1,
+    19.0,
+    23.5,
+    22.4,
+    30.2,
+    26.8,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     21,
+     15,
+     19,
+     18,
+     15
+    ],
+    [
+     21,
+     25,
+     17,
+     16,
+     16
+    ],
+    [
+     28,
+     22,
+     15,
+     17,
+     11
+    ],
+    [
+     22,
+     17,
+     22,
+     20,
+     18
+    ],
+    [
+     22,
+     27,
+     20,
+     16,
+     17
+    ],
+    [
+     19,
+     23,
+     18,
+     22,
+     21
+    ],
+    [
+     16,
+     24,
+     32,
+     24,
+     20
+    ],
+    [
+     15,
+     19,
+     24,
+     20,
+     27
+    ],
+    [
+     16,
+     13,
+     22,
+     33,
+     24
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 5
+  },
+  {
+   "name": "Rosemary Anderson Middle School",
+   "region": "Jefferson / Roosevelt",
+   "area": "Roosevelt",
+   "character": "Private",
+   "grades_served": "6-8",
+   "latest_wave": "2023-24",
+   "peak_total": 31,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    7,
+    11,
+    13,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    7.0,
+    11.0,
+    13.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     7
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     11
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     13
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "St Agatha Catholic School",
+   "region": "Cleveland / Franklin",
+   "area": "Cleveland",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 198,
+   "latest": [
+    12,
+    15,
+    21,
+    15,
+    17,
+    18,
+    18,
+    12,
+    10,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    17.2,
+    21.5,
+    30.1,
+    21.5,
+    24.4,
+    25.8,
+    25.8,
+    17.2,
+    14.3,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     18,
+     17,
+     17,
+     14.5,
+     12
+    ],
+    [
+     25,
+     13,
+     17,
+     16.0,
+     15
+    ],
+    [
+     21,
+     24,
+     18,
+     19.5,
+     21
+    ],
+    [
+     21,
+     20,
+     11,
+     13.0,
+     15
+    ],
+    [
+     20,
+     18,
+     24,
+     20.5,
+     17
+    ],
+    [
+     18,
+     19,
+     26,
+     22.0,
+     18
+    ],
+    [
+     24,
+     21,
+     17,
+     17.5,
+     18
+    ],
+    [
+     23,
+     17,
+     18,
+     15.0,
+     12
+    ],
+    [
+     28,
+     21,
+     24,
+     17.0,
+     10
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ]
+   ],
+   "typology": 2
+  },
+  {
+   "name": "St Andrew Nativity School",
+   "region": "Jefferson / Roosevelt",
+   "area": "Jefferson / Grant",
+   "character": "Private, Catholic",
+   "grades_served": "6-8",
+   "latest_wave": "2023-24",
+   "peak_total": 83,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    24,
+    27,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    30.7,
+    24.6,
+    27.7,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     29,
+     28,
+     28,
+     27,
+     30
+    ],
+    [
+     29,
+     28,
+     27,
+     28,
+     24
+    ],
+    [
+     25,
+     27,
+     25,
+     28,
+     27
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 3
+  },
+  {
+   "name": "St Clare School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Ida B. Wells",
+   "character": "Private, Catholic",
+   "grades_served": "K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 230,
+   "latest": [
+    24,
+    20,
+    25,
+    22,
+    28,
+    25,
+    28,
+    28,
+    28,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    24.2,
+    20.2,
+    25.2,
+    22.2,
+    28.2,
+    25.2,
+    28.2,
+    28.2,
+    28.2,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     24,
+     16,
+     26,
+     25,
+     24
+    ],
+    [
+     19,
+     19,
+     18,
+     20,
+     20
+    ],
+    [
+     23,
+     24,
+     17,
+     27,
+     25
+    ],
+    [
+     28,
+     18,
+     20,
+     27,
+     22
+    ],
+    [
+     28,
+     22,
+     28,
+     25,
+     28
+    ],
+    [
+     24,
+     27,
+     22,
+     28,
+     25
+    ],
+    [
+     26,
+     25,
+     25,
+     28,
+     28
+    ],
+    [
+     24,
+     27,
+     26,
+     25,
+     28
+    ],
+    [
+     28,
+     24,
+     27,
+     25,
+     28
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 2
+  },
+  {
+   "name": "St Ignatius School",
+   "region": "Cleveland / Franklin",
+   "area": "Franklin",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 218,
+   "latest": [
+    12,
+    15,
+    23,
+    13,
+    23,
+    28,
+    24,
+    27,
+    31,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    13.3,
+    16.7,
+    25.6,
+    14.5,
+    25.6,
+    31.1,
+    26.7,
+    30.0,
+    34.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     23,
+     23,
+     12,
+     21,
+     12
+    ],
+    [
+     23,
+     23,
+     21,
+     11,
+     15
+    ],
+    [
+     24,
+     24,
+     19,
+     17,
+     23
+    ],
+    [
+     25,
+     25,
+     21,
+     28,
+     13
+    ],
+    [
+     17,
+     17,
+     23,
+     18,
+     23
+    ],
+    [
+     29,
+     29,
+     30,
+     21,
+     28
+    ],
+    [
+     29,
+     29,
+     36,
+     30,
+     24
+    ],
+    [
+     21,
+     21,
+     25,
+     30,
+     27
+    ],
+    [
+     27,
+     27,
+     30,
+     37,
+     31
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 2
+  },
+  {
+   "name": "St James Child Development Center",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Lincoln",
+   "character": "Private, Lutheran",
+   "grades_served": "PK, K",
+   "latest_wave": "2021-22",
+   "peak_total": 20,
+   "latest": [
+    10,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    20.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     14,
+     14,
+     20,
+     10,
+     10
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 5
+  },
+  {
+   "name": "St John Fisher",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Ida B. Wells",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 220,
+   "latest": [
+    9,
+    22,
+    22,
+    24,
+    26,
+    26,
+    24,
+    26,
+    25,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    9.7,
+    23.7,
+    23.7,
+    25.9,
+    28.0,
+    28.0,
+    25.9,
+    28.0,
+    27.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     24,
+     21,
+     20,
+     17,
+     9
+    ],
+    [
+     19,
+     24,
+     23,
+     23,
+     22
+    ],
+    [
+     21,
+     28,
+     26,
+     25,
+     22
+    ],
+    [
+     28,
+     20,
+     21,
+     25,
+     24
+    ],
+    [
+     21,
+     22,
+     26,
+     26,
+     26
+    ],
+    [
+     20,
+     25,
+     20,
+     25,
+     26
+    ],
+    [
+     28,
+     23,
+     17,
+     25,
+     24
+    ],
+    [
+     29,
+     22,
+     22,
+     26,
+     26
+    ],
+    [
+     30,
+     29,
+     26,
+     24,
+     25
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 1
+  },
+  {
+   "name": "St John the Baptist Catholic School",
+   "region": "Cleveland / Franklin",
+   "area": "Near the PPS border (listed as an alternative)",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 214,
+   "latest": [
+    18,
+    10,
+    13,
+    16,
+    12,
+    12,
+    13,
+    27,
+    25,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    26.4,
+    14.7,
+    19.1,
+    23.5,
+    17.6,
+    17.6,
+    19.1,
+    39.6,
+    36.6,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     19,
+     12,
+     19,
+     25,
+     18
+    ],
+    [
+     21,
+     21,
+     16,
+     23,
+     10
+    ],
+    [
+     19,
+     18,
+     14,
+     27,
+     13
+    ],
+    [
+     22,
+     23,
+     15,
+     18,
+     16
+    ],
+    [
+     20,
+     17,
+     22,
+     24,
+     12
+    ],
+    [
+     19,
+     19,
+     17,
+     26,
+     12
+    ],
+    [
+     17,
+     21,
+     19,
+     26,
+     13
+    ],
+    [
+     21,
+     17,
+     19,
+     26,
+     27
+    ],
+    [
+     20,
+     19,
+     17,
+     19,
+     25
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 2
+  },
+  {
+   "name": "St Marys Academy",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Lincoln",
+   "character": "Private, Catholic",
+   "grades_served": "9-12",
+   "latest_wave": "2023-24",
+   "peak_total": 720,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    146,
+    157,
+    145,
+    158
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    173.5,
+    186.5,
+    172.3,
+    187.7
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     186,
+     188,
+     154,
+     150.0,
+     146
+    ],
+    [
+     198,
+     162,
+     216,
+     186.5,
+     157
+    ],
+    [
+     193,
+     171,
+     0,
+     72.5,
+     145
+    ],
+    [
+     143,
+     174,
+     0,
+     79.0,
+     158
+    ]
+   ],
+   "typology": 3
+  },
+  {
+   "name": "St Rose School",
+   "region": "Grant / McDaniel",
+   "area": "Grant",
+   "character": "Private, Catholic",
+   "grades_served": "PK, K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 244,
+   "latest": [
+    17,
+    10,
+    19,
+    17,
+    25,
+    24,
+    28,
+    30,
+    24,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    21.4,
+    12.6,
+    23.9,
+    21.4,
+    31.4,
+    30.2,
+    35.2,
+    37.7,
+    30.2,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     24,
+     25,
+     21.0,
+     17,
+     17
+    ],
+    [
+     18,
+     24,
+     26.0,
+     28,
+     10
+    ],
+    [
+     19,
+     25,
+     24.5,
+     24,
+     19
+    ],
+    [
+     18,
+     24,
+     27.0,
+     30,
+     17
+    ],
+    [
+     27,
+     22,
+     24.5,
+     27,
+     25
+    ],
+    [
+     19,
+     28,
+     29.0,
+     30,
+     24
+    ],
+    [
+     17,
+     27,
+     28.0,
+     29,
+     28
+    ],
+    [
+     12,
+     26,
+     27.0,
+     28,
+     30
+    ],
+    [
+     28,
+     19,
+     25.0,
+     31,
+     24
+    ],
+    [
+     0,
+     0,
+     0.0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0.0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0.0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0.0,
+     0,
+     0
+    ]
+   ],
+   "typology": 1
+  },
+  {
+   "name": "St Thomas More School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Lincoln",
+   "character": "Private, Catholic",
+   "grades_served": "K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 222,
+   "latest": [
+    18,
+    14,
+    20,
+    20,
+    22,
+    27,
+    24,
+    22,
+    26,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    20.7,
+    16.1,
+    23.0,
+    23.0,
+    25.3,
+    31.1,
+    27.6,
+    25.3,
+    29.9,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     15,
+     20,
+     22,
+     22,
+     18
+    ],
+    [
+     26,
+     0,
+     20,
+     21,
+     14
+    ],
+    [
+     22,
+     0,
+     21,
+     21,
+     20
+    ],
+    [
+     25,
+     0,
+     19,
+     26,
+     20
+    ],
+    [
+     26,
+     0,
+     22,
+     26,
+     22
+    ],
+    [
+     27,
+     0,
+     28,
+     26,
+     27
+    ],
+    [
+     27,
+     0,
+     26,
+     26,
+     24
+    ],
+    [
+     26,
+     0,
+     27,
+     27,
+     22
+    ],
+    [
+     26,
+     0,
+     26,
+     27,
+     26
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 2
+  },
+  {
+   "name": "The Madeleine Elementary School",
+   "region": "Grant / McDaniel",
+   "area": "Jefferson / Grant",
+   "character": "Private, Catholic",
+   "grades_served": "K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 270,
+   "latest": [
+    22,
+    30,
+    30,
+    27,
+    30,
+    30,
+    30,
+    29,
+    28,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    23.2,
+    31.6,
+    31.6,
+    28.5,
+    31.6,
+    31.6,
+    31.6,
+    30.6,
+    29.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     24,
+     24,
+     25,
+     30,
+     22
+    ],
+    [
+     28,
+     29,
+     30,
+     30,
+     30
+    ],
+    [
+     29,
+     30,
+     30,
+     30,
+     30
+    ],
+    [
+     30,
+     30,
+     29,
+     30,
+     27
+    ],
+    [
+     30,
+     30,
+     30,
+     30,
+     30
+    ],
+    [
+     30,
+     30,
+     30,
+     30,
+     30
+    ],
+    [
+     31,
+     30,
+     30,
+     30,
+     30
+    ],
+    [
+     26,
+     30,
+     30,
+     30,
+     29
+    ],
+    [
+     30,
+     30,
+     30,
+     30,
+     28
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 2
+  },
+  {
+   "name": "The Montessori House of St Johns",
+   "region": "Jefferson / Roosevelt",
+   "area": "Roosevelt",
+   "character": "Private",
+   "grades_served": "PK, K",
+   "latest_wave": "2021-22",
+   "peak_total": 2,
+   "latest": [
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    2.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     2,
+     2
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "Trinity Academy",
+   "region": "Jefferson / Roosevelt",
+   "area": "Jefferson / Roosevelt",
+   "character": "Private, Christian (General)",
+   "grades_served": "6-12",
+   "latest_wave": "2023-24",
+   "peak_total": 126,
+   "latest": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    20,
+    23,
+    19,
+    21,
+    19,
+    11,
+    13
+   ],
+   "capacity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    20.0,
+    23.0,
+    19.0,
+    21.0,
+    19.0,
+    11.0,
+    13.0
+   ],
+   "series": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     15,
+     20
+    ],
+    [
+     0,
+     0,
+     0,
+     21,
+     23
+    ],
+    [
+     0,
+     0,
+     0,
+     21,
+     19
+    ],
+    [
+     0,
+     0,
+     0,
+     13,
+     21
+    ],
+    [
+     0,
+     0,
+     0,
+     14,
+     19
+    ],
+    [
+     0,
+     0,
+     0,
+     9,
+     11
+    ],
+    [
+     0,
+     0,
+     0,
+     11,
+     13
+    ]
+   ],
+   "typology": 6
+  },
+  {
+   "name": "Trinity Lutheran School",
+   "region": "Grant / McDaniel",
+   "area": "McDaniel",
+   "character": "Private, Lutheran",
+   "grades_served": "K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 77,
+   "latest": [
+    6,
+    6,
+    4,
+    6,
+    6,
+    4,
+    6,
+    6,
+    6,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    9.2,
+    9.2,
+    6.2,
+    9.2,
+    9.2,
+    6.2,
+    9.2,
+    9.2,
+    9.2,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     6,
+     9,
+     11,
+     6,
+     6
+    ],
+    [
+     7,
+     6,
+     6,
+     5,
+     6
+    ],
+    [
+     7,
+     8,
+     6,
+     12,
+     4
+    ],
+    [
+     13,
+     3,
+     6,
+     7,
+     6
+    ],
+    [
+     5,
+     2,
+     6,
+     5,
+     6
+    ],
+    [
+     14,
+     9,
+     6,
+     7,
+     4
+    ],
+    [
+     8,
+     5,
+     6,
+     8,
+     6
+    ],
+    [
+     8,
+     12,
+     7,
+     3,
+     6
+    ],
+    [
+     9,
+     9,
+     9,
+     6,
+     6
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 5
+  },
+  {
+   "name": "Tucker Maxon School",
+   "region": "Cleveland / Franklin",
+   "area": "Cleveland",
+   "character": "Private",
+   "grades_served": "PK, K-5",
+   "latest_wave": "2023-24",
+   "peak_total": 62,
+   "latest": [
+    9,
+    6,
+    7,
+    5,
+    17,
+    4,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    11.6,
+    7.8,
+    9.0,
+    6.5,
+    22.0,
+    5.2,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     14,
+     9,
+     12,
+     12,
+     9
+    ],
+    [
+     11,
+     9,
+     7,
+     11,
+     6
+    ],
+    [
+     9,
+     11,
+     3,
+     19,
+     7
+    ],
+    [
+     9,
+     11,
+     6,
+     10,
+     5
+    ],
+    [
+     6,
+     6,
+     8,
+     4,
+     17
+    ],
+    [
+     6,
+     7,
+     9,
+     6,
+     4
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "Venn Academy",
+   "region": "Cleveland / Franklin",
+   "area": "Cleveland",
+   "character": "Private",
+   "grades_served": "K-7",
+   "latest_wave": "2021-22",
+   "peak_total": 15,
+   "latest": [
+    3,
+    2,
+    2,
+    2,
+    3,
+    2,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    3.0,
+    2.0,
+    2.0,
+    2.0,
+    3.0,
+    2.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     0,
+     1,
+     2,
+     3,
+     3
+    ],
+    [
+     0,
+     1,
+     1,
+     2,
+     2
+    ],
+    [
+     0,
+     1,
+     4,
+     2,
+     2
+    ],
+    [
+     0,
+     1,
+     2,
+     2,
+     2
+    ],
+    [
+     0,
+     0,
+     1,
+     3,
+     3
+    ],
+    [
+     0,
+     1,
+     0,
+     2,
+     2
+    ],
+    [
+     0,
+     3,
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     2,
+     2,
+     1,
+     1
+    ],
+    [
+     0,
+     2,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "typology": 7
+  },
+  {
+   "name": "West Hills Christian School",
+   "region": "Ida B. Wells / Lincoln",
+   "area": "Ida B. Wells",
+   "character": "Private, Christian (General)",
+   "grades_served": "K-8",
+   "latest_wave": "2023-24",
+   "peak_total": 425,
+   "latest": [
+    20,
+    37,
+    26,
+    29,
+    39,
+    33,
+    52,
+    40,
+    46,
+    0,
+    0,
+    0,
+    0
+   ],
+   "capacity": [
+    26.4,
+    48.8,
+    34.3,
+    38.3,
+    51.5,
+    43.6,
+    68.6,
+    52.8,
+    60.7,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "series": [
+    [
+     39,
+     33,
+     28.7,
+     24.3,
+     20
+    ],
+    [
+     41,
+     33,
+     34.3,
+     35.7,
+     37
+    ],
+    [
+     40,
+     39,
+     34.7,
+     30.3,
+     26
+    ],
+    [
+     46,
+     36,
+     33.7,
+     31.3,
+     29
+    ],
+    [
+     49,
+     40,
+     39.7,
+     39.3,
+     39
+    ],
+    [
+     52,
+     42,
+     39.0,
+     36.0,
+     33
+    ],
+    [
+     50,
+     54,
+     53.3,
+     52.7,
+     52
+    ],
+    [
+     56,
+     50,
+     46.7,
+     43.3,
+     40
+    ],
+    [
+     52,
+     50,
+     48.7,
+     47.3,
+     46
+    ],
+    [
+     0,
+     0,
+     0.0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0.0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0.0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0.0,
+     0.0,
+     0
+    ]
+   ],
+   "typology": 4
+  }
+ ]
+}

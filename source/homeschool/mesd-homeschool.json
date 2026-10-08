@@ -1,0 +1,198 @@
+{
+ "source": "Multnomah Education Service District homeschool registrations: Homeschool Data Briefs (November 2023, 2024, 2025), the detailed registration spreadsheet linked from the November 2025 brief, and the 2022 Homeschool Report",
+ "note": "Homeschool registrations for the Portland School District and Multnomah County, 2020-21 on, from Multnomah ESD\n(which registers homeschooling families in the county; ORS 339.010, OAR 581-021-0026):\n  - new registrations by district and school year: the \"full detailed report\" spreadsheet linked from the\n    November 2025 Homeschool Data Brief (archive/homeschool/mesd-detail-2025.csv; 2025-26 is July-October only)\n  - students registered by district on November 1: the 2023, 2024 and 2025 November Homeschool Data Briefs\n  - county total of about 3,700 on June 1, 2022: the 2022 Homeschool Report (no district breakdown published)\nFamilies must notify MESD when they start homeschooling but not when they stop, so registered totals can overcount\n(and records cleanups can make them drop sharply); families unaware of the rule are not counted.",
+ "new_registrations": {
+  "Portland": {
+   "2020-21": 841,
+   "2021-22": 473,
+   "2022-23": 212,
+   "2023-24": 275,
+   "2024-25": 240,
+   "2025-26": 120
+  },
+  "Multnomah County": {
+   "2020-21": 1754,
+   "2021-22": 938,
+   "2022-23": 460,
+   "2023-24": 542,
+   "2024-25": 503,
+   "2025-26": 266
+  }
+ },
+ "new_registrations_partial_year": "2025-26 (July to October)",
+ "registered_nov1": {
+  "Portland": {
+   "2023": 1585,
+   "2024": 1414,
+   "2025": 787
+  },
+  "Multnomah County": {
+   "2023": 3117,
+   "2024": 2876,
+   "2025": 2102
+  }
+ },
+ "registered_county_jun1_2022": 3700,
+ "pre_2020_portland_new_registrations": {
+  "2017-18": 311,
+  "2018-19": 314,
+  "2019-20": 289
+ },
+ "years": [
+  "2017-18",
+  "2018-19",
+  "2019-20",
+  "2020-21",
+  "2021-22",
+  "2022-23",
+  "2023-24",
+  "2024-25",
+  "2025-26"
+ ],
+ "by_district": {
+  "Centennial": {
+   "new": {
+    "2017-18": 28,
+    "2018-19": 32,
+    "2019-20": 31,
+    "2020-21": 119,
+    "2021-22": 58,
+    "2022-23": 38,
+    "2023-24": 28,
+    "2024-25": 36,
+    "2025-26": 13
+   },
+   "registered_nov1": {
+    "2023": 205,
+    "2024": 213,
+    "2025": 183
+   }
+  },
+  "Corbett": {
+   "new": {
+    "2017-18": 15,
+    "2018-19": 2,
+    "2019-20": 3,
+    "2020-21": 50,
+    "2021-22": 10,
+    "2022-23": 6,
+    "2023-24": 10,
+    "2024-25": 13,
+    "2025-26": 4
+   },
+   "registered_nov1": {
+    "2023": 64,
+    "2024": 66,
+    "2025": 62
+   }
+  },
+  "David Douglas": {
+   "new": {
+    "2017-18": 49,
+    "2018-19": 48,
+    "2019-20": 33,
+    "2020-21": 137,
+    "2021-22": 81,
+    "2022-23": 40,
+    "2023-24": 52,
+    "2024-25": 54,
+    "2025-26": 34
+   },
+   "registered_nov1": {
+    "2023": 271,
+    "2024": 274,
+    "2025": 240
+   }
+  },
+  "Gresham Barlow": {
+   "new": {
+    "2017-18": 92,
+    "2018-19": 82,
+    "2019-20": 58,
+    "2020-21": 394,
+    "2021-22": 146,
+    "2022-23": 84,
+    "2023-24": 85,
+    "2024-25": 95,
+    "2025-26": 43
+   },
+   "registered_nov1": {
+    "2023": 564,
+    "2024": 525,
+    "2025": 451
+   }
+  },
+  "Parkrose": {
+   "new": {
+    "2017-18": 17,
+    "2018-19": 17,
+    "2019-20": 20,
+    "2020-21": 49,
+    "2021-22": 20,
+    "2022-23": 19,
+    "2023-24": 30,
+    "2024-25": 12,
+    "2025-26": 15
+   },
+   "registered_nov1": {
+    "2023": 89,
+    "2024": 81,
+    "2025": 91
+   }
+  },
+  "Portland": {
+   "new": {
+    "2017-18": 311,
+    "2018-19": 314,
+    "2019-20": 289,
+    "2020-21": 841,
+    "2021-22": 473,
+    "2022-23": 212,
+    "2023-24": 275,
+    "2024-25": 240,
+    "2025-26": 120
+   },
+   "registered_nov1": {
+    "2023": 1585,
+    "2024": 1414,
+    "2025": 787
+   }
+  },
+  "Reynolds": {
+   "new": {
+    "2017-18": 58,
+    "2018-19": 63,
+    "2019-20": 78,
+    "2020-21": 156,
+    "2021-22": 148,
+    "2022-23": 61,
+    "2023-24": 62,
+    "2024-25": 52,
+    "2025-26": 36
+   },
+   "registered_nov1": {
+    "2023": 338,
+    "2024": 303,
+    "2025": 287
+   }
+  },
+  "Riverdale": {
+   "new": {
+    "2017-18": 1,
+    "2018-19": 2,
+    "2019-20": 0,
+    "2020-21": 8,
+    "2021-22": 2,
+    "2022-23": 0,
+    "2023-24": 0,
+    "2024-25": 1,
+    "2025-26": 1
+   },
+   "registered_nov1": {
+    "2023": 1,
+    "2024": 0,
+    "2025": 1
+   }
+  }
+ }
+}

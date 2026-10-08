@@ -1,0 +1,1566 @@
+{
+ "source": "rightsizing-scenario-explorer.html: alternatives() in Scenarios A and B (private schools within each affected PPS school's relocation distance, or its nearest when none are) and nearestPPS()",
+ "listed": {
+  "Holy Redeemer Catholic School": [
+   {
+    "school": "Beach",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 1.69,
+    "how": "nearest"
+   },
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 1.78,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 1.67,
+    "how": "within"
+   },
+   {
+    "school": "Beach",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 1.69,
+    "how": "nearest"
+   },
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 1.78,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 1.67,
+    "how": "within"
+   }
+  ],
+  "All Saints School": [
+   {
+    "school": "Beverly Cleary",
+    "region": "Grant / McDaniel",
+    "scenario": "A",
+    "mi": 1.02,
+    "how": "within"
+   },
+   {
+    "school": "Laurelhurst",
+    "region": "Grant / McDaniel",
+    "scenario": "A",
+    "mi": 0.37,
+    "how": "within"
+   },
+   {
+    "school": "Beverly Cleary",
+    "region": "Grant / McDaniel",
+    "scenario": "B",
+    "mi": 1.02,
+    "how": "within"
+   },
+   {
+    "school": "Laurelhurst",
+    "region": "Grant / McDaniel",
+    "scenario": "B",
+    "mi": 0.37,
+    "how": "within"
+   }
+  ],
+  "Pacific Crest Community School": [
+   {
+    "school": "Beverly Cleary",
+    "region": "Grant / McDaniel",
+    "scenario": "A",
+    "mi": 1.12,
+    "how": "within"
+   },
+   {
+    "school": "Laurelhurst",
+    "region": "Grant / McDaniel",
+    "scenario": "A",
+    "mi": 1,
+    "how": "within"
+   },
+   {
+    "school": "Sunnyside Environmental",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 1.01,
+    "how": "nearest"
+   },
+   {
+    "school": "Beverly Cleary",
+    "region": "Grant / McDaniel",
+    "scenario": "B",
+    "mi": 1.12,
+    "how": "within"
+   },
+   {
+    "school": "Laurelhurst",
+    "region": "Grant / McDaniel",
+    "scenario": "B",
+    "mi": 1,
+    "how": "within"
+   },
+   {
+    "school": "Sunnyside Environmental",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 1.01,
+    "how": "nearest"
+   }
+  ],
+  "The Madeleine Elementary School": [
+   {
+    "school": "Beverly Cleary",
+    "region": "Grant / McDaniel",
+    "scenario": "A",
+    "mi": 1.14,
+    "how": "within"
+   },
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 2.17,
+    "how": "within"
+   },
+   {
+    "school": "Irvington",
+    "region": "Grant / McDaniel",
+    "scenario": "A",
+    "mi": 0.93,
+    "how": "within"
+   },
+   {
+    "school": "Sabin",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 0.93,
+    "how": "nearest"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 1.43,
+    "how": "within"
+   },
+   {
+    "school": "Beverly Cleary",
+    "region": "Grant / McDaniel",
+    "scenario": "B",
+    "mi": 1.14,
+    "how": "within"
+   },
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 2.17,
+    "how": "within"
+   },
+   {
+    "school": "Irvington",
+    "region": "Grant / McDaniel",
+    "scenario": "B",
+    "mi": 0.93,
+    "how": "within"
+   },
+   {
+    "school": "Sabin",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 0.93,
+    "how": "nearest"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 1.43,
+    "how": "within"
+   }
+  ],
+  "Grace Lutheran School": [
+   {
+    "school": "Bridger Creative Science",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 1.11,
+    "how": "nearest"
+   },
+   {
+    "school": "Bridger Creative Science",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 1.11,
+    "how": "nearest"
+   }
+  ],
+  "Venn Academy": [
+   {
+    "school": "Buckman",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 1.38,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 4.18,
+    "how": "within"
+   },
+   {
+    "school": "Buckman",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 1.38,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 4.18,
+    "how": "within"
+   }
+  ],
+  "St Ignatius School": [
+   {
+    "school": "Creston",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 0.61,
+    "how": "within"
+   },
+   {
+    "school": "Creston",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 0.61,
+    "how": "within"
+   }
+  ],
+  "Holy Cross Catholic School": [
+   {
+    "school": "César Chávez",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 0.35,
+    "how": "within"
+   },
+   {
+    "school": "James John",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 1.8,
+    "how": "nearest"
+   },
+   {
+    "school": "César Chávez",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 0.35,
+    "how": "within"
+   },
+   {
+    "school": "James John",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 1.8,
+    "how": "nearest"
+   }
+  ],
+  "Rosemary Anderson Middle School": [
+   {
+    "school": "César Chávez",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 0.62,
+    "how": "within"
+   },
+   {
+    "school": "César Chávez",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 0.62,
+    "how": "within"
+   }
+  ],
+  "Shining Star Waldorf School": [
+   {
+    "school": "César Chávez",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 0.87,
+    "how": "within"
+   },
+   {
+    "school": "Peninsula",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 0.85,
+    "how": "within"
+   },
+   {
+    "school": "César Chávez",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 0.87,
+    "how": "within"
+   },
+   {
+    "school": "Peninsula",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 0.85,
+    "how": "within"
+   }
+  ],
+  "Fora Health Alternative School": [
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 1.59,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 1.35,
+    "how": "within"
+   },
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 1.59,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 1.35,
+    "how": "within"
+   }
+  ],
+  "St Andrew Nativity School": [
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 2.02,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 0.9,
+    "how": "within"
+   },
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 2.02,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 0.9,
+    "how": "within"
+   }
+  ],
+  "Trinity Lutheran School": [
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 2.11,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 1.97,
+    "how": "within"
+   },
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 2.11,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 1.97,
+    "how": "within"
+   }
+  ],
+  "Trinity Academy": [
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 2.25,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 2.55,
+    "how": "within"
+   },
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 2.25,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 2.55,
+    "how": "within"
+   }
+  ],
+  "Community Transitional School": [
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 2.44,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 2.38,
+    "how": "within"
+   },
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 2.44,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 2.38,
+    "how": "within"
+   }
+  ],
+  "Rosemary Anderson High School/Portland OIC": [
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 2.64,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "A",
+    "mi": 1.53,
+    "how": "within"
+   },
+   {
+    "school": "Faubion",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 2.64,
+    "how": "within"
+   },
+   {
+    "school": "Vernon",
+    "region": "Jefferson / Roosevelt",
+    "scenario": "B",
+    "mi": 1.53,
+    "how": "within"
+   }
+  ],
+  "Puddletown School": [
+   {
+    "school": "Lewis",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 0.43,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 2.37,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 2.37,
+    "how": "within"
+   }
+  ],
+  "Holy Family School": [
+   {
+    "school": "Lewis",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 0.55,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 2.49,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 2.49,
+    "how": "within"
+   }
+  ],
+  "Sunstone Montessori School": [
+   {
+    "school": "Lewis",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 0.94,
+    "how": "within"
+   },
+   {
+    "school": "Marysville",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 1.71,
+    "how": "nearest"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 3.23,
+    "how": "within"
+   },
+   {
+    "school": "Woodmere",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 1.64,
+    "how": "nearest"
+   },
+   {
+    "school": "Marysville",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 1.71,
+    "how": "nearest"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 3.23,
+    "how": "within"
+   },
+   {
+    "school": "Woodmere",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 1.64,
+    "how": "nearest"
+   }
+  ],
+  "West Hills Montessori School-Vermont": [
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 0.67,
+    "how": "within"
+   },
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "B",
+    "mi": 0.67,
+    "how": "within"
+   }
+  ],
+  "St John Fisher": [
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 0.98,
+    "how": "within"
+   },
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "B",
+    "mi": 0.98,
+    "how": "within"
+   }
+  ],
+  "Child's View Montessori School": [
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 1.4,
+    "how": "within"
+   },
+   {
+    "school": "Stephenson",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 2.11,
+    "how": "within"
+   },
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "B",
+    "mi": 1.4,
+    "how": "within"
+   }
+  ],
+  "Portland Jewish Academy": [
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 1.73,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 4.35,
+    "how": "within"
+   },
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "B",
+    "mi": 1.73,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 4.35,
+    "how": "within"
+   }
+  ],
+  "West Hills Christian School": [
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 1.8,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 3.57,
+    "how": "within"
+   },
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "B",
+    "mi": 1.8,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 3.57,
+    "how": "within"
+   }
+  ],
+  "Islamic School of Portland": [
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 1.85,
+    "how": "within"
+   },
+   {
+    "school": "Stephenson",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 1.78,
+    "how": "within"
+   },
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "B",
+    "mi": 1.85,
+    "how": "within"
+   }
+  ],
+  "Double Creek School for Gifted Children": [
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 1.92,
+    "how": "within"
+   },
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "B",
+    "mi": 1.92,
+    "how": "within"
+   }
+  ],
+  "St Clare School": [
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 1.93,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 3.14,
+    "how": "within"
+   },
+   {
+    "school": "Stephenson",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 2.72,
+    "how": "within"
+   },
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "B",
+    "mi": 1.93,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 3.14,
+    "how": "within"
+   }
+  ],
+  "Maimonides Jewish Day School": [
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 1.95,
+    "how": "within"
+   },
+   {
+    "school": "Maplewood",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "B",
+    "mi": 1.95,
+    "how": "within"
+   }
+  ],
+  "St Rose School": [
+   {
+    "school": "Rose City Park",
+    "region": "Grant / McDaniel",
+    "scenario": "A",
+    "mi": 0.44,
+    "how": "within"
+   }
+  ],
+  "St Agatha Catholic School": [
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 0.28,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 0.28,
+    "how": "within"
+   }
+  ],
+  "Portland Waldorf School": [
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 1.73,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 1.73,
+    "how": "within"
+   }
+  ],
+  "St John the Baptist Catholic School": [
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 1.94,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 1.94,
+    "how": "within"
+   }
+  ],
+  "A Renaissance School of Arts and Sciences": [
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 3.1,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 3.1,
+    "how": "within"
+   }
+  ],
+  "Cedarwood Waldorf School": [
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 3.82,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 3.82,
+    "how": "within"
+   }
+  ],
+  "Bridges Middle School": [
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "A",
+    "mi": 4.04,
+    "how": "within"
+   },
+   {
+    "school": "Sellwood",
+    "region": "Cleveland / Franklin",
+    "scenario": "B",
+    "mi": 4.04,
+    "how": "within"
+   }
+  ],
+  "Maayan Torah Day School": [
+   {
+    "school": "Stephenson",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 1.82,
+    "how": "within"
+   }
+  ],
+  "International Leadership Academy": [
+   {
+    "school": "Stephenson",
+    "region": "Ida B. Wells / Lincoln",
+    "scenario": "A",
+    "mi": 2.29,
+    "how": "within"
+   }
+  ]
+ },
+ "nearest": {
+  "A Renaissance School of Arts and Sciences": {
+   "school": "Ida B Wells-Barnett",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 2.02,
+   "road": true
+  },
+  "Activate School": {
+   "school": "Sellwood",
+   "region": "Cleveland / Franklin",
+   "mi": 0.38,
+   "road": true
+  },
+  "All Saints School": {
+   "school": "Laurelhurst",
+   "region": "Grant / McDaniel",
+   "mi": 0.37,
+   "road": true
+  },
+  "Altiar School": {
+   "school": "Forest Park",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 4.22,
+   "road": true
+  },
+  "Barnes-Miller Child Development Center": {
+   "school": "Odyssey",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.85,
+   "road": false
+  },
+  "Beautiful Savior Lutheran Preschool": {
+   "school": "Kelly",
+   "region": "Cleveland / Franklin",
+   "mi": 1.46,
+   "road": false
+  },
+  "Bethany Village Montessori": {
+   "school": "Forest Park",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 2.8,
+   "road": false
+  },
+  "Bridges Middle School": {
+   "school": "Abernethy",
+   "region": "Cleveland / Franklin",
+   "mi": 1.85,
+   "road": true
+  },
+  "Busy Hands Montessori": {
+   "school": "Forest Park",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 2.1,
+   "road": false
+  },
+  "Cathedral School": {
+   "school": "Lincoln",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.45,
+   "road": true
+  },
+  "Catlin Gabel School": {
+   "school": "Odyssey",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 3.08,
+   "road": true
+  },
+  "Cedar Hills Kindergarten and Preschool": {
+   "school": "West Sylvan",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.78,
+   "road": false
+  },
+  "Cedarwood Waldorf School": {
+   "school": "Abernethy",
+   "region": "Cleveland / Franklin",
+   "mi": 1.96,
+   "road": true
+  },
+  "Central Catholic High School": {
+   "school": "Buckman",
+   "region": "Cleveland / Franklin",
+   "mi": 0.42,
+   "road": true
+  },
+  "Chestnut Grove Montessori Childrens House": {
+   "school": "Sellwood",
+   "region": "Cleveland / Franklin",
+   "mi": 0.37,
+   "road": false
+  },
+  "Child's View Montessori School": {
+   "school": "Markham",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.88,
+   "road": true
+  },
+  "Childpeace Montessori School": {
+   "school": "Chapman",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.09,
+   "road": true
+  },
+  "Chinese American International School": {
+   "school": "Stephenson",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 2.56,
+   "road": false
+  },
+  "Christ the King Catholic School": {
+   "school": "Whitman",
+   "region": "Cleveland / Franklin",
+   "mi": 2.76,
+   "road": true
+  },
+  "Christa McAuliffe Academy - School of Arts and Sciences": {
+   "school": "Stephenson",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 3.24,
+   "road": true
+  },
+  "Class Academy": {
+   "school": "Chapman",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.68,
+   "road": true
+  },
+  "Columbia Christian Schools": {
+   "school": "Vestal",
+   "region": "Grant / McDaniel",
+   "mi": 0.57,
+   "road": true
+  },
+  "Community Transitional School": {
+   "school": "Scott",
+   "region": "Grant / McDaniel",
+   "mi": 0.75,
+   "road": true
+  },
+  "De La Salle North Catholic High School": {
+   "school": "Beaumont",
+   "region": "Grant / McDaniel",
+   "mi": 0.93,
+   "road": true
+  },
+  "Double Creek School for Gifted Children": {
+   "school": "Hayhurst",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.9,
+   "road": true
+  },
+  "Edison High School": {
+   "school": "West Sylvan",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.95,
+   "road": true
+  },
+  "For Autism Minds Everywhere": {
+   "school": "Maplewood",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 3.65,
+   "road": true
+  },
+  "Fora Health Alternative School": {
+   "school": "Beaumont",
+   "region": "Grant / McDaniel",
+   "mi": 0.99,
+   "road": true
+  },
+  "Franciscan Montessori Earth School": {
+   "school": "Harrison Park",
+   "region": "Grant / McDaniel",
+   "mi": 3.45,
+   "road": true
+  },
+  "French International School of Oregon": {
+   "school": "Forest Park",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.86,
+   "road": true
+  },
+  "Goodtime Chinese School": {
+   "school": "Forest Park",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 4.16,
+   "road": true
+  },
+  "Grace Lutheran School": {
+   "school": "Clark",
+   "region": "Grant / McDaniel",
+   "mi": 0.72,
+   "road": true
+  },
+  "Happy Day Christian Child Care": {
+   "school": "Clark",
+   "region": "Grant / McDaniel",
+   "mi": 0.42,
+   "road": false
+  },
+  "Harmony Montessori School": {
+   "school": "Clark",
+   "region": "Grant / McDaniel",
+   "mi": 1.17,
+   "road": true
+  },
+  "Hilltop Early Learning Academy": {
+   "school": "Gray",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.29,
+   "road": false
+  },
+  "Holy Cross Catholic School": {
+   "school": "César Chávez",
+   "region": "Jefferson / Roosevelt",
+   "mi": 0.35,
+   "road": true
+  },
+  "Holy Family School": {
+   "school": "Duniway",
+   "region": "Cleveland / Franklin",
+   "mi": 0.53,
+   "road": true
+  },
+  "Holy Redeemer Catholic School": {
+   "school": "Jefferson",
+   "region": "Jefferson / Roosevelt",
+   "mi": 0.82,
+   "road": true
+  },
+  "International Leadership Academy": {
+   "school": "Stephenson",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 2.29,
+   "road": true
+  },
+  "International School of Portland": {
+   "school": "Lincoln",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.83,
+   "road": true
+  },
+  "Islamic School of Portland": {
+   "school": "Markham",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.43,
+   "road": true
+  },
+  "Jesuit High School": {
+   "school": "West Sylvan",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.93,
+   "road": true
+  },
+  "L'Etoile French Immersion School": {
+   "school": "Sellwood",
+   "region": "Cleveland / Franklin",
+   "mi": 2.26,
+   "road": true
+  },
+  "La Salle Catholic College Preparatory": {
+   "school": "Whitman",
+   "region": "Cleveland / Franklin",
+   "mi": 2.84,
+   "road": true
+  },
+  "Lindamood-Bell Learning Processes Portland": {
+   "school": "Odyssey",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.28,
+   "road": true
+  },
+  "Maayan Torah Day School": {
+   "school": "Stephenson",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.82,
+   "road": true
+  },
+  "Maimonides Jewish Day School": {
+   "school": "Rieke",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.48,
+   "road": true
+  },
+  "Montessori Childrens House": {
+   "school": "Winterhaven",
+   "region": "Cleveland / Franklin",
+   "mi": 0.95,
+   "road": false
+  },
+  "Montessori School of Beaverton": {
+   "school": "Forest Park",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.81,
+   "road": true
+  },
+  "Montessori of Alameda": {
+   "school": "Beaumont",
+   "region": "Grant / McDaniel",
+   "mi": 0.52,
+   "road": false
+  },
+  "Mt Scott Park Center for Learning": {
+   "school": "Arleta",
+   "region": "Cleveland / Franklin",
+   "mi": 0.41,
+   "road": true
+  },
+  "Northwest Academy": {
+   "school": "Lincoln",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.49,
+   "road": true
+  },
+  "Oregon Episcopal School": {
+   "school": "Bridlemile",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 2.73,
+   "road": true
+  },
+  "Oregon Hope Chinese School": {
+   "school": "Forest Park",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 2.55,
+   "road": false
+  },
+  "Oregon Outreach": {
+   "school": "Chief Joseph",
+   "region": "Jefferson / Roosevelt",
+   "mi": 0.44,
+   "road": true
+  },
+  "Our Lady of the Lake Catholic School": {
+   "school": "Stephenson",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 3.62,
+   "road": true
+  },
+  "Pacific Crest Community School": {
+   "school": "Buckman",
+   "region": "Cleveland / Franklin",
+   "mi": 0.91,
+   "road": true
+  },
+  "Park Academy": {
+   "school": "Stephenson",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 5.59,
+   "road": true
+  },
+  "Parkrose Montessori": {
+   "school": "Lee",
+   "region": "Grant / McDaniel",
+   "mi": 2.01,
+   "road": false
+  },
+  "Portland Adventist Academy": {
+   "school": "Clark",
+   "region": "Grant / McDaniel",
+   "mi": 0.59,
+   "road": true
+  },
+  "Portland Chinese School": {
+   "school": "Lincoln",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.96,
+   "road": true
+  },
+  "Portland Christian Elementary School": {
+   "school": "Clark",
+   "region": "Grant / McDaniel",
+   "mi": 2.01,
+   "road": true
+  },
+  "Portland Christian Schools": {
+   "school": "Lee",
+   "region": "Grant / McDaniel",
+   "mi": 2.47,
+   "road": true
+  },
+  "Portland Jewish Academy": {
+   "school": "Rieke",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.62,
+   "road": true
+  },
+  "Portland Montessori Collaborative": {
+   "school": "Bridlemile",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.4,
+   "road": false
+  },
+  "Portland Waldorf School": {
+   "school": "Sellwood",
+   "region": "Cleveland / Franklin",
+   "mi": 1.73,
+   "road": true
+  },
+  "Portland Youthbuilders": {
+   "school": "Lent",
+   "region": "Cleveland / Franklin",
+   "mi": 0.78,
+   "road": true
+  },
+  "Prince of Peace School": {
+   "school": "Forest Park",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 2.33,
+   "road": false
+  },
+  "Puddletown School": {
+   "school": "Lewis",
+   "region": "Cleveland / Franklin",
+   "mi": 0.43,
+   "road": true
+  },
+  "Rosemary Anderson High School/Portland OIC": {
+   "school": "Jefferson",
+   "region": "Jefferson / Roosevelt",
+   "mi": 0.36,
+   "road": true
+  },
+  "Rosemary Anderson Middle School": {
+   "school": "Rosa Parks",
+   "region": "Jefferson / Roosevelt",
+   "mi": 0.12,
+   "road": true
+  },
+  "Shining Star Waldorf School": {
+   "school": "Peninsula",
+   "region": "Jefferson / Roosevelt",
+   "mi": 0.85,
+   "road": true
+  },
+  "Slavic Christian Academy": {
+   "school": "Kelly",
+   "region": "Cleveland / Franklin",
+   "mi": 1.33,
+   "road": true
+  },
+  "Sonshine Express Preschool": {
+   "school": "Stephenson",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.72,
+   "road": false
+  },
+  "St Agatha Catholic School": {
+   "school": "Sellwood",
+   "region": "Cleveland / Franklin",
+   "mi": 0.28,
+   "road": true
+  },
+  "St Andrew Nativity School": {
+   "school": "MLK Jr",
+   "region": "Jefferson / Roosevelt",
+   "mi": 0.22,
+   "road": true
+  },
+  "St Clare School": {
+   "school": "Capitol Hill",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.25,
+   "road": true
+  },
+  "St Ignatius School": {
+   "school": "Creston",
+   "region": "Cleveland / Franklin",
+   "mi": 0.61,
+   "road": true
+  },
+  "St James Child Development Center": {
+   "school": "Lincoln",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.45,
+   "road": false
+  },
+  "St John Fisher": {
+   "school": "Hayhurst",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.59,
+   "road": true
+  },
+  "St John the Baptist Catholic School": {
+   "school": "Sellwood",
+   "region": "Cleveland / Franklin",
+   "mi": 1.94,
+   "road": true
+  },
+  "St Marys Academy": {
+   "school": "Lincoln",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.01,
+   "road": true
+  },
+  "St Pius X School": {
+   "school": "Forest Park",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 2.72,
+   "road": true
+  },
+  "St Rose School": {
+   "school": "Rose City Park",
+   "region": "Grant / McDaniel",
+   "mi": 0.44,
+   "road": true
+  },
+  "St Therese Catholic School": {
+   "school": "Lee",
+   "region": "Grant / McDaniel",
+   "mi": 2.59,
+   "road": true
+  },
+  "St Thomas More School": {
+   "school": "Ainsworth",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.14,
+   "road": true
+  },
+  "Sunnyside Mennonite Montessori School": {
+   "school": "Sunnyside Environmental",
+   "region": "Cleveland / Franklin",
+   "mi": 0.1,
+   "road": false
+  },
+  "Sunstone Montessori School": {
+   "school": "Woodstock",
+   "region": "Cleveland / Franklin",
+   "mi": 0.37,
+   "road": true
+  },
+  "The Madeleine Elementary School": {
+   "school": "Alameda",
+   "region": "Grant / McDaniel",
+   "mi": 0.42,
+   "road": true
+  },
+  "The Montessori House of St Johns": {
+   "school": "James John",
+   "region": "Jefferson / Roosevelt",
+   "mi": 0.06,
+   "road": false
+  },
+  "The Portland Montessori School": {
+   "school": "Mt Tabor",
+   "region": "Cleveland / Franklin",
+   "mi": 0.63,
+   "road": true
+  },
+  "Trinity Academy": {
+   "school": "Chief Joseph",
+   "region": "Jefferson / Roosevelt",
+   "mi": 1.1,
+   "road": true
+  },
+  "Trinity Lutheran School": {
+   "school": "Rigler",
+   "region": "Grant / McDaniel",
+   "mi": 0.69,
+   "road": true
+  },
+  "Tucker Maxon School": {
+   "school": "Grout",
+   "region": "Cleveland / Franklin",
+   "mi": 0.2,
+   "road": true
+  },
+  "Urban Ed Alternative School Outside in School": {
+   "school": "Lincoln",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.51,
+   "road": true
+  },
+  "Venn Academy": {
+   "school": "Abernethy",
+   "region": "Cleveland / Franklin",
+   "mi": 0.12,
+   "road": true
+  },
+  "Village Free School": {
+   "school": "Buckman",
+   "region": "Cleveland / Franklin",
+   "mi": 0.35,
+   "road": false
+  },
+  "West Hills Christian School": {
+   "school": "Capitol Hill",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.67,
+   "road": true
+  },
+  "West Hills Montessori School-Lake Oswego": {
+   "school": "Stephenson",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 1.65,
+   "road": false
+  },
+  "West Hills Montessori School-Vermont": {
+   "school": "Hayhurst",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 0.36,
+   "road": true
+  },
+  "Westside Christian High School": {
+   "school": "Markham",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 2.51,
+   "road": true
+  },
+  "Whole Child Montessori Center": {
+   "school": "Lewis",
+   "region": "Cleveland / Franklin",
+   "mi": 0.45,
+   "road": false
+  },
+  "Willamette Valley Academy": {
+   "school": "Forest Park",
+   "region": "Ida B. Wells / Lincoln",
+   "mi": 4.22,
+   "road": true
+  },
+  "Woodlawn Montessori": {
+   "school": "Woodlawn",
+   "region": "Jefferson / Roosevelt",
+   "mi": 0.48,
+   "road": false
+  }
+ }
+}
