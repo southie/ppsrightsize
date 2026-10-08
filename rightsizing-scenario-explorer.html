@@ -218,6 +218,7 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
   <section class="card">
     <h2>Projected enrollment by school, 2025-26 to 2035-36</h2>
     <p class="sub" id="linesub"></p>
+    <details id="overwrap" open style="margin:0 0 14px"><summary id="oversum"></summary><p class="sub" style="margin:8px 0">Years in which projected enrollment exceeds the building's 2021 functional capacity (PPS 2021 Long-Range Facility Plan). Capacity reflects 2021 grade configurations, so flags for K-8s becoming K-5 and for buildings taking new grades are indicative only.</p><div class="tablewrap" id="overlist"></div></details>
     <div class="controls">
       <label>Region <select id="region"></select></label>
       <label>Find a school <input type="search" id="find" placeholder="e.g. Ockley Green" list="schoollist"></label>
@@ -225,7 +226,6 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
     </div>
     <div class="legend" id="legend2" style="margin:0 0 10px"></div>
     <div class="panels" id="panels"></div>
-    <details id="overwrap" style="margin-top:16px"><summary id="oversum"></summary><p class="sub" style="margin:8px 0">Years in which projected enrollment exceeds the building's 2021 functional capacity (PPS 2021 Long-Range Facility Plan). Capacity reflects 2021 grade configurations, so flags for K-8s becoming K-5 and for buildings taking new grades are indicative only.</p><div class="tablewrap" id="overlist"></div></details>
   </section>
 
   <section class="card">
@@ -1005,7 +1005,7 @@ function renderLines() {
     return idx.map(i => sqOver(i) ? esc(Y[i]) : `<span class="newyr" title="Not over capacity under Status Quo">${esc(Y[i])}</span>`).join(', ') +
       (nNew ? ` <span class="muted">(${nNew} new vs Status Quo)</span>` : '');
   }
-  document.getElementById('oversum').innerHTML = `<span class="tri"></span>${rowsOver.length} school${rowsOver.length === 1 ? '' : 's'} over 2021 functional capacity in at least one year (${LABEL[scen]}${rsel ? ', ' + esc(rsel) : ''}) — show list`;
+  document.getElementById('oversum').innerHTML = `<span class="tri"></span>${rowsOver.length} school${rowsOver.length === 1 ? '' : 's'} over 2021 functional capacity in at least one year (${LABEL[scen]}${rsel ? ', ' + esc(rsel) : ''}) `;
   document.getElementById('overlist').innerHTML = rowsOver.length ? `<table><thead><tr><th>School</th><th>Region</th><th>Type</th><th class="num">2021 capacity</th><th class="num">Peak utilization</th><th>Years over capacity${scen === 'SQ' ? '' : ' <span style="font-weight:400">(<span class="newyr">highlighted</span> = not over in Status Quo)</span>'}</th></tr></thead><tbody>` +
     rowsOver.map(r => `<tr><td><b>${esc(short(byKey[r.n].name))}</b>${byKey[r.n].fc_note ? `<span class="muted" style="display:block;font-size:11px">${esc(byKey[r.n].fc_note)}</span>` : ''}</td><td>${esc(D.region_of[r.n])}</td><td>${TL[r.t]}${D.types.SQ[r.n] !== r.t ? ` <span class="muted">(was ${TL[D.types.SQ[r.n]]})</span>` : ''}</td><td class="num">${r.c.toLocaleString()}</td><td class="num"><b>${Math.round(100 * r.pk)}%</b> <span class="muted">${ser[r.n][r.pi].toLocaleString()} in ${Y[r.pi]}</span></td><td>${overYears(r)}</td></tr>`).join('') + '</tbody></table>'
     : '<p class="sub">No school exceeds its 2021 functional capacity in any year.</p>';
