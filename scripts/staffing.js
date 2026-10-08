@@ -106,7 +106,7 @@ function renderStaffing() {
     h += isSQ ? `<td>${staffUSD(cs)}</td>` : `<td><span class="main">${staffUSD(cc - cs)}</span><span class="muted" style="display:block;font-size:11px">of ${staffUSD(cs)}</span></td>`;
     h += '</tr>';
     if (isReg && open) {
-      for (const k of keys.sort((a, b) => (schoolFTE(a, 'SQ', yi)?.total || 0) - (schoolFTE(b, 'SQ', yi)?.total || 0))) {
+      for (const k of keys.sort(byStatusName)) {
         const a = schoolFTE(k, 'SQ', yi), b = schoolFTE(k, scen, yi);
         h += `<tr class="srow${b ? '' : ' closed'}"><td><span class="nm">${esc(short(byKey[k].name))}</span><span class="ty">${TYPE_LABEL[(b || a).type]}${a.title1 ? ' &middot; Title I' : ''}</span>` +
           `<span class="muted" style="display:block;font-size:11px">${Math.round(a.enroll)}${isSQ ? '' : ` &rarr; ${b ? Math.round(b.enroll) : 'closed'}`} students${a.homeroomsByGrade && !isSQ && b?.homeroomsByGrade ? ` &middot; homerooms ${a.homeroom} &rarr; ${b.homeroom}` : a.homeroomsByGrade ? ` &middot; ${a.homeroom} homerooms` : ''}</span></td>` +
