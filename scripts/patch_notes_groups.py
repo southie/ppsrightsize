@@ -19,9 +19,9 @@ start = html.index("document.getElementById('notes').innerHTML = [")
 end_marker = "].map(t => `<li>${esc(t)}</li>`).join('');"
 end = html.index(end_marker, start)
 body = html[start + len("document.getElementById('notes').innerHTML = ["):end]
-staffing_note = ("  'Staffing: PPS\\'s 2026-27 school staffing formula (Proposed Budget Vol. 1, pp. 206-210) applied to every school\\'s projected enrollment under the scenario and under Status Quo in the same year; the difference is positions the formula no longer funds. "
+staffing_note = ("  'Staffing: PPS\\'s 2026-27 school staffing formula (Adopted Budget Vol. 1, pp. 232-238) applied to every school\\'s projected enrollment under the scenario and under Status Quo in the same year; the difference is positions the formula no longer funds. "
                  "K-5 homerooms are counted grade by grade from each school\\'s 2025-26 grade mix (ODE fall membership) against the class-size maximums (default: budget targets, grade 1 at 31, Title I schools 30; editable). "
-                 "Middle and high school teachers follow the formula\\'s ratios (23.5 and 25 students per FTE). Costs are 2026-27 General Fund salary per budgeted FTE by employee type plus payroll costs (p. 100): about $' + Math.round(D.staff.costs.licensed / 1000) + 'k per licensed FTE, $' + Math.round(D.staff.costs.administrator / 1000) + 'k per principal or assistant/vice principal and $' + Math.round(D.staff.costs.classified / 1000) + 'k per administrative assistant. "
+                 "Middle and high school teachers follow the formula\\'s ratios (23.5 and 25 students per FTE). Costs are 2026-27 General Fund salary per budgeted FTE by employee type plus payroll costs (p. 105): about $' + Math.round(D.staff.costs.licensed / 1000) + 'k per licensed FTE, $' + Math.round(D.staff.costs.administrator / 1000) + 'k per principal or assistant/vice principal and $' + Math.round(D.staff.costs.classified / 1000) + 'k per administrative assistant. "
                  "Equity, Title I, special education, multilingual, Measure 98 and grant-funded positions are excluded. Checked against PPS\\'s October 6 slide 7 (10 schools, within 0.5 FTE on average).',\n")
 new = ("const NOTES = [" + body + staffing_note + "];\n"
 """const NOTE_GROUPS = [

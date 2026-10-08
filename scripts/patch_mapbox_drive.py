@@ -1,5 +1,5 @@
 """Car button next to each point-to-point drive time in the school and private-school panes: requests the Mapbox
-Directions API (mapbox/driving-traffic) drive time on the next weekday, leaving 30 minutes before the start time of
+Directions API (mapbox/driving-traffic) drive time on the next Tuesday (slowest weekday in a test), leaving 30 minutes before the start time of
 the PPS school in the trip (PPS 2026-27 start times by level), and shows it in line, with Mapbox / OpenStreetMap
 attribution. Results are cached for the page visit.
 The page embeds a URL-restricted public token; local test servers read mapbox-token.local.json (git-ignored).
@@ -30,7 +30,7 @@ rep("""${n.road ? `${n.d.toFixed(1)} mi / ${Math.round(n.min)} min by road` : `$
 # ---- request, cache, display ----
 rep("function altSection(s) {", r"""// ---------- Mapbox drive time in traffic (weekday 7:30 am) ----------
 // The listed drive times are free-flow (OSRM, no traffic). The car button asks the Mapbox Directions API
-// (driving-traffic profile, depart_at = next weekday 7:30 am Portland time, i.e. typical traffic then) for the same
+// (driving-traffic profile, depart_at = the next Tuesday before school starts, Portland time, i.e. typical traffic then) for the same
 // trip and shows the result in line with Mapbox / OpenStreetMap attribution.
 // Published pages use a Mapbox token restricted to this site's URLs. A restricted token cannot allow localhost, so on a
 // local test server the page uses the token in mapbox-token.local.json ({"token": "pk..."}), which is git-ignored.
@@ -50,13 +50,16 @@ function mbPlan(a, b) {
   const t = D.types[scen]?.[pps.key] || D.types.SQ[pps.key], start = MB_START[t]; if (start == null) return null;
   return { dep: start - MB_LEAD, start, school: short(pps.name), dest: pps === b };
 }
-// the next weekday whose departure time is still ahead, Portland time, as Mapbox's local depart_at (YYYY-MM-DDThh:mm)
+// Tuesday: in a test of 23 closure-to-receiver trips on each weekday (Oct 12-16, 2026), Tuesday was the slowest
+// for 19 of them (about 0.5% above the weekday average; Friday the fastest; the weekdays differ by about 2%)
+const MB_DAY = 2, MB_DAY_NAME = 'Tuesday';
+// the next Tuesday whose departure time is still ahead, Portland time, as Mapbox's local depart_at (YYYY-MM-DDThh:mm)
 function mbDepart(dep) {
   const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
     .formatToParts(new Date()).map(x => [x.type, x.value]));
   const d = new Date(Date.UTC(+p.year, +p.month - 1, +p.day));
   if (+p.hour * 60 + +p.minute >= dep - 5) d.setUTCDate(d.getUTCDate() + 1);   // leave a few minutes: must be in the future
-  while (d.getUTCDay() === 0 || d.getUTCDay() === 6) d.setUTCDate(d.getUTCDate() + 1);
+  while (d.getUTCDay() !== MB_DAY) d.setUTCDate(d.getUTCDate() + 1);
   return { at: `${d.toISOString().slice(0, 10)}T${String(Math.floor(dep / 60)).padStart(2, '0')}:${String(dep % 60).padStart(2, '0')}`,
     day: d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }) };
 }
@@ -72,7 +75,7 @@ function mbLink(a, b) {
   if (!a || !b || a.lat == null || b.lat == null) return '';
   const pl = mbPlan(a, b); if (!pl) return '';
   const c = mbCoords(a, b), k = `${c}@${pl.dep}`, r = MB_CACHE.get(k);
-  const tt = `Drive time in typical weekday traffic, leaving ${mbClock(pl.dep)} (${MB_LEAD} min before ${pl.school}'s ${mbClock(pl.start)} start; Mapbox)`;
+  const tt = `Drive time in typical ${MB_DAY_NAME} traffic, leaving ${mbClock(pl.dep)} (${MB_LEAD} min before ${pl.school}'s ${mbClock(pl.start)} start; Mapbox)`;
   return ` <button type="button" class="mbx" data-k="${k}" data-c="${c}" data-dep="${pl.dep}" data-start="${pl.start}" data-school="${esc(pl.school)}" data-dest="${pl.dest ? 1 : ''}" title="${esc(tt)}" aria-label="${esc(tt)}">${MB_CAR}</button>${r && !r.pending ? mbResult(r) : ''}`;
 }
 async function mbFetch(btn) {
@@ -110,7 +113,8 @@ rep(".dock[hidden] { display: none; }", """.dock[hidden] { display: none; }
 # ---- method note ----
 rep("  'Travel time:", "  " + json.dumps(
     "Traffic drive times: the drive times listed in the school panes are free-flow (OSRM, no traffic). The car button next "
-    "to each asks the Mapbox Directions API (driving-traffic profile) for the same trip on the next weekday, leaving 30 "
+    "to each asks the Mapbox Directions API (driving-traffic profile) for the same trip on the next Tuesday (the slowest "
+    "weekday in a test of 23 trips, though weekdays differ by only about 2%), leaving 30 "
     "minutes before the start time of the PPS school in the trip (the destination when it is a PPS school, otherwise the "
     "origin; PPS 2026-27 start times: elementary 8:00, K-8 8:45, middle 9:15, high 8:30, as reported by PDX Parent from "
     "PPS, Aug 12, 2026), which reflects typical traffic for that time; results are shown with Mapbox and OpenStreetMap "

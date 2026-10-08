@@ -1,5 +1,5 @@
 """Add annual cost (2026-27 dollars) to the staffing estimate, using General Fund salary and FTE by employee type
-from the PPS 2026-27 Proposed Budget, Vol. 1, p. 100 (General Fund requirements by major object, $ thousands)."""
+from the PPS 2026-27 Adopted Budget, Vol. 1, p. 105 (General Fund requirements by major object, $ thousands)."""
 import json, os, re, sys
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,7 +13,7 @@ salaries = GF['licensed'][0] + GF['classified'][0] + GF['nonrep'][0] + GF['admin
 load = GF['payroll'] / salaries                         # benefits + payroll taxes per salary dollar
 rate = lambda k: GF[k][0] * 1000 / GF[k][1] * (1 + load)
 COSTS = dict(
-    source='PPS 2026-27 Proposed Budget, Vol. 1, p. 100: General Fund salaries and budgeted FTE by employee type; associated payroll costs spread over all salaries',
+    source='PPS 2026-27 Adopted Budget, Vol. 1, p. 105: General Fund salaries and budgeted FTE by employee type; associated payroll costs spread over all salaries',
     payroll_load=round(load, 4),
     licensed=round(rate('licensed')),          # teachers, counselors, specialists, discretionary (licensed-equivalent FTE)
     administrator=round(rate('admin')),        # principals, assistant / vice principals
@@ -61,7 +61,7 @@ rep("""          STAFF_COLS.map(([c]) => isSQ ? `<td>${a[c].toFixed(c === 'princ
 rep("""    : `${LABEL[scen]} in ${staffYear}, compared with Status Quo the same year: about <b>${(dsq.total - dist.total).toFixed(0)}</b> fewer formula positions""",
 """    : `${LABEL[scen]} in ${staffYear}, compared with Status Quo the same year: about <b>${usdM(staffCost(dsq) - staffCost(dist)).replace('&minus;', '')}</b> a year in formula staffing (2026-27 dollars, salary plus benefits), from about <b>${(dsq.total - dist.total).toFixed(0)}</b> fewer formula positions""")
 rep("Whether reductions become layoffs, reassignments or attrition is PPS's decision.</p>",
-    "Whether reductions become layoffs, reassignments or attrition is PPS's decision. Costs use 2026-27 General Fund salary per budgeted FTE by employee type plus associated payroll costs (pension, FICA, health and other benefits, about 56% of salaries; Proposed Budget p. 100): about $159k per licensed FTE (matching the roughly $159.5k per formula FTE implied by PPS's October 6 board slide 7), $265k per principal or assistant/vice principal, and $81k per administrative assistant. They are averages in 2026-27 dollars, without raises or cost escalation, and exclude custodial, utilities and other building operating costs.</p>")
+    "Whether reductions become layoffs, reassignments or attrition is PPS's decision. Costs use 2026-27 General Fund salary per budgeted FTE by employee type plus associated payroll costs (pension, FICA, health and other benefits, about 56% of salaries; Adopted Budget p. 105): about $159k per licensed FTE (matching the roughly $159.5k per formula FTE implied by PPS's October 6 board slide 7), $265k per principal or assistant/vice principal, and $81k per administrative assistant. They are averages in 2026-27 dollars, without raises or cost escalation, and exclude custodial, utilities and other building operating costs.</p>")
 open(PAGE, 'w', encoding='utf-8').write(html)
 
 # keep scripts/staffing.js in sync with the page's staffing block

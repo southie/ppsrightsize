@@ -10,17 +10,16 @@ from the current route PDFs (scripts/fetch_pps_bus.py) and the 2026-27 budget.
    ride to school along the run.
 3. Estimate the buses the general routes need: the most morning (or afternoon) runs under way at once, each run
    padded by BUFFER_MIN for the drive to the next run.
-4. Cost of the general routes: function 2550 Student Transportation Services (General Fund, 2026-27 proposed,
-   Volume 1 p. 101), less the TriMet high school pass payment, x general buses / all PPS bus routes (293 in 2023-24,
-   per First Student). The 2026-27 budget does not show the TriMet payment, so it is taken at its 2018-19 share of
-   Student Transportation: object 533140 Reimb - Tri-Met $2,114,332 of $25,458,264 (2018-19 Adopted Budget, General
-   Fund requirements by account p. 90 and by program p. 87). Function 2550 also pays for taxis and administration,
-   so this is still an upper estimate. A second value adjusts that 2018-19 share for enrollment since then: TriMet
-   passes follow high school enrollment (+9% at the eight comprehensive high schools, 2018-19 to 2025-26) and yellow
-   buses serve grades K-8 (-23% at 65 matched schools), from the 2018-19 budget's school enrollment table (pp. 40-42)
-   and the explorer's 2025-26 enrollment. The two values bound the estimate. Route miles are service miles (first stop
-   to school and back); trips from the garage and between runs are not in the route PDFs, so cost per bus-mile is
-   higher than it would be with them included.
+4. Cost of the general routes: function 2550 Student Transportation Services (General Fund, 2026-27 Adopted Budget,
+   Volume 1, requirements by function p. 108; unchanged from the proposed budget), less transportation that is not
+   yellow-bus routes, x general buses / all PPS bus routes (293 in 2023-24, per First Student). Two values bound it,
+   from the General Fund requirements by account (p. 110):
+     upper  less the TriMet high school pass payment (533140, $2,108k)
+     lower  also less taxis (533120), payments in lieu (533130), field trips (533150) and other student transport
+            (533200), which are not home-to-school bus routes
+   Both still include transportation administration, routing and fleet costs shared with special-education routes.
+   Route miles are service miles (first stop to school and back); trips from the garage and between runs are not in
+   the route PDFs, so cost per bus-mile is higher than it would be with them included.
 5. Daily student-miles = riders x their ride along the route x 2 trips. Costs are annual and miles are per school day,
    so no school-year length is needed: the rate is the annual cost per daily student-mile, and a scenario's added
    daily student-miles times that rate is its added annual cost. Students are enrollment (actual 2025-26 for the
@@ -32,8 +31,8 @@ from the current route PDFs (scripts/fetch_pps_bus.py) and the 2026-27 budget.
 6. Scenario cost, for every year (scenarios use Status Quo's attendance areas before they take effect): the change in bus-eligible K-8 students' walking miles to school (K-5 beyond 1 mile, 6-8 beyond
    1.5 miles; source/block-access, scripts/build_block_access.py), turned into bus ride miles with the ratio of the
    measured stop-to-school ride to the eligible students' walking distance under Status Quo, x the annual cost per
-   daily student-mile. Rider and PPS-share assumptions cancel (they scale both the cost per mile and the added miles), so the
-   range comes from the two TriMet values. Assumes cost grows in proportion to student-miles.
+   daily student-mile. Rider assumptions cancel (they scale both the cost per mile and the added miles), so the
+   range comes from the two general-route cost values. Assumes cost grows in proportion to student-miles.
 
 Outputs: source/pps-bus/stop-locations.csv, source/pps-bus/bus-cost-estimate.json
 """
@@ -51,15 +50,11 @@ STREETS = os.path.join(ROOT, 'source', 'osm', 'streets.json')
 ACC = os.path.join(ROOT, 'source', 'block-access', 'school-access.csv')
 GEOCACHE = os.path.join(BUS, 'geocode-cache.json')
 
-BUDGET_2550 = 47_647_560        # 2026-27 proposed, General Fund function 2550 (Volume 1, p. 101)
-BUDGET_2550_PRIOR = 44_125_736  # 2025-26 column on the same page
-TRIMET_2018, TRANSPORT_2018 = 2_114_332, 25_458_264   # 2018-19 adopted: 533140 Reimb - Tri-Met; subtotal Student Transportation
-TRIMET_SHARE = TRIMET_2018 / TRANSPORT_2018
-# enrollment since 2018-19: 2018-19 Adopted Budget school table (pp. 40-42) vs 2025-26 enrollment in the explorer
-HS_2018, HS_2526 = 10_978, 11_965      # the eight comprehensive high schools (Wilson = Ida B. Wells, Madison = McDaniel)
-K8_2018, K8_2526 = 31_177, 24_128      # 65 elementary, K-8 and middle schools matched by name
-_h, _k = HS_2526 / HS_2018, K8_2526 / K8_2018
-TRIMET_SHARES = {'budget ratio': TRIMET_SHARE, 'enrollment-adjusted': TRIMET_SHARE * _h / (TRIMET_SHARE * _h + (1 - TRIMET_SHARE) * _k)}
+BUDGET_2550 = 47_647_560        # 2026-27 General Fund function 2550 ($47,648k adopted, Volume 1 p. 108; same as proposed)
+BUDGET_2550_PRIOR = 44_125_736  # 2025-26 budget, same function
+# 2026-27 adopted, General Fund requirements by account (Volume 1 p. 110), transportation lines that are not yellow-bus routes
+ACCT = dict(trimet=2_108_000, taxi=2_885_000, in_lieu=14_000, field_trips=1_388_000, other_transport=953_000)
+REMOVED = {'upper': ACCT['trimet'], 'lower': sum(ACCT.values())}   # dollars taken out before the bus-count split
 LEGCACHE = os.path.join(ROOT, 'source', 'osm', 'bus-leg-cache.json')   # derived from streets.json node order
 ALL_BUS_ROUTES = 293            # PPS school bus routes, 2023-24 (First Student, strike make-up days article)
 BUFFER_MIN = 10                 # minutes between runs for one bus (deadhead to the next first stop)
@@ -277,17 +272,15 @@ eligible, m_served = elig('SQ', RATE_YEAR, served)
 log(f'bus-eligible K-8 students ({RATE_YEAR} enrollment x census share) at the {len(served)} schools these routes serve: {eligible:,.0f}')
 
 # ---------- cost ----------
-GT = {v: (BUDGET_2550 * (1 - sh)) * buses / ALL_BUS_ROUTES for v, sh in TRIMET_SHARES.items()}
+GT = {v: (BUDGET_2550 - x) * buses / ALL_BUS_ROUTES for v, x in REMOVED.items()}
 out = dict(built=time.strftime('%Y-%m-%d'), assumptions=dict(
     budget_2550=BUDGET_2550, budget_2550_prior=BUDGET_2550_PRIOR, all_bus_routes=ALL_BUS_ROUTES,
-    buffer_min=BUFFER_MIN, trimet_2018=TRIMET_2018, transport_2018=TRANSPORT_2018,
-    trimet_shares={k: round(v, 4) for k, v in TRIMET_SHARES.items()},
-    enrollment=dict(hs_2018=HS_2018, hs_2526=HS_2526, k8_2018=K8_2018, k8_2526=K8_2526),
+    buffer_min=BUFFER_MIN, accounts=ACCT, removed=REMOVED,
     ride_share=RIDE_SHARE, rate_year=RATE_YEAR),
     routes=dict(runs=daily_runs, runs_measured=len(runs), measured_route_miles=round(measured_miles), runs_skipped=skipped, schools_served=len(served), buses_estimated=buses,
                 daily_route_miles=round(daily_bus_miles),
                 mean_run_miles=round(daily_bus_miles / daily_runs, 2), mean_ride_miles=round(avg_ride, 2), median_ride_miles=round(med_ride, 2)),
-    cost={v: dict(trimet_estimate_2026_27=round(BUDGET_2550 * TRIMET_SHARES[v]), general_routes_share=round(buses / ALL_BUS_ROUTES, 3),
+    cost={v: dict(removed=REMOVED[v], general_routes_share=round(buses / ALL_BUS_ROUTES, 3),
                   general_routes_cost=round(g), per_daily_bus_mile=round(g / daily_bus_miles), per_bus=round(g / buses))
           for v, g in GT.items()},
     cases={})

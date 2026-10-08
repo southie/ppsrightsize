@@ -14,7 +14,7 @@ rep("""  <section class="card">
     <h2>Projected enrollment by school, 2025-26 to 2035-36</h2>""",
 """  <section class="card">
     <h2>Staffing impact: positions no longer needed</h2>
-    <p class="sub">Applies PPS's 2026-27 school staffing formula (Proposed Budget, Volume 1, pp. 206-210) to every school's projected enrollment under the selected scenario and under Status Quo in the same year; the difference is positions the formula no longer funds. K-5 homerooms are counted grade by grade from each school's 2025-26 grade mix, so they capture students filling open seats at receiving schools. Counts are licensed-equivalent FTE (an administrative assistant counts as half). Positions funded by equity, Title I, special education, multilingual, Measure 98 and grants, which largely follow students, are excluded. Whether reductions become layoffs, reassignments or attrition is PPS's decision.</p>
+    <p class="sub">Applies PPS's 2026-27 school staffing formula (Adopted Budget, Volume 1, pp. 232-238) to every school's projected enrollment under the selected scenario and under Status Quo in the same year; the difference is positions the formula no longer funds. K-5 homerooms are counted grade by grade from each school's 2025-26 grade mix, so they capture students filling open seats at receiving schools. Counts are licensed-equivalent FTE (an administrative assistant counts as half). Positions funded by equity, Title I, special education, multilingual, Measure 98 and grants, which largely follow students, are excluded. Whether reductions become layoffs, reassignments or attrition is PPS's decision.</p>
     <p class="sub" id="staffsum"></p>
     <div id="staffing"></div>
   </section>

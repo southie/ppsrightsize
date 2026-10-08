@@ -1,5 +1,5 @@
 """Embed staffing inputs into rightsizing-scenario-explorer.html as D.staff:
-  * PPS 2026-27 school staffing formula (Proposed Budget Vol. 1, pp. 206-210)
+  * PPS 2026-27 school staffing formula (Adopted Budget Vol. 1, pp. 232-238)
   * each school's 2025-26 grade mix (ODE fall membership) and Title I status (pps-data roster)
 """
 import csv, json, os, re, shutil, sys
@@ -49,7 +49,7 @@ print('no ODE grade counts:', missing)
 print('Title I schools:', sorted(k for k, v in schools.items() if v['title1']))
 
 FORMULA = dict(
-    source='PPS 2026-27 Proposed Budget, Volume 1, School Staffing (pp. 206-210); allocations are preliminary per PPS',
+    source='PPS 2026-27 Adopted Budget, Volume 1, School Staffing (pp. 232-238); allocations are preliminary per PPS',
     # K-5 homeroom maximums by grade K..5 (budget "Target Class Size")
     caps_budget={'title1': [28, 30, 30, 30, 33, 33], 'other': [29, 31, 32, 33, 34, 34]},
     caps_contract={'title1': [24, 26, 26, 26, 28, 28], 'other': [24, 26, 26, 26, 28, 28]},

@@ -13,7 +13,7 @@ if 'function opexOf(' in html: sys.exit('already patched')
 
 OM, SQFT = 72437027, 9_000_000
 OPEX = dict(rate=round(OM / SQFT, 2), om_budget=OM, district_sqft=SQFT,
-            source='PPS 2026-27 Proposed Budget Vol. 1: General Fund Operation and Maintenance of Plant (p. 101) / about 9 million sq ft of district buildings (p. 48)')
+            source='PPS 2026-27 Adopted Budget Vol. 1: General Fund Operation and Maintenance of Plant (p. 108) / about 9 million sq ft of district buildings (p. 45)')
 i = html.index('const D = ') + len('const D = ')
 D, end = json.JSONDecoder().raw_decode(html[i:])
 D['opex'] = OPEX
@@ -51,7 +51,7 @@ rep("""        `<div class="s">Full modernization avoided: <b>${usdM(a.mod)}</b>
         ((o) => o.n ? `<div class="s">Operating cost of the closed buildings (est.): <b>${usdM1(o.usd)}</b> a year (${Math.round(o.sf).toLocaleString()} sq ft at $${D.opex.rate.toFixed(2)}/sq ft)</div>` : '')(closedOpex(D.schools.map(s => s.key))) + '</div>')""")
 # method note
 rep("  'Student-group rates below zero in the roster are CRDC suppression codes",
-    "  'Building operating cost (estimate): PPS budgets $72.4M in 2026-27 for operation and maintenance of plant (custodial, utilities, grounds, maintenance and repair; General Fund, Proposed Budget Vol. 1 p. 101) across about 9 million sq ft of district buildings (p. 48), about $' + D.opex.rate.toFixed(2) + ' per sq ft per year. Closed buildings show that rate times their floor area as an annual expense attached to the building; it is an average, not a building-specific figure, and is not counted as savings.',\n"
+    "  'Building operating cost (estimate): PPS budgets $72.4M in 2026-27 for operation and maintenance of plant (custodial, utilities, grounds, maintenance and repair; General Fund, Adopted Budget Vol. 1 p. 108) across about 9 million sq ft of district buildings (p. 45), about $' + D.opex.rate.toFixed(2) + ' per sq ft per year. Closed buildings show that rate times their floor area as an annual expense attached to the building; it is an average, not a building-specific figure, and is not counted as savings.',\n"
     "  'Student-group rates below zero in the roster are CRDC suppression codes")
 open(PAGE, 'w', encoding='utf-8').write(html)
 print('patched; rate', OPEX['rate'])

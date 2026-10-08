@@ -18,16 +18,16 @@ M = {}
 for r in csv.DictReader(open(os.path.join(ROOT, 'source', 'block-access', 'school-access.csv'), encoding='utf-8')):
     col = {'k5': 'beyond_1mi_walkmi', '68': 'beyond_1.5mi_walkmi'}.get(r['band'])
     if col and r[col]: M.setdefault(r['scenario'], {}).setdefault(r['school'], {})[r['band']] = int(float(r[col]))
-V = ['budget ratio', 'enrollment-adjusted']
+V = ['upper', 'lower']   # general-route cost: less TriMet only / less all non-route transportation
 A, R = E['assumptions'], E['routes']
 D['buscost'] = dict(
     budget=A['budget_2550'], budget_prior=A['budget_2550_prior'], all_routes=A['all_bus_routes'],
-    trimet_2018=A['trimet_2018'], transport_2018=A['transport_2018'], shares=[A['trimet_shares'][v] for v in V],
-    enroll=A['enrollment'], ride_share=A['ride_share'], rate_year=A['rate_year'], eligible=R['eligible_students'],
+    acct=A['accounts'], removed=[A['removed'][v] for v in V],
+    ride_share=A['ride_share'], rate_year=A['rate_year'], eligible=R['eligible_students'],
     runs=R['runs'], runs_measured=R['runs_measured'], buses=R['buses_estimated'], schools=R['schools_served'],
     daily_miles=R['daily_route_miles'], mean_ride=R['mean_ride_miles'],
     median_ride=R['median_ride_miles'], walk_mean=R['eligible_mean_walk_miles'], ratio=R['ride_to_walk_ratio'],
-    trimet=[E['cost'][v]['trimet_estimate_2026_27'] for v in V], gt=[E['cost'][v]['general_routes_cost'] for v in V],
+    gt=[E['cost'][v]['general_routes_cost'] for v in V],
     per_mile=[E['cost'][v]['per_daily_bus_mile'] for v in V],
     cases={k: dict(riders=c['riders'], per_run=c['riders_per_run'], psm=[c['per_daily_student_mile'][v] for v in V],
                    rider=[c['per_rider_year'][v] for v in V]) for k, c in E['cases'].items()},
@@ -55,8 +55,8 @@ if 'function renderBusCost' not in html:
   document.getElementById('commutesum').innerHTML = (scen === 'SQ'""")
 
     rep("// building costs (D.costs, 2026 dollars)", r"""// ---------- yellow-bus cost (D.buscost, from scripts/estimate_bus_cost.py) ----------
-// Two values for the TriMet high school pass share of the transportation budget bound every figure:
-// index 0 = its 2018-19 budget share, index 1 = that share adjusted for enrollment since (high school up, K-8 down).
+// Two values for the general-route cost bound every figure (adopted budget accounts): index 0 = transportation less
+// the TriMet high school pass payment (upper); index 1 = also less taxis, field trips and other non-route transport (lower).
 const BC = D.buscost;
 const bcM = v => '$' + (Math.abs(v) / 1e6).toFixed(Math.abs(v) >= 1e7 ? 1 : 2) + 'M';
 const bcD = v => '$' + Math.round(v).toLocaleString();
@@ -65,7 +65,7 @@ const bcKRange = (a, b) => `${bcK(Math.min(a, b))}&ndash;${bcK(Math.max(a, b))}`
 const bcRange = (a, b) => { const lo = Math.min(a, b), hi = Math.max(a, b); return bcM(lo) === bcM(hi) ? bcM(lo) : `${bcM(lo)}&ndash;${bcM(hi)}`; };
 // scenario change in bus-eligible K-8 students and their bus student-miles, district-wide, in the table's year
 // (cmYear): student-miles a school day = eligible students' walking miles x ride-to-walk ratio x central ridership
-// x 2 trips; cost = that x the annual cost per daily student-mile (one value per TriMet share)
+// x 2 trips; cost = that x the annual cost per daily student-mile (one value per general-route cost bound)
 function busScen() {
   const keys = Object.keys(D.region_of), f = BC.ratio * BC.ride_share.central * 2;
   const agg = sc => ['k5', '68'].map(b => cmAgg(sc, keys, b)).reduce((a, o) => ({ n: a.n + o.beyond, m: a.m + o.bm }), { n: 0, m: 0 });
@@ -91,17 +91,17 @@ function renderBusCost() {
   // range table: cost per student-mile
   const cols = [['high', 'More riders'], ['central', 'Central'], ['low', 'Fewer riders']];
   h += `<div class="tablewrap"><table class="bctable"><thead><tr><th>Annual cost per daily student-mile</th>${cols.map(([k, l]) => `<th>${l}<br><span style="font-weight:400">${n(BC.cases[k].riders)} riders a day, ${Math.round(100 * BC.ride_share[k])}% of eligible</span></th>`).join('')}</tr></thead><tbody>` +
-    [0, 1].map(i => `<tr><td>TriMet passes ${pct(BC.shares[i])} of transportation <span class="muted">(${i ? 'adjusted for enrollment' : '2018-19 budget ratio'})</span></td>${cols.map(([k]) => `<td>${bcD(BC.cases[k].psm[i])}</td>`).join('')}</tr>`).join('') +
+    [0, 1].map(i => `<tr><td>General routes ${bcM(BC.gt[i])} a year <span class="muted">(${i ? 'transportation less TriMet, taxis, field trips and other non-route transport' : 'transportation less TriMet passes'})</span></td>${cols.map(([k]) => `<td>${bcD(BC.cases[k].psm[i])}</td>`).join('')}</tr>`).join('') +
     `<tr class="dist"><td>Range</td><td>${bcD(BC.box.low)}</td><td>${bcD(BC.box.central)}</td><td>${bcD(BC.box.high)}</td></tr></tbody></table></div>`;
   // how it is estimated
   h += `<details class="bcdet"><summary>How the cost per daily student-mile is estimated</summary><ol>` +
-    `<li><b>Transportation budget.</b> General Fund function 2550, Student Transportation Services: <b>${bcM(BC.budget)}</b> in the 2026-27 proposed budget (Volume 1, p. 101; ${bcM(BC.budget_prior)} in 2025-26). It also pays for special-education transportation, TriMet passes, taxis and administration.</li>` +
-    `<li><b>Less TriMet passes.</b> The 2026-27 budget does not show the high school TriMet payment. In the 2018-19 adopted budget it was ${bcM(BC.trimet_2018)} of ${bcM(BC.transport_2018)} in Student Transportation (<b>${pct(BC.shares[0])}</b>). Since then, high school enrollment rose ${Math.round(100 * (BC.enroll.hs_2526 / BC.enroll.hs_2018 - 1))}% and K-8 enrollment fell ${Math.round(100 * (1 - BC.enroll.k8_2526 / BC.enroll.k8_2018))}%, which would put the share nearer <b>${pct(BC.shares[1])}</b>. Both are used: ${bcRange(...BC.trimet)} for TriMet in 2026-27.</li>` +
+    `<li><b>Transportation budget.</b> General Fund function 2550, Student Transportation Services: <b>${bcM(BC.budget)}</b> in the 2026-27 adopted budget (Volume 1, p. 108; unchanged from the proposed budget; ${bcM(BC.budget_prior)} in 2025-26). It also pays for special-education transportation, TriMet passes, taxis and administration.</li>` +
+    `<li><b>Less transportation that is not yellow-bus routes.</b> The adopted budget's General Fund accounts (Volume 1, p. 110) show <b>${bcM(BC.acct.trimet)}</b> for high school TriMet passes, ${bcM(BC.acct.taxi)} for taxis, ${bcM(BC.acct.field_trips)} for field trips and ${bcM(BC.acct.other_transport)} for other student transport. The upper value takes out TriMet passes only; the lower value takes out all of these (${bcM(BC.removed[1])}).</li>` +
     `<li><b>Share for general routes.</b> The ${BC.runs} current general route runs posted on PPS's bus schedule site (${BC.schools} schools) need about <b>${BC.buses}</b> buses at the busiest time of day (runs under way at once, plus 10 minutes between runs). PPS ran ${BC.all_routes} bus routes in all in 2023-24, most of the rest special education, so general routes get ${pct(BC.buses / BC.all_routes)} of the rest of the budget: <b>${bcRange(...BC.gt)}</b> a year (${bcKRange(...perBus)} per bus).</li>` +
     `<li><b>Bus miles.</b> Each run's stops were located (street intersections from OpenStreetMap, addresses by the US Census geocoder) and the run measured along the street network: about <b>${n(BC.daily_miles)}</b> route miles a school day (${bcD(Math.min(...BC.per_mile))}&ndash;${bcD(Math.max(...BC.per_mile))} a year per daily route mile). A student's ride from their stop to school averages <b>${BC.mean_ride} miles</b> along the route (median ${BC.median_ride}).</li>` +
     `<li><b>Riders.</b> PPS does not publish ridership. About <b>${n(BC.eligible)}</b> K-8 students at the schools these routes serve live beyond bus distance (${BC.rate_year} enrollment &times; the census share of each school's area beyond bus distance); the central case assumes half of them ride (35% and 65% for the other cases), so <b>${n(BC.cases.central.riders)}</b> riders a day, about ${BC.cases.central.per_run} per run.</li>` +
     `<li><b>Annual cost per daily student-mile</b> = general-route cost a year &divide; (riders &times; ride miles &times; 2 trips). Costs are annual and miles are per school day, so the length of the school year is not needed.</li>` +
-    `<li><b>Scenarios.</b> The change in bus-eligible K-8 students' total walking miles to school in the selected year (projected enrollment &times; each area's census walking miles beyond bus distance per resident; the table above) is turned into bus miles with the ratio of the measured ride to those students' walking distance under Status Quo (${BC.ratio.toFixed(1)}&times;: ${BC.mean_ride} miles on the bus for ${BC.walk_mean} miles on foot), then multiplied by the annual cost per daily student-mile. Ridership drops out: more riders means more added miles but a lower cost per mile, so the scenario range comes from the two TriMet values.</li></ol></details>`;
+    `<li><b>Scenarios.</b> The change in bus-eligible K-8 students' total walking miles to school in the selected year (projected enrollment &times; each area's census walking miles beyond bus distance per resident; the table above) is turned into bus miles with the ratio of the measured ride to those students' walking distance under Status Quo (${BC.ratio.toFixed(1)}&times;: ${BC.mean_ride} miles on the bus for ${BC.walk_mean} miles on foot), then multiplied by the annual cost per daily student-mile. Ridership drops out: more riders means more added miles but a lower cost per mile, so the scenario range comes from the two general-route cost values.</li></ol></details>`;
   // caveats
   h += `<details class="bcdet" open><summary>Caveats</summary><ul>` +
     `<li><b>Bus utilization is unknown, and it matters most.</b> The estimate assumes cost grows in step with student-miles, as if buses ran at today's average load. PPS does not publish how full its buses are. If current runs have empty seats along the new students' paths, many added riders could be carried for little more than extra stops and miles, and the real added cost would be well below this estimate. If runs are full, or the new riders live off existing routes, each added bus costs about ${bcKRange(...perBus)} a year, and bell times, driver availability and tiering decide how many are needed, so the cost could also be higher. Read the scenario figure as the cost of the added student-miles at today's average, not a routing plan.</li>` +
@@ -124,8 +124,8 @@ function renderBusCost() {
     # ---- method note ----
     rep("  'Travel time:", "  " + json.dumps(
         "Busing cost: estimated cost of PPS's general (home-to-school) yellow-bus routes and the added cost of each scenario. "
-        "The 2026-27 Student Transportation budget (function 2550), less the TriMet high school pass payment (8.3% of transportation "
-        "in the 2018-19 adopted budget, or 11.3% adjusted for enrollment since), is split to general routes by buses needed (peak "
+        "The 2026-27 adopted Student Transportation budget (function 2550), less the TriMet high school pass payment ($2.1M; for "
+        "the lower value also taxis, field trips and other non-route transport, from the adopted budget's accounts), is split to general routes by buses needed (peak "
         "simultaneous runs from PPS's posted schedules) over all bus routes (293 in 2023-24). The rate divides that by "
         "riders x measured stop-to-school ride miles x 2 trips, giving an annual cost per daily student-mile (no school-year "
         "length needed); ridership is not published and is assumed (35-65% of "
@@ -156,7 +156,7 @@ function cmBus(c, q) {
   const sm = c.bm * f, sq = q ? q.bm * f : null;
   const fm = v => Math.round(v).toLocaleString();
   const fc = v => v >= 995000 ? '$' + (v / 1e6).toFixed(2) + 'M' : '$' + Math.round(v / 1000) + 'k';
-  const tip = `${fc(sm * Math.min(...ps))}&ndash;${fc(sm * Math.max(...ps))} a year with the TriMet share at ${(100 * BC.shares[1]).toFixed(1)}% or ${(100 * BC.shares[0]).toFixed(1)}%`;
+  const tip = `${fc(sm * Math.min(...ps))}&ndash;${fc(sm * Math.max(...ps))} a year (general routes ${bcM(BC.gt[1])}&ndash;${bcM(BC.gt[0])} a year)`;
   return `<td><span class="main">${fm(sm)}</span>${cmD(sm, sq, fm, 'down')}</td>` +
     `<td title="${tip}"><span class="main">${fc(sm * rate)}</span>${q ? cmD(sm * rate, sq * rate, fc, 'down') : ''}</td>`;
 }
