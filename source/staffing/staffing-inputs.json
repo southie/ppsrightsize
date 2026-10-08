@@ -1,0 +1,1515 @@
+{
+ "formula": {
+  "source": "PPS 2026-27 Proposed Budget, Volume 1, School Staffing (pp. 206-210); allocations are preliminary per PPS",
+  "caps_budget": {
+   "title1": [
+    28,
+    30,
+    30,
+    30,
+    33,
+    33
+   ],
+   "other": [
+    29,
+    31,
+    32,
+    33,
+    34,
+    34
+   ]
+  },
+  "caps_contract": {
+   "title1": [
+    24,
+    26,
+    26,
+    26,
+    28,
+    28
+   ],
+   "other": [
+    24,
+    26,
+    26,
+    26,
+    28,
+    28
+   ]
+  },
+  "ms_ratio": 23.5,
+  "ms_base_title1": 1.0,
+  "hs_ratio": 25.0,
+  "counselor_ratio": 350
+ },
+ "schools": {
+  "Abernethy": {
+   "ode_name": "Abernethy Elementary School",
+   "grades_2526": [
+    43,
+    44,
+    37,
+    42,
+    47,
+    56,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Arleta": {
+   "ode_name": "Arleta Elementary School",
+   "grades_2526": [
+    41,
+    29,
+    40,
+    36,
+    36,
+    48,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Atkinson": {
+   "ode_name": "Atkinson Elementary School",
+   "grades_2526": [
+    65,
+    51,
+    68,
+    62,
+    55,
+    65,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Bridger Creative Science": {
+   "ode_name": "Bridger Creative Science School",
+   "grades_2526": [
+    46,
+    44,
+    42,
+    56,
+    69,
+    49,
+    41,
+    48,
+    51,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Buckman": {
+   "ode_name": "Buckman Elementary School",
+   "grades_2526": [
+    42,
+    40,
+    36,
+    42,
+    55,
+    68,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Cleveland": {
+   "ode_name": "Cleveland High School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    401,
+    339,
+    341,
+    370
+   ],
+   "title1": false
+  },
+  "Creston": {
+   "ode_name": "Creston Elementary School",
+   "grades_2526": [
+    27,
+    33,
+    37,
+    41,
+    43,
+    38,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Duniway": {
+   "ode_name": "Duniway Elementary School",
+   "grades_2526": [
+    57,
+    54,
+    63,
+    52,
+    80,
+    56,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Franklin": {
+   "ode_name": "Franklin High School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    460,
+    468,
+    423,
+    426
+   ],
+   "title1": false
+  },
+  "Glencoe": {
+   "ode_name": "Glencoe Elementary School",
+   "grades_2526": [
+    49,
+    42,
+    47,
+    76,
+    65,
+    62,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Grout": {
+   "ode_name": "Grout Elementary School",
+   "grades_2526": [
+    51,
+    59,
+    49,
+    50,
+    53,
+    65,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Hosford": {
+   "ode_name": "Hosford Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    166,
+    184,
+    178,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Kellogg": {
+   "ode_name": "Kellogg Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    167,
+    171,
+    195,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Kelly": {
+   "ode_name": "Kelly Elementary School",
+   "grades_2526": [
+    69,
+    75,
+    63,
+    66,
+    77,
+    61,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Lane": {
+   "ode_name": "Lane Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    148,
+    149,
+    153,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Lent": {
+   "ode_name": "Lent Elementary School",
+   "grades_2526": [
+    43,
+    33,
+    40,
+    38,
+    46,
+    56,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Lewis": {
+   "ode_name": "Lewis Elementary School",
+   "grades_2526": [
+    35,
+    44,
+    27,
+    53,
+    54,
+    49,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Llewellyn": {
+   "ode_name": "Llewellyn Elementary School",
+   "grades_2526": [
+    52,
+    48,
+    41,
+    66,
+    75,
+    63,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Marysville": {
+   "ode_name": "Marysville Elementary School",
+   "grades_2526": [
+    46,
+    50,
+    43,
+    46,
+    55,
+    64,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Mt Tabor": {
+   "ode_name": "Mt Tabor Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    141,
+    140,
+    149,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Richmond": {
+   "ode_name": "Richmond Elementary School",
+   "grades_2526": [
+    89,
+    95,
+    84,
+    83,
+    79,
+    82,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Sellwood": {
+   "ode_name": "Sellwood Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    188,
+    194,
+    184,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Sunnyside Environmental": {
+   "ode_name": "Sunnyside Environmental School",
+   "grades_2526": [
+    46,
+    50,
+    41,
+    52,
+    50,
+    53,
+    64,
+    59,
+    70,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Whitman": {
+   "ode_name": "Whitman Elementary School",
+   "grades_2526": [
+    32,
+    33,
+    39,
+    28,
+    32,
+    29,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Winterhaven": {
+   "ode_name": "Winterhaven School",
+   "grades_2526": [
+    24,
+    25,
+    29,
+    29,
+    30,
+    29,
+    51,
+    50,
+    49,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Woodmere": {
+   "ode_name": "Woodmere Elementary School",
+   "grades_2526": [
+    31,
+    42,
+    37,
+    42,
+    36,
+    38,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Woodstock": {
+   "ode_name": "Woodstock Elementary School",
+   "grades_2526": [
+    69,
+    51,
+    64,
+    53,
+    68,
+    61,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Alameda": {
+   "ode_name": "Alameda Elementary School",
+   "grades_2526": [
+    83,
+    83,
+    81,
+    84,
+    91,
+    93,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Beaumont": {
+   "ode_name": "Beaumont Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    138,
+    144,
+    134,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Beverly Cleary": {
+   "ode_name": "Beverly Cleary School",
+   "grades_2526": [
+    40,
+    51,
+    37,
+    50,
+    50,
+    48,
+    64,
+    78,
+    62,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Clark": {
+   "ode_name": "Clark Elementary School",
+   "grades_2526": [
+    60,
+    58,
+    58,
+    66,
+    62,
+    59,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Grant": {
+   "ode_name": "Grant High School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    521,
+    515,
+    514,
+    524
+   ],
+   "title1": false
+  },
+  "Harrison Park": {
+   "ode_name": "Harrison Park School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    144,
+    149,
+    127,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Irvington": {
+   "ode_name": "Irvington Elementary School",
+   "grades_2526": [
+    35,
+    45,
+    45,
+    43,
+    46,
+    45,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Laurelhurst": {
+   "ode_name": "Laurelhurst Elementary School",
+   "grades_2526": [
+    42,
+    60,
+    57,
+    69,
+    68,
+    83,
+    75,
+    72,
+    88,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Lee": {
+   "ode_name": "Lee Elementary School",
+   "grades_2526": [
+    42,
+    28,
+    55,
+    38,
+    51,
+    37,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "McDaniel": {
+   "ode_name": "Leodis V. McDaniel High School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    420,
+    402,
+    407,
+    397
+   ],
+   "title1": false
+  },
+  "Rigler": {
+   "ode_name": "Rigler Elementary School",
+   "grades_2526": [
+    50,
+    59,
+    60,
+    33,
+    49,
+    40,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Rose City Park": {
+   "ode_name": "Rose City Park",
+   "grades_2526": [
+    54,
+    67,
+    62,
+    90,
+    69,
+    75,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Roseway Heights": {
+   "ode_name": "Roseway Heights School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    207,
+    188,
+    177,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Scott": {
+   "ode_name": "Scott Elementary School",
+   "grades_2526": [
+    76,
+    82,
+    80,
+    90,
+    75,
+    74,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Vestal": {
+   "ode_name": "Vestal Elementary School",
+   "grades_2526": [
+    53,
+    53,
+    43,
+    54,
+    42,
+    41,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Astor": {
+   "ode_name": "Astor Elementary School",
+   "grades_2526": [
+    36,
+    45,
+    45,
+    47,
+    53,
+    38,
+    50,
+    52,
+    35,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Beach": {
+   "ode_name": "Beach Elementary School",
+   "grades_2526": [
+    59,
+    36,
+    49,
+    47,
+    53,
+    44,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Boise-Eliot/Humboldt": {
+   "ode_name": "Boise-Eliot Elementary School",
+   "grades_2526": [
+    53,
+    40,
+    54,
+    46,
+    48,
+    54,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Chief Joseph": {
+   "ode_name": "Chief Joseph Elementary School",
+   "grades_2526": [
+    38,
+    45,
+    49,
+    39,
+    38,
+    38,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "César Chávez": {
+   "ode_name": "César Chávez K-8 School",
+   "grades_2526": [
+    47,
+    45,
+    46,
+    55,
+    41,
+    39,
+    56,
+    54,
+    60,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Faubion": {
+   "ode_name": "Faubion Elementary School",
+   "grades_2526": [
+    65,
+    58,
+    73,
+    66,
+    61,
+    54,
+    75,
+    77,
+    71,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "George": {
+   "ode_name": "George Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    119,
+    133,
+    104,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Harriet Tubman": {
+   "ode_name": "Harriet Tubman Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    164,
+    123,
+    116,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "James John": {
+   "ode_name": "James John Elementary School",
+   "grades_2526": [
+    59,
+    73,
+    51,
+    53,
+    63,
+    65,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Jefferson": {
+   "ode_name": "Jefferson High School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    96,
+    89,
+    101,
+    104
+   ],
+   "title1": true
+  },
+  "MLK Jr": {
+   "ode_name": "Dr. Martin Luther King Jr. School",
+   "grades_2526": [
+    71,
+    50,
+    56,
+    57,
+    31,
+    54,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Ockley Green": {
+   "ode_name": "Ockley Green Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    169,
+    147,
+    144,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Peninsula": {
+   "ode_name": "Peninsula Elementary School",
+   "grades_2526": [
+    43,
+    38,
+    48,
+    42,
+    41,
+    27,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Roosevelt": {
+   "ode_name": "Roosevelt High School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    357,
+    353,
+    323,
+    385
+   ],
+   "title1": true
+  },
+  "Rosa Parks": {
+   "ode_name": "Rosa Parks Elementary School",
+   "grades_2526": [
+    23,
+    30,
+    24,
+    21,
+    32,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Sabin": {
+   "ode_name": "Sabin Elementary School",
+   "grades_2526": [
+    37,
+    48,
+    50,
+    28,
+    60,
+    47,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Sitton": {
+   "ode_name": "Sitton Elementary School",
+   "grades_2526": [
+    55,
+    52,
+    58,
+    70,
+    60,
+    51,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Vernon": {
+   "ode_name": "Vernon Elementary School",
+   "grades_2526": [
+    44,
+    55,
+    56,
+    62,
+    67,
+    60,
+    57,
+    66,
+    72,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Woodlawn": {
+   "ode_name": "Woodlawn Elementary School",
+   "grades_2526": [
+    48,
+    56,
+    62,
+    37,
+    71,
+    49,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Ainsworth": {
+   "ode_name": "Ainsworth Elementary School",
+   "grades_2526": [
+    78,
+    92,
+    109,
+    88,
+    97,
+    101,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Bridlemile": {
+   "ode_name": "Bridlemile Elementary School",
+   "grades_2526": [
+    78,
+    58,
+    71,
+    75,
+    68,
+    73,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Capitol Hill": {
+   "ode_name": "Capitol Hill Elementary School",
+   "grades_2526": [
+    58,
+    40,
+    46,
+    67,
+    62,
+    56,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Chapman": {
+   "ode_name": "Chapman Elementary School",
+   "grades_2526": [
+    35,
+    61,
+    64,
+    52,
+    73,
+    48,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Forest Park": {
+   "ode_name": "Forest Park Elementary School",
+   "grades_2526": [
+    35,
+    46,
+    45,
+    46,
+    43,
+    49,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Gray": {
+   "ode_name": "Gray Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    156,
+    135,
+    141,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Hayhurst": {
+   "ode_name": "Hayhurst Elementary School",
+   "grades_2526": [
+    61,
+    64,
+    74,
+    72,
+    80,
+    80,
+    26,
+    28,
+    23,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Ida B Wells-Barnett": {
+   "ode_name": "Ida B. Wells-Barnett High School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    416,
+    413,
+    393,
+    352
+   ],
+   "title1": false
+  },
+  "Jackson": {
+   "ode_name": "Jackson Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    225,
+    242,
+    221,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Lincoln": {
+   "ode_name": "Lincoln High School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    413,
+    427,
+    423,
+    385
+   ],
+   "title1": false
+  },
+  "Maplewood": {
+   "ode_name": "Maplewood Elementary School",
+   "grades_2526": [
+    53,
+    36,
+    47,
+    57,
+    51,
+    44,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Markham": {
+   "ode_name": "Markham Elementary School",
+   "grades_2526": [
+    60,
+    50,
+    50,
+    50,
+    65,
+    64,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": true
+  },
+  "Odyssey": {
+   "ode_name": null,
+   "grades_2526": null,
+   "title1": false
+  },
+  "Rieke": {
+   "ode_name": "Rieke Elementary School",
+   "grades_2526": [
+    43,
+    39,
+    44,
+    42,
+    46,
+    52,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Skyline": {
+   "ode_name": "Skyline Elementary School",
+   "grades_2526": [
+    12,
+    22,
+    29,
+    21,
+    29,
+    26,
+    20,
+    27,
+    21,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "Stephenson": {
+   "ode_name": "Stephenson Elementary School",
+   "grades_2526": [
+    41,
+    33,
+    57,
+    53,
+    41,
+    56,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  },
+  "West Sylvan": {
+   "ode_name": "West Sylvan Middle School",
+   "grades_2526": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    254,
+    196,
+    235,
+    0,
+    0,
+    0,
+    0
+   ],
+   "title1": false
+  }
+ }
+}

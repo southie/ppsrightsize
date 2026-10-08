@@ -273,7 +273,7 @@ function renderKPIs() {
     const d = cur[k] - sq[k];
     const dt = scen === 'SQ' || k === 'closures' || k === 'change' ? '' : `<span class="d" style="color:${d > 0 ? 'var(--up)' : d < 0 ? 'var(--down)' : 'var(--text-muted)'}">${d > 0 ? '+' : ''}${d} pts</span>`;
     return `<div class="kpi"><div class="v">${cur[k]}${u}${dt}</div><div class="l">District, 2031-32: ${l}</div></div>`;
-  }).join('') + extraKPIs() + staffKPI();
+  }).join('') + extraKPIs();
   document.getElementById('desc').textContent = scen === 'SQ' ? 'No schools close and no boundaries change.' :
     scen === 'A' ? '14 closures; 7 K-8s become K-5; 13 program moves.' : scen === 'B' ? '11 closures (Stephenson, Rose City Park and Lewis stay open).' :
     `${custom.name ? custom.name + ': ' : ''}${LABEL[custom.base]}${((c, r) => [c ? ` plus ${c} custom closure${c === 1 ? '' : 's'}` : '', r ? `${c ? ',' : ''} with ${r} of its closures kept open` : ''].join('') || ' with no changes')(custom.actions.filter(a => !a.reopen).length, custom.actions.filter(a => a.reopen).length)} (this page's model).`;
@@ -741,45 +741,6 @@ function costCell(keys) {
   const line = (l, v, tot) => `<span class="rm">${l}</span>${a.n ? `<b>${usdM(v)}</b> <span class="muted">of ${usdM(tot)}</span> <span class="ca">${pctOf(-v, tot)}</span>` : `$0 <span class="muted">of ${usdM(tot)}</span>`}`;
   return `<td class="cost">${line('Must-fix', a.mf, t.mf)}<br>${line('Modernize', a.mod, t.mod)}<br><span class="muted" style="font-size:11px">${a.n ? `${a.n} building${a.n === 1 ? '' : 's'} closed` : 'none closed'}; totals are Status Quo</span></td>`;
 }
-// staffing (PPS school staffing formula, salary + benefits): uses the year and class sizes chosen in the Staffing section
-function staffDelta(keys) {
-  const yi = D.years.indexOf(staffYear), sq = staffAgg(keys, 'SQ', yi), cur = staffAgg(keys, scen, yi);
-  const adminFTE = a => a.principal + a.ap + a.office;
-  const adminUSD = a => (a.principal + a.ap) * SC.administrator + a.office * 2 * SC.classified;
-  return { sq, cur, fte: cur.total - sq.total, usd: staffCost(cur) - staffCost(sq), aFte: adminFTE(cur) - adminFTE(sq), aUsd: adminUSD(cur) - adminUSD(sq),
-           teach: (cur.homeroom + cur.t68 + cur.t912) - (sq.homeroom + sq.t68 + sq.t912) };
-}
-const sgn = (v, d = 1) => (Math.abs(v) < 0.05 ? '0' : (v > 0 ? '+' : '&minus;') + Math.abs(v).toFixed(d));
-function staffCell(keys) {
-  const s = staffDelta(keys);
-  if (keys.length === 1) {
-    const a = schoolFTE(keys[0], 'SQ', D.years.indexOf(staffYear)), b = schoolFTE(keys[0], scen, D.years.indexOf(staffYear));
-    if (!a) return '<td class="cost muted">&mdash;</td>';
-    if (scen === 'SQ') return `<td class="cost"><span class="rm">Positions</span>${a.total.toFixed(1)} FTE<br><span class="rm">Per year</span>${staffUSD(staffCost(a))}</td>`;
-    if (Math.abs(s.fte) < 0.05) return '<td class="cost muted">no change</td>';
-    return `<td class="cost">${b ? '' : '<span class="ca">closes</span><br>'}<span class="rm">Positions</span><b>${sgn(s.fte)}</b> FTE<br><span class="rm">Per year</span><b>${staffUSD(s.usd)}</b>` +
-      (Math.abs(s.aFte) >= 0.05 ? `<br><span class="muted" style="font-size:11px">admin ${sgn(s.aFte)} FTE</span>` : '') + '</td>';
-  }
-  if (scen === 'SQ') return `<td class="cost"><span class="muted" style="font-size:11px">Status Quo, ${staffYear}</span><br><span class="rm">Positions</span><b>${s.sq.total.toFixed(0)}</b> FTE<br><span class="rm">Per year</span><b>${staffUSD(staffCost(s.sq))}</b></td>`;
-  return `<td class="cost"><span class="rm">Positions</span><b>${sgn(s.fte)}</b> FTE <span class="muted">of ${s.sq.total.toFixed(0)}</span><br>` +
-    `<span class="rm">Per year</span><b>${staffUSD(s.usd)}</b> <span class="muted">of ${staffUSD(staffCost(s.sq))}</span><br>` +
-    `<span class="muted" style="font-size:11px">admin ${sgn(s.aFte)} FTE (${staffUSD(s.aUsd)}) &middot; teachers ${sgn(s.teach)} &middot; ${staffYear}</span></td>`;
-}
-function staffKPI() {
-  const s = staffDelta(D.schools.map(x => x.key));
-  // two-way split: administration (principals, assistant/vice principals, office) vs teachers and direct student support
-  const pos = v => staffUSD(Math.abs(v)).replace('&minus;', '');
-  const split = (aFte, aUsd, tFte, tUsd) => `<div class="s">Administration: <b>${aFte.toFixed(1)}</b> FTE &middot; <b>${pos(aUsd)}</b><br>` +
-    `Teachers &amp; direct support: <b>${tFte.toFixed(1)}</b> FTE &middot; <b>${pos(tUsd)}</b></div>`;
-  if (scen === 'SQ') {
-    const aF = s.sq.principal + s.sq.ap + s.sq.office, aU = (s.sq.principal + s.sq.ap) * SC.administrator + s.sq.office * 2 * SC.classified;
-    return `<div class="kpi"><div class="v">${staffUSD(staffCost(s.sq))}</div><div class="l">School staffing per year under PPS's formula, ${staffYear} (salary + benefits, 2026-27 $)</div>` +
-      split(aF, aU, s.sq.total - aF, staffCost(s.sq) - aU) + '</div>';
-  }
-  return `<div class="kpi"><div class="v">${pos(s.usd)}<span class="d" style="color:var(--text-muted)">per year</span></div>` +
-    `<div class="l">School staffing no longer needed under PPS's formula, ${staffYear} vs Status Quo (salary + benefits, 2026-27 $)</div>` +
-    split(-s.aFte, s.aUsd, -(s.fte - s.aFte), s.usd - s.aUsd) + '</div>';
-}
 function schoolRows(rn) {
   const det = D.detail[scen], sqd = D.detail.SQ;
   const names = Object.keys(D.region_of).filter(n => D.region_of[n] === rn);
@@ -796,7 +757,7 @@ function schoolRows(rn) {
       h += `<tr class="srow closed"><td><span class="nm">${esc(nm)}</span><span class="ty">${TYPE_LABEL[s0.type]}</span></td>` +
         `<td><span class="stag closes">Closes</span>${goes.length ? `<span class="to">&rarr; ${esc(goes.join('; '))}</span>` : ''}</td>` +
         `<td class="muted">&mdash;</td><td><span class="muted">closed</span><span class="muted" style="display:block;font-size:11px">SQ ${s0.e}</span></td>` +
-        GROUPS.map(() => '<td class="muted">&mdash;</td>').join('') + `<td class="muted">${s0.fc ? `building of ${s0.fc.toLocaleString()} seats` : '&mdash;'}</td>` + '<td class="reach muted">&mdash;</td>' + costCell([n]) + staffCell([n]) + landCell([n]) + '<td></td></tr>';
+        GROUPS.map(() => '<td class="muted">&mdash;</td>').join('') + `<td class="muted">${s0.fc ? `building of ${s0.fc.toLocaleString()} seats` : '&mdash;'}</td>` + '<td class="reach muted">&mdash;</td>' + costCell([n]) + landCell([n]) + '<td></td></tr>';
       continue;
     }
     const conv = s0.type !== d.type ? ` <span class="ty">(was ${TYPE_LABEL[s0.type]})</span>` : '';
@@ -806,14 +767,14 @@ function schoolRows(rn) {
       `<td>${d.above ? '<span class="ok">&#10003; above</span>' : '<span class="no">&#10007; below</span>'} <span class="muted">${d.thr}</span></td>` +
       `<td><b>${d.e.toLocaleString()}</b>${scen !== 'SQ' && de !== 0 ? `<span class="muted" style="display:block;font-size:11px">${de > 0 ? '+' : '&minus;'}${Math.abs(de)} vs SQ</span>` : ''}</td>` +
       GROUPS.map(g => d.g[g] == null ? '<td class="muted">no data</td>' : `<td><span class="${d.above ? 'cnt-in' : 'cnt-out'}">${d.g[g].toLocaleString()}</span></td>`).join('') +
-      `<td>${d.fc ? `<b>${d.util}%</b><span class="muted" style="display:block;font-size:11px">${d.e.toLocaleString()} / ${d.fc.toLocaleString()}${d.util > 100 ? ' · over capacity' : ''}</span>` : '<span class="muted">no data</span>'}</td>` + reachCell([n]) + costCell([n]) + staffCell([n]) + landCell([n]) + '<td></td></tr>';
+      `<td>${d.fc ? `<b>${d.util}%</b><span class="muted" style="display:block;font-size:11px">${d.e.toLocaleString()} / ${d.fc.toLocaleString()}${d.util > 100 ? ' · over capacity' : ''}</span>` : '<span class="muted">no data</span>'}</td>` + reachCell([n]) + costCell([n]) + landCell([n]) + '<td></td></tr>';
   }
   return h;
 }
 function renderEndpoints() {
   const rows = [...D.region_order, 'District'];
   const showRec = document.getElementById('showrec').checked;
-  let h = `<table class="${showRec ? '' : 'hide-rec'}"><thead><tr><th>Region</th>${MEAS.map(m => `<th>${esc(m.label)}</th>`).join('')}<th>Building utilization<br><span style="font-weight:400">(2031-32 enrollment &divide; 2021 functional capacity)</span></th><th>Attendance-area residents within 15 min<br><span style="font-weight:400">(of their school, 2020 Census; roll-ups weighted by 2031-32 enrollment; change vs Status Quo in pts)</span></th><th>Building costs avoided by closures<br><span style="font-weight:400">(2026 $; must-fix = deferred maintenance + seismic retrofit; school rows show each building)</span></th><th>School staffing no longer needed<br><span style="font-weight:400">(PPS staffing formula; FTE and salary + benefits per year, 2026-27 $; year and class sizes set in Staffing impact)</span></th><th>Land value (assessor)<br><span style="font-weight:400">(Multnomah County real market value, 2025 roll; land, and land + buildings)</span></th><th>Students who would change schools</th></tr></thead><tbody>`;
+  let h = `<table class="${showRec ? '' : 'hide-rec'}"><thead><tr><th>Region</th>${MEAS.map(m => `<th>${esc(m.label)}</th>`).join('')}<th>Building utilization<br><span style="font-weight:400">(2031-32 enrollment &divide; 2021 functional capacity)</span></th><th>Attendance-area residents within 15 min<br><span style="font-weight:400">(of their school, 2020 Census; roll-ups weighted by 2031-32 enrollment; change vs Status Quo in pts)</span></th><th>Building costs avoided by closures<br><span style="font-weight:400">(2026 $; must-fix = deferred maintenance + seismic retrofit; school rows show each building)</span></th><th>Land value (assessor)<br><span style="font-weight:400">(Multnomah County real market value, 2025 roll; land, and land + buildings)</span></th><th>Students who would change schools</th></tr></thead><tbody>`;
   for (const rn of rows) {
     const E = D.endpoints[rn], cur = E[scen], sq = scen === 'C' ? E.SQmodel : E.SQ, rec = (D.recreated[scen] || {})[rn] || {};
     const isReg = rn !== 'District', open = expanded.has(rn);
@@ -837,7 +798,6 @@ function renderEndpoints() {
     h += `<td><span class="main">${ucur}%</span>${scen !== 'SQ' ? `<span class="delta ${ucur > usq ? 'up' : ucur < usq ? 'down' : 'flat'}">${ucur > usq ? '+' : ucur < usq ? '&minus;' : '&plusmn;'}${Math.abs(ucur - usq)} pts</span>` : ''}<span class="muted" style="display:block;font-size:11px">${ue.toLocaleString()} / ${uc.toLocaleString()} seats</span></td>`;
     h += reachCell(Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn));
     h += costCell(Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn));
-    h += staffCell(Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn));
     h += landCell(Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn));
     h += `<td>${rn === 'District' ? `<span class="main">${cur.change}%</span>` : '<span class="rec" style="display:block">not reported</span>'}</td></tr>`;
     if (isReg && open) h += schoolRows(rn);
@@ -1372,7 +1332,6 @@ function staffAgg(keys, sc, yi) {
   return a;
 }
 const fte1 = v => (Math.abs(v) < 0.05 ? '0' : (v > 0 ? '+' : '&minus;') + Math.abs(v).toFixed(Math.abs(v) >= 100 ? 0 : 1));
-function staffChanged() { renderKPIs(); renderEndpoints(); renderStaffing(); }
 function renderStaffing() {
   const host = document.getElementById('staffing'); if (!host) return;
   const yi = D.years.indexOf(staffYear), isSQ = scen === 'SQ';
@@ -1422,11 +1381,11 @@ function renderStaffing() {
     : `${LABEL[scen]} in ${staffYear}, compared with Status Quo the same year: about <b>${staffUSD(staffCost(dsq) - staffCost(dist)).replace('&minus;', '')}</b> a year in formula staffing (2026-27 dollars, salary plus benefits), from about <b>${(dsq.total - dist.total).toFixed(0)}</b> fewer formula positions (licensed-equivalent FTE): <b>${(dsq.principal - dist.principal).toFixed(0)}</b> principals, <b>${(dsq.ap - dist.ap).toFixed(0)}</b> assistant/vice principals and <b>${(dsq.office - dist.office).toFixed(1)}</b> office FTE (administration ${admin.toFixed(1)} in all), and <b>${teach.toFixed(1)}</b> classroom teachers, of which <b>${(dsq.homeroom - dist.homeroom).toFixed(0)}</b> are K-5 homerooms freed when students fill open seats at receiving schools.`;
   host.innerHTML = h;
   // wiring
-  document.getElementById('st-year').onchange = e => { staffYear = e.target.value; staffChanged(); };
-  document.getElementById('st-preset').onchange = e => { capPreset = e.target.value; if (capPreset !== 'custom') caps = JSON.parse(JSON.stringify(capPreset === 'budget' ? SF.caps_budget : SF.caps_contract)); staffChanged(); };
+  document.getElementById('st-year').onchange = e => { staffYear = e.target.value; renderStaffing(); };
+  document.getElementById('st-preset').onchange = e => { capPreset = e.target.value; if (capPreset !== 'custom') caps = JSON.parse(JSON.stringify(capPreset === 'budget' ? SF.caps_budget : SF.caps_contract)); renderStaffing(); };
   document.getElementById('st-capbtn').onclick = () => { const g = document.getElementById('st-capgrid'); g.dataset.open = g.dataset.open === '1' ? '0' : '1'; renderStaffing(); };
   host.querySelectorAll('.capgrid input').forEach(inp => inp.onchange = () => {
-    const v = Math.max(10, Math.min(40, Math.round(+inp.value || 0))); caps[inp.dataset.w][+inp.dataset.g] = v; capPreset = 'custom'; staffChanged();
+    const v = Math.max(10, Math.min(40, Math.round(+inp.value || 0))); caps[inp.dataset.w][+inp.dataset.g] = v; capPreset = 'custom'; renderStaffing();
   });
   host.querySelectorAll('.st-x').forEach(b => b.onclick = () => { const r = b.dataset.r; staffOpen.has(r) ? staffOpen.delete(r) : staffOpen.add(r); renderStaffing(); });
 }

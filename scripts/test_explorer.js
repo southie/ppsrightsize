@@ -10,7 +10,7 @@ Object.assign(global, { window: global, L: chain, innerWidth: 1200, addEventList
   document: { getElementById: el, querySelectorAll: () => [], createElement: el, createElementNS: el, documentElement: {} },
   getComputedStyle: () => ({ getPropertyValue: () => '#000' }), localStorage: { getItem: () => null, setItem() {} },
   location: { hash: '', pathname: '/x.html', search: '', href: '' }, history: { replaceState() {} } });
-const T = new Function(script + `;return { D, P, custom, buildCustom: () => buildCustom(), alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights };`)();
+const T = new Function(script + `;return { D, P, custom, buildCustom: () => buildCustom(), alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; } };`)();
 const { D } = T;
 const ok = (c, msg) => { console.log((c ? 'PASS ' : 'FAIL ') + msg); if (!c) process.exitCode = 1; };
 
@@ -66,8 +66,9 @@ ok(np.road && np.min > 0, `nearest PPS to ${pr.name}: ${np.s.key} ${np.d} mi / $
   const Y = D.years.indexOf('2031-32'), sum = sc => Object.values(D.series[sc]).reduce((a, s) => a + (s[Y] || 0), 0);
   T.custom.base = 'A'; T.custom.name = ''; T.custom.actions = [{ k: 'Maplewood', reopen: true }]; T.buildCustom();
   const sq = D.series.SQ.Maplewood[Y];
-  ok(Math.abs(D.series.C.Maplewood[Y] - sq) < 1e-9, `Maplewood kept open in A: 2031-32 back to Status Quo (${sq})`);
-  ok(Math.abs((D.series.A.Hayhurst[Y] - D.series.C.Hayhurst[Y]) - 0.7 * sq) < 1e-6 && Math.abs((D.series.A.Rieke[Y] - D.series.C.Rieke[Y]) - 0.3 * sq) < 1e-6, 'Hayhurst and Rieke give back 70% / 30%');
+  ok(Math.abs(D.series.C.Maplewood[Y] - sq) < 0.5,   // projections are whole numbers, so caps can round a fraction off
+   `Maplewood kept open in A: 2031-32 back to Status Quo (${sq})`);
+  ok(Math.abs((D.series.A.Hayhurst[Y] - D.series.C.Hayhurst[Y]) - 0.7 * sq) < 0.5 && Math.abs((D.series.A.Rieke[Y] - D.series.C.Rieke[Y]) - 0.3 * sq) < 0.5, 'Hayhurst and Rieke give back 70% / 30%');
   ok(Math.abs(sum('A') - sum('C')) < 0.01, `district 2031-32 total unchanged from A (${Math.round(sum('C'))})`);
   ok(D.endpoints.District.C.closures === D.endpoints.District.A.closures - 1, `district closures ${D.endpoints.District.A.closures} -> ${D.endpoints.District.C.closures}`);
   ok(!D.flows.C.receivers.some(r => r.from_key === 'Maplewood') && D.schools.find(s => s.key === 'Maplewood').cat.C === 'other', 'no flow lines from Maplewood; marked as a change');
@@ -80,5 +81,30 @@ ok(np.road && np.min > 0, `nearest PPS to ${pr.name}: ${np.s.key} ${np.d} mi / $
   const parts = T.describeClose(T.baseState('A'), 'Hayhurst', 1);
   T.custom.actions.push({ k: 'Hayhurst', parts: parts.map(p => ({ band: p.band, to: ['Maplewood'] })) }); T.buildCustom();
   ok(D.series.C.Hayhurst[Y] == null && D.series.C.Maplewood[Y] > sq && Math.abs(sum('A') - sum('C')) < 0.01, `then closing Hayhurst into Maplewood: ${Math.round(D.series.C.Maplewood[Y])}, total conserved`);
+  T.custom.actions = []; T.custom.base = 'SQ';
+}
+
+// 7) switching between a custom scenario and the published ones redraws the table and summary cards
+//    (building a custom scenario adds a District closing list for C only; switching back to A/B used to throw)
+{
+  T.custom.base = 'A'; T.custom.name = ''; T.custom.actions = [{ k: 'Maplewood', reopen: true }]; T.buildCustom();
+  for (const sc of ['C', 'A', 'B', 'SQ', 'C']) {
+    let err = null;
+    try { T.setScen(sc); T.renderEndpoints(); T.renderKPIs(); } catch (e) { err = e; }
+    ok(!err, `table and summary cards render after switching to ${sc}${err ? ': ' + err.message : ''}`);
+  }
+  T.setScen('A'); T.custom.actions = []; T.custom.base = 'SQ';
+}
+
+// 8) keeping Sellwood open in A: receivers give back at most what they gained over Status Quo
+{
+  const Y = D.years.indexOf('2031-32'), sum = sc => Object.values(D.series[sc]).reduce((a, s) => a + (s[Y] || 0), 0);
+  const gained = ['Hosford', 'Lane'].reduce((a, k) => a + D.series.A[k][Y] - D.series.SQ[k][Y], 0);
+  T.custom.base = 'A'; T.custom.actions = [{ k: 'Sellwood', reopen: true }]; T.buildCustom();
+  const back = D.series.C.Sellwood[Y];
+  ok(!D.detail.C.Sellwood.closed && D.endpoints.District.C.closures === D.endpoints.District.A.closures - 1, `Sellwood kept open in A: open, district closures ${D.endpoints.District.C.closures}`);
+  ok(Math.abs(back - Math.min(D.series.SQ.Sellwood[Y], gained)) < 0.5, `Sellwood gets back ${Math.round(back)} (Status Quo ${D.series.SQ.Sellwood[Y]}; Hosford and Brentwood gained ${gained})`);
+  ok(['Hosford', 'Lane'].every(k => D.series.C[k][Y] >= D.series.SQ[k][Y] - 0.5), `no receiver drops below Status Quo (Hosford ${Math.round(D.series.C.Hosford[Y])} vs ${D.series.SQ.Hosford[Y]}, Brentwood ${Math.round(D.series.C.Lane[Y])} vs ${D.series.SQ.Lane[Y]})`);
+  ok(Math.abs(sum('A') - sum('C')) < 0.01, `district 2031-32 total unchanged from A (${Math.round(sum('C'))})`);
   T.custom.actions = []; T.custom.base = 'SQ';
 }
