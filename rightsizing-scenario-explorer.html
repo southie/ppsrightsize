@@ -82,6 +82,10 @@ h2 { font-size: 18px; margin: 0 0 4px; }
 /* dimmed closed rows: keep the pinned cell's background solid so scrolled cells don't show through it */
 tr.srow.closed td:first-child { opacity: 1; } tr.srow.closed td:first-child > * { opacity: .8; }
 .commutetable td, .commutetable th { white-space: nowrap; } .commutetable td .main { font-size: 14px; font-weight: 600; }
+/* getting to school: narrower first four data columns (headers and notes wrap) */
+.commutetable thead th:nth-child(n+2):nth-child(-n+5) { white-space: normal; width: 108px; min-width: 96px; max-width: 112px; }
+.commutetable tbody td:nth-child(n+2):nth-child(-n+5):not([colspan]) { width: 108px; max-width: 112px; }
+.commutetable td .cmprog { white-space: normal; line-height: 1.3; }
 #commute table { scroll-margin-top: 72px; }
 .commutetable .cmprog { display: block; font-size: 11px; color: var(--text-muted); font-weight: 400; cursor: help; }
 .commutetable tr.srow.prog td { white-space: normal; } .commutetable tr.srow.prog td:first-child { white-space: nowrap; }
