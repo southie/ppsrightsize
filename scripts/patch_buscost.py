@@ -73,10 +73,16 @@ function busScen() {
   const cost = BC.cases.central.psm.map(p => d_sm * p);
   return { d_elig: c.n - q.n, d_walk: q.m ? (c.m - q.m) / q.m : 0, d_sm, lo: Math.min(...cost), hi: Math.max(...cost), mid: (cost[0] + cost[1]) / 2 };
 }
+// run fn as if the getting-to-school table showed year y (cmStu / cmAgg read cmYear)
+function cmAtYear(y, fn) { const keep = cmYear; cmYear = y; try { return fn(); } finally { cmYear = keep; } }
+// summary card: the immediate impact, in the year the scenarios take effect (D.impl_year), plus the table's year if different
 function busLine() {
   if (scen === 'SQ') return `<br>General yellow-bus routes: about <b>${bcRange(...BC.gt)}</b> a year (est.)`;
-  const s = busScen();
-  return `<br>Added yellow-bus cost, ${cmYear}: <b>${bcRange(s.lo, s.hi)}</b> a year (est.)`;
+  const s = cmAtYear(D.impl_year, busScen), more = s.d_elig >= 0;
+  let h = `<br>Added yellow-bus cost in ${D.impl_year}, the first year: <b>${bcRange(s.lo, s.hi)}</b> a year (est.; ` +
+    `${cmN(Math.abs(s.d_elig))} ${more ? 'more' : 'fewer'} K-8 students beyond bus distance)`;
+  if (cmYear !== D.impl_year) { const t = busScen(); h += `<br><span class="pcs">${cmYear}: ${bcRange(t.lo, t.hi)} a year</span>`; }
+  return h;
 }
 function renderBusCost() {
   const host = document.getElementById('buscost'); if (!host) return;

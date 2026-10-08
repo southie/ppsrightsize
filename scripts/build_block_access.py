@@ -256,6 +256,10 @@ sidx = {k: i for i, k in enumerate(SK)}
 WALK_M = TT['walk'] * (WALK_MPH * MPH)   # walking-route metres
 BCOL = {'k5': 1, '68': 2, '912': 3}
 block_rows, school_rows, district = [], [], {}
+# schools that could take each grade band in any scenario (receivers of a custom closure), and the area -> school stats
+ACC_T = {'k5': ('ES', 'K8'), '68': ('MS', 'K8'), '912': ('HS',)}
+TAKERS = {b: sorted({k for s_ in D['types'] for k, t in D['types'][s_].items() if t in ACC_T[b]}) for b in BANDS}
+PAIRS = {}
 for sc in SCENS:
     for band in BANDS:
         areas = AREAS[sc, band]
@@ -305,6 +309,19 @@ for sc in SCENS:
                 h = np.bincount(np.searchsorted(HIST_MIN, np.nan_to_num(tmin[m][sel], posinf=999), 'right'), w, len(HIST_MIN) + 1)
                 row[f'{m}_hist'] = ';'.join(str(int(round(x))) for x in h)
             school_rows.append(row)
+            # ---- this area's residents travelling to each other school in the region that could take these grades
+            # (for custom closures: moved students still live in their old school's area) ----
+            ws = w.sum()
+            def stats(j):
+                wmj = WALK_M[j, sel]; tj = {m: np.nan_to_num(TT[m][j, sel] / 60, posinf=999) for m in TT}
+                return [round(ws), round(w[wmj > thr].sum() / ws, 3), round(np.average(wmj, weights=w) / MILE, 2),
+                        *[round(np.average(tj[m], weights=w), 1) for m in TT], *[round(w[tj[m] <= 15].sum() / ws, 3) for m in TT],
+                        round(w[nearest[sel] == j].sum() / ws, 3),
+                        *[[int(round(x)) for x in np.bincount(np.searchsorted(HIST_MIN, tj[m], 'right'), w, len(HIST_MIN) + 1)] for m in TT],
+                        round(float((w * wmj)[wmj > thr].sum()) / MILE)]
+            for r in TAKERS[band]:
+                if r != k and D['region_of'].get(r) == D['region_of'].get(k):
+                    PAIRS.setdefault(sc, {}).setdefault(k, {}).setdefault(band, {})[r] = stats(sidx[r])
         # ---- district ----
         d = dict(residents=round(wb.sum()), mean_walk_mi=round(np.average(wm[has], weights=wb[has]) / MILE, 2),
                  nearest_is_assigned_share=round(wb[(nearest == assign)].sum() / wb.sum(), 3))
@@ -328,6 +345,10 @@ with open(os.path.join(OUT, 'block-access.csv'), 'w', newline='', encoding='utf-
 cols = list(dict.fromkeys(k for r in school_rows for k in r))
 with open(os.path.join(OUT, 'school-access.csv'), 'w', newline='', encoding='utf-8') as fh:
     w = csv.DictWriter(fh, cols); w.writeheader(); w.writerows(school_rows)
+# area -> other school travel, same layout as the explorer's per-area arrays plus their walking miles beyond bus distance
+json.dump(dict(layout='residents, beyond share, mean walk mi, mean walk/bike/drive min, within 15 min walk/bike/drive, '
+                      'nearest share, walk/bike/drive histogram, walking miles beyond bus distance', pairs=PAIRS),
+          open(os.path.join(OUT, 'school-pairs.json'), 'w', encoding='utf-8'), separators=(',', ':'))
 json.dump(dict(method=__doc__.split('Outputs')[0].strip(), built=time.strftime('%Y-%m-%d'), walk_mph=WALK_MPH, bike_mph=BIKE_MPH,
                drive_factor_vs_osrm=round(DRIVE_FACTOR, 3), hist_min=HIST_MIN, bus_headline_miles=BUS_HEADLINE, grid_m=GRID_M, district=district),
           open(os.path.join(OUT, 'district-access.json'), 'w', encoding='utf-8'), indent=1)
