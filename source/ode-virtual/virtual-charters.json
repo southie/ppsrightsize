@@ -1,0 +1,360 @@
+{
+ "source": "Oregon Department of Education, Fall Membership Reports 2019-20 to 2025-26 (school tab; virtual flag from 2025-26)",
+ "source_url": "https://www.oregon.gov/ode/reports-and-data/students/Pages/Student-Enrollment-Reports.aspx",
+ "pps_cap": {
+  "quote": "Portland Public Schools is currently below the 3% district cap set by OAR 581-020-0342.",
+  "url": "https://www.pps.net/Page/1029",
+  "retrieved": "2026-10-08",
+  "note": "undated on the PPS page"
+ },
+ "years": [
+  "2019-20",
+  "2020-21",
+  "2021-22",
+  "2022-23",
+  "2023-24",
+  "2024-25",
+  "2025-26"
+ ],
+ "schools": [
+  {
+   "name": "Baker Web Academy",
+   "sponsor": "Baker SD 5J",
+   "enrollment": {
+    "2019-20": 2046,
+    "2020-21": 2727,
+    "2021-22": 2586,
+    "2022-23": 2377,
+    "2023-24": 2676,
+    "2024-25": 3066,
+    "2025-26": 3752
+   }
+  },
+  {
+   "name": "Fossil Charter School",
+   "sponsor": "Fossil SD 21J",
+   "enrollment": {
+    "2019-20": 1021,
+    "2020-21": 1317,
+    "2021-22": 1436,
+    "2022-23": 1778,
+    "2023-24": 1929,
+    "2024-25": 2494,
+    "2025-26": 3312
+   }
+  },
+  {
+   "name": "Oregon Charter Academy",
+   "sponsor": "Santiam Canyon SD 129J",
+   "enrollment": {
+    "2019-20": 3849,
+    "2020-21": 4711,
+    "2021-22": 2695,
+    "2022-23": 2057,
+    "2023-24": 2111,
+    "2024-25": 2345,
+    "2025-26": 2511
+   }
+  },
+  {
+   "name": "Silvies River Charter School",
+   "sponsor": "Harney County Union High SD 1J",
+   "enrollment": {
+    "2019-20": 576,
+    "2020-21": 1028,
+    "2021-22": 982,
+    "2022-23": 896,
+    "2023-24": 1053,
+    "2024-25": 1219,
+    "2025-26": 1510
+   }
+  },
+  {
+   "name": "Cascade Virtual Academy",
+   "sponsor": "Mitchell SD 55",
+   "enrollment": {
+    "2019-20": 121,
+    "2020-21": 673,
+    "2021-22": 731,
+    "2022-23": 731,
+    "2023-24": 958,
+    "2024-25": 1226,
+    "2025-26": 1470
+   }
+  },
+  {
+   "name": "Summit Learning Charter",
+   "sponsor": "Estacada SD 108",
+   "enrollment": {
+    "2019-20": 1138,
+    "2020-21": 1434,
+    "2021-22": 1297,
+    "2022-23": 1181,
+    "2023-24": 1295,
+    "2024-25": 1355,
+    "2025-26": 1378
+   }
+  },
+  {
+   "name": "Willamette Connections Academy",
+   "sponsor": "Scio SD 95",
+   "enrollment": {
+    "2019-20": 81,
+    "2020-21": 2159,
+    "2021-22": 1214,
+    "2022-23": 996,
+    "2023-24": 1017,
+    "2024-25": 1282,
+    "2025-26": 1301
+   }
+  },
+  {
+   "name": "Oregon Connections Academy",
+   "sponsor": "Prairie City SD 4",
+   "enrollment": {
+    "2021-22": 679,
+    "2022-23": 846,
+    "2023-24": 942,
+    "2024-25": 884,
+    "2025-26": 1202
+   }
+  },
+  {
+   "name": "Oregon Family School",
+   "sponsor": "Harney County SD 4",
+   "enrollment": {
+    "2019-20": 478,
+    "2020-21": 645,
+    "2021-22": 796,
+    "2022-23": 746,
+    "2023-24": 891,
+    "2024-25": 919,
+    "2025-26": 900
+   }
+  },
+  {
+   "name": "Metro East Web Academy",
+   "sponsor": "Gresham-Barlow SD 10J",
+   "enrollment": {
+    "2019-20": 518,
+    "2020-21": 822,
+    "2021-22": 782,
+    "2022-23": 628,
+    "2023-24": 717,
+    "2024-25": 759,
+    "2025-26": 869
+   }
+  },
+  {
+   "name": "Evergreen Virtual Academy",
+   "sponsor": "North Bend SD 13",
+   "enrollment": {
+    "2019-20": 1953,
+    "2020-21": 3215,
+    "2021-22": 1895,
+    "2022-23": 1295,
+    "2023-24": 880,
+    "2024-25": 794,
+    "2025-26": 837
+   }
+  },
+  {
+   "name": "TEACH-NW",
+   "sponsor": "Marcola SD 79J",
+   "enrollment": {
+    "2019-20": 328,
+    "2020-21": 475,
+    "2021-22": 510,
+    "2022-23": 570,
+    "2023-24": 623,
+    "2024-25": 655,
+    "2025-26": 714
+   }
+  },
+  {
+   "name": "Clackamas Web Academy",
+   "sponsor": "North Clackamas SD 12",
+   "enrollment": {
+    "2019-20": 453,
+    "2020-21": 566,
+    "2021-22": 551,
+    "2022-23": 513,
+    "2023-24": 533,
+    "2024-25": 529,
+    "2025-26": 544
+   }
+  },
+  {
+   "name": "Sheridan AllPrep Academy",
+   "sponsor": "Sheridan SD 48J",
+   "enrollment": {
+    "2019-20": 125,
+    "2020-21": 189,
+    "2021-22": 145,
+    "2022-23": 229,
+    "2023-24": 269,
+    "2024-25": 356,
+    "2025-26": 352
+   }
+  },
+  {
+   "name": "Frontier Charter Academy",
+   "sponsor": "Gervais SD 1",
+   "enrollment": {
+    "2019-20": 375,
+    "2020-21": 589,
+    "2021-22": 475,
+    "2022-23": 343,
+    "2023-24": 387,
+    "2024-25": 341,
+    "2025-26": 313
+   }
+  },
+  {
+   "name": "Paisley School",
+   "sponsor": "Paisley SD 11",
+   "enrollment": {
+    "2019-20": 211,
+    "2020-21": 194,
+    "2021-22": 210,
+    "2022-23": 206,
+    "2023-24": 192,
+    "2024-25": 222,
+    "2025-26": 299
+   }
+  },
+  {
+   "name": "Insight School of Oregon Painted Hills",
+   "sponsor": "Mitchell SD 55",
+   "enrollment": {
+    "2019-20": 287,
+    "2020-21": 399,
+    "2021-22": 234,
+    "2022-23": 170,
+    "2023-24": 173,
+    "2024-25": 211,
+    "2025-26": 189
+   }
+  },
+  {
+   "name": "Virtual Preparatory Academy of Oregon",
+   "sponsor": "Prairie City SD 4",
+   "enrollment": {
+    "2023-24": 37,
+    "2024-25": 80,
+    "2025-26": 113
+   }
+  },
+  {
+   "name": "Applegate Valley Virtual Academy",
+   "sponsor": "Three Rivers/Josephine County SD",
+   "enrollment": {
+    "2025-26": 101
+   }
+  },
+  {
+   "name": "Destinations Career Academy of Oregon",
+   "sponsor": "Mitchell SD 55",
+   "enrollment": {
+    "2019-20": 79,
+    "2020-21": 174,
+    "2021-22": 124,
+    "2022-23": 89,
+    "2023-24": 74,
+    "2024-25": 79,
+    "2025-26": 92
+   }
+  },
+  {
+   "name": "West Lane Charter School",
+   "sponsor": "Fern Ridge SD 28J",
+   "enrollment": {
+    "2019-20": 83,
+    "2020-21": 57,
+    "2021-22": 54,
+    "2022-23": 60,
+    "2023-24": 74,
+    "2024-25": 84,
+    "2025-26": 84
+   }
+  },
+  {
+   "name": "Jefferson Classical Academy of Oregon",
+   "sponsor": "Spray SD 1",
+   "enrollment": {
+    "2025-26": 10
+   }
+  },
+  {
+   "name": "Stellar Pines Virtual Academy",
+   "sponsor": "Colton SD 53",
+   "enrollment": {
+    "2025-26": 2
+   }
+  }
+ ],
+ "total": {
+  "2019-20": 13722,
+  "2020-21": 21374,
+  "2021-22": 17396,
+  "2022-23": 15711,
+  "2023-24": 16831,
+  "2024-25": 18900,
+  "2025-26": 21855
+ },
+ "bands": {
+  "2019-20": {
+   "K-5": 4411,
+   "6-8": 3235,
+   "9-12": 6076
+  },
+  "2020-21": {
+   "K-5": 8589,
+   "6-8": 5338,
+   "9-12": 7447
+  },
+  "2021-22": {
+   "K-5": 7138,
+   "6-8": 4128,
+   "9-12": 6130
+  },
+  "2022-23": {
+   "K-5": 6035,
+   "6-8": 3738,
+   "9-12": 5938
+  },
+  "2023-24": {
+   "K-5": 6314,
+   "6-8": 4164,
+   "9-12": 6353
+  },
+  "2024-25": {
+   "K-5": 7029,
+   "6-8": 4774,
+   "9-12": 7097
+  },
+  "2025-26": {
+   "K-5": 7984,
+   "6-8": 5512,
+   "9-12": 8359
+  }
+ },
+ "state_total": {
+  "2019-20": 582661,
+  "2020-21": 559798,
+  "2021-22": 551977,
+  "2022-23": 552380,
+  "2023-24": 547424,
+  "2024-25": 544840,
+  "2025-26": 538637
+ },
+ "pps_total": {
+  "2019-20": 48559,
+  "2020-21": 46924,
+  "2021-22": 45123,
+  "2022-23": 44681,
+  "2023-24": 43979,
+  "2024-25": 43319,
+  "2025-26": 42623
+ }
+}
