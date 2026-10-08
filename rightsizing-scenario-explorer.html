@@ -80,7 +80,7 @@ h2 { font-size: 18px; margin: 0 0 4px; }
 .cstable .cssub { display: block; font-size: 11px; color: var(--text-muted); }
 .cstable td.csover, .csover-key { background: color-mix(in srgb, var(--over) 38%, transparent); } .cstable td.csover .cssub { color: var(--text-primary); }
 .csover-key { padding: 0 4px; border-radius: 3px; }
-.cstable tr.csfc td { color: var(--text-secondary); font-size: 12.5px; } .cstable tr.csfc .cssub { white-space: normal; max-width: 260px; } .cstable tr.csfc:first-of-type td { border-top: 2px solid var(--line); }
+.cstable tr.csfc td { color: var(--text-secondary); font-size: 12.5px; } .cstable tr.cstotal td { border-top: 1px solid var(--line); font-weight: 600; color: var(--text-primary); } .cstable tr.csfc .cssub { white-space: normal; max-width: 260px; } .cstable tr.csfc:first-of-type td { border-top: 2px solid var(--line); }
 /* large tables: header row stays visible while scrolling down (the box scrolls both ways, under the scenario bar) */
 #endpoints, #commute, #overlist, #classsize, #privcap, .tablewrap:has(> .stafftable) { max-height: max(360px, calc(100vh - 120px)); overflow: auto; overscroll-behavior: auto; }
 #endpoints thead th, .commutetable thead th, .stafftable thead th, #overlist thead th, .cstable thead th, .pctable thead th {
@@ -2241,14 +2241,19 @@ function renderClassSizes() {
   if (fg.every(v => v != null)) {
     const dist = sumRows(all), ft = fg.reduce((a, b) => a + b, 0), ours = i => dist.grades[i].n, pc = v => Math.round(100 * v) + '%';
     const cells = f => [...fg.slice(0, 9).map((v, i) => f(v, i)), '<td></td>', ...fg.slice(9).map((v, i) => f(v, 9 + i)), '<td></td>'].join('');
+    // these schools' share of the forecast, by grade
+    h += `<tr class="csfc"><td>These schools' share<span class="cssub">of the forecast, by grade</span></td><td>${pc(dist.E / ft)}</td>` +
+      cells((v, i) => `<td title="${esc(`${n0(ours(i))} students at the schools on this page in grade ${CS_GRADES[i]}, of ${n0(v)} in the district forecast`)}">${pc(ours(i) / v)}</td>`) + '</tr>';
     // students the forecast counts at schools this page does not model: Table 5.2 minus this page, by grade
     const oth = Object.entries(D.forecast_other?.schools || {}).map(([n, v]) => [n, v[csYear]]).filter(([, v]) => v).sort((a, b) => b[1] - a[1]);
     h += `<tr class="csfc"><td>Schools not on this page<span class="cssub">${oth.map(([n, v]) => `${esc(n)} ${n0(v)}`).join(' &middot; ')}</span></td><td>${n0(ft - dist.E)}</td>` +
       cells((v, i) => `<td title="${esc(`grade ${CS_GRADES[i]}: ${n0(v)} in the forecast, ${n0(ours(i))} at the schools on this page`)}">${n0(v - ours(i))}</td>`) + '</tr>';
     h += `<tr class="csfc"><td>PPS forecast, Table 5.2<span class="cssub">medium scenario, all PPS schools (this page + schools not on it)</span></td><td>${n0(ft)}</td>` +
       cells(v => `<td>${n0(v)}</td>`) + '</tr>';
-    h += `<tr class="csfc"><td>These schools' share<span class="cssub">of the forecast, by grade</span></td><td>${pc(dist.E / ft)}</td>` +
-      cells((v, i) => `<td title="${esc(`${n0(ours(i))} students at the schools on this page in grade ${CS_GRADES[i]}, of ${n0(v)} in the district forecast`)}">${pc(ours(i) / v)}</td>`) + '</tr>';
+    // each part's share of Table 5.2: this page + not on this page = 100%
+    const two = (a) => `<span class="cssplit">${pc(a)}<span class="cssub">+ ${100 - Math.round(100 * a)}% = 100%</span></span>`;   // second share from the rounded first, so they add to 100
+    h += `<tr class="csfc cstotal"><td>Share of Table 5.2<span class="cssub">this page + schools not on this page</span></td><td>${two(dist.E / ft, 1 - dist.E / ft)}</td>` +
+      cells((v, i) => `<td title="${esc(`grade ${CS_GRADES[i]}: ${pc(ours(i) / v)} at the schools on this page, ${pc(1 - ours(i) / v)} at schools not on it`)}">${two(ours(i) / v, 1 - ours(i) / v)}</td>`) + '</tr>';
   }
   host.innerHTML = h + '</tbody></table>';
   host.querySelectorAll('.cs-x').forEach(b => b.onclick = () => { const r = b.dataset.r; csOpen.has(r) ? csOpen.delete(r) : csOpen.add(r); renderClassSizes(); });
