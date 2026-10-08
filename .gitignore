@@ -1,0 +1,6 @@
+# Files the explorer and its scripts don't use (PPS PDFs, one-off captures, check pages, old backups)
+/archive/
+# Separate repository (meub/pps-data); the scripts read copies of its files in source/pps-data/
+/pps-data/
+scripts/__pycache__/
+*.tmp
