@@ -54,6 +54,7 @@ h2 { font-size: 18px; margin: 0 0 4px; }
 .kpi .v { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .kpi .l { font-size: 12.5px; color: var(--text-secondary); }
 .kpi .d { font-size: 12.5px; margin-left: 6px; font-weight: 600; }
+.kpi .s { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; } .kpi .s b { color: var(--text-primary); }
 .card { background: var(--surface-1); border-radius: 14px; padding: 18px; margin-bottom: 20px; }
 .sub { color: var(--text-secondary); font-size: 13px; margin: 0 0 12px; }
 #map { height: clamp(560px, 78vh, 1100px); border-radius: 10px; }
@@ -226,6 +227,24 @@ seg.innerHTML = ['SQ', 'A', 'B', 'C'].map(s => `<button data-s="${s}">${LABEL[s]
 seg.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; scen = b.dataset.s; try { localStorage.setItem('rsScen', scen); } catch (e) {} if (scen === 'C') buildCustom(); renderAll(); });
 
 // ---------- KPIs ----------
+// school-years over 2021 functional capacity, and residents within 15 minutes of their school (district)
+function overSchoolYears(sc) {
+  const s = D.series[sc] || {}; let n = 0;
+  for (const k of Object.keys(s)) { const c = byKey[k]?.fc; if (c) for (const v of s[k]) if (v != null && v > c) n++; }
+  return n;
+}
+function extraKPIs() {
+  const delta = (d, unit, worseUp) => scen === 'SQ' || !d ? '' :
+    `<span class="d" style="color:${(worseUp ? d < 0 : d > 0) ? 'var(--up)' : 'var(--down)'}">${d > 0 ? '+' : '&minus;'}${Math.abs(d)}${unit}</span>`;
+  const ov = overSchoolYears(scen), ovSq = overSchoolYears('SQ');
+  const keys = Object.keys(D.region_of), r = reachRoll(scen, keys), rs = reachRoll('SQ', keys);
+  const sub = (m, l) => r[m] == null ? '' : `${l} <b>${r[m]}%</b>${scen !== 'SQ' && rs[m] != null && r[m] !== rs[m] ? ` (${r[m] > rs[m] ? '+' : '&minus;'}${Math.abs(r[m] - rs[m])})` : ''}`;
+  return `<div class="kpi"><div class="v">${ov}${delta(ov - ovSq, ' vs SQ', true)}</div>` +
+      `<div class="l">School-years over 2021 functional capacity, ${D.years[0]} to ${D.years[D.years.length - 1]}</div></div>` +
+    `<div class="kpi"><div class="v">${r.w == null ? '&mdash;' : r.w + '%'}${r.w != null && rs.w != null ? delta(r.w - rs.w, ' pts', false) : ''}</div>` +
+      `<div class="l">District: attendance-area residents within a 15-minute walk of their school</div>` +
+      `<div class="s">${[sub('b', 'Bike'), sub('d', 'Drive')].filter(Boolean).join(' &middot; ')}</div></div>`;
+}
 function renderKPIs() {
   const E = D.endpoints.District, cur = E[scen], sq = scen === 'C' ? E.SQmodel : E.SQ;
   const items = [['closures', 'schools or sites close', ''], ['schools_above', 'of schools above the threshold', '%'], ['students_above', 'of students in a school above it', '%'], ['change', 'of students change schools', '%']];
@@ -233,7 +252,7 @@ function renderKPIs() {
     const d = cur[k] - sq[k];
     const dt = scen === 'SQ' || k === 'closures' || k === 'change' ? '' : `<span class="d" style="color:${d > 0 ? 'var(--up)' : d < 0 ? 'var(--down)' : 'var(--text-muted)'}">${d > 0 ? '+' : ''}${d} pts</span>`;
     return `<div class="kpi"><div class="v">${cur[k]}${u}${dt}</div><div class="l">District, 2031-32: ${l}</div></div>`;
-  }).join('');
+  }).join('') + extraKPIs();
   document.getElementById('desc').textContent = scen === 'SQ' ? 'No schools close and no boundaries change.' :
     scen === 'A' ? '14 closures; 7 K-8s become K-5; 13 program moves.' : scen === 'B' ? '11 closures (Stephenson, Rose City Park and Lewis stay open).' :
     `${custom.name ? custom.name + ': ' : ''}${LABEL[custom.base]}${((c, r) => [c ? ` plus ${c} custom closure${c === 1 ? '' : 's'}` : '', r ? `${c ? ',' : ''} with ${r} of its closures kept open` : ''].join('') || ' with no changes')(custom.actions.filter(a => !a.reopen).length, custom.actions.filter(a => a.reopen).length)} (this page's model).`;
