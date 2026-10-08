@@ -172,6 +172,9 @@ svg text { font-family: inherit; }
 .tip .k { color: var(--text-secondary); }
 details summary { cursor: pointer; color: var(--text-secondary); font-size: 13px; }
 ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
+.sitefoot { margin: -40px 24px 0; padding: 4px 0 40px; color: var(--text-secondary); font-size: 12.5px; border-top: 1px solid var(--line); }
+.sitefoot p { margin: 12px 0 0; max-width: 900px; } .sitefoot b { color: var(--text-primary); font-weight: 600; }
+.sitefoot a { color: var(--change); }
 .notegroups h3 { font-size: 14px; margin: 18px 0 4px; color: var(--text-primary); }
 .notegroups h3:first-child { margin-top: 4px; }
 .notegroups ul.notes { margin: 0 0 6px; } .notegroups ul.notes li { margin-bottom: 5px; }
@@ -246,6 +249,10 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
     <div id="notes" class="notegroups"></div>
   </section>
 </main>
+<footer class="sitefoot">
+  <p><b>Right Size Portland is an independent project. It is not affiliated with, endorsed by, or operated by Portland Public Schools.</b> Figures labeled as PPS's come from public PPS documents; all other figures are this site's own estimates and may differ from PPS's analysis. For official information, see the <a href="https://www.pps.net/rightsizing" target="_blank" rel="noopener">PPS rightsizing page</a>.</p>
+  <p><a href="https://github.com/southie/ppsrightsize" target="_blank" rel="noopener">Source code and data on GitHub</a></p>
+</footer>
 <aside class="dock" id="dock" hidden aria-label="School details"><button class="dock-x" id="dockx" type="button" aria-label="Close details">&times;</button><div id="dockbody"></div></aside>
 <div class="tip" id="tip"></div>
 <script>
