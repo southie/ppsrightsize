@@ -1,0 +1,1384 @@
+{
+ "source": "PPS bond program reports, ppsbondhub.com: Bond Financials as of 07.01.26; PPS Summary Schedule (data date 06-Jul-26, run 02-Sep-26)",
+ "as_of": "2026-07-01",
+ "schedule_as_of": "2026-07-06",
+ "financials_url": "https://ppsbondhub.com/wp-content/uploads/2026/09/Bond-Financials-as-of-07.01.26.pdf",
+ "schedule_url": "https://ppsbondhub.com/wp-content/uploads/2026/09/PPS-Summary-Schedule-2026.09.02.pdf",
+ "schools": {
+  "Jefferson": {
+   "work": [
+    {
+     "scope": "Jefferson HS",
+     "status": "in construction",
+     "finish": "2030-07-30",
+     "construction": [
+      "2026-06-15",
+      "2030-07-30"
+     ],
+     "phases": [
+      [
+       "Project Redesign & Construction Documents",
+       "2025-01-02",
+       "2026-12-08",
+       false
+      ],
+      [
+       "Land Use Permit",
+       "2025-10-06",
+       "2026-05-07",
+       true
+      ],
+      [
+       "Building Permits",
+       "2026-03-20",
+       "2027-01-15",
+       false
+      ],
+      [
+       "Construction - South Fields",
+       "2026-06-15",
+       "2027-03-29",
+       false
+      ],
+      [
+       "Construction - New Building",
+       "2027-03-01",
+       "2029-05-31",
+       false
+      ],
+      [
+       "Close-Out & Warranty",
+       "2029-06-01",
+       "2029-08-23",
+       false
+      ],
+      [
+       "Demo - Old Building",
+       "2029-06-01",
+       "2029-10-18",
+       false
+      ],
+      [
+       "Construction - Football Stadium",
+       "2029-10-19",
+       "2030-07-30",
+       false
+      ]
+     ]
+    },
+    {
+     "scope": "Jefferson Field",
+     "status": "in construction",
+     "finish": "2030-07-05",
+     "construction": [
+      "2026-06-15",
+      "2030-06-26"
+     ],
+     "phases": [
+      [
+       "Design (Bora)",
+       "2025-09-01",
+       "2026-01-31",
+       true
+      ],
+      [
+       "Land Use Permit",
+       "2025-10-01",
+       "2026-03-20",
+       true
+      ],
+      [
+       "Permitting",
+       "2025-12-08",
+       "2026-06-15",
+       true
+      ],
+      [
+       "Construction - Phase 1",
+       "2026-06-15",
+       "2027-03-29",
+       false
+      ],
+      [
+       "Construction - Phase 2",
+       "2029-06-01",
+       "2030-06-26",
+       false
+      ],
+      [
+       "Close-Out",
+       "2030-07-01",
+       "2030-07-05",
+       false
+      ]
+     ]
+    }
+   ],
+   "dollars": [
+    {
+     "bond": "2020",
+     "project": "Jefferson HS Mod",
+     "budget": 366007500.0,
+     "encumbered": 38429302.0,
+     "paid": 30053013.0,
+     "remaining": 297525185.0
+    },
+    {
+     "bond": "2020",
+     "project": "Jefferson Add Ons",
+     "budget": 152175.0,
+     "encumbered": 149945.0,
+     "paid": 250.0,
+     "remaining": 1980.0
+    },
+    {
+     "bond": "2025",
+     "project": "Jefferson HS Modernization",
+     "budget": 100000000.0,
+     "encumbered": 0.0,
+     "paid": 0.0,
+     "remaining": 100000000.0
+    }
+   ]
+  },
+  "Cleveland": {
+   "work": [
+    {
+     "scope": "Cleveland HS",
+     "status": "in design or permitting",
+     "finish": "2029-10-26",
+     "construction": [
+      "2026-07-06",
+      "2029-08-03"
+     ],
+     "phases": [
+      [
+       "Project Redesign & Construction Documents",
+       "2025-01-02",
+       "2026-12-08",
+       false
+      ],
+      [
+       "Land Use Permit",
+       "2025-10-01",
+       "2026-05-05",
+       true
+      ],
+      [
+       "Building Permits",
+       "2026-05-14",
+       "2027-01-14",
+       false
+      ],
+      [
+       "Demo & Sitework",
+       "2026-07-06",
+       "2027-01-29",
+       false
+      ],
+      [
+       "Construction - Stadium",
+       "2026-11-02",
+       "2028-08-31",
+       false
+      ],
+      [
+       "Construction - New Building",
+       "2027-03-08",
+       "2029-08-03",
+       false
+      ],
+      [
+       "Close-Out & Warranty",
+       "2029-08-06",
+       "2029-10-26",
+       false
+      ]
+     ]
+    }
+   ],
+   "dollars": [
+    {
+     "bond": "2020",
+     "project": "Cleveland HS – Design",
+     "budget": 23679515.0,
+     "encumbered": 8412380.0,
+     "paid": 15270600.0,
+     "remaining": -3465.0
+    },
+    {
+     "bond": "2020",
+     "project": "Cleveland Swing Site",
+     "budget": 137500.0,
+     "encumbered": 1800.0,
+     "paid": 105905.0,
+     "remaining": 29795.0
+    },
+    {
+     "bond": "2025",
+     "project": "Cleveland HS Modernization",
+     "budget": 448911745.0,
+     "encumbered": 12273030.0,
+     "paid": 393615.0,
+     "remaining": 436245100.0
+    }
+   ]
+  },
+  "Ida B Wells-Barnett": {
+   "work": [
+    {
+     "scope": "Ida B Wells HS",
+     "status": "in design or permitting",
+     "finish": "2030-08-30",
+     "construction": [
+      "2026-12-02",
+      "2030-08-30"
+     ],
+     "phases": [
+      [
+       "Project Redesign & Construction Documents",
+       "2025-01-02",
+       "2026-12-08",
+       false
+      ],
+      [
+       "Project Redesign & Construction Documents",
+       "2025-01-02",
+       "2026-12-08",
+       false
+      ],
+      [
+       "Land Use Permit",
+       "2026-04-08",
+       "2027-01-08",
+       false
+      ],
+      [
+       "Land Use Permit",
+       "2026-04-08",
+       "2027-01-08",
+       false
+      ],
+      [
+       "Building Permits",
+       "2026-10-20",
+       "2027-03-02",
+       false
+      ],
+      [
+       "Building Permits",
+       "2026-10-20",
+       "2027-03-02",
+       false
+      ],
+      [
+       "Demo & Sitework",
+       "2026-12-02",
+       "2027-04-16",
+       false
+      ],
+      [
+       "Demo & Sitework",
+       "2026-12-02",
+       "2027-04-16",
+       false
+      ],
+      [
+       "Construction - New Building",
+       "2027-04-19",
+       "2029-06-29",
+       false
+      ],
+      [
+       "Construction - New Building",
+       "2027-04-19",
+       "2029-06-29",
+       false
+      ],
+      [
+       "Construction - New Fields",
+       "2029-05-15",
+       "2030-08-30",
+       false
+      ],
+      [
+       "Construction - New Fields",
+       "2029-05-15",
+       "2030-08-30",
+       false
+      ],
+      [
+       "Close-Out & Warranty",
+       "2029-07-05",
+       "2029-09-26",
+       false
+      ],
+      [
+       "Close-Out & Warranty",
+       "2029-07-05",
+       "2029-09-26",
+       false
+      ]
+     ]
+    }
+   ],
+   "dollars": [
+    {
+     "bond": "2020",
+     "project": "Wells HS – Design",
+     "budget": 20000000.0,
+     "encumbered": 2404163.0,
+     "paid": 17584080.0,
+     "remaining": 11757.0
+    },
+    {
+     "bond": "2025",
+     "project": "Ida B Wells HS Modernization",
+     "budget": 429350000.0,
+     "encumbered": 29359062.0,
+     "paid": 507760.0,
+     "remaining": 399483178.0
+    }
+   ]
+  },
+  "Grant": {
+   "work": [
+    {
+     "scope": "Grant HS Lights",
+     "status": "complete",
+     "finish": "2026-06-19",
+     "construction": [
+      "2026-03-23",
+      "2026-05-26"
+     ],
+     "phases": [
+      [
+       "Design",
+       "2025-01-01",
+       "2025-02-28",
+       true
+      ],
+      [
+       "Land Use Permit",
+       "2025-03-01",
+       "2025-08-08",
+       true
+      ],
+      [
+       "Permitting",
+       "2025-11-21",
+       "2026-02-16",
+       true
+      ],
+      [
+       "Construction",
+       "2026-03-23",
+       "2026-05-26",
+       true
+      ],
+      [
+       "Close-Out",
+       "2026-05-28",
+       "2026-06-19",
+       true
+      ]
+     ]
+    },
+    {
+     "scope": "Grant HS Seating",
+     "status": "planned",
+     "finish": "2028-07-14",
+     "construction": [
+      "2027-11-01",
+      "2028-05-31"
+     ],
+     "phases": [
+      [
+       "A/E Procurement",
+       "2026-09-01",
+       "2026-09-14",
+       false
+      ],
+      [
+       "Design",
+       "2026-11-02",
+       "2027-07-30",
+       false
+      ],
+      [
+       "Land Use Permit",
+       "2026-11-02",
+       "2027-07-30",
+       false
+      ],
+      [
+       "Permitting",
+       "2027-05-03",
+       "2027-10-29",
+       false
+      ],
+      [
+       "Construction",
+       "2027-11-01",
+       "2028-05-31",
+       false
+      ],
+      [
+       "Close-Out",
+       "2028-06-05",
+       "2028-07-14",
+       false
+      ]
+     ]
+    }
+   ],
+   "dollars": [
+    {
+     "bond": "2012",
+     "project": "Grant HS Mod",
+     "budget": 155300188.0,
+     "encumbered": 0.0,
+     "paid": 155300188.0,
+     "remaining": 0.0
+    },
+    {
+     "bond": "2012",
+     "project": "Grant Upper Field",
+     "budget": 3170988.0,
+     "encumbered": 0.0,
+     "paid": 3170988.0,
+     "remaining": 0.0
+    }
+   ]
+  },
+  "Jackson": {
+   "work": [
+    {
+     "scope": "Jackson MS Hub / Phase 0",
+     "status": "in construction",
+     "finish": "2026-11-11",
+     "construction": [
+      "2026-06-10",
+      "2026-11-11"
+     ],
+     "phases": [
+      [
+       "Land Use Permit",
+       "2024-01-01",
+       "2024-09-10",
+       true
+      ],
+      [
+       "Direct Select / Coop Procurement",
+       "2025-12-22",
+       "2026-02-11",
+       true
+      ],
+      [
+       "Design",
+       "2026-02-11",
+       "2026-05-29",
+       true
+      ],
+      [
+       "Permitting",
+       "2026-05-29",
+       "2026-06-10",
+       true
+      ],
+      [
+       "Construction",
+       "2026-06-10",
+       "2026-11-11",
+       false
+      ]
+     ]
+    },
+    {
+     "scope": "Jackson MS Hub / Phase 1A",
+     "status": "in design or permitting",
+     "finish": "2027-03-08",
+     "construction": [
+      "2026-09-22",
+      "2027-03-08"
+     ],
+     "phases": [
+      [
+       "Land Use Permit",
+       "2026-01-01",
+       "2026-01-01",
+       true
+      ],
+      [
+       "Design",
+       "2026-02-11",
+       "2026-07-30",
+       false
+      ],
+      [
+       "Permitting",
+       "2026-07-31",
+       "2026-09-21",
+       false
+      ],
+      [
+       "Construction",
+       "2026-09-22",
+       "2027-03-08",
+       false
+      ]
+     ]
+    },
+    {
+     "scope": "Jackson MS Hub / Phase 1B",
+     "status": "in design or permitting",
+     "finish": "2027-06-18",
+     "construction": [
+      "2026-12-22",
+      "2027-06-04"
+     ],
+     "phases": [
+      [
+       "Design",
+       "2026-04-01",
+       "2026-10-26",
+       false
+      ],
+      [
+       "Permitting",
+       "2026-09-22",
+       "2026-12-21",
+       false
+      ],
+      [
+       "Construction",
+       "2026-12-22",
+       "2027-06-04",
+       false
+      ],
+      [
+       "Close-Out",
+       "2027-06-09",
+       "2027-06-18",
+       false
+      ]
+     ]
+    }
+   ]
+  },
+  "Roosevelt": {
+   "work": [
+    {
+     "scope": "Roosevelt HS Athletic Improvements",
+     "status": "planned",
+     "finish": "2028-12-14",
+     "construction": [
+      "2028-01-31",
+      "2028-10-31"
+     ],
+     "phases": [
+      [
+       "A/E Procurement",
+       "2026-09-01",
+       "2026-09-14",
+       false
+      ],
+      [
+       "Design",
+       "2026-11-02",
+       "2027-10-29",
+       false
+      ],
+      [
+       "Land Use Permit",
+       "2026-11-02",
+       "2027-10-29",
+       false
+      ],
+      [
+       "Permitting",
+       "2027-08-02",
+       "2028-01-28",
+       false
+      ],
+      [
+       "Construction",
+       "2028-01-31",
+       "2028-10-31",
+       false
+      ],
+      [
+       "Close-Out",
+       "2028-11-03",
+       "2028-12-14",
+       false
+      ]
+     ]
+    }
+   ],
+   "dollars": [
+    {
+     "bond": "2012",
+     "project": "Roosevelt HS Mod",
+     "budget": 97128043.0,
+     "encumbered": 0.0,
+     "paid": 97128043.0,
+     "remaining": 0.0
+    },
+    {
+     "bond": "2012",
+     "project": "RHS Phase IV",
+     "budget": 6153741.0,
+     "encumbered": 0.0,
+     "paid": 6153741.0,
+     "remaining": 0.0
+    },
+    {
+     "bond": "2020",
+     "project": "Roosevelt PhV – Design",
+     "budget": 2000000.0,
+     "encumbered": 1035.0,
+     "paid": 97625.0,
+     "remaining": 1901340.0
+    }
+   ]
+  },
+  "Franklin": {
+   "work": [
+    {
+     "scope": "Franklin Field",
+     "status": "planned",
+     "finish": "2028-07-14",
+     "construction": [
+      "2027-09-30",
+      "2028-05-31"
+     ],
+     "phases": [
+      [
+       "A/E Procurement",
+       "2026-09-01",
+       "2026-09-14",
+       false
+      ],
+      [
+       "Design",
+       "2026-10-01",
+       "2027-06-30",
+       false
+      ],
+      [
+       "Land Use Permit",
+       "2026-10-01",
+       "2027-06-30",
+       false
+      ],
+      [
+       "Permitting",
+       "2027-04-01",
+       "2027-09-29",
+       false
+      ],
+      [
+       "Construction",
+       "2027-09-30",
+       "2028-05-31",
+       false
+      ],
+      [
+       "Close-Out",
+       "2028-06-05",
+       "2028-07-14",
+       false
+      ]
+     ]
+    }
+   ],
+   "dollars": [
+    {
+     "bond": "2012",
+     "project": "Franklin HS Mod",
+     "budget": 110950414.0,
+     "encumbered": 0.0,
+     "paid": 110950414.0,
+     "remaining": 0.0
+    }
+   ]
+  },
+  "West Sylvan": {
+   "work": [
+    {
+     "scope": "West Sylvan MS Field",
+     "status": "planned",
+     "finish": "2028-08-14",
+     "construction": [
+      "2027-12-01",
+      "2028-06-29"
+     ],
+     "phases": [
+      [
+       "A/E Procurement",
+       "2026-09-01",
+       "2026-09-14",
+       false
+      ],
+      [
+       "Design",
+       "2026-10-01",
+       "2027-09-30",
+       false
+      ],
+      [
+       "Land Use Permit",
+       "2026-10-01",
+       "2027-09-30",
+       false
+      ],
+      [
+       "Permitting",
+       "2027-08-02",
+       "2027-11-30",
+       false
+      ],
+      [
+       "Construction",
+       "2027-12-01",
+       "2028-06-29",
+       false
+      ],
+      [
+       "Close-Out",
+       "2028-07-04",
+       "2028-08-14",
+       false
+      ]
+     ]
+    }
+   ]
+  },
+  "Beverly Cleary": {
+   "work": [
+    {
+     "scope": "Beverly Cleary Fernwood Full Seismic",
+     "status": "in design or permitting",
+     "finish": "2028-09-29",
+     "construction": [
+      "2027-06-11",
+      "2028-08-18"
+     ],
+     "phases": [
+      [
+       "Design",
+       "2026-01-13",
+       "2026-08-19",
+       false
+      ],
+      [
+       "Permitting",
+       "2026-08-20",
+       "2027-02-17",
+       false
+      ],
+      [
+       "Construction",
+       "2027-06-11",
+       "2028-08-18",
+       false
+      ],
+      [
+       "Close-Out",
+       "2028-08-21",
+       "2028-09-29",
+       false
+      ]
+     ]
+    }
+   ]
+  },
+  "Winterhaven": {
+   "work": [
+    {
+     "scope": "Vernon & Winterhaven Approach B, Partial Seismic",
+     "status": "in construction",
+     "finish": "2026-10-12",
+     "construction": [
+      "2026-06-12",
+      "2026-08-31"
+     ],
+     "phases": [
+      [
+       "Design",
+       "2025-09-18",
+       "2025-12-24",
+       true
+      ],
+      [
+       "Permitting",
+       "2025-11-25",
+       "2026-05-27",
+       true
+      ],
+      [
+       "Construction",
+       "2026-06-12",
+       "2026-08-31",
+       false
+      ],
+      [
+       "Close-Out",
+       "2026-09-01",
+       "2026-10-12",
+       false
+      ]
+     ]
+    }
+   ]
+  },
+  "Vernon": {
+   "work": [
+    {
+     "scope": "Vernon & Winterhaven Approach B, Partial Seismic",
+     "status": "in construction",
+     "finish": "2026-10-12",
+     "construction": [
+      "2026-06-12",
+      "2026-08-31"
+     ],
+     "phases": [
+      [
+       "Design",
+       "2025-09-18",
+       "2025-12-24",
+       true
+      ],
+      [
+       "Permitting",
+       "2025-11-25",
+       "2026-05-27",
+       true
+      ],
+      [
+       "Construction",
+       "2026-06-12",
+       "2026-08-31",
+       false
+      ],
+      [
+       "Close-Out",
+       "2026-09-01",
+       "2026-10-12",
+       false
+      ]
+     ]
+    }
+   ]
+  },
+  "Ainsworth": {
+   "work": [
+    {
+     "scope": "Ainsworth & Kelly Partial Seismic",
+     "status": "in design or permitting",
+     "finish": "2027-10-29",
+     "construction": [
+      "2027-06-11",
+      "2027-08-27"
+     ],
+     "phases": [
+      [
+       "Design",
+       "2026-05-13",
+       "2026-11-18",
+       false
+      ],
+      [
+       "Permitting",
+       "2026-11-19",
+       "2027-04-07",
+       false
+      ],
+      [
+       "Construction",
+       "2027-06-11",
+       "2027-08-27",
+       false
+      ],
+      [
+       "Close-Out",
+       "2027-08-30",
+       "2027-10-29",
+       false
+      ]
+     ]
+    }
+   ]
+  },
+  "Kelly": {
+   "work": [
+    {
+     "scope": "Ainsworth & Kelly Partial Seismic",
+     "status": "in design or permitting",
+     "finish": "2027-10-29",
+     "construction": [
+      "2027-06-11",
+      "2027-08-27"
+     ],
+     "phases": [
+      [
+       "Design",
+       "2026-05-13",
+       "2026-11-18",
+       false
+      ],
+      [
+       "Permitting",
+       "2026-11-19",
+       "2027-04-07",
+       false
+      ],
+      [
+       "Construction",
+       "2027-06-11",
+       "2027-08-27",
+       false
+      ],
+      [
+       "Close-Out",
+       "2027-08-30",
+       "2027-10-29",
+       false
+      ]
+     ]
+    }
+   ]
+  },
+  "Richmond": {
+   "work": [
+    {
+     "scope": "Richmond Partial Seismic & Roof",
+     "status": "in design or permitting",
+     "finish": "2027-10-11",
+     "construction": [
+      "2027-06-11",
+      "2027-08-27"
+     ],
+     "phases": [
+      [
+       "Design",
+       "2026-04-30",
+       "2026-11-04",
+       false
+      ],
+      [
+       "Permitting",
+       "2026-11-05",
+       "2027-04-14",
+       false
+      ],
+      [
+       "Construction",
+       "2027-06-11",
+       "2027-08-27",
+       false
+      ],
+      [
+       "Close-Out",
+       "2027-08-30",
+       "2027-10-11",
+       false
+      ]
+     ]
+    }
+   ]
+  },
+  "Capitol Hill": {
+   "work": [
+    {
+     "scope": "Capitol Hill Seismic & Roof",
+     "status": "in design or permitting",
+     "finish": "2028-09-29",
+     "construction": [
+      "2027-06-11",
+      "2028-08-18"
+     ],
+     "phases": [
+      [
+       "Design",
+       "2026-04-28",
+       "2026-12-08",
+       false
+      ],
+      [
+       "Permitting",
+       "2026-12-09",
+       "2027-02-24",
+       false
+      ],
+      [
+       "Construction - Phase 1",
+       "2027-06-11",
+       "2027-08-17",
+       false
+      ],
+      [
+       "Close-Out - Phase 1",
+       "2027-08-18",
+       "2027-09-17",
+       false
+      ],
+      [
+       "Construction - Phase 2",
+       "2028-06-14",
+       "2028-08-18",
+       false
+      ],
+      [
+       "Close-Out - Phase 2",
+       "2028-08-21",
+       "2028-09-29",
+       false
+      ]
+     ]
+    }
+   ]
+  },
+  "Beach": {
+   "work": [
+    {
+     "scope": "Beach Seismic & Roof",
+     "status": "planned",
+     "finish": "2028-09-29",
+     "construction": [
+      "2028-01-10",
+      "2028-08-18"
+     ],
+     "phases": [
+      [
+       "Design",
+       "2026-08-06",
+       "2027-04-22",
+       false
+      ],
+      [
+       "Permitting",
+       "2027-05-17",
+       "2028-01-05",
+       false
+      ],
+      [
+       "Construction - Phase 1",
+       "2028-01-10",
+       "2028-03-15",
+       false
+      ],
+      [
+       "Close-Out - Phase 1",
+       "2028-03-16",
+       "2028-04-17",
+       false
+      ],
+      [
+       "Construction - Phase 2",
+       "2028-06-14",
+       "2028-08-18",
+       false
+      ],
+      [
+       "Close-Out - Phase 2",
+       "2028-08-21",
+       "2028-09-29",
+       false
+      ]
+     ]
+    }
+   ]
+  },
+  "Rose City Park": {
+   "work": [
+    {
+     "scope": "Rose City Park Seismic and Roof",
+     "status": "in design or permitting",
+     "finish": "2029-10-05",
+     "construction": [
+      "2028-06-16",
+      "2029-08-24"
+     ],
+     "phases": [
+      [
+       "Design",
+       "2026-05-27",
+       "2027-06-16",
+       false
+      ],
+      [
+       "Permitting",
+       "2027-06-17",
+       "2028-02-16",
+       false
+      ],
+      [
+       "Construction",
+       "2028-06-16",
+       "2029-08-24",
+       false
+      ],
+      [
+       "Close-Out",
+       "2029-08-27",
+       "2029-10-05",
+       false
+      ]
+     ]
+    }
+   ]
+  },
+  "Faubion": {
+   "dollars": [
+    {
+     "bond": "2012",
+     "project": "Faubion Replace",
+     "budget": 30653663.0,
+     "encumbered": 0.0,
+     "paid": 30653663.0,
+     "remaining": 0.0
+    }
+   ]
+  },
+  "Lincoln": {
+   "dollars": [
+    {
+     "bond": "2017",
+     "project": "Lincoln HS Repl",
+     "budget": 240836448.0,
+     "encumbered": 28738.0,
+     "paid": 224096580.0,
+     "remaining": 16711130.0
+    }
+   ]
+  },
+  "Kellogg": {
+   "dollars": [
+    {
+     "bond": "2017",
+     "project": "Kellogg MS Replace",
+     "budget": 57648703.0,
+     "encumbered": 0.0,
+     "paid": 57648703.0,
+     "remaining": 0.0
+    }
+   ]
+  },
+  "McDaniel": {
+   "dollars": [
+    {
+     "bond": "2017",
+     "project": "McDaniel Mod",
+     "budget": 197000000.0,
+     "encumbered": 48407.0,
+     "paid": 196817745.0,
+     "remaining": 133848.0
+    }
+   ]
+  }
+ },
+ "pools": {
+  "2012": [
+   {
+    "project": "Other Projects",
+    "budget": 112740428.0,
+    "encumbered": 8100.0,
+    "paid": 112710428.0,
+    "remaining": 21900.0
+   },
+   {
+    "project": "Grant & Franklin Add Ons",
+    "budget": 367663.0,
+    "encumbered": 92107.0,
+    "paid": 75464.0,
+    "remaining": 200092.0
+   },
+   {
+    "project": "Administration",
+    "budget": 31284018.0,
+    "encumbered": 0.0,
+    "paid": 31284018.0,
+    "remaining": 0.0
+   },
+   {
+    "project": "Contingency",
+    "budget": 83104.0,
+    "encumbered": 0.0,
+    "paid": -902.0,
+    "remaining": 84006.0
+   }
+  ],
+  "2017": [
+   {
+    "project": "Health & Safety",
+    "budget": 168865686.0,
+    "encumbered": 22536517.0,
+    "paid": 124615088.0,
+    "remaining": 21714081.0
+   },
+   {
+    "project": "Athletics",
+    "budget": 4734678.0,
+    "encumbered": 174034.0,
+    "paid": 2278729.0,
+    "remaining": 2281914.0
+   },
+   {
+    "project": "Administration",
+    "budget": 61087401.0,
+    "encumbered": 168934.0,
+    "paid": 60908060.0,
+    "remaining": 10408.0
+   },
+   {
+    "project": "Contingency",
+    "budget": 593194.0,
+    "encumbered": 0.0,
+    "paid": 0.0,
+    "remaining": 593194.0
+   }
+  ],
+  "2020": [
+   {
+    "project": "Curriculum",
+    "budget": 63319191.0,
+    "encumbered": 1255550.0,
+    "paid": 54617744.0,
+    "remaining": 7445897.0
+   },
+   {
+    "project": "Technology",
+    "budget": 136100000.0,
+    "encumbered": 16660493.0,
+    "paid": 91534529.0,
+    "remaining": 27904978.0
+   },
+   {
+    "project": "Infra Projects",
+    "budget": 268153105.0,
+    "encumbered": 19787893.0,
+    "paid": 235023435.0,
+    "remaining": 13341777.0
+   },
+   {
+    "project": "Administration",
+    "budget": 51706045.0,
+    "encumbered": 1239513.0,
+    "paid": 34440015.0,
+    "remaining": 16026517.0
+   },
+   {
+    "project": "2017 Bond Balance",
+    "budget": 0.0,
+    "encumbered": 0.0,
+    "paid": 0.0,
+    "remaining": 0.0
+   },
+   {
+    "project": "Contingency – OSM",
+    "budget": 79451387.0,
+    "encumbered": 0.0,
+    "paid": 0.0,
+    "remaining": 79451387.0
+   },
+   {
+    "project": "Unallocated Funds",
+    "budget": 17649899.0,
+    "encumbered": 0.0,
+    "paid": 0.0,
+    "remaining": 17649899.0
+   }
+  ],
+  "2025": [
+   {
+    "project": "Priority Scope",
+    "budget": 190000000.0,
+    "encumbered": 10622793.0,
+    "paid": 344233.0,
+    "remaining": 179032974.0
+   },
+   {
+    "project": "Athletics",
+    "budget": 79000000.0,
+    "encumbered": 1347024.0,
+    "paid": 2047435.0,
+    "remaining": 75605541.0
+   },
+   {
+    "project": "Technology",
+    "budget": 176000000.0,
+    "encumbered": 3916460.0,
+    "paid": 26452579.0,
+    "remaining": 145630961.0
+   },
+   {
+    "project": "Physical Education",
+    "budget": 10000000.0,
+    "encumbered": 0.0,
+    "paid": 0.0,
+    "remaining": 10000000.0
+   },
+   {
+    "project": "Curriculum",
+    "budget": 56000000.0,
+    "encumbered": 0.0,
+    "paid": 0.0,
+    "remaining": 56000000.0
+   },
+   {
+    "project": "Elementary & Middle Schools",
+    "budget": 171738255.0,
+    "encumbered": 0.0,
+    "paid": 0.0,
+    "remaining": 171738255.0
+   },
+   {
+    "project": "Admin",
+    "budget": 83050000.0,
+    "encumbered": 57898825.0,
+    "paid": 7570008.0,
+    "remaining": 17581167.0
+   },
+   {
+    "project": "Contingency",
+    "budget": 125956806.0,
+    "encumbered": 0.0,
+    "paid": 0.0,
+    "remaining": 125956806.0
+   }
+  ]
+ },
+ "totals": {
+  "2012": {
+   "project": "PPS 2012 Bond Program Total",
+   "budget": 547832249.0,
+   "encumbered": 100207.0,
+   "paid": 547426043.0,
+   "remaining": 305998.0
+  },
+  "2017": {
+   "project": "PPS 2017 Bond Program Total",
+   "budget": 892445285.0,
+   "encumbered": 23567653.0,
+   "paid": 823546245.0,
+   "remaining": 45331387.0
+  },
+  "2020": {
+   "project": "PPS 2020 Bond Program Total",
+   "budget": 1333707282.0,
+   "encumbered": 89283832.0,
+   "paid": 735700902.0,
+   "remaining": 508722548.0
+  },
+  "2025": {
+   "project": "PPS 2025 Bond Program Total",
+   "budget": 1870006806.0,
+   "encumbered": 115417194.0,
+   "paid": 37315630.0,
+   "remaining": 1717273982.0
+  }
+ },
+ "note": "PPS capital bond work by school, from the bond program's own reports (ppsbondhub.com):\n  financials  \"Bond Financials as of 07.01.26\": each bond's projects with budget, outstanding encumbrance, amount paid\n              to date and remaining balance (2012, 2017, 2020 and 2025 bonds)\n  schedule    \"PPS Summary Schedule 2026.09.02\" (data date 06-Jul-26): each project's phases (design, permitting,\n              construction, close-out) with start and finish dates; \"A\" marks an actual date\nA project is assigned to a school only where the report names one school (modernizations, design, a school's field or\nseismic work). District-wide pools (Health & Safety, Infrastructure, Technology, Curriculum, the 2025 Elementary &\nMiddle Schools and Priority Scope funds, administration, contingency) cannot be split by school; they are kept as\ndistrict totals. Scheduled work names the school and scope but carries no dollars."
+}

@@ -344,16 +344,30 @@ function rpTravel(k, sc) {
   });
 }
 function rpCosts(k, sc) {
-  const c = (D.costs || {})[k], l = (D.land || {})[k], closed = (D.detail[sc] || {})[k]?.closed;
-  if (!c && !l) return '<p class="muted">No cost estimate for this school.</p>';
+  const c = (D.costs || {})[k], l = (D.land || {})[k], closed = (D.detail[sc] || {})[k]?.closed, bd = D.bond?.schools?.[k];
+  if (!c && !l && !bd) return '<p class="muted">No cost estimate for this school.</p>';
   const v = x => x == null ? '&mdash;' : usdM(x);
+  // bond capital: projects PPS's bond reports assign to this school (paid of allocated) and scheduled bond work
+  let bond = '';
+  if (bd && typeof bondUSD === 'function') {
+    const ds = bd.dollars || [], ws = bd.work || [], open = ws.filter(w => w.status !== 'complete');
+    const tb = ds.reduce((a, d) => a + d.budget, 0), tp = ds.reduce((a, d) => a + d.paid, 0);
+    bond = `<h4>Bond capital</h4>` + (ds.length ? `<table class="rptable"><tbody>` +
+      `<tr class="tot"><td>School-specific bond projects</td><td>${bondUSD(tp)} paid of ${bondUSD(tb)}</td></tr>` +
+      ds.map(d => `<tr><td>&nbsp;&nbsp;${esc(d.bond)} bond: ${esc(d.project)}</td><td>${bondUSD(d.paid)} of ${bondUSD(d.budget)}${d.encumbered >= 5e4 ? ` <span class="muted">(${bondUSD(d.encumbered)} committed)</span>` : ''}</td></tr>`).join('') +
+      `</tbody></table>` : '') +
+      (ws.length ? `<ul class="rplist">${ws.map(w => `<li><b>${esc(w.scope)}</b>: ${w.status === 'complete' ? `complete ${bondMon(w.finish)}` :
+        `${esc(w.status)}${w.construction ? `; construction ${bondMon(w.construction[0])} to ${bondMon(w.construction[1])}` : ''}; completes ${bondMon(w.finish)}`}</li>`).join('')}</ul>` : '') +
+      (closed && open.length ? `<p class="rpline"><span class="stag closes">closes in ${esc(LABEL[sc])}</span> bond work not yet complete here could be avoided or redirected</p>` : '') +
+      `<p class="muted rpnote">PPS bond reports, as of ${bondMon(D.bond.as_of)} (dollars) and ${bondMon(D.bond.schedule_as_of)} (schedule). Roofs, seismic, accessibility and mechanical work paid from district-wide pools are not reported by school, so only school-specific projects carry dollars.</p>`;
+  }
   return (closed ? `<p class="rpline"><span class="stag closes">closes in ${esc(LABEL[sc])}</span> these costs are avoided</p>` : '') +
-    `<table class="rptable"><tbody>` +
+    (c || l ? `<table class="rptable"><tbody>` +
     (c ? `<tr class="tot"><td>Must-fix</td><td>${v(c.mf)}</td></tr><tr><td>&nbsp;&nbsp;Deferred maintenance (2021 FCI ${c.fci ?? 'n/a'})</td><td>${v(c.dm)}</td></tr>` +
       `<tr><td>&nbsp;&nbsp;Seismic retrofit${c.urm ? ` (URM part ${usdM(c.urm)})` : ''}</td><td>${v(c.se)}</td></tr>` +
       `<tr class="tot"><td>Full modernization</td><td>${v(c.mod)}</td></tr><tr><td>&nbsp;&nbsp;Building area</td><td>${c.sf ? c.sf.toLocaleString() + ' sq ft' : '&mdash;'}</td></tr>` : '') +
     (l ? `<tr><td>Assessor land value (2025 roll)</td><td>${usdM(l.land)}</td></tr><tr><td>&nbsp;&nbsp;Land + buildings</td><td>${usdM(l.land + l.imp)}</td></tr>` : '') +
-    `</tbody></table><p class="muted rpnote">2026 dollars. Must-fix = deferred maintenance + remaining seismic retrofit; full modernization = replacement value (see Method).</p>`;
+    `</tbody></table><p class="muted rpnote">2026 dollars. Must-fix = deferred maintenance + remaining seismic retrofit (2021 Long-Range Facility Plan; bond work since 2021 is not subtracted); full modernization = replacement value (see Method).</p>` : '') + bond;
 }
 
 // boundary map: Status Quo area outlined, scenario area filled, changing parts in gold
