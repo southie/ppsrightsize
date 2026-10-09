@@ -13,7 +13,7 @@ Enrollment by grade band (K-5 with transitional K and 1st, 6-8, 9-12; pre-K excl
 
 Per school: capacity = its peak total K-12 enrollment in the five waves (demonstrated capacity), split across its grade
 bands in proportion to its latest enrollment by band (so a K-8 or K-12 school is not credited with each band's own
-peak from different years); a school serving one band keeps that band's peak. Per band: open seats = capacity -
+peak from different years); a school serving one band keeps that band's peak. Per band: estimated available capacity = capacity -
 latest enrollment. Per area and band: enrollment in each wave (a school's missing waves between two reports are
 filled by straight line; before its first report it counts as not yet open, 0), and the trend: a log-linear fit of
 area enrollment on survey year, as an average percent change per year.
@@ -139,7 +139,7 @@ json.dump(dict(source='NCES Private School Universe Survey, 2015-16 to 2023-24 (
 
 # summary
 for b, lab in [('k5', 'K-5'), ('68', '6-8'), ('912', '9-12')]:
-    print(f'\n{lab}: area | comparable schools | latest | capacity (peak) | open seats | trend %/yr | enrollment by wave')
+    print(f'\n{lab}: area | comparable schools | latest | capacity (peak) | available | trend %/yr | enrollment by wave')
     for r in out:
         x = r['bands'].get(b)
         if x and x['schools']: print(f"  {r['region'][:22]:22s} {r['area'][:28]:28s} {x['schools']:3d} {x['latest']:6d} {x['capacity']:6d} {x['open_seats']:5d} {str(x['trend_pct_per_year']):>6s}  {x['series']}")

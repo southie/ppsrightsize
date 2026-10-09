@@ -1,0 +1,154 @@
+{
+ "note": "Census-based estimate of the attendance-area changes the enrollment model does not move (Duniway's southern area to\nLlewellyn, the Alameda edge to Scott, Lincoln's area to Ida B. Wells-Barnett, and the other partial boundary edits in\nScenarios A and B). For each grade band, every Census block is assigned to its school under Status Quo and under the\nscenario (source/block-access/block-access.csv, from scripts/build_block_access.py, with 2020 Census residents of that\nband's ages). A block whose school changes is already in the model when:\n  - its Status Quo school closes in the scenario (the closure flows move its students), or\n  - grades 6-8, and its Status Quo school is a K-8 that becomes K-5 (its 6-8 students move to the receiving middle\n    school), or its K-5 school is one of the elementary areas whose middle school PPS reassigns and the model moves\n    (Maplewood, Irvington, Peninsula, Kelly, Atkinson, Creston), or\n  - grades 9-12, and its K-5 school is Skyline, Sunnyside Environmental, Whitman or Woodmere (the high-school area\n    moves the model makes).\nOnly moves between schools PPS lists as a changed area (D.bounds <scenario>_<band>.changed) count; this drops blocks the\nStatus Quo layer assigns to an immersion program's area (Kelly, Lent, Rigler, Scott). Rosa Parks' gain from César\nChávez's neighborhood is already in the model (Rosa Parks gains more than Peninsula's students), so it is skipped.\nEvery other changed block is a move the model leaves out. For each such (from, to, band), the share is the moved\nband-age residents divided by all band-age residents in the from-school's Status Quo area; the page moves that share of\nthe from-school's Status Quo neighborhood students in that band (excluding immersion programs) in each year from 2027-28.",
+ "source": "2020 Census block residents by age (DHC) and attendance areas by scenario",
+ "moves": {
+  "A": [
+   {
+    "frm": "Duniway",
+    "to": "Llewellyn",
+    "band": "k5",
+    "residents": 228.9,
+    "area_residents": 684.7,
+    "share": 0.3343
+   },
+   {
+    "frm": "Kellogg",
+    "to": "Harrison Park",
+    "band": "68",
+    "residents": 182.4,
+    "area_residents": 563.9,
+    "share": 0.3235
+   },
+   {
+    "frm": "Hayhurst",
+    "to": "Rieke",
+    "band": "k5",
+    "residents": 68.6,
+    "area_residents": 563.6,
+    "share": 0.1217
+   },
+   {
+    "frm": "Franklin",
+    "to": "McDaniel",
+    "band": "912",
+    "residents": 54.0,
+    "area_residents": 2881.9,
+    "share": 0.0187
+   },
+   {
+    "frm": "Franklin",
+    "to": "Cleveland",
+    "band": "912",
+    "residents": 26.2,
+    "area_residents": 2881.9,
+    "share": 0.0091
+   },
+   {
+    "frm": "Lincoln",
+    "to": "Ida B Wells-Barnett",
+    "band": "912",
+    "residents": 14.6,
+    "area_residents": 2320.9,
+    "share": 0.0063
+   },
+   {
+    "frm": "Jefferson",
+    "to": "Roosevelt",
+    "band": "912",
+    "residents": 8.1,
+    "area_residents": 2282.5,
+    "share": 0.0035
+   },
+   {
+    "frm": "Faubion",
+    "to": "Astor",
+    "band": "k5",
+    "residents": 7.1,
+    "area_residents": 557.9,
+    "share": 0.0127
+   },
+   {
+    "frm": "West Sylvan",
+    "to": "Gray",
+    "band": "68",
+    "residents": 6.9,
+    "area_residents": 1342.0,
+    "share": 0.0051
+   }
+  ],
+  "B": [
+   {
+    "frm": "Whitman",
+    "to": "Lewis",
+    "band": "k5",
+    "residents": 266.6,
+    "area_residents": 538.0,
+    "share": 0.4955
+   },
+   {
+    "frm": "Kellogg",
+    "to": "Harrison Park",
+    "band": "68",
+    "residents": 182.4,
+    "area_residents": 563.9,
+    "share": 0.3235
+   },
+   {
+    "frm": "Hayhurst",
+    "to": "Rieke",
+    "band": "k5",
+    "residents": 68.6,
+    "area_residents": 563.6,
+    "share": 0.1217
+   },
+   {
+    "frm": "Franklin",
+    "to": "McDaniel",
+    "band": "912",
+    "residents": 54.0,
+    "area_residents": 2881.9,
+    "share": 0.0187
+   },
+   {
+    "frm": "Franklin",
+    "to": "Cleveland",
+    "band": "912",
+    "residents": 26.2,
+    "area_residents": 2881.9,
+    "share": 0.0091
+   },
+   {
+    "frm": "Lincoln",
+    "to": "Ida B Wells-Barnett",
+    "band": "912",
+    "residents": 14.6,
+    "area_residents": 2320.9,
+    "share": 0.0063
+   },
+   {
+    "frm": "Jefferson",
+    "to": "Roosevelt",
+    "band": "912",
+    "residents": 8.1,
+    "area_residents": 2282.5,
+    "share": 0.0035
+   },
+   {
+    "frm": "Faubion",
+    "to": "Astor",
+    "band": "k5",
+    "residents": 7.1,
+    "area_residents": 557.9,
+    "share": 0.0127
+   },
+   {
+    "frm": "West Sylvan",
+    "to": "Gray",
+    "band": "68",
+    "residents": 6.9,
+    "area_residents": 1342.0,
+    "share": 0.0051
+   }
+  ]
+ }
+}

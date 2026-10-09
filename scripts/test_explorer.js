@@ -10,7 +10,7 @@ Object.assign(global, { window: global, L: chain, innerWidth: 1200, addEventList
   document: { getElementById: el, querySelectorAll: () => [], createElement: el, createElementNS: el, documentElement: {} },
   getComputedStyle: () => ({ getPropertyValue: () => '#000' }), localStorage: { getItem: () => null, setItem() {} },
   location: { hash: '', pathname: '/x.html', search: '', href: '' }, history: { replaceState() {} } });
-const T = new Function(script + `;return { D, P, custom, buildCustom: () => buildCustom(), alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; } };`)();
+const T = new Function(script + `;return { D, P, custom, buildCustom: () => buildCustom(), applyAdjust, ADJ, alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; } };`)();
 const { D } = T;
 const ok = (c, msg) => { console.log((c ? 'PASS ' : 'FAIL ') + msg); if (!c) process.exitCode = 1; };
 
@@ -61,7 +61,9 @@ const pr = T.P.find(x => !x.preKOnly);
 const np = T.nearestPPS(pr);
 ok(np.road && np.min > 0, `nearest PPS to ${pr.name}: ${np.s.key} ${np.d} mi / ${np.min} min by road`);
 
-// 6) keep open a school the starting scenario closes
+// 6) keep open a school the starting scenario closes (checked without the Census boundary adjustment, which moves
+// part of Hayhurst's area to Rieke and so caps what Hayhurst can give back)
+T.applyAdjust(false);
 {
   const Y = D.years.indexOf('2031-32'), sum = sc => Object.values(D.series[sc]).reduce((a, s) => a + (s[Y] || 0), 0);
   T.custom.base = 'A'; T.custom.name = ''; T.custom.actions = [{ k: 'Maplewood', reopen: true }]; T.buildCustom();
@@ -107,4 +109,20 @@ ok(np.road && np.min > 0, `nearest PPS to ${pr.name}: ${np.s.key} ${np.d} mi / $
   ok(['Hosford', 'Lane'].every(k => D.series.C[k][Y] >= D.series.SQ[k][Y] - 0.5), `no receiver drops below Status Quo (Hosford ${Math.round(D.series.C.Hosford[Y])} vs ${D.series.SQ.Hosford[Y]}, Brentwood ${Math.round(D.series.C.Lane[Y])} vs ${D.series.SQ.Lane[Y]})`);
   ok(Math.abs(sum('A') - sum('C')) < 0.01, `district 2031-32 total unchanged from A (${Math.round(sum('C'))})`);
   T.custom.actions = []; T.custom.base = 'SQ';
+}
+
+// 7) Census boundary adjustment: moves conserve students, Llewellyn gains from Duniway, published measures shift and restore
+{
+  const Y = D.years.indexOf('2031-32'), sum = sc => Object.values(D.series[sc]).reduce((a, s) => a + (s[Y] || 0), 0);
+  T.applyAdjust(false); const a0 = sum('A'), b0 = sum('B');
+  T.applyAdjust(true);
+  const dl = D.series.A.Llewellyn[Y] - 312, dd = 546 - D.series.A.Duniway[Y];
+  ok(dl > 80 && dl === dd, `A: Duniway -> Llewellyn moves ${dl} students in 2031-32 (Llewellyn ${D.series.A.Llewellyn[Y]}, Duniway ${D.series.A.Duniway[Y]})`);
+  ok(Math.abs(sum('A') - a0) < 0.01 && Math.abs(sum('B') - b0) < 0.01, `adjusted A and B keep their district 2031-32 totals (${a0}, ${b0})`);
+  ok(D.detail.A.Llewellyn.above && D.endpoints['Cleveland / Franklin'].A.schools_above === 76 && T.ADJ.diff['Cleveland / Franklin'].A.schools_above.pub === 71,
+     `Cleveland / Franklin A: schools above ${D.endpoints['Cleveland / Franklin'].A.schools_above}% (PPS published 71%)`);
+  ok(D.series.B.Lewis[Y] > 201, `B: Whitman -> Lewis (Lewis ${D.series.B.Lewis[Y]})`);
+  T.applyAdjust(false);
+  ok(D.series.A.Llewellyn[Y] === 312 && D.endpoints['Cleveland / Franklin'].A.schools_above === 71 && !Object.keys(T.ADJ.diff).length, 'turning it off restores the published figures');
+  T.applyAdjust(true);
 }

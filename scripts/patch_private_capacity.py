@@ -1,5 +1,5 @@
-"""Private school capacity table (last section, before the method notes): comparable private schools' enrollment, demonstrated capacity, open
-seats and enrollment trend from five NCES PSS waves (source/nces-pss/private-capacity.json, from
+"""Private school capacity table (last section, before the method notes): comparable private schools' enrollment, demonstrated capacity,
+estimated available capacity and enrollment trend from five NCES PSS waves (source/nces-pss/private-capacity.json, from
 scripts/build_private_capacity.py), by region, drilling down to schools and then grades, with a grade-band selector.
 Data refreshed on rerun; code added once.
 """
@@ -25,7 +25,7 @@ if 'function renderPrivCap' not in html:
     rep("""  <section class="card">
     <h2>Method and assumptions</h2>""", """  <section class="card">
     <h2>Private school capacity: comparable schools by region</h2>
-    <p class="sub">Comparable private schools are regular Catholic, other religious and nonsectarian schools (not special program emphasis or special education) inside PPS, plus schools just outside the district within 3.5 miles by road of a PPS school (or listed on the map as an alternative for one), counted in the region of their nearest PPS school. From five NCES Private School Universe Surveys, 2015-16 to 2023-24 (every two years). <b>Capacity</b> is each school's highest total K-12 enrollment in those surveys, split across its grades by its latest enrollment, so it is room a school has shown it can fill, not its building's limit. <b>Open seats</b> = capacity &minus; latest enrollment. <b>Trend</b> is the average change a year from a log-linear fit through the five surveys (a school's missing surveys between two reports are filled in by straight line). Click a region to see its schools, and a school to see its grades.</p>
+    <p class="sub">Comparable private schools are regular Catholic, other religious and nonsectarian schools (not special program emphasis or special education) inside PPS, plus schools just outside the district within 3.5 miles by road of a PPS school (or listed on the map as an alternative for one), counted in the region of their nearest PPS school. From five NCES Private School Universe Surveys, 2015-16 to 2023-24 (every two years). <b>Capacity</b> is each school's highest total K-12 enrollment in those surveys, split across its grades by its latest enrollment, so it is room a school has shown it can fill, not its building's limit. <b>Estimated available capacity</b> = capacity &minus; latest enrollment. <b>Trend</b> is the average change a year from a log-linear fit through the five surveys (a school's missing surveys between two reports are filled in by straight line). Click a region to see its schools, and a school to see its grades.</p>
     <div class="controls"><label>Grades <select id="pc-band"></select></label></div>
     <div class="tablewrap" id="privcap"></div>
   </section>
@@ -83,7 +83,7 @@ function renderPrivCap() {
   const [, , lo, hi] = PC_BANDS.find(b => b[0] === pcBand), G = CS_GRADES;
   const serves = s => s.latest.slice(lo, hi + 1).some(x => x) || s.series.slice(lo, hi + 1).some(v => v.some(x => x));
   let h = `<table class="pctable"><thead><tr><th>Region</th><th>Comparable schools</th><th>Students<br><span style="font-weight:400">(latest survey)</span></th>` +
-    `<th>Capacity<br><span style="font-weight:400">(highest enrollment)</span></th><th>Open seats</th><th>Trend<br><span style="font-weight:400">(change a year)</span></th>` +
+    `<th>Capacity<br><span style="font-weight:400">(highest enrollment)</span></th><th>Estimated available capacity<br><span style="font-weight:400">(capacity &minus; latest enrollment)</span></th><th>Trend<br><span style="font-weight:400">(change a year)</span></th>` +
     `<th>Enrollment<br><span style="font-weight:400">${PC.waves[0]} to ${PC.waves[PC.waves.length - 1]}</span></th></tr></thead><tbody>`;
   const all = [];
   for (const rn of D.region_order) {
