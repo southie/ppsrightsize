@@ -437,7 +437,7 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
 </main>
 <footer class="sitefoot">
   <p><b>Right Size Portland is an independent project. It is not affiliated with, endorsed by, or operated by Portland Public Schools.</b> Figures labeled as PPS's come from public PPS documents; all other figures are this site's own estimates and may differ from PPS's analysis. For official information, see the <a href="https://www.pps.net/rightsizing" target="_blank" rel="noopener">PPS rightsizing page</a>.</p>
-  <p><a href="https://github.com/southie/ppsrightsize" target="_blank" rel="noopener">Source code and data on GitHub</a></p>
+  <p><a href="https://github.com/southie/ppsrightsize" target="_blank" rel="noopener">Source code and data on GitHub</a> &middot; Contact: <a href="mailto:contact@rightsizepdx.com">contact@rightsizepdx.com</a></p>
 </footer>
 <aside class="dock" id="dock" hidden aria-label="School details"><button class="dock-x" id="dockx" type="button" aria-label="Close details">&times;</button><div id="dockbody"></div></aside>
 <div class="tip" id="tip"></div>
@@ -970,14 +970,13 @@ function popup(s) {
     (e == null ? `<div class="row">2031-32: closed</div>` : `<div class="row">2031-32 projected (${LABEL[scen]}): <b style="display:inline">${e}</b> · threshold ${t} · ${e >= t ? 'above' : 'below'}</div>`) + '</div>';
 }
 function privPopup(x) {
-  const n = nearestPPS(x), rl = role(n.s, scen);
-  const fate = scen === 'SQ' ? '' : rl === 'closes' ? ` &middot; <b style="color:#c2410c">closes in ${LABEL[scen]}</b>` : '';
+  const n = nearestPPS(x);
   return `<div class="pop"><b>${esc(x.name)}</b><span class="tag" style="color:#4a3aa7">Private</span> <span style="color:#57606a">${esc(x.genus || '')}</span>` +
     `<h4>School</h4><div class="row">${esc(x.character || '')}</div><div class="row">Grades: ${esc(x.grades_served || 'n/a')}</div>` +
     `<div class="row">Students: ${x.students != null ? x.students.toLocaleString() : 'n/a'}${x.pss_year ? ` (K-12, ${x.pss_year} survey)` : ''}${x.ratio ? ` &middot; ${x.ratio}:1 student-teacher` : ''}</div>` +
     `<h4>Location</h4><div class="row">${esc(x.city || '')}</div>` +
     `<div class="row">${x.pps_hs_area ? `Inside PPS: ${esc(x.pps_hs_area)} high school area${x.pps_hs_area.includes('/') ? ' (2024-25 shared zone)' : ''}` : 'Outside the PPS district'}</div>` +
-    `<div class="row">Nearest PPS school: ${esc(short(n.s.name))}, ${n.road ? `${n.d.toFixed(1)} mi / ${Math.round(n.min)} min by road` : `${n.d.toFixed(1)} mi straight-line`}${fate}${n.road ? mbLink(n.s, x) : ''}</div>` +
+    `<div class="row">Nearest PPS school: ${esc(short(n.s.name))}, ${n.road ? `${n.d.toFixed(1)} mi / ${Math.round(n.min)} min by road` : `${n.d.toFixed(1)} mi straight-line`}${n.road ? mbLink(n.s, x) : ''}</div>` +
     '</div>';
 }
 function renderAlts() {
@@ -1007,7 +1006,7 @@ function renderPrivate() {
   const col = css('--priv');
   for (const x of P) {
     if (hidePreK && x.preKOnly) continue;
-    const sz = Math.round(Math.max(7, Math.min(16, Math.sqrt(x.students || 50) * 0.5)));
+    const sz = Math.round(Math.max(12, Math.min(22, Math.sqrt(x.students || 50) * 0.7)));
     L.marker([x.lat, x.lng], { keyboard: false, zIndexOffset: -500,
       icon: shapeIcon(SHAPE[gradeCat(x.g)], sz, { fill: col, opacity: x.pps_hs_area ? .92 : .7, stroke: '#ffffff', sw: 1.4 }) })
       .on('click', () => openDock(() => privPopup(x), L.latLng(x.lat, x.lng)))
