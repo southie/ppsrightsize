@@ -190,6 +190,7 @@ tr.srow.closed td:first-child { opacity: 1; } tr.srow.closed td:first-child > * 
 .rplegend .k.thr { border-top-style: dotted; border-color: var(--text-secondary); } .rplegend .k.impl { border-top-style: dashed; border-color: var(--axis); }
 .rplegend .k.sqa { height: 10px; border: 2px dashed #33312c; width: 12px; vertical-align: -1px; } .rplegend .k.sca { height: 10px; border: 0; background: var(--change); opacity: .5; width: 14px; vertical-align: -1px; }
 .rplegend .k.chg { height: 10px; border: 0; background: #d4a017; opacity: .8; width: 14px; vertical-align: -1px; }
+.rplegend .k.jn, .rplegend .k.lv { height: 10px; border: 0; opacity: .75; width: 14px; vertical-align: -1px; } .rplegend .k.jn { background: #1f9d47; } .rplegend .k.lv { background: #d6452c; }
 .rpfindwrap { position: relative; display: inline-block; }
 .rpsuggest { position: absolute; left: 0; top: 100%; z-index: 1100; margin: 3px 0 0; padding: 4px 0; list-style: none; min-width: 100%; width: max-content; max-width: min(92vw, 420px);
   background: var(--surface-1); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
@@ -2877,18 +2878,19 @@ function rpGrades(k, sc) {
   const at = (s, yi) => { const r = classSizes(k, yi < D.years.indexOf(D.impl_year) ? 'SQ' : s, yi); return r ? r.grades.map(g => g?.n ?? null) : null; };
   const a = Y.map((_, yi) => at('SQ', yi)), b = sc === 'SQ' ? a : Y.map((_, yi) => at(sc, yi));
   const rows = G.map((g, i) => i).filter(i => a.some(r => r && r[i]) || b.some(r => r && r[i]));
+  const IMP = D.years.indexOf(D.impl_year), cc = yi => yi === IMP ? ' cur' : '', ca = yi => yi === IMP ? ' class="cur"' : '';
   if (!rows.length) return '<p class="muted">No grade-level projection for this school.</p>';
   const cell = (yi, i) => {
     const v = b[yi] ? b[yi][i] : null, q = a[yi] ? a[yi][i] : null;
-    if (!b[yi]) return '<td class="muted">closed</td>';
+    if (!b[yi]) return `<td class="muted${cc(yi)}">closed</td>`;
     const dv = sc !== 'SQ' && q != null && Math.round(v ?? 0) !== Math.round(q);
-    return `<td>${v == null ? '<span class="muted">&mdash;</span>' : Math.round(v)}${dv ? `<span class="sq">SQ ${Math.round(q)}</span>` : ''}</td>`;
+    return `<td${ca(yi)}>${v == null ? '<span class="muted">&mdash;</span>' : Math.round(v)}${dv ? `<span class="sq">SQ ${Math.round(q)}</span>` : ''}</td>`;
   };
-  const tot = yi => b[yi] ? `<td><b>${Math.round(b[yi].reduce((s, v) => s + (v || 0), 0))}</b></td>` : '<td class="muted">closed</td>';
-  return `<div class="tablewrap"><table class="rptable full"><thead><tr><th>Grade</th>${Y.map(y => `<th>${y}</th>`).join('')}</tr></thead><tbody>` +
+  const tot = yi => b[yi] ? `<td${ca(yi)}><b>${Math.round(b[yi].reduce((s, v) => s + (v || 0), 0))}</b></td>` : `<td class="muted${cc(yi)}">closed</td>`;
+  return `<div class="tablewrap"><table class="rptable full"><thead><tr><th>Grade</th>${Y.map((y, yi) => `<th${ca(yi)}>${y}</th>`).join('')}</tr></thead><tbody>` +
     rows.map(i => `<tr><td>${G[i] === 'K' ? 'K' : 'Grade ' + G[i]}</td>${Y.map((_, yi) => cell(yi, i)).join('')}</tr>`).join('') +
     `<tr class="tot"><td>Total</td>${Y.map((_, yi) => tot(yi)).join('')}</tr></tbody></table></div>` +
-    `<p class="muted rpnote">${sc === 'SQ' ? '' : `${esc(LABEL[sc])} figures, with Status Quo beneath where they differ. `}2025-26 is the fall count by grade (ODE); later years move each grade up a year with the district forecast and scale to this page's projected enrollment.</p>`;
+    `<p class="muted rpnote">${sc === 'SQ' ? '' : `${esc(LABEL[sc])} figures, with Status Quo beneath where they differ. `}${esc(D.impl_year)} (highlighted) is the first year of the scenario. 2025-26 is the fall count by grade (ODE); later years move each grade up a year with the district forecast and scale to this page's projected enrollment.</p>`;
 }
 
 // staffing: budget formula FTE, and what it takes to stay under the PAT thresholds
@@ -2958,7 +2960,7 @@ function rpDrawMap(k, sc) {
   rpLayer.clearLayers();
   const base = rpBase(sc).toLowerCase(), t0 = D.types.SQ[k], t1 = (D.types[sc] || {})[k] || t0, closed = (D.detail[sc] || {})[k]?.closed;
   const bands = [...new Set([...(RP_BANDS[t0] || []), ...(RP_BANDS[t1] || [])])];
-  const all = [], notes = [];
+  const all = [], notes = []; let jn = false, lv = false;
   const draw = (g, style) => { const lyr = L.geoJSON(g, { interactive: false, style }).addTo(rpLayer); all.push(lyr.getBounds()); };
   for (const b of bands) {
     const S = D.bounds['sq_' + b], B = D.bounds[base + '_' + b];
@@ -2967,7 +2969,8 @@ function rpDrawMap(k, sc) {
     if (sc === 'SQ' && S && S.akeys) S.areas.forEach(([lab, g], i) => { if (S.akeys[i] === k) draw(g, { stroke: false, fillColor: css('--change'), fillOpacity: .18 }); });
     if (sc !== 'SQ' && B && B.ckeys) B.ckeys.forEach(([f, t], i) => {
       if (f !== k && t !== k) return;
-      draw(B.changed[i][2], { stroke: false, fillColor: '#d4a017', fillOpacity: .5 });
+      if (f === k) lv = true; else jn = true;
+      draw(B.changed[i][2], { stroke: false, fillColor: f === k ? '#d6452c' : '#1f9d47', fillOpacity: .55 });
       notes.push(`${RP_BL[b]}: ${f === k ? `part moves to ${rpLink(t)}` : `part of ${rpLink(f)} joins`}`);
     });
   }
@@ -2979,7 +2982,8 @@ function rpDrawMap(k, sc) {
     else rpMap.setView(ll(s), 14);
   }, 50);
   return (all.length ? '' : '<p class="muted">No neighborhood attendance area for this school (focus option or program school).</p>') +
-    `<div class="rplegend"><span><i class="k sqa"></i>Status Quo area</span>${sc !== 'SQ' && !closed ? `<span><i class="k sca"></i>${esc(LABEL[sc])} area</span>` : ''}${notes.length ? '<span><i class="k chg"></i>changing area</span>' : ''}</div>` +
+    `<div class="rplegend"><span><i class="k sqa"></i>Status Quo area</span>${sc !== 'SQ' && !closed ? `<span><i class="k sca"></i>${esc(LABEL[sc])} area</span>` : ''}${jn ? '<span><i class="k jn"></i>area joining this school</span>' : ''}${lv ? '<span><i class="k lv"></i>area leaving this school</span>' : ''}</div>` +
+    (notes.length ? `<p class="muted rpnote">Joining and leaving areas are drawn on top of the other shading and overlap it: an area joining this school lies inside its ${esc(LABEL[sc])} area, and an area leaving it lies inside its Status Quo area (dashed outline).</p>` : '') +
     (notes.length ? `<ul class="rplist">${notes.map(n => `<li>${n}</li>`).join('')}</ul>` : '');
 }
 
@@ -3096,7 +3100,7 @@ function renderReport() {
     `<div class="rppanel"><h3>Building costs</h3>${rpCosts(k, sc)}</div>` +
     `<div class="rppanel"><h3>Attendance area</h3><div id="rpmap"></div><div id="rpmapnote"></div></div>` +
     `<div class="rppanel rpwide"><h3>Enrollment and capacity, ${D.years[0]} to ${D.years[D.years.length - 1]}: Status Quo and scenarios</h3>${rpPlot(k, sc)}</div>` +
-    `<div class="rppanel rpwide"><h3>Staffing, ${rpYear}: Status Quo and scenarios</h3>${rpStaff(k, sc)}</div>` +
+    `<div class="rppanel rpwide"><h3>Staffing changes, ${rpYear}: Status Quo and scenarios</h3>${rpStaff(k, sc)}</div>` +
     `<div class="rppanel rpwide"><h3>Students by grade${rpMark(k, sc)}</h3>${rpGrades(k, sc)}</div>` +
     `</div>`;
   // the map element is new each render: rebuild the Leaflet map on it

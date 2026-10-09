@@ -121,6 +121,7 @@ CSS = """
 .rplegend .k.thr { border-top-style: dotted; border-color: var(--text-secondary); } .rplegend .k.impl { border-top-style: dashed; border-color: var(--axis); }
 .rplegend .k.sqa { height: 10px; border: 2px dashed #33312c; width: 12px; vertical-align: -1px; } .rplegend .k.sca { height: 10px; border: 0; background: var(--change); opacity: .5; width: 14px; vertical-align: -1px; }
 .rplegend .k.chg { height: 10px; border: 0; background: #d4a017; opacity: .8; width: 14px; vertical-align: -1px; }
+.rplegend .k.jn, .rplegend .k.lv { height: 10px; border: 0; opacity: .75; width: 14px; vertical-align: -1px; } .rplegend .k.jn { background: #1f9d47; } .rplegend .k.lv { background: #d6452c; }
 .rpfindwrap { position: relative; display: inline-block; }
 .rpsuggest { position: absolute; left: 0; top: 100%; z-index: 1100; margin: 3px 0 0; padding: 4px 0; list-style: none; min-width: 100%; width: max-content; max-width: min(92vw, 420px);
   background: var(--surface-1); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
