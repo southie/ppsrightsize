@@ -221,14 +221,39 @@ function rpStaff(k, sc) {
   if (cols.every(s => !F[s])) return '<p class="muted">No staffing estimate for this school.</p>';
   const f = v => v == null ? '&mdash;' : (Math.round(v * 10) / 10).toFixed(1);
   const dl = (d, money) => Math.abs(d) < (money ? 5e4 : 0.05) ? '' : `<span class="sq">${money ? (d > 0 ? '+' : '') + staffUSD(d) : (d > 0 ? '+' : '&minus;') + Math.abs(d).toFixed(1)} vs SQ</span>`;
+  // a scenario that closes this school: the net change for each staff type = this school's Status Quo positions lost
+  // + the positions its students add at each destination (the destination's staffing with them minus without them)
+  const dests = s => [...new Set((D.flows[s]?.receivers || []).filter(r => r.from_key === k && byKey[r.to_key]).map(r => r.to_key))];
+  const fte = (t, s) => (D.series[s] || {})[t] ? schoolFTE(t, s, yi) : null;
+  const sent = (s, t) => { const w = reopenWeights(k, s, yi).filter(x => x.to === t).reduce((a, x) => a + x.w, 0);
+    return w * ((D.series.SQ[k] || [])[yi] || 0); };   // this school's Status Quo students that go to t
+  const without = (t, s, n) => { const ser = (D.series[s] || {})[t]; if (!ser || ser[yi] == null) return null;
+    const keep = ser[yi]; ser[yi] = Math.max(0, keep - n); try { return schoolFTE(t, s, yi); } finally { ser[yi] = keep; } };
+  const destChange = (s, t, val) => { const a = fte(t, s); if (!a) return 0; const b = without(t, s, sent(s, t)); return val(a) - (b ? val(b) : 0); };
+  const netOf = (s, val) => dests(s).reduce((a, t) => a + destChange(s, t, val), -val(F.SQ));
+  // hover: this school's Status Quo positions and each destination's change for this row
+  const netTip = (s, val, money) => {
+    const fmt = v => money ? (Math.abs(v) < 5e4 ? '$0' : (v > 0 ? '+' : '') + staffUSD(v).replace(/&minus;/g, '-')) : (Math.abs(v) < 0.05 ? '0.0' : (v > 0 ? '+' : '-') + Math.abs(v).toFixed(1));
+    const lines = dests(s).map(t => `${rpName(t)}: ${fmt(destChange(s, t, val))} for about ${Math.round(sent(s, t))} students from ${rpName(k)}`);
+    return `${rpName(k)} closes in ${LABEL[s]}. Shown: its Status Quo ${money ? 'cost' : 'positions'} plus the net change, i.e. what its students still need at their new schools.\n` +
+      `${rpName(k)}: ${fmt(-val(F.SQ))}\n` + lines.join('\n') + `\nNet: ${fmt(netOf(s, val))}\n(Each destination: its staffing with these students minus without them, so its own grade changes and other schools' students are left out.)`;
+  };
+  // the closed school's column: Status Quo + net change, with the change shown as "vs SQ"
+  const netCell = (s, val, money) => { const n = netOf(s, val), v0 = val(F.SQ);
+    return `<td class="rpnet${s === sc ? ' cur' : ''}" title="${esc(netTip(s, val, money))}"><span class="muted">closes</span><br>` +
+      `${money ? staffUSD(v0 + n) : f(v0 + n)}${dl(n, money)}</td>`; };
   const cell = (s, c) => {
-    const r = F[s]; if (!r) return '<td class="muted">closed</td>';
+    const r = F[s];
+    if (!r) return s !== 'SQ' && F.SQ ? netCell(s, x => x[c], false) : '<td class="muted">closed</td>';
     return `<td${s === sc ? ' class="cur"' : ''}>${f(r[c])}${s !== 'SQ' ? dl(r[c] - (F.SQ ? F.SQ[c] : 0)) : ''}</td>`;
   };
   const rows = STAFF_COLS.filter(([c]) => cols.some(s => F[s] && F[s][c])).map(([c, l]) =>
     `<tr${c === 'total' ? ' class="tot"' : ''}><td>${esc(l)}</td>${cols.map(s => cell(s, c)).join('')}</tr>`).join('');
-  const cost = s => { const r = F[s]; if (!r) return '<td class="muted">closed</td>'; const v = staffCost(r);
+  const cost = s => { const r = F[s];
+    if (!r) return s !== 'SQ' && F.SQ ? netCell(s, staffCost, true) : '<td class="muted">closed</td>';
+    const v = staffCost(r);
     return `<td${s === sc ? ' class="cur"' : ''}>${staffUSD(v)}${s !== 'SQ' ? dl(v - (F.SQ ? staffCost(F.SQ) : 0), true) : ''}</td>`; };
+  const anyNet = cols.some(s => s !== 'SQ' && !F[s] && F.SQ);
   const P = Object.fromEntries(cols.map(s => [s, F[s] ? rpPat(k, s, yi) : null]));
   const pat = p => !p ? 'closed' : [p.h ? `${p.over} of ${p.h} K-5 classes over` : '', p.load68 ? `6-8 load ${Math.round(p.load68)} a day (limit ${PAT_MS})` : '',
     p.load912 ? `9-12 load ${Math.round(p.load912)} a day (limit ${PAT_HS})` : ''].filter(Boolean).join('; ') + `; <b>${p.extra.toFixed(1)}</b> more FTE to stay under`;
@@ -240,9 +265,84 @@ function rpStaff(k, sc) {
     `<h4>Under the PAT thresholds (K over 24, grades 1-3 over 26, 4-5 over 28; 6-8 over ${PAT_MS} and 9-12 over ${PAT_HS} students a day)</h4>` +
     cols.map(s => `<p class="rpline${s === sc ? ' cur' : ''}">${esc(LABEL[s])}${rpMark(k, s)}: ${pat(P[s])}</p>`).join('') + grade +
     `<p class="muted rpnote">Budget formula FTE: PPS 2026-27 adopted staffing formula at its largest class sizes. "More FTE to stay under" adds the homeroom teachers needed to keep every K-5 class at or under its PAT threshold, and the 6-8 and 9-12 teachers needed to keep daily student loads at or under ${PAT_MS} and ${PAT_HS}.` +
+    (anyNet ? ' Where a scenario closes this school, its column shows, by staff type, this school\'s Status Quo positions plus the net change: its positions lost and the positions its students add at the schools they go to (each destination\'s staffing with them minus without them; hover for each school).' : '') +
     (cols.some(s => rpMark(k, s)) ? ' &#9670;: this scenario\'s enrollment for the school includes the modified enrollment model; hover it for the moves.' : '') + '</p>';
 }
 // costs and land
+// ---------- getting to school ----------
+// The school's students in the report year: students beyond bus distance and walk / bike / drive / bus time histograms
+// (bars: the scenario; outline: Status Quo). For an area the scenario takes away from the school (a closure, or a K-8's
+// 6-8 grades), its students by their newly assigned school (D.commute.R, scripts/build_closure_access.py), against
+// those students' Status Quo trips to this school. Uses the getting-to-school table's helpers (cmAgg, cmHist).
+function rpAggV(list) {   // list of [per-area array in the D.commute.X layout, students, yellow-bus grades?]
+  const nb = D.commute.hist_min.length + 1;
+  const o = { r: 0, beyond: 0, wmi: 0, wmin: 0, bmin: 0, dmin: 0, w15: 0, b15: 0, d15: 0, near: 0, bm: 0, be8: 0,
+    bh: Array(D.commute.bh_mi.length + 1).fill(0), h: { walk: Array(nb).fill(0), bike: Array(nb).fill(0), drive: Array(nb).fill(0) } };
+  for (const [v, r, bus] of list) {
+    if (!v || !v[0] || !r) continue;
+    const x = r / v[0];   // students per census resident of the area
+    o.r += r; o.beyond += r * v[1]; o.wmi += r * v[2]; o.wmin += r * v[3]; o.bmin += r * v[4]; o.dmin += r * v[5];
+    o.w15 += r * v[6]; o.b15 += r * v[7]; o.d15 += r * v[8]; o.near += r * v[9];
+    ['walk', 'bike', 'drive'].forEach((m, j) => v[10 + j].forEach((y, i) => { o.h[m][i] += y * x; }));
+    if (bus && v[13] != null) { o.bm += v[13] * x; o.be8 += r * v[1]; (v[14] || []).forEach((y, i) => { o.bh[i] += y * x; }); }
+  }
+  if (o.r) for (const f of ['wmi', 'wmin', 'bmin', 'dmin', 'w15', 'b15', 'd15', 'near']) o[f] /= o.r;
+  // bus ride: walking miles x ride-to-walk ratio x minutes per bus-mile (as cmAgg)
+  const K = (D.buscost?.ratio || 0) * (D.buscost?.min_per_mile || 0), E = D.commute.hist_min, BM = D.commute.bh_mi;
+  o.h.bus = Array(E.length + 1).fill(0);
+  o.bh.forEach((y, i) => {
+    if (!y) return;
+    const mi = i === 0 ? BM[0] / 2 : i < BM.length ? (BM[i - 1] + BM[i]) / 2 : BM[BM.length - 1] + 0.5;
+    o.h.bus[E.filter(e => e <= mi * K).length] += y;
+  });
+  o.busmin = o.be8 ? o.bm * K / o.be8 : 0;
+  return o;
+}
+function rpTravRow(label, c, q, hs) {
+  if (!c || !c.r) return '';
+  const keep = cmBand; cmBand = hs ? '912' : 'all';
+  try {
+    const n0 = v => Math.round(v).toLocaleString();
+    const dm = (a, b, u = '') => { if (b == null) return ''; const d = Math.round(a - b);
+      return ` <span class="muted">(${d > 0 ? '+' : d < 0 ? '&minus;' : '&plusmn;'}${Math.abs(d).toLocaleString()}${u})</span>`; };
+    const cell = (m, mean, qm) => {
+      const h = cmHist(c, q, m).replace(/^<td[^>]*>/, '').replace(/<\/td>$/, '');
+      const noBus = m === 'bus' && (hs || !c.be8);
+      return `<td class="rph">${noBus ? '' : `<span class="main">${Math.round(mean)} min</span>${q && !(m === 'bus' && !q.be8) ? dm(mean, qm) : ''}<br>`}${h}</td>`;
+    };
+    return `<tr><td>${label}</td><td><span class="main">${n0(c.r)}</span></td>` +
+      `<td><span class="main">${n0(c.beyond)}</span> <span class="muted">${Math.round(100 * c.beyond / Math.max(1, c.r))}%</span>${q ? dm(c.beyond, q.beyond) : ''}</td>` +
+      cell('walk', c.wmin, q?.wmin) + cell('bike', c.bmin, q?.bmin) + cell('drive', c.dmin, q?.dmin) + cell('bus', c.busmin, q?.busmin) + '</tr>';
+  } finally { cmBand = keep; }
+}
+function rpTravel(k, sc) {
+  return cmAtYear(rpYear, () => {
+    const base = rpBase(sc), d1 = (D.detail[sc] || {})[k] || {}, hs = D.types.SQ[k] === 'HS', nm = esc(rpName(k));
+    const vec = (s, kk, b) => { const v = D.commute.S[s]?.[kk]?.[b]; return v ? [...v, D.buscost?.M?.[s]?.[kk]?.[b] ?? null, D.commute.BH?.[s]?.[kk]?.[b] || null] : null; };
+    let h = `<style>.rptrav td { vertical-align: top; } .rptrav td.rph { min-width: 128px; } .rptrav td.rph svg { display: block; margin-top: 2px; } .rptrav tr.rpsub td { background: var(--surface-2); font-size: 12px; color: var(--text-secondary); }</style>` +
+      `<div class="tablewrap"><table class="rptable rptrav"><thead><tr><th></th><th>Students</th><th>Beyond bus distance</th><th>Walk</th><th>Bike</th><th>Drive</th><th>Bus${hs ? '' : ' (eligible K-8)'}</th></tr></thead><tbody>`;
+    if (!d1.closed) {
+      const c = cmAgg(sc, [k], 'all'), q = sc === 'SQ' ? null : cmAgg('SQ', [k], 'all');
+      if (c.r) h += rpTravRow(`${nm} students${sc === 'SQ' ? '' : `, ${esc(LABEL[sc])}`}`, c, q, hs);
+    }
+    // areas the scenario takes away from this school, by the school each block is newly assigned to
+    const R = base === 'SQ' ? null : D.commute.R?.[base]?.[k];
+    let shown = false;
+    if (R) for (const [b, to] of Object.entries(R)) {
+      const n = cmStu('SQ', k, b), tot = Object.values(to).reduce((a, v) => a + v[0], 0);
+      if (!n || !tot) continue;
+      const bus = b !== '912', q = rpAggV([[vec('SQ', k, b), n, bus]]);
+      h += `<tr class="rpsub"><td colspan="7">${d1.closed ? `${nm} closes in ${esc(LABEL[base])}` : `${nm}'s ${RP_BL[b]} grades move in ${esc(LABEL[base])}`}: ` +
+        `its ${RP_BL[b]} students' area by newly assigned school (Status Quo enrollment; outline and changes: their Status Quo trip to ${nm})</td></tr>`;
+      h += rpTravRow(`All ${RP_BL[b]} students from ${nm}'s area`, rpAggV(Object.values(to).map(v => [v, n * v[0] / tot, bus])), q, !bus);
+      for (const [t, v] of Object.entries(to).sort((x, y) => y[1][0] - x[1][0]))
+        h += rpTravRow(`&rarr; ${rpLink(t, esc(rpName(t)))} <span class="muted">${Math.round(100 * v[0] / tot)}% of the area</span>`, rpAggV([[v, n * v[0] / tot, bus]]), q, !bus);
+      shown = true;
+    }
+    if (d1.closed && !shown) h += `<tr><td colspan="7" class="muted">${nm} closes in this custom scenario; see the getting-to-school table for its students' travel to their receiving schools.</td></tr>`;
+    return h + `</tbody></table></div><p class="muted rpnote">Bars: ${esc(LABEL[sc])}; outline: Status Quo. Shaded bars are trips of 15 minutes or less. Students beyond bus distance: K-5 more than 1 mile, 6-12 more than 1.5 miles of walking. Bus: eligible K-8 students' ride (walking miles &times; ${(D.buscost?.ratio || 0).toFixed(1)} &times; ${(D.buscost?.min_per_mile || 0).toFixed(1)} min per bus-mile); high school students get TriMet passes.</p>`;
+  });
+}
 function rpCosts(k, sc) {
   const c = (D.costs || {})[k], l = (D.land || {})[k], closed = (D.detail[sc] || {})[k]?.closed;
   if (!c && !l) return '<p class="muted">No cost estimate for this school.</p>';
@@ -406,6 +506,7 @@ function renderReport() {
     `</div><p class="muted rpnote">${sc === 'SQ' ? 'Status Quo pathways.' : `Green: new in ${esc(LABEL[sc])}; struck through: no longer. Next school is where students normally go next (or, if the school closes, where its students go); students moved to another school at the same level are listed under This school with the mechanism: PPS boundary change, grade change, program move, receiving share, or the modified enrollment model's estimate.`}</p>${sc === 'SQ' ? '' : rpChanges(k, sc)}</div>` +
     `<div class="rppanel"><h3>Building costs</h3>${rpCosts(k, sc)}</div>` +
     `<div class="rppanel"><h3>Attendance area</h3><div id="rpmap"></div><div id="rpmapnote"></div></div>` +
+    `<div class="rppanel rpwide"><h3>Getting to school, ${rpYear}${sc === 'SQ' ? '' : `: ${esc(LABEL[sc])} and Status Quo`}</h3>${rpTravel(k, sc)}</div>` +
     `<div class="rppanel rpwide"><h3>Enrollment and capacity, ${D.years[0]} to ${D.years[D.years.length - 1]}: Status Quo and scenarios</h3>${rpPlot(k, sc)}</div>` +
     `<div class="rppanel rpwide"><h3>Staffing changes, ${rpYear}: Status Quo and scenarios</h3>${rpStaff(k, sc)}</div>` +
     `<div class="rppanel rpwide"><h3>Students by grade${rpMark(k, sc)}</h3>${rpGrades(k, sc)}</div>` +
