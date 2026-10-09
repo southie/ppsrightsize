@@ -78,6 +78,7 @@ h2 { font-size: 18px; margin: 0 0 4px; }
 #endpoints table tr.srow td:first-child, .stafftable tr.srow td:first-child, .commutetable tr.srow td:first-child, .cstable tr.srow td:first-child, .pctable tr.srow td:first-child { background: var(--surface-2); }
 .hsdisclaimer { margin: 6px 0 10px; padding: 8px 12px; border-left: 4px solid var(--over); border-radius: 4px; background: color-mix(in srgb, var(--over) 18%, transparent); font-size: 13px; line-height: 1.45; }
 .hstable { min-width: 640px; }
+.bltable { min-width: 980px; } .bltable td, .bltable th { text-align: right; } .bltable td.cost { text-align: left; } .bltable td:first-child, .bltable th:first-child { text-align: left; }
 .psleg { display: inline-block; width: 11px; height: 11px; border-radius: 2px; vertical-align: -1px; margin-right: 4px; }
 .vcquote { margin: 4px 0 10px; padding: 8px 14px; border-left: 4px solid var(--priv); background: var(--surface-2); border-radius: 4px; font-size: 14px; }
 .vcquote cite { display: block; margin-top: 4px; font-style: normal; font-size: 12px; color: var(--text-muted); }
@@ -356,11 +357,18 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
 
 
   <section class="card">
-    <h2>Scenario impact by region: enrollment, buildings, staffing and costs</h2>
-    <p class="sub">The closure count and the six sustainability measures (2031-32) are PPS's own figures from its regional summaries and district scenario overview. The remaining columns are this analysis's estimates: building utilization, building costs (capital, plus the operating cost of closed buildings), school staffing under PPS's staffing formula, and assessor land value. Under each scenario, changes are shown against Status Quo (percentage points for the sustainability measures, closures as a count). "Sustainable" schools are above the size threshold (K-5: 360, K-8 and middle: 500, high: 1,100).</p>
+    <h2>Scenario impact by region: enrollment and buildings</h2>
+    <p class="sub">The closure count and the six sustainability measures (2031-32) are PPS's own figures from its regional summaries and district scenario overview. Building utilization is this analysis's estimate; building costs, school staffing and land value are in the next table. Under each scenario, changes are shown against Status Quo (percentage points for the sustainability measures, closures as a count). "Sustainable" schools are above the size threshold (K-5: 360, K-8 and middle: 500, high: 1,100).</p>
     <div class="controls tabletools"><button id="expandall">Expand all regions</button><label><input type="checkbox" id="showrec"> Show this analysis's recreated values (feeder model)</label></div>
     <p class="sub" style="margin-top:-4px">Click a region to see its schools in 2031-32, using this analysis's enrollment projection. Each school shows its status under the scenario; whether it is above its size threshold (<span class="ok">&#10003;</span> counted as sustainable, <span class="no">&#10007;</span> not); its projected enrollment and change from Status Quo; and its students in each group. Bold group counts are in a sustainable school and count toward the region's share; struck-through counts do not. Region share = bold counts &divide; all counts. Building utilization uses the 2021 Long-Range Facility Plan's functional capacity, which reflects 2021 grade configurations, so utilization for converted K-8s and for buildings taking new grades is indicative only.</p>
     <div class="tablewrap" id="endpoints"></div>
+  </section>
+
+  <section class="card">
+    <h2>Building, staffing and land costs by region</h2>
+    <p class="sub">Capital needs of PPS's buildings (2026 dollars) from the 2021 Long-Range Facility Plan: <b>must-fix</b> = deferred maintenance + seismic retrofit; <b>modernize</b> = full modernization. Under Status Quo every building stays open; under a scenario, the costs of the buildings it closes are avoided (shown against the Status Quo total). Operating cost is the estimated annual custodial, utilities and maintenance cost of the closed buildings (square feet &times; PPS's rate). <b>Staffing</b> is school positions under PPS's staffing formula (licensed-equivalent FTE and salary + benefits, 2026-27 dollars; the year and class sizes are set in Staffing impact): Status Quo totals, or the change under a scenario. <b>Land value</b> is the Multnomah County assessor's real market value (2025 roll): all sites under Status Quo, or the sites a scenario closes. Click a region to see its schools.</p>
+    <div class="controls tabletools"><button id="bc-expand">Expand all regions</button></div>
+    <div class="tablewrap" id="bldcosts"></div>
   </section>
 
   <section class="card">
@@ -547,12 +555,16 @@ function overSchoolYears(sc) {
 // building costs, land value), then staffKPI(); keep this list in step if cards are added or reordered
 const KPI_TARGETS = ['closures', 'schools_above', 'students_above', 'change', 'overcap', 'commute', 'bus', 'cost', 'land', 'staff', 'classsize'];
 // columns of the measures table, in header order (see renderEndpoints)
-function endpointCols() { return ['region', ...MEAS.map(m => m.key), 'util', 'cost', 'staff', 'land', 'change']; }
+function endpointCols() { return ['region', ...MEAS.map(m => m.key), 'util', 'change']; }
 function flash(els) {
   els.forEach(e => { e.classList.remove('flash'); void e.offsetWidth; e.classList.add('flash'); });
   setTimeout(() => els.forEach(e => e.classList.remove('flash')), 2700);
 }
 function goTo(target) {
+  if (target === 'cost' || target === 'staff' || target === 'land') {
+    const t = document.getElementById('bldcosts'); if (!t) return;
+    t.scrollIntoView({ behavior: 'smooth', block: 'start' }); flash([t]); return;
+  }
   if (target === 'classsize') {
     const t = document.getElementById('classsize'); if (!t) return;
     t.scrollIntoView({ behavior: 'smooth', block: 'start' }); flash([t]); return;
@@ -581,7 +593,7 @@ function wireKPIs() {
   document.querySelectorAll('#kpis .kpi').forEach((k, i) => {
     const t = KPI_TARGETS[i]; if (!t) return;
     k.classList.add('go'); k.tabIndex = 0; k.setAttribute('role', 'link');
-    k.title = (k.dataset.adjtip ? k.dataset.adjtip + ' Click the card: ' : '') + (t === 'overcap' ? 'Show the schools over capacity' : t === 'commute' ? 'Show getting to school by region' : t === 'bus' ? 'Show how the bus cost is estimated' : t === 'classsize' ? 'Show class sizes and teacher loads by grade' : 'Show this in the table by region');
+    k.title = (k.dataset.adjtip ? k.dataset.adjtip + ' Click the card: ' : '') + (t === 'overcap' ? 'Show the schools over capacity' : t === 'commute' ? 'Show getting to school by region' : t === 'bus' ? 'Show how the bus cost is estimated' : t === 'classsize' ? 'Show class sizes and teacher loads by grade' : t === 'cost' || t === 'staff' || t === 'land' ? 'Show building, staffing and land costs by region' : 'Show this in the table by region');
     k.onclick = () => goTo(t);
     k.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo(t); } };
   });
@@ -1588,7 +1600,7 @@ function schoolRows(rn) {
       h += `<tr class="srow closed"><td><span class="nm">${esc(nm)}</span><span class="ty">${TYPE_LABEL[s0.type]}</span></td>` +
         `<td><span class="stag closes">Closes</span>${goes.length ? `<span class="to">&rarr; ${esc(goes.join('; '))}</span>` : ''}</td>` +
         `<td class="muted">&mdash;</td><td><span class="muted">closed</span><span class="muted" style="display:block;font-size:11px">SQ ${s0.e}</span></td>` +
-        GROUPS.map(() => '<td class="muted">&mdash;</td>').join('') + `<td class="muted">${s0.fc ? `building of ${s0.fc.toLocaleString()} seats` : '&mdash;'}</td>` + costCell([n]) + staffCell([n]) + landCell([n]) + '<td></td></tr>';
+        GROUPS.map(() => '<td class="muted">&mdash;</td>').join('') + `<td class="muted">${s0.fc ? `building of ${s0.fc.toLocaleString()} seats` : '&mdash;'}</td>` + '<td></td></tr>';
       continue;
     }
     const conv = s0.type !== d.type ? ` <span class="ty">(was ${TYPE_LABEL[s0.type]})</span>` : '';
@@ -1598,14 +1610,14 @@ function schoolRows(rn) {
       `<td>${d.above ? '<span class="ok">&#10003; above</span>' : '<span class="no">&#10007; below</span>'} <span class="muted">${d.thr}</span></td>` +
       `<td><b>${d.e.toLocaleString()}</b>${scen !== 'SQ' && de !== 0 ? `<span class="muted" style="display:block;font-size:11px">${de > 0 ? '+' : '&minus;'}${Math.abs(de)} vs SQ</span>` : ''}</td>` +
       GROUPS.map(g => d.g[g] == null ? '<td class="muted">no data</td>' : `<td><span class="${d.above ? 'cnt-in' : 'cnt-out'}">${d.g[g].toLocaleString()}</span></td>`).join('') +
-      `<td>${d.fc ? `<b>${d.util}%</b><span class="muted" style="display:block;font-size:11px">${d.e.toLocaleString()} / ${d.fc.toLocaleString()}${d.util > 100 ? ' · over capacity' : ''}</span>` : '<span class="muted">no data</span>'}</td>` + costCell([n]) + staffCell([n]) + landCell([n]) + '<td></td></tr>';
+      `<td>${d.fc ? `<b>${d.util}%</b><span class="muted" style="display:block;font-size:11px">${d.e.toLocaleString()} / ${d.fc.toLocaleString()}${d.util > 100 ? ' · over capacity' : ''}</span>` : '<span class="muted">no data</span>'}</td>` + '<td></td></tr>';
   }
   return h;
 }
 function renderEndpoints() {
   const rows = [...D.region_order, 'District'];
   const showRec = document.getElementById('showrec').checked;
-  let h = `<table class="${showRec ? '' : 'hide-rec'}"><thead><tr><th>Region</th>${MEAS.map(m => `<th>${esc(m.label)}</th>`).join('')}<th>Building utilization<br><span style="font-weight:400">(2031-32 enrollment &divide; 2021 functional capacity)</span></th><th>Building costs avoided by closures<br><span style="font-weight:400">(2026 $; must-fix = deferred maintenance + seismic retrofit; operating = estimated annual custodial, utilities and maintenance cost of closed buildings; school rows show each building)</span></th><th>School staffing no longer needed<br><span style="font-weight:400">(PPS staffing formula; FTE and salary + benefits per year, 2026-27 $; year and class sizes set in Staffing impact)</span></th><th>Land value (assessor)<br><span style="font-weight:400">(Multnomah County real market value, 2025 roll; land, and land + buildings)</span></th><th>Students who would change schools</th></tr></thead><tbody>`;
+  let h = `<table class="${showRec ? '' : 'hide-rec'}"><thead><tr><th>Region</th>${MEAS.map(m => `<th>${esc(m.label)}</th>`).join('')}<th>Building utilization<br><span style="font-weight:400">(2031-32 enrollment &divide; 2021 functional capacity)</span></th><th>Students who would change schools</th></tr></thead><tbody>`;
   for (const rn of rows) {
     const E = D.endpoints[rn], cur = E[scen], sq = scen === 'C' ? E.SQmodel : E.SQ, rec = (D.recreated[scen] || {})[rn] || {};
     const isReg = rn !== 'District', open = expanded.has(rn);
@@ -1628,9 +1640,6 @@ function renderEndpoints() {
     const sqn = Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn).map(k => D.detail.SQ[k]).filter(x => x.fc);
     const usq = Math.round(100 * sqn.reduce((a, x) => a + x.e, 0) / sqn.reduce((a, x) => a + x.fc, 0)), ucur = Math.round(100 * ue / uc);
     h += `<td><span class="main">${ucur}%</span>${scen !== 'SQ' ? `<span class="delta ${ucur > usq ? 'up' : ucur < usq ? 'down' : 'flat'}">${ucur > usq ? '+' : ucur < usq ? '&minus;' : '&plusmn;'}${Math.abs(ucur - usq)} pts</span>` : ''}<span class="muted" style="display:block;font-size:11px">${ue.toLocaleString()} / ${uc.toLocaleString()} seats</span></td>`;
-    h += costCell(Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn));
-    h += staffCell(Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn));
-    h += landCell(Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn));
     const atc = rn === 'District' && (scen === 'A' || scen === 'B') ? adjTip('District', scen, 'change') : '';
     h += `<td${atc ? ` class="adjd" title="${esc(atc)}"` : ''}>${rn === 'District' ? `<span class="main">${cur.change}%</span>${atc ? '<span class="adjm">&#9670;</span>' : ''}` : '<span class="rec" style="display:block">not reported</span>'}</td></tr>`;
     if (isReg && open) h += schoolRows(rn);
@@ -3131,7 +3140,46 @@ function renderReport() {
   if (rpScroll) { rpScroll = false; setTimeout(() => document.getElementById('reportcard')?.scrollIntoView({ block: 'start' }), 300); }
 }
 // ---------- end school report ----------
-function renderAll() { renderReport(); renderKPIs(); renderCustomPanel(); renderMap(); renderEndpoints(); renderCommute(); renderStaffing(); renderLines(); renderClassSizes(); renderPrivShare(); renderPrivCap(); renderHomeschool(); renderHsDistricts(); renderVirtual(); }
+// ---------- building costs by region (D.costs, D.opex; moved out of the region table) ----------
+const bcOpen = new Set();
+function renderBuildings() {
+  const host = document.getElementById('bldcosts'); if (!host) return;
+  const isSQ = scen === 'SQ', C = D.costs || {}, det = D.detail[scen] || {};
+  const keysOf = rn => Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn);
+  const amt = (v, tot) => isSQ ? `<span class="main">${usdM(v)}</span>`
+    : `<span class="main">${usdM(v)}</span><span class="muted" style="display:block;font-size:11px">of ${usdM(tot)} &middot; ${pctOf(-v, tot)}</span>`;
+  let h = `<table class="bltable"><thead><tr><th>Region</th><th>Must-fix<br><span style="font-weight:400">${isSQ ? 'all buildings' : 'avoided by closures'} (deferred maintenance + seismic)</span></th>` +
+    `<th>Full modernization<br><span style="font-weight:400">${isSQ ? 'all buildings' : 'avoided by closures'}</span></th><th>Operating cost<br><span style="font-weight:400">${isSQ ? 'all buildings, a year (est.)' : 'of closed buildings, a year (est.)'}</span></th>` +
+    `<th>Buildings<br><span style="font-weight:400">${isSQ ? 'with cost data' : 'closed'}</span></th>` +
+    `<th class="bl-staff">School staffing<br><span style="font-weight:400">${isSQ ? 'positions and cost a year' : 'positions no longer needed'} (${staffYear})</span></th>` +
+    `<th>Land value (assessor)<br><span style="font-weight:400">${isSQ ? 'all sites' : 'sites closed'}; land, and land + buildings</span></th></tr></thead><tbody>`;
+  for (const rn of [...D.region_order, 'District']) {
+    const keys = keysOf(rn), a = avoidedCosts(keys), t = totalCosts(keys), o = closedOpex(keys), isReg = rn !== 'District', open = bcOpen.has(rn);
+    const allOpex = keys.reduce((s, k) => s + opexOf(k), 0), withData = keys.filter(k => C[k] && (C[k].mf != null || C[k].mod != null)).length;
+    h += `<tr class="${isReg ? '' : 'dist'}"><td>${isReg ? `<button class="xbtn bc-x" data-r="${esc(rn)}" aria-expanded="${open}"><span class="car">&#9656;</span><span>${esc(rn)}</span></button>` : esc(rn)}</td>` +
+      `<td>${amt(isSQ ? t.mf : a.mf, t.mf)}</td><td>${amt(isSQ ? t.mod : a.mod, t.mod)}</td>` +
+      `<td><span class="main">${usdM1(isSQ ? allOpex : o.usd)}</span>${isSQ ? '' : `<span class="muted" style="display:block;font-size:11px">${Math.round(o.sf).toLocaleString()} sq ft</span>`}</td>` +
+      `<td><span class="main">${isSQ ? withData : a.n}</span>${isSQ ? '' : `<span class="muted" style="display:block;font-size:11px">of ${keys.length}</span>`}</td>` + staffCell(keys) + landCell(keys) + '</tr>';
+    if (!isReg || !open) continue;
+    for (const k of [...keys].sort(byStatusName)) {
+      const c = C[k], closed = det[k]?.closed, sch = byKey[k];
+      const tag = isSQ ? '' : `<span class="stag ${closed ? 'closes' : 'none'}">${closed ? 'Closes' : 'Open'}</span> `;
+      const tip = c ? `Deferred maintenance ${c.dm == null ? 'n/a' : usdM(c.dm)} + seismic retrofit ${c.se == null ? 'n/a' : usdM(c.se)}${c.urm ? ` (URM part ${usdM(c.urm)})` : ''}` : '';
+      const cell = v => v == null ? '<td class="muted">&mdash;</td>' : `<td title="${esc(tip)}"><span class="main" style="${closed || isSQ ? '' : 'color:var(--text-muted)'}">${usdM(v)}</span>${closed ? '<span class="ca" style="display:block">avoided</span>' : ''}</td>`;
+      h += `<tr class="srow${closed ? ' closed' : ''}"><td><span class="nm">${esc(short(sch ? sch.name : k))}</span><span class="ty">${TYPE_LABEL[D.types.SQ[k]] || ''}</span>` +
+        `<span class="muted" style="display:block;font-size:11px">${tag}${c?.fci != null ? `2021 FCI ${c.fci}` : ''}${c?.sf ? `${c?.fci != null ? ' &middot; ' : ''}${c.sf.toLocaleString()} sq ft` : ''}</span></td>` +
+        (c ? cell(c.mf) + cell(c.mod) : '<td class="muted">&mdash;</td><td class="muted">&mdash;</td>') +
+        `<td>${c?.sf ? `<span class="main" style="${closed || isSQ ? '' : 'color:var(--text-muted)'}">${usdM1(opexOf(k))}</span>${closed ? '<span class="ca" style="display:block">saved</span>' : ''}` : '<span class="muted">&mdash;</span>'}</td><td></td>` + staffCell([k]) + landCell([k]) + '</tr>';
+    }
+  }
+  host.innerHTML = h + '</tbody></table>';
+  host.querySelectorAll('.bc-x').forEach(b => b.onclick = () => { const r = b.dataset.r; bcOpen.has(r) ? bcOpen.delete(r) : bcOpen.add(r); renderBuildings(); });
+  const ex = document.getElementById('bc-expand');
+  if (ex) { ex.textContent = bcOpen.size === D.region_order.length ? 'Collapse all regions' : 'Expand all regions';
+    ex.onclick = () => { if (bcOpen.size === D.region_order.length) bcOpen.clear(); else D.region_order.forEach(r => bcOpen.add(r)); renderBuildings(); }; }
+}
+renderBuildings = stableLayout(renderBuildings, 'bldcosts');
+function renderAll() { renderReport(); renderKPIs(); renderCustomPanel(); renderMap(); renderEndpoints(); renderBuildings(); renderCommute(); renderStaffing(); renderLines(); renderClassSizes(); renderPrivShare(); renderPrivCap(); renderHomeschool(); renderHsDistricts(); renderVirtual(); }
 let rsT; let lastW = innerWidth; addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rsT); rsT = setTimeout(renderLines, 150); });
 renderAll();
 document.fonts?.ready?.then(() => renderAll());
