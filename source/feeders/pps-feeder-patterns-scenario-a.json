@@ -1,0 +1,1747 @@
+{
+    "scenario": "Scenario A",
+    "projection_year": "2031-32",
+    "source": "Built by applying the rightsizing changes to pps-feeder-patterns.json (current state).",
+    "sources": {
+        "memo": "08 Rightsizing - Rightsizing Update Scenario Release Memo.pdf (October 5, 2026)",
+        "slide": "08 Rightsizing - 10.06.26 PowerPoint.pdf",
+        "map": "08 Rightsizing - Scenario A - Attendance Boundaries (K-5, 6-8, 9-12).pdf"
+    },
+    "legend": {
+        "pathway_to_high_school": {
+            "all": "Solid arrow: all students continue to the same school.",
+            "some": "Dashed arrow: only some students continue to this high school (split pathway)."
+        },
+        "continues_to": "null = continues to this high school; otherwise the named high school.",
+        "program": "neighborhood, or the immersion program the link carries",
+        "changed": "true when the link differs from the current feeder pattern"
+    },
+    "caveats": [
+        "Only feeder-relevant changes are applied. The memo counts 38 (A) / 34 (B) boundary changes; small boundary edits that move streets between schools are not itemised and change enrollment, not school-to-school links.",
+        "Shares are given only where PPS states them (Maplewood, Stephenson, Buckman). Other new split feeders have no published shares.",
+        "One slide 39 link (Mt. Tabor -> Cleveland) conflicts with the maps and is not applied; see changes."
+    ],
+    "high_schools": {
+        "McDaniel": {
+            "high_school": "Leodis V. McDaniel High School",
+            "forecast_name": "McDaniel",
+            "feeders": [
+                {
+                    "school": "Roseway Heights Middle School",
+                    "forecast_name": "Roseway Heights",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Rigler Elementary",
+                            "forecast_name": "Rigler",
+                            "continues_to": null,
+                            "program": "Spanish DLI",
+                            "note": "Spanish Immersion students only (Rigler-area non-immersion students attend Scott Elementary) | Spanish DLI grades 6-8 move from Beaumont to Roseway Heights, so Rigler Spanish DLI now feeds Roseway Heights -> McDaniel"
+                        },
+                        {
+                            "school": "Scott Elementary",
+                            "forecast_name": "Scott",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Sunrise Elementary",
+                            "forecast_name": "Lee",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Vestal Elementary",
+                            "forecast_name": "Vestal",
+                            "continues_to": null,
+                            "program": "Vietnamese DLI",
+                            "note": "Vietnamese DLI moves from Rose City Park to Vestal; continues to Roseway Heights (Vietnamese) -> McDaniel"
+                        }
+                    ]
+                },
+                {
+                    "school": "Harrison Park Middle School",
+                    "forecast_name": "Harrison Park",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Clark Elementary",
+                            "forecast_name": "Clark",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Vestal Elementary",
+                            "forecast_name": "Vestal",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Bridger Creative Science K-8 School",
+                            "forecast_name": "Bridger Creative Science",
+                            "continues_to": "Franklin",
+                            "program": "neighborhood",
+                            "grade_change": "K-8 becomes K-5",
+                            "note": "Becomes a K-5 neighborhood/focus school. | Bridger Creative Science K-8 School becomes K-5; grades 6-8 move to Harrison Park Middle School"
+                        },
+                        {
+                            "school": "Kelly Elementary",
+                            "forecast_name": "Kelly",
+                            "continues_to": "Franklin",
+                            "program": "neighborhood",
+                            "note": "Kelly neighborhood students move from Brentwood to Harrison Park (still Franklin)"
+                        },
+                        {
+                            "school": "Woodstock Elementary",
+                            "forecast_name": "Woodstock",
+                            "continues_to": "Cleveland",
+                            "program": "Chinese DLI",
+                            "note": "Inferred: slide 39 shows a Harrison Park -> Cleveland split; the Mandarin pathway is the only Cleveland-bound link into Harrison Park. | Woodstock receives Clark's Chinese (Mandarin) DLI; continues to Harrison Park (Mandarin) -> Cleveland"
+                        }
+                    ],
+                    "split_note": "Some students continue to Cleveland, Franklin."
+                }
+            ]
+        },
+        "Cleveland": {
+            "high_school": "Cleveland High School",
+            "forecast_name": "Cleveland",
+            "feeders": [
+                {
+                    "school": "Brentwood Middle School",
+                    "forecast_name": "Lane",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Duniway Elementary",
+                            "forecast_name": "Duniway",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "note": "Sellwood MS closes; Duniway-area students go to Brentwood"
+                        },
+                        {
+                            "school": "Woodstock Elementary",
+                            "forecast_name": "Woodstock",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Kelly Elementary",
+                            "forecast_name": "Kelly",
+                            "continues_to": "Franklin",
+                            "program": "Russian DLI",
+                            "note": "Kelly Russian DLI continues to Brentwood (Russian) -> Franklin"
+                        },
+                        {
+                            "school": "Whitman Elementary",
+                            "forecast_name": "Whitman",
+                            "continues_to": "Franklin",
+                            "program": "neighborhood",
+                            "note": "Whitman area moves from Cleveland to Franklin high school (still Brentwood)"
+                        }
+                    ],
+                    "split_note": "Some students continue to Franklin."
+                },
+                {
+                    "school": "Hosford Middle School",
+                    "forecast_name": "Hosford",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Abernethy Elementary",
+                            "forecast_name": "Abernethy",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Grout Elementary",
+                            "forecast_name": "Grout",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Llewellyn Elementary",
+                            "forecast_name": "Llewellyn",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "note": "Sellwood MS closes; Llewellyn-area students go to Hosford"
+                        },
+                        {
+                            "school": "Sunnyside Environmental K-8 School",
+                            "forecast_name": "Sunnyside Environmental",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "grade_change": "K-8 becomes K-5",
+                            "note": "Environmental focus option discontinued; becomes a K-5 neighborhood school. Its area moves from Franklin to Cleveland high school. | Sunnyside Environmental K-8 School becomes K-5; grades 6-8 move to Hosford Middle School"
+                        }
+                    ]
+                },
+                {
+                    "school": "Harrison Park Middle School",
+                    "forecast_name": "Harrison Park",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Woodstock Elementary",
+                            "forecast_name": "Woodstock",
+                            "continues_to": null,
+                            "program": "Chinese DLI",
+                            "note": "Inferred: slide 39 shows a Harrison Park -> Cleveland split; the Mandarin pathway is the only Cleveland-bound link into Harrison Park. | Woodstock receives Clark's Chinese (Mandarin) DLI; continues to Harrison Park (Mandarin) -> Cleveland"
+                        },
+                        {
+                            "school": "Bridger Creative Science K-8 School",
+                            "forecast_name": "Bridger Creative Science",
+                            "continues_to": "Franklin",
+                            "program": "neighborhood",
+                            "grade_change": "K-8 becomes K-5",
+                            "note": "Becomes a K-5 neighborhood/focus school. | Bridger Creative Science K-8 School becomes K-5; grades 6-8 move to Harrison Park Middle School"
+                        },
+                        {
+                            "school": "Clark Elementary",
+                            "forecast_name": "Clark",
+                            "continues_to": "McDaniel",
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Kelly Elementary",
+                            "forecast_name": "Kelly",
+                            "continues_to": "Franklin",
+                            "program": "neighborhood",
+                            "note": "Kelly neighborhood students move from Brentwood to Harrison Park (still Franklin)"
+                        },
+                        {
+                            "school": "Vestal Elementary",
+                            "forecast_name": "Vestal",
+                            "continues_to": "McDaniel",
+                            "program": "neighborhood"
+                        }
+                    ],
+                    "split_note": "Some students continue to Franklin, McDaniel."
+                }
+            ]
+        },
+        "Franklin": {
+            "high_school": "Franklin High School",
+            "forecast_name": "Franklin",
+            "feeders": [
+                {
+                    "school": "Brentwood Middle School",
+                    "forecast_name": "Lane",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Kelly Elementary",
+                            "forecast_name": "Kelly",
+                            "continues_to": null,
+                            "program": "Russian DLI",
+                            "note": "Kelly Russian DLI continues to Brentwood (Russian) -> Franklin"
+                        },
+                        {
+                            "school": "Whitman Elementary",
+                            "forecast_name": "Whitman",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "note": "Whitman area moves from Cleveland to Franklin high school (still Brentwood)"
+                        },
+                        {
+                            "school": "Duniway Elementary",
+                            "forecast_name": "Duniway",
+                            "continues_to": "Cleveland",
+                            "program": "neighborhood",
+                            "note": "Sellwood MS closes; Duniway-area students go to Brentwood"
+                        },
+                        {
+                            "school": "Woodstock Elementary",
+                            "forecast_name": "Woodstock",
+                            "continues_to": "Cleveland",
+                            "program": "neighborhood"
+                        }
+                    ],
+                    "split_note": "Some students continue to Cleveland."
+                },
+                {
+                    "school": "Harrison Park Middle School",
+                    "forecast_name": "Harrison Park",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Bridger Creative Science K-8 School",
+                            "forecast_name": "Bridger Creative Science",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "grade_change": "K-8 becomes K-5",
+                            "note": "Becomes a K-5 neighborhood/focus school. | Bridger Creative Science K-8 School becomes K-5; grades 6-8 move to Harrison Park Middle School"
+                        },
+                        {
+                            "school": "Kelly Elementary",
+                            "forecast_name": "Kelly",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "note": "Kelly neighborhood students move from Brentwood to Harrison Park (still Franklin)"
+                        },
+                        {
+                            "school": "Clark Elementary",
+                            "forecast_name": "Clark",
+                            "continues_to": "McDaniel",
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Vestal Elementary",
+                            "forecast_name": "Vestal",
+                            "continues_to": "McDaniel",
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Woodstock Elementary",
+                            "forecast_name": "Woodstock",
+                            "continues_to": "Cleveland",
+                            "program": "Chinese DLI",
+                            "note": "Inferred: slide 39 shows a Harrison Park -> Cleveland split; the Mandarin pathway is the only Cleveland-bound link into Harrison Park. | Woodstock receives Clark's Chinese (Mandarin) DLI; continues to Harrison Park (Mandarin) -> Cleveland"
+                        }
+                    ],
+                    "split_note": "Some students continue to Cleveland, McDaniel."
+                },
+                {
+                    "school": "Kellogg Middle School",
+                    "forecast_name": "Kellogg",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Arleta Elementary",
+                            "forecast_name": "Arleta",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Atkinson Elementary",
+                            "forecast_name": "Atkinson",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "note": "Atkinson no longer feeds Harrison Park; its area falls in Kellogg (Franklin)"
+                        },
+                        {
+                            "school": "Lent Elementary",
+                            "forecast_name": "Lent",
+                            "continues_to": null,
+                            "program": "Spanish DLI",
+                            "note": "Lent becomes the K-5 Spanish DLI site (receives Atkinson DLI); continues to Kellogg -> Franklin. Lent non-DLI students attending Marysville move to Kelly."
+                        }
+                    ]
+                },
+                {
+                    "school": "Mt. Tabor Middle School",
+                    "forecast_name": "Mt Tabor",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Glencoe Elementary",
+                            "forecast_name": "Glencoe",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Laurelhurst K-8 School",
+                            "forecast_name": "Laurelhurst",
+                            "continues_to": "Grant",
+                            "program": "neighborhood",
+                            "grade_change": "K-8 becomes K-5",
+                            "note": "Laurelhurst K-8 School becomes K-5; grades 6-8 move to Mt. Tabor Middle School"
+                        },
+                        {
+                            "school": "Richmond Elementary",
+                            "forecast_name": "Richmond",
+                            "continues_to": "Grant",
+                            "program": "Japanese DLI",
+                            "note": "Japanese Immersion"
+                        }
+                    ],
+                    "split_note": "Some students continue to Grant."
+                }
+            ]
+        },
+        "Jefferson": {
+            "high_school": "Jefferson High School",
+            "forecast_name": "Jefferson",
+            "feeders": [
+                {
+                    "school": "Harriet Tubman Middle School",
+                    "forecast_name": "Harriet Tubman",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Boise-Eliot/Humboldt Elementary",
+                            "forecast_name": "Boise-Eliot/Humboldt",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Martin Luther King Jr. Elementary",
+                            "forecast_name": "MLK Jr",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Vernon K-8 School",
+                            "forecast_name": "Vernon",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "grade_change": "K-8 becomes K-5",
+                            "note": "Vernon K-8 School becomes K-5; grades 6-8 move to Harriet Tubman Middle School"
+                        }
+                    ]
+                },
+                {
+                    "school": "Ockley Green Middle School",
+                    "forecast_name": "Ockley Green",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Chief Joseph Elementary",
+                            "forecast_name": "Chief Joseph",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Faubion K-8 School",
+                            "forecast_name": "Faubion",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "grade_change": "K-8 becomes K-5",
+                            "note": "Faubion K-8 School becomes K-5; grades 6-8 move to Ockley Green Middle School"
+                        },
+                        {
+                            "school": "Woodlawn Elementary",
+                            "forecast_name": "Woodlawn",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        }
+                    ]
+                }
+            ]
+        },
+        "Roosevelt": {
+            "high_school": "Roosevelt High School",
+            "forecast_name": "Roosevelt",
+            "feeders": [
+                {
+                    "school": "Skyline K-8 School",
+                    "forecast_name": "Skyline",
+                    "kind": "k8",
+                    "pathway_to_high_school": "all"
+                },
+                {
+                    "school": "Astor K-8 School",
+                    "forecast_name": "Astor",
+                    "kind": "k8",
+                    "pathway_to_high_school": "all"
+                },
+                {
+                    "school": "George Middle School",
+                    "forecast_name": "George",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Cesar Chavez K-8 School",
+                            "forecast_name": "César Chávez",
+                            "continues_to": null,
+                            "program": "Spanish DLI",
+                            "grade_change": "K-8 becomes K-5",
+                            "note": "Becomes a K-5 Spanish DLI hub; non-DLI K-5 students are assigned to Rosa Parks. | Cesar Chavez K-8 School becomes K-5; grades 6-8 move to George Middle School"
+                        },
+                        {
+                            "school": "Rosa Parks Elementary",
+                            "forecast_name": "Rosa Parks",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Sitton Elementary",
+                            "forecast_name": "Sitton",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        }
+                    ]
+                }
+            ]
+        },
+        "Grant": {
+            "high_school": "Grant High School",
+            "forecast_name": "Grant",
+            "feeders": [
+                {
+                    "school": "Beaumont Middle School",
+                    "forecast_name": "Beaumont",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Alameda Elementary",
+                            "forecast_name": "Alameda",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Beverly Cleary K-8 School",
+                            "forecast_name": "Beverly Cleary",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "grade_change": "K-8 becomes K-5",
+                            "note": "Beverly Cleary K-8 School becomes K-5; grades 6-8 move to Beaumont Middle School"
+                        }
+                    ]
+                },
+                {
+                    "school": "Mt. Tabor Middle School",
+                    "forecast_name": "Mt Tabor",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Laurelhurst K-8 School",
+                            "forecast_name": "Laurelhurst",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "grade_change": "K-8 becomes K-5",
+                            "note": "Laurelhurst K-8 School becomes K-5; grades 6-8 move to Mt. Tabor Middle School"
+                        },
+                        {
+                            "school": "Richmond Elementary",
+                            "forecast_name": "Richmond",
+                            "continues_to": null,
+                            "program": "Japanese DLI",
+                            "note": "Japanese Immersion"
+                        },
+                        {
+                            "school": "Glencoe Elementary",
+                            "forecast_name": "Glencoe",
+                            "continues_to": "Franklin",
+                            "program": "neighborhood"
+                        }
+                    ],
+                    "split_note": "Some students continue to Franklin."
+                }
+            ]
+        },
+        "Lincoln": {
+            "high_school": "Lincoln High School",
+            "forecast_name": "Lincoln",
+            "feeders": [
+                {
+                    "school": "West Sylvan Middle School",
+                    "forecast_name": "West Sylvan",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Ainsworth Elementary",
+                            "forecast_name": "Ainsworth",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Bridlemile Elementary",
+                            "forecast_name": "Bridlemile",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "note": "Split by home address"
+                        },
+                        {
+                            "school": "Chapman Elementary",
+                            "forecast_name": "Chapman",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Forest Park Elementary",
+                            "forecast_name": "Forest Park",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        }
+                    ]
+                }
+            ]
+        },
+        "Ida B. Wells": {
+            "high_school": "Ida B. Wells High School",
+            "forecast_name": "Ida B Wells-Barnett",
+            "feeders": [
+                {
+                    "school": "Gray Middle School",
+                    "forecast_name": "Gray",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Bridlemile Elementary",
+                            "forecast_name": "Bridlemile",
+                            "continues_to": null,
+                            "program": "neighborhood",
+                            "note": "Split by home address"
+                        },
+                        {
+                            "school": "Hayhurst Elementary",
+                            "forecast_name": "Hayhurst",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Rieke Elementary",
+                            "forecast_name": "Rieke",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        }
+                    ]
+                },
+                {
+                    "school": "Jackson Middle School",
+                    "forecast_name": "Jackson",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Capitol Hill Elementary",
+                            "forecast_name": "Capitol Hill",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        },
+                        {
+                            "school": "Markham Elementary",
+                            "forecast_name": "Markham",
+                            "continues_to": null,
+                            "program": "neighborhood"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "pathways": [
+        {
+            "elementary": "Duniway Elementary",
+            "elementary_forecast_name": "Duniway",
+            "middle": "Brentwood Middle School",
+            "middle_forecast_name": "Lane",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "program": "neighborhood",
+            "note": "Sellwood MS closes; Duniway-area students go to Brentwood",
+            "changed": true
+        },
+        {
+            "elementary": "Woodstock Elementary",
+            "elementary_forecast_name": "Woodstock",
+            "middle": "Brentwood Middle School",
+            "middle_forecast_name": "Lane",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Woodstock Elementary",
+            "elementary_forecast_name": "Woodstock",
+            "middle": "Harrison Park Middle School",
+            "middle_forecast_name": "Harrison Park",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "program": "Chinese DLI",
+            "note": "Inferred: slide 39 shows a Harrison Park -> Cleveland split; the Mandarin pathway is the only Cleveland-bound link into Harrison Park. | Woodstock receives Clark's Chinese (Mandarin) DLI; continues to Harrison Park (Mandarin) -> Cleveland",
+            "changed": true
+        },
+        {
+            "elementary": "Abernethy Elementary",
+            "elementary_forecast_name": "Abernethy",
+            "middle": "Hosford Middle School",
+            "middle_forecast_name": "Hosford",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Grout Elementary",
+            "elementary_forecast_name": "Grout",
+            "middle": "Hosford Middle School",
+            "middle_forecast_name": "Hosford",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Llewellyn Elementary",
+            "elementary_forecast_name": "Llewellyn",
+            "middle": "Hosford Middle School",
+            "middle_forecast_name": "Hosford",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "program": "neighborhood",
+            "note": "Sellwood MS closes; Llewellyn-area students go to Hosford",
+            "changed": true
+        },
+        {
+            "elementary": "Sunnyside Environmental K-8 School",
+            "elementary_forecast_name": "Sunnyside Environmental",
+            "middle": "Hosford Middle School",
+            "middle_forecast_name": "Hosford",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "program": "neighborhood",
+            "note": "Environmental focus option discontinued; becomes a K-5 neighborhood school. Its area moves from Franklin to Cleveland high school. | Sunnyside Environmental K-8 School becomes K-5; grades 6-8 move to Hosford Middle School",
+            "changed": true
+        },
+        {
+            "elementary": "Kelly Elementary",
+            "elementary_forecast_name": "Kelly",
+            "middle": "Brentwood Middle School",
+            "middle_forecast_name": "Lane",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "program": "Russian DLI",
+            "note": "Kelly Russian DLI continues to Brentwood (Russian) -> Franklin",
+            "changed": true
+        },
+        {
+            "elementary": "Whitman Elementary",
+            "elementary_forecast_name": "Whitman",
+            "middle": "Brentwood Middle School",
+            "middle_forecast_name": "Lane",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "program": "neighborhood",
+            "note": "Whitman area moves from Cleveland to Franklin high school (still Brentwood)",
+            "changed": true
+        },
+        {
+            "elementary": "Bridger Creative Science K-8 School",
+            "elementary_forecast_name": "Bridger Creative Science",
+            "middle": "Harrison Park Middle School",
+            "middle_forecast_name": "Harrison Park",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "program": "neighborhood",
+            "note": "Becomes a K-5 neighborhood/focus school. | Bridger Creative Science K-8 School becomes K-5; grades 6-8 move to Harrison Park Middle School",
+            "changed": true
+        },
+        {
+            "elementary": "Kelly Elementary",
+            "elementary_forecast_name": "Kelly",
+            "middle": "Harrison Park Middle School",
+            "middle_forecast_name": "Harrison Park",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "program": "neighborhood",
+            "note": "Kelly neighborhood students move from Brentwood to Harrison Park (still Franklin)",
+            "changed": true
+        },
+        {
+            "elementary": "Arleta Elementary",
+            "elementary_forecast_name": "Arleta",
+            "middle": "Kellogg Middle School",
+            "middle_forecast_name": "Kellogg",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Atkinson Elementary",
+            "elementary_forecast_name": "Atkinson",
+            "middle": "Kellogg Middle School",
+            "middle_forecast_name": "Kellogg",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "program": "neighborhood",
+            "note": "Atkinson no longer feeds Harrison Park; its area falls in Kellogg (Franklin)",
+            "changed": true
+        },
+        {
+            "elementary": "Lent Elementary",
+            "elementary_forecast_name": "Lent",
+            "middle": "Kellogg Middle School",
+            "middle_forecast_name": "Kellogg",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "program": "Spanish DLI",
+            "note": "Lent becomes the K-5 Spanish DLI site (receives Atkinson DLI); continues to Kellogg -> Franklin. Lent non-DLI students attending Marysville move to Kelly.",
+            "changed": true
+        },
+        {
+            "elementary": "Glencoe Elementary",
+            "elementary_forecast_name": "Glencoe",
+            "middle": "Mt. Tabor Middle School",
+            "middle_forecast_name": "Mt Tabor",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Alameda Elementary",
+            "elementary_forecast_name": "Alameda",
+            "middle": "Beaumont Middle School",
+            "middle_forecast_name": "Beaumont",
+            "high_school": "Grant",
+            "high_school_forecast_name": "Grant",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Beverly Cleary K-8 School",
+            "elementary_forecast_name": "Beverly Cleary",
+            "middle": "Beaumont Middle School",
+            "middle_forecast_name": "Beaumont",
+            "high_school": "Grant",
+            "high_school_forecast_name": "Grant",
+            "program": "neighborhood",
+            "note": "Beverly Cleary K-8 School becomes K-5; grades 6-8 move to Beaumont Middle School",
+            "changed": true
+        },
+        {
+            "elementary": "Laurelhurst K-8 School",
+            "elementary_forecast_name": "Laurelhurst",
+            "middle": "Mt. Tabor Middle School",
+            "middle_forecast_name": "Mt Tabor",
+            "high_school": "Grant",
+            "high_school_forecast_name": "Grant",
+            "program": "neighborhood",
+            "note": "Laurelhurst K-8 School becomes K-5; grades 6-8 move to Mt. Tabor Middle School",
+            "changed": true
+        },
+        {
+            "elementary": "Richmond Elementary",
+            "elementary_forecast_name": "Richmond",
+            "middle": "Mt. Tabor Middle School",
+            "middle_forecast_name": "Mt Tabor",
+            "high_school": "Grant",
+            "high_school_forecast_name": "Grant",
+            "program": "Japanese DLI",
+            "note": "Japanese Immersion",
+            "changed": false
+        },
+        {
+            "elementary": "Bridlemile Elementary",
+            "elementary_forecast_name": "Bridlemile",
+            "middle": "Gray Middle School",
+            "middle_forecast_name": "Gray",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "program": "neighborhood",
+            "note": "Split by home address",
+            "changed": false
+        },
+        {
+            "elementary": "Hayhurst Elementary",
+            "elementary_forecast_name": "Hayhurst",
+            "middle": "Gray Middle School",
+            "middle_forecast_name": "Gray",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Rieke Elementary",
+            "elementary_forecast_name": "Rieke",
+            "middle": "Gray Middle School",
+            "middle_forecast_name": "Gray",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Capitol Hill Elementary",
+            "elementary_forecast_name": "Capitol Hill",
+            "middle": "Jackson Middle School",
+            "middle_forecast_name": "Jackson",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Markham Elementary",
+            "elementary_forecast_name": "Markham",
+            "middle": "Jackson Middle School",
+            "middle_forecast_name": "Jackson",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Boise-Eliot/Humboldt Elementary",
+            "elementary_forecast_name": "Boise-Eliot/Humboldt",
+            "middle": "Harriet Tubman Middle School",
+            "middle_forecast_name": "Harriet Tubman",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Martin Luther King Jr. Elementary",
+            "elementary_forecast_name": "MLK Jr",
+            "middle": "Harriet Tubman Middle School",
+            "middle_forecast_name": "Harriet Tubman",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Vernon K-8 School",
+            "elementary_forecast_name": "Vernon",
+            "middle": "Harriet Tubman Middle School",
+            "middle_forecast_name": "Harriet Tubman",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "program": "neighborhood",
+            "note": "Vernon K-8 School becomes K-5; grades 6-8 move to Harriet Tubman Middle School",
+            "changed": true
+        },
+        {
+            "elementary": "Chief Joseph Elementary",
+            "elementary_forecast_name": "Chief Joseph",
+            "middle": "Ockley Green Middle School",
+            "middle_forecast_name": "Ockley Green",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Faubion K-8 School",
+            "elementary_forecast_name": "Faubion",
+            "middle": "Ockley Green Middle School",
+            "middle_forecast_name": "Ockley Green",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "program": "neighborhood",
+            "note": "Faubion K-8 School becomes K-5; grades 6-8 move to Ockley Green Middle School",
+            "changed": true
+        },
+        {
+            "elementary": "Woodlawn Elementary",
+            "elementary_forecast_name": "Woodlawn",
+            "middle": "Ockley Green Middle School",
+            "middle_forecast_name": "Ockley Green",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Ainsworth Elementary",
+            "elementary_forecast_name": "Ainsworth",
+            "middle": "West Sylvan Middle School",
+            "middle_forecast_name": "West Sylvan",
+            "high_school": "Lincoln",
+            "high_school_forecast_name": "Lincoln",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Bridlemile Elementary",
+            "elementary_forecast_name": "Bridlemile",
+            "middle": "West Sylvan Middle School",
+            "middle_forecast_name": "West Sylvan",
+            "high_school": "Lincoln",
+            "high_school_forecast_name": "Lincoln",
+            "program": "neighborhood",
+            "note": "Split by home address",
+            "changed": false
+        },
+        {
+            "elementary": "Chapman Elementary",
+            "elementary_forecast_name": "Chapman",
+            "middle": "West Sylvan Middle School",
+            "middle_forecast_name": "West Sylvan",
+            "high_school": "Lincoln",
+            "high_school_forecast_name": "Lincoln",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Forest Park Elementary",
+            "elementary_forecast_name": "Forest Park",
+            "middle": "West Sylvan Middle School",
+            "middle_forecast_name": "West Sylvan",
+            "high_school": "Lincoln",
+            "high_school_forecast_name": "Lincoln",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Clark Elementary",
+            "elementary_forecast_name": "Clark",
+            "middle": "Harrison Park Middle School",
+            "middle_forecast_name": "Harrison Park",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Vestal Elementary",
+            "elementary_forecast_name": "Vestal",
+            "middle": "Harrison Park Middle School",
+            "middle_forecast_name": "Harrison Park",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Rigler Elementary",
+            "elementary_forecast_name": "Rigler",
+            "middle": "Roseway Heights Middle School",
+            "middle_forecast_name": "Roseway Heights",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "program": "Spanish DLI",
+            "note": "Spanish Immersion students only (Rigler-area non-immersion students attend Scott Elementary) | Spanish DLI grades 6-8 move from Beaumont to Roseway Heights, so Rigler Spanish DLI now feeds Roseway Heights -> McDaniel",
+            "changed": true
+        },
+        {
+            "elementary": "Scott Elementary",
+            "elementary_forecast_name": "Scott",
+            "middle": "Roseway Heights Middle School",
+            "middle_forecast_name": "Roseway Heights",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Sunrise Elementary",
+            "elementary_forecast_name": "Lee",
+            "middle": "Roseway Heights Middle School",
+            "middle_forecast_name": "Roseway Heights",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Vestal Elementary",
+            "elementary_forecast_name": "Vestal",
+            "middle": "Roseway Heights Middle School",
+            "middle_forecast_name": "Roseway Heights",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "program": "Vietnamese DLI",
+            "note": "Vietnamese DLI moves from Rose City Park to Vestal; continues to Roseway Heights (Vietnamese) -> McDaniel",
+            "changed": true
+        },
+        {
+            "elementary": "Astor K-8 School",
+            "elementary_forecast_name": "Astor",
+            "middle": "Astor K-8 School",
+            "middle_forecast_name": "Astor",
+            "high_school": "Roosevelt",
+            "high_school_forecast_name": "Roosevelt",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Cesar Chavez K-8 School",
+            "elementary_forecast_name": "César Chávez",
+            "middle": "George Middle School",
+            "middle_forecast_name": "George",
+            "high_school": "Roosevelt",
+            "high_school_forecast_name": "Roosevelt",
+            "program": "Spanish DLI",
+            "note": "Becomes a K-5 Spanish DLI hub; non-DLI K-5 students are assigned to Rosa Parks. | Cesar Chavez K-8 School becomes K-5; grades 6-8 move to George Middle School",
+            "changed": true
+        },
+        {
+            "elementary": "Rosa Parks Elementary",
+            "elementary_forecast_name": "Rosa Parks",
+            "middle": "George Middle School",
+            "middle_forecast_name": "George",
+            "high_school": "Roosevelt",
+            "high_school_forecast_name": "Roosevelt",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Sitton Elementary",
+            "elementary_forecast_name": "Sitton",
+            "middle": "George Middle School",
+            "middle_forecast_name": "George",
+            "high_school": "Roosevelt",
+            "high_school_forecast_name": "Roosevelt",
+            "program": "neighborhood",
+            "changed": false
+        },
+        {
+            "elementary": "Skyline K-8 School",
+            "elementary_forecast_name": "Skyline",
+            "middle": "Skyline K-8 School",
+            "middle_forecast_name": "Skyline",
+            "high_school": "Roosevelt",
+            "high_school_forecast_name": "Roosevelt",
+            "program": "neighborhood",
+            "note": "Skyline K-8 high school assignment moves from Lincoln to Roosevelt",
+            "changed": true
+        }
+    ],
+    "dual_language_immersion": {
+        "spanish": [
+            {
+                "home_address_areas": [
+                    "Lincoln",
+                    "Ida B. Wells"
+                ],
+                "high_school": "Lincoln High School",
+                "schools": [
+                    [
+                        "Ainsworth Elementary",
+                        "West Sylvan Middle School"
+                    ]
+                ]
+            },
+            {
+                "home_address_areas": [
+                    "Roosevelt",
+                    "Jefferson"
+                ],
+                "high_school": "Roosevelt High School",
+                "schools": [
+                    [
+                        "Cesar Chavez (K-5 Spanish DLI hub)",
+                        "George Middle School"
+                    ]
+                ]
+            },
+            {
+                "home_address_areas": [
+                    "McDaniel",
+                    "Grant"
+                ],
+                "high_school": "Leodis V. McDaniel High School",
+                "schools": [
+                    [
+                        "Rigler Elementary",
+                        "Roseway Heights Middle School"
+                    ]
+                ]
+            },
+            {
+                "home_address_areas": [
+                    "Franklin",
+                    "Cleveland"
+                ],
+                "high_school": "Franklin High School",
+                "schools": [
+                    [
+                        "Lent Elementary",
+                        "Kellogg Middle School"
+                    ]
+                ]
+            }
+        ],
+        "other_languages": [
+            {
+                "language": "Chinese",
+                "elementary": [
+                    "Boise-Eliot/Humboldt Elementary"
+                ],
+                "middle": "Harriet Tubman Middle School",
+                "high_school": "Jefferson High School"
+            },
+            {
+                "language": "Chinese",
+                "elementary": [
+                    "Woodstock Elementary"
+                ],
+                "middle": "Harrison Park Middle School",
+                "high_school": "Cleveland High School"
+            },
+            {
+                "language": "Japanese",
+                "elementary": [
+                    "Richmond Elementary"
+                ],
+                "middle": "Mt. Tabor Middle School",
+                "high_school": "Grant High School"
+            },
+            {
+                "language": "Russian",
+                "elementary": [
+                    "Kelly Elementary"
+                ],
+                "middle": "Brentwood Middle School",
+                "high_school": "Franklin High School"
+            },
+            {
+                "language": "Vietnamese",
+                "elementary": [
+                    "Vestal Elementary"
+                ],
+                "middle": "Roseway Heights Middle School",
+                "high_school": "Leodis V. McDaniel High School"
+            }
+        ],
+        "source": "memo pp2-3; slides 35, 38, 43; Scenario 6-8 maps (immersion labels)"
+    },
+    "changes": [
+        {
+            "region": "Ida B. Wells / Lincoln",
+            "type": "closure",
+            "change": "Maplewood Elementary closes; students consolidate into Hayhurst Elementary (70%), Rieke Elementary (30%)",
+            "source": "memo p2; slide 31",
+            "school": "Maplewood Elementary",
+            "receivers": [
+                {
+                    "school": "Hayhurst Elementary",
+                    "share": 0.7,
+                    "program": null
+                },
+                {
+                    "school": "Rieke Elementary",
+                    "share": 0.3,
+                    "program": null
+                }
+            ],
+            "note": "Maplewood middle school area shifts from Jackson to Gray (slide 32), so its students now feed Gray via Hayhurst/Rieke."
+        },
+        {
+            "region": "Ida B. Wells / Lincoln",
+            "type": "closure",
+            "change": "Stephenson Elementary closes; students consolidate into Markham Elementary (70%), Capitol Hill Elementary (30%)",
+            "source": "memo p2; slide 31",
+            "school": "Stephenson Elementary",
+            "receivers": [
+                {
+                    "school": "Markham Elementary",
+                    "share": 0.7,
+                    "program": null
+                },
+                {
+                    "school": "Capitol Hill Elementary",
+                    "share": 0.3,
+                    "program": null
+                }
+            ],
+            "note": null
+        },
+        {
+            "region": "Ida B. Wells / Lincoln",
+            "type": "high_school_reassignment",
+            "change": "Skyline K-8 high school assignment moves from Lincoln to Roosevelt",
+            "source": "memo p2; slide 32; map 9-12",
+            "school": "Skyline K-8 School",
+            "before": {
+                "middle": "Skyline K-8 School",
+                "high_school": "Lincoln"
+            },
+            "after": {
+                "middle": "Skyline K-8 School",
+                "high_school": "Roosevelt"
+            }
+        },
+        {
+            "region": "Ida B. Wells / Lincoln",
+            "type": "program_move",
+            "change": "MLC grades 9-12 close; students go to their neighborhood high school. Odyssey moves to the MLC site (MLC becomes K-8).",
+            "source": "memo p2; slide 31"
+        },
+        {
+            "region": "Jefferson / Roosevelt",
+            "type": "closure",
+            "change": "Beach Elementary closes; students consolidate into Chief Joseph Elementary [neighborhood], Cesar Chavez K-8 School [Spanish DLI]",
+            "source": "memo p3; slide 34",
+            "school": "Beach Elementary",
+            "receivers": [
+                {
+                    "school": "Chief Joseph Elementary",
+                    "share": null,
+                    "program": "neighborhood"
+                },
+                {
+                    "school": "Cesar Chavez K-8 School",
+                    "share": null,
+                    "program": "Spanish DLI"
+                }
+            ],
+            "note": null
+        },
+        {
+            "region": "Jefferson / Roosevelt",
+            "type": "closure",
+            "change": "James John Elementary closes; students consolidate into Sitton Elementary [neighborhood], Cesar Chavez K-8 School [Spanish DLI]",
+            "source": "memo p3; slide 34",
+            "school": "James John Elementary",
+            "receivers": [
+                {
+                    "school": "Sitton Elementary",
+                    "share": null,
+                    "program": "neighborhood"
+                },
+                {
+                    "school": "Cesar Chavez K-8 School",
+                    "share": null,
+                    "program": "Spanish DLI"
+                }
+            ],
+            "note": null
+        },
+        {
+            "region": "Jefferson / Roosevelt",
+            "type": "closure",
+            "change": "Peninsula Elementary closes; students consolidate into Rosa Parks Elementary",
+            "source": "memo p3; slide 34",
+            "school": "Peninsula Elementary",
+            "receivers": [
+                {
+                    "school": "Rosa Parks Elementary",
+                    "share": null,
+                    "program": null
+                }
+            ],
+            "note": null
+        },
+        {
+            "region": "Jefferson / Roosevelt",
+            "type": "closure",
+            "change": "Sabin Elementary closes; students consolidate into Martin Luther King Jr. Elementary",
+            "source": "memo p3; slide 34",
+            "school": "Sabin Elementary",
+            "receivers": [
+                {
+                    "school": "Martin Luther King Jr. Elementary",
+                    "share": null,
+                    "program": null
+                }
+            ],
+            "note": null
+        },
+        {
+            "region": "Jefferson / Roosevelt",
+            "type": "program_move",
+            "change": "Spanish DLI: Sitton (and Beach, James John) consolidate at Cesar Chavez",
+            "source": "memo p3; slide 35"
+        },
+        {
+            "region": "Jefferson / Roosevelt",
+            "type": "grade_reconfiguration",
+            "change": "Cesar Chavez K-8 School becomes K-5; grades 6-8 move to George Middle School",
+            "source": "memo p3; slide 35",
+            "school": "Cesar Chavez K-8 School",
+            "after": {
+                "middle": "George Middle School",
+                "high_school": "Roosevelt",
+                "program": "Spanish DLI"
+            }
+        },
+        {
+            "region": "Jefferson / Roosevelt",
+            "type": "program_move",
+            "change": "Spanish DLI grades 6-8: Ockley Green to George",
+            "source": "memo p3; slide 35"
+        },
+        {
+            "region": "Jefferson / Roosevelt",
+            "type": "program_move",
+            "change": "Chinese (Mandarin) DLI: MLK Jr. to Boise-Eliot/Humboldt",
+            "source": "memo p3; slide 35"
+        },
+        {
+            "region": "Jefferson / Roosevelt",
+            "type": "grade_reconfiguration",
+            "change": "Faubion K-8 School becomes K-5; grades 6-8 move to Ockley Green Middle School",
+            "source": "memo p3; slide 35",
+            "school": "Faubion K-8 School",
+            "after": {
+                "middle": "Ockley Green Middle School",
+                "high_school": "Jefferson",
+                "program": "neighborhood"
+            }
+        },
+        {
+            "region": "Jefferson / Roosevelt",
+            "type": "grade_reconfiguration",
+            "change": "Vernon K-8 School becomes K-5; grades 6-8 move to Harriet Tubman Middle School",
+            "source": "memo p3; slide 35",
+            "school": "Vernon K-8 School",
+            "after": {
+                "middle": "Harriet Tubman Middle School",
+                "high_school": "Jefferson",
+                "program": "neighborhood"
+            }
+        },
+        {
+            "region": "Grant / McDaniel",
+            "type": "closure",
+            "change": "Irvington Elementary closes; students consolidate into Beverly Cleary K-8 School",
+            "source": "memo p2; slide 37",
+            "school": "Irvington Elementary",
+            "receivers": [
+                {
+                    "school": "Beverly Cleary K-8 School",
+                    "share": null,
+                    "program": null
+                }
+            ],
+            "note": "Irvington middle school area is assigned to Beaumont (memo p2), so it now feeds Beaumont -> Grant."
+        },
+        {
+            "region": "Grant / McDaniel",
+            "type": "grade_reconfiguration",
+            "change": "Beverly Cleary K-8 School becomes K-5; grades 6-8 move to Beaumont Middle School",
+            "source": "memo p2; slide 38; slide 39",
+            "school": "Beverly Cleary K-8 School",
+            "after": {
+                "middle": "Beaumont Middle School",
+                "high_school": "Grant",
+                "program": "neighborhood"
+            }
+        },
+        {
+            "region": "Grant / McDaniel",
+            "type": "grade_reconfiguration",
+            "change": "Laurelhurst K-8 School becomes K-5; grades 6-8 move to Mt. Tabor Middle School",
+            "source": "memo p2; slide 38; slide 39",
+            "school": "Laurelhurst K-8 School",
+            "after": {
+                "middle": "Mt. Tabor Middle School",
+                "high_school": "Grant",
+                "program": "neighborhood"
+            }
+        },
+        {
+            "region": "Grant / McDaniel",
+            "type": "closure",
+            "change": "Rose City Park Elementary closes; students consolidate into Scott Elementary [neighborhood], Vestal Elementary [Vietnamese DLI]",
+            "source": "memo p2; slide 37",
+            "school": "Rose City Park Elementary",
+            "receivers": [
+                {
+                    "school": "Scott Elementary",
+                    "share": null,
+                    "program": "neighborhood"
+                },
+                {
+                    "school": "Vestal Elementary",
+                    "share": null,
+                    "program": "Vietnamese DLI"
+                }
+            ],
+            "note": null
+        },
+        {
+            "region": "Grant / McDaniel",
+            "type": "program_move",
+            "change": "Vietnamese DLI moves from Rose City Park to Vestal; continues to Roseway Heights (Vietnamese) -> McDaniel",
+            "source": "memo p2; slide 37; map 6-8",
+            "school": "Vestal Elementary",
+            "after": {
+                "middle": "Roseway Heights Middle School",
+                "high_school": "McDaniel",
+                "program": "Vietnamese DLI"
+            }
+        },
+        {
+            "region": "Grant / McDaniel",
+            "type": "program_move",
+            "change": "Spanish DLI: Scott to Rigler",
+            "source": "memo p2; slide 38"
+        },
+        {
+            "region": "Grant / McDaniel",
+            "type": "program_move",
+            "change": "Spanish DLI grades 6-8 move from Beaumont to Roseway Heights, so Rigler Spanish DLI now feeds Roseway Heights -> McDaniel",
+            "source": "memo p2; slide 38",
+            "school": "Rigler Elementary",
+            "before": {
+                "middle": "Beaumont Middle School",
+                "high_school": "McDaniel"
+            },
+            "after": {
+                "middle": "Roseway Heights Middle School",
+                "high_school": "McDaniel"
+            }
+        },
+        {
+            "region": "Grant / McDaniel",
+            "type": "program_move",
+            "change": "Chinese (Mandarin) DLI: Clark to Woodstock",
+            "source": "memo p2-3; slide 38"
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "closure",
+            "change": "Buckman Elementary closes; students consolidate into Sunnyside Environmental K-8 School (50%), Abernethy Elementary (50%)",
+            "source": "memo p3; slide 41",
+            "school": "Buckman Elementary",
+            "receivers": [
+                {
+                    "school": "Sunnyside Environmental K-8 School",
+                    "share": 0.5,
+                    "program": null
+                },
+                {
+                    "school": "Abernethy Elementary",
+                    "share": 0.5,
+                    "program": null
+                }
+            ],
+            "note": null
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "closure",
+            "change": "Creston Elementary closes; students consolidate into Atkinson Elementary [neighborhood], Glencoe Elementary [Deaf and Hard of Hearing]",
+            "source": "memo p3; slide 41",
+            "school": "Creston Elementary",
+            "receivers": [
+                {
+                    "school": "Atkinson Elementary",
+                    "share": null,
+                    "program": "neighborhood"
+                },
+                {
+                    "school": "Glencoe Elementary",
+                    "share": null,
+                    "program": "Deaf and Hard of Hearing"
+                }
+            ],
+            "note": null
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "closure",
+            "change": "Lewis Elementary closes; students consolidate into Duniway Elementary",
+            "source": "memo p3; slide 41",
+            "school": "Lewis Elementary",
+            "receivers": [
+                {
+                    "school": "Duniway Elementary",
+                    "share": null,
+                    "program": null
+                }
+            ],
+            "note": null
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "closure",
+            "change": "Marysville Elementary closes; students consolidate into Arleta Elementary",
+            "source": "memo p3; slide 41",
+            "school": "Marysville Elementary",
+            "receivers": [
+                {
+                    "school": "Arleta Elementary",
+                    "share": null,
+                    "program": null
+                }
+            ],
+            "note": "Lent non-DLI students attending Marysville move to Kelly (slide 43)."
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "closure",
+            "change": "Woodmere Elementary closes; students consolidate into Whitman Elementary",
+            "source": "memo p3; slide 41",
+            "school": "Woodmere Elementary",
+            "receivers": [
+                {
+                    "school": "Whitman Elementary",
+                    "share": null,
+                    "program": null
+                }
+            ],
+            "note": null
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "closure",
+            "change": "Sellwood Middle School closes; students go to Hosford (Llewellyn area) or Brentwood (Duniway and Lewis areas)",
+            "source": "memo p3; slide 42",
+            "school": "Sellwood Middle School",
+            "receivers": [
+                {
+                    "school": "Hosford Middle School",
+                    "share": null,
+                    "program": null
+                },
+                {
+                    "school": "Brentwood Middle School",
+                    "share": null,
+                    "program": null
+                }
+            ]
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "middle_school_closure",
+            "change": "Sellwood MS closes; Llewellyn-area students go to Hosford",
+            "source": "memo p3; slide 42",
+            "school": "Llewellyn Elementary",
+            "before": {
+                "middle": "Sellwood Middle School",
+                "high_school": "Cleveland"
+            },
+            "after": {
+                "middle": "Hosford Middle School",
+                "high_school": "Cleveland"
+            }
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "middle_school_closure",
+            "change": "Sellwood MS closes; Duniway-area students go to Brentwood",
+            "source": "memo p3; slide 42",
+            "school": "Duniway Elementary",
+            "before": {
+                "middle": "Sellwood Middle School",
+                "high_school": "Cleveland"
+            },
+            "after": {
+                "middle": "Brentwood Middle School",
+                "high_school": "Cleveland"
+            }
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "boundary",
+            "change": "Duniway southern boundary moves to Llewellyn",
+            "source": "slide 43"
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "grade_reconfiguration",
+            "change": "Sunnyside Environmental K-8 School becomes K-5; grades 6-8 move to Hosford Middle School",
+            "source": "memo p2-3; slide 43; map K-5/9-12",
+            "school": "Sunnyside Environmental K-8 School",
+            "after": {
+                "middle": "Hosford Middle School",
+                "high_school": "Cleveland",
+                "program": "neighborhood"
+            }
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "grade_reconfiguration",
+            "change": "Bridger Creative Science K-8 School becomes K-5; grades 6-8 move to Harrison Park Middle School",
+            "source": "memo p3; slide 43; map K-5",
+            "school": "Bridger Creative Science K-8 School",
+            "after": {
+                "middle": "Harrison Park Middle School",
+                "high_school": "Franklin",
+                "program": "neighborhood"
+            }
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "boundary_feeder",
+            "change": "Kelly neighborhood students move from Brentwood to Harrison Park (still Franklin)",
+            "source": "slide 39; map 6-8",
+            "school": "Kelly Elementary",
+            "before": {
+                "middle": "Brentwood Middle School",
+                "high_school": "Franklin"
+            },
+            "after": {
+                "middle": "Harrison Park Middle School",
+                "high_school": "Franklin"
+            }
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "program_pathway",
+            "change": "Kelly Russian DLI continues to Brentwood (Russian) -> Franklin",
+            "source": "map 6-8 (Brentwood Russian Immersion)",
+            "school": "Kelly Elementary",
+            "after": {
+                "middle": "Brentwood Middle School",
+                "high_school": "Franklin",
+                "program": "Russian DLI"
+            }
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "boundary_feeder",
+            "change": "Atkinson no longer feeds Harrison Park; its area falls in Kellogg (Franklin)",
+            "source": "slide 39; map 6-8",
+            "school": "Atkinson Elementary",
+            "before": {
+                "middle": "Harrison Park Middle School",
+                "high_school": "Franklin"
+            },
+            "after": {
+                "middle": "Kellogg Middle School",
+                "high_school": "Franklin"
+            }
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "program_move",
+            "change": "Spanish DLI: Atkinson to Lent",
+            "source": "memo p3; slide 43"
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "program_move",
+            "change": "Lent becomes the K-5 Spanish DLI site (receives Atkinson DLI); continues to Kellogg -> Franklin. Lent non-DLI students attending Marysville move to Kelly.",
+            "source": "memo p3; slide 43; map K-5",
+            "school": "Lent Elementary",
+            "before": {
+                "middle": "Kellogg Middle School",
+                "high_school": "Franklin"
+            },
+            "after": {
+                "middle": "Kellogg Middle School",
+                "high_school": "Franklin"
+            }
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "high_school_reassignment",
+            "change": "Whitman area moves from Cleveland to Franklin high school (still Brentwood)",
+            "source": "map K-5; map 9-12",
+            "school": "Whitman Elementary",
+            "before": {
+                "middle": "Brentwood Middle School",
+                "high_school": "Cleveland"
+            },
+            "after": {
+                "middle": "Brentwood Middle School",
+                "high_school": "Franklin"
+            }
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "program_move",
+            "change": "Woodstock receives Clark's Chinese (Mandarin) DLI; continues to Harrison Park (Mandarin) -> Cleveland",
+            "source": "memo p2-3; slide 38; slide 39",
+            "school": "Woodstock Elementary",
+            "after": {
+                "middle": "Harrison Park Middle School",
+                "high_school": "Cleveland",
+                "program": "Chinese DLI"
+            }
+        },
+        {
+            "region": "Cleveland / Franklin",
+            "type": "unresolved",
+            "change": "Slide 39 also draws a faint Mt. Tabor -> Cleveland line, but the Scenario 6-8 and 9-12 maps place the whole Mt. Tabor area in Franklin. Not applied.",
+            "source": "slide 39"
+        }
+    ]
+}

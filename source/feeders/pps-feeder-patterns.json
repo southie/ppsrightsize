@@ -1,0 +1,1451 @@
+{
+    "source": "PPS_High_School_Feeder_Patterns_Eng.pdf (Portland Public Schools, \"Current State\")",
+    "legend": {
+        "pathway_to_high_school": {
+            "all": "Solid arrow: all students continue to the same school.",
+            "some": "Dashed arrow: only some students continue to this high school (split pathway)."
+        },
+        "continues_to": "null = continues to this page's high school; otherwise students continue to the named high school (shown grayed on the page).",
+        "forecast_name": "School name as listed in PSU Table 5.5 (pps-enrollment-forecast-2026-27-table-5.5.json), for joining. null = not in the forecast. Brentwood MS -> Lane and Sunrise ES -> Lee are inferred renames."
+    },
+    "high_schools": {
+        "McDaniel": {
+            "high_school": "Leodis V. McDaniel High School",
+            "forecast_name": "McDaniel",
+            "page": 1,
+            "reflects_dual_assignment_sunset_2027_28": true,
+            "feeders": [
+                {
+                    "school": "Harrison Park Middle School",
+                    "forecast_name": "Harrison Park",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Clark Elementary",
+                            "forecast_name": "Clark",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Vestal Elementary",
+                            "forecast_name": "Vestal",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Atkinson Elementary",
+                            "forecast_name": "Atkinson",
+                            "continues_to": "Franklin"
+                        }
+                    ],
+                    "split_note": "Atkinson-area students go to Franklin. All other students continue to McDaniel."
+                },
+                {
+                    "school": "Roseway Heights Middle School",
+                    "forecast_name": "Roseway Heights",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Rose City Park Elementary",
+                            "forecast_name": "Rose City Park",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Scott Elementary",
+                            "forecast_name": "Scott",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Sunrise Elementary",
+                            "forecast_name": "Lee",
+                            "forecast_name_note": "Inferred rename: listed under the forecast name in PSU Table 5.5.",
+                            "continues_to": null
+                        }
+                    ]
+                },
+                {
+                    "school": "Beaumont Middle School",
+                    "forecast_name": "Beaumont",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Rigler Elementary",
+                            "forecast_name": "Rigler",
+                            "continues_to": null,
+                            "note": "Spanish Immersion students only"
+                        },
+                        {
+                            "school": "Alameda Elementary",
+                            "forecast_name": "Alameda",
+                            "continues_to": "Grant"
+                        }
+                    ],
+                    "split_note": "Alameda-area students go to Grant. Rigler Elementary Spanish Immersion students continue to McDaniel."
+                }
+            ],
+            "good_to_know": [
+                "Harrison Park also serves Atkinson Elementary. Atkinson students continue to Franklin High School.",
+                "Rigler students in Spanish Immersion attend Beaumont Middle School. Rigler-area students not in immersion attend Scott Elementary."
+            ]
+        },
+        "Cleveland": {
+            "high_school": "Cleveland High School",
+            "forecast_name": "Cleveland",
+            "page": 2,
+            "reflects_dual_assignment_sunset_2027_28": false,
+            "feeders": [
+                {
+                    "school": "Hosford Middle School",
+                    "forecast_name": "Hosford",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Abernethy Elementary",
+                            "forecast_name": "Abernethy",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Grout Elementary",
+                            "forecast_name": "Grout",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Buckman Elementary",
+                            "forecast_name": "Buckman",
+                            "continues_to": null,
+                            "note": "Focus option school; focus option students return to their neighborhood middle school for grades 6-8."
+                        },
+                        {
+                            "school": "Creston Elementary",
+                            "forecast_name": "Creston",
+                            "continues_to": "Franklin"
+                        }
+                    ],
+                    "split_note": "Creston-area students go to Franklin High School. All other students continue to Cleveland."
+                },
+                {
+                    "school": "Sellwood Middle School",
+                    "forecast_name": "Sellwood",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Duniway Elementary",
+                            "forecast_name": "Duniway",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Llewellyn Elementary",
+                            "forecast_name": "Llewellyn",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Lewis Elementary",
+                            "forecast_name": "Lewis",
+                            "continues_to": null
+                        }
+                    ]
+                },
+                {
+                    "school": "Brentwood Middle School",
+                    "forecast_name": "Lane",
+                    "forecast_name_note": "Inferred rename: listed under the forecast name in PSU Table 5.5.",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Whitman Elementary",
+                            "forecast_name": "Whitman",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Woodstock Elementary",
+                            "forecast_name": "Woodstock",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Kelly Elementary",
+                            "forecast_name": "Kelly",
+                            "continues_to": "Franklin"
+                        },
+                        {
+                            "school": "Woodmere Elementary",
+                            "forecast_name": "Woodmere",
+                            "continues_to": "Franklin"
+                        }
+                    ],
+                    "split_note": "Kelly- and Woodmere-area students go to Franklin High School. All other students continue to Cleveland."
+                }
+            ],
+            "good_to_know": [
+                "Hosford also serves Creston Elementary students. Those students continue to Franklin High School.",
+                "Buckman is a focus option school. Focus option students return to their neighborhood middle school for grades 6-8.",
+                "Brentwood also serves Kelly and Woodmere Elementary. Those students continue to Franklin High School."
+            ]
+        },
+        "Franklin": {
+            "high_school": "Franklin High School",
+            "forecast_name": "Franklin",
+            "page": 3,
+            "reflects_dual_assignment_sunset_2027_28": false,
+            "feeders": [
+                {
+                    "school": "Kellogg Middle School",
+                    "forecast_name": "Kellogg",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Lent Elementary",
+                            "forecast_name": "Lent",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Arleta Elementary",
+                            "forecast_name": "Arleta",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Marysville Elementary",
+                            "forecast_name": "Marysville",
+                            "continues_to": null
+                        }
+                    ]
+                },
+                {
+                    "school": "Mt. Tabor Middle School",
+                    "forecast_name": "Mt Tabor",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Glencoe Elementary",
+                            "forecast_name": "Glencoe",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Richmond Elementary",
+                            "forecast_name": "Richmond",
+                            "continues_to": "Grant",
+                            "note": "Japanese Immersion - continues to Grant"
+                        }
+                    ],
+                    "split_note": "Richmond Japanese Immersion students go to Grant. Other Mt. Tabor students continue to Franklin."
+                },
+                {
+                    "school": "Brentwood Middle School",
+                    "forecast_name": "Lane",
+                    "forecast_name_note": "Inferred rename: listed under the forecast name in PSU Table 5.5.",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Kelly Elementary",
+                            "forecast_name": "Kelly",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Woodmere Elementary",
+                            "forecast_name": "Woodmere",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Whitman Elementary",
+                            "forecast_name": "Whitman",
+                            "continues_to": "Cleveland"
+                        },
+                        {
+                            "school": "Woodstock Elementary",
+                            "forecast_name": "Woodstock",
+                            "continues_to": "Cleveland"
+                        }
+                    ],
+                    "split_note": "Whitman- and Woodstock-area students go to Cleveland. Other Brentwood students continue to Franklin."
+                },
+                {
+                    "school": "Hosford Middle School",
+                    "forecast_name": "Hosford",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Creston Elementary",
+                            "forecast_name": "Creston",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Abernethy Elementary",
+                            "forecast_name": "Abernethy",
+                            "continues_to": "Cleveland"
+                        },
+                        {
+                            "school": "Grout Elementary",
+                            "forecast_name": "Grout",
+                            "continues_to": "Cleveland"
+                        },
+                        {
+                            "school": "Buckman Elementary",
+                            "forecast_name": "Buckman",
+                            "continues_to": "Cleveland"
+                        }
+                    ],
+                    "split_note": "Only Creston-area students continue to Franklin. Other Hosford students continue to Cleveland."
+                },
+                {
+                    "school": "Harrison Park Middle School",
+                    "forecast_name": "Harrison Park",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Atkinson Elementary",
+                            "forecast_name": "Atkinson",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Clark Elementary",
+                            "forecast_name": "Clark",
+                            "continues_to": "McDaniel"
+                        },
+                        {
+                            "school": "Vestal Elementary",
+                            "forecast_name": "Vestal",
+                            "continues_to": "McDaniel"
+                        }
+                    ],
+                    "split_note": "Only Atkinson-area students continue to Franklin. Other Harrison Park students continue to McDaniel."
+                },
+                {
+                    "school": "Bridger Creative Science K-8 School",
+                    "forecast_name": "Bridger Creative Science",
+                    "kind": "k8_focus_option",
+                    "pathway_to_high_school": "some",
+                    "split_note": "Focus Option students continue to their neighborhood high school after 8th grade.",
+                    "note": "Focus option school serving kindergarten through 8th grade."
+                },
+                {
+                    "school": "Sunnyside Environmental K-8 School",
+                    "forecast_name": "Sunnyside Environmental",
+                    "kind": "k8_focus_option",
+                    "pathway_to_high_school": "some",
+                    "split_note": "Focus Option students continue to their neighborhood high school after 8th grade.",
+                    "note": "Focus option school serving kindergarten through 8th grade."
+                }
+            ],
+            "good_to_know": [
+                "Mt. Tabor also serves Richmond Japanese Immersion students. Those students continue to Grant High School.",
+                "Brentwood also serves Whitman and Woodstock Elementary. Those students continue to Cleveland High School.",
+                "Hosford also serves Abernethy, Grout and Buckman. Those students continue to Cleveland High School.",
+                "Harrison Park also serves Clark, and Vestal. Those students continue to McDaniel High School."
+            ]
+        },
+        "Jefferson": {
+            "high_school": "Jefferson High School",
+            "forecast_name": "Jefferson",
+            "page": 4,
+            "reflects_dual_assignment_sunset_2027_28": true,
+            "feeders": [
+                {
+                    "school": "Ockley Green Middle School",
+                    "forecast_name": "Ockley Green",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Beach Elementary",
+                            "forecast_name": "Beach",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Chief Joseph Elementary",
+                            "forecast_name": "Chief Joseph",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Woodlawn Elementary",
+                            "forecast_name": "Woodlawn",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Peninsula Elementary",
+                            "forecast_name": "Peninsula",
+                            "continues_to": "Roosevelt"
+                        }
+                    ],
+                    "split_note": "Peninsula-area students and Beach Spanish Immersion students go to Roosevelt. Other Ockley Green students continue to Jefferson."
+                },
+                {
+                    "school": "Harriet Tubman Middle School",
+                    "forecast_name": "Harriet Tubman",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Boise-Eliot/Humboldt Elementary",
+                            "forecast_name": "Boise-Eliot/Humboldt",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Martin Luther King Jr. Elementary",
+                            "forecast_name": "MLK Jr",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Sabin Elementary",
+                            "forecast_name": "Sabin",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Irvington Elementary",
+                            "forecast_name": "Irvington",
+                            "continues_to": "Grant"
+                        }
+                    ],
+                    "split_note": "Irvington-area students go to Grant. Other Tubman students continue to Jefferson."
+                },
+                {
+                    "school": "Faubion K-8 School",
+                    "forecast_name": "Faubion",
+                    "kind": "k8",
+                    "pathway_to_high_school": "all",
+                    "note": "Students stay at one school from kindergarten through 8th grade."
+                },
+                {
+                    "school": "Vernon K-8 School",
+                    "forecast_name": "Vernon",
+                    "kind": "k8",
+                    "pathway_to_high_school": "all",
+                    "note": "Students stay at one school from kindergarten through 8th grade."
+                }
+            ],
+            "good_to_know": [
+                "Ockley Green also serves Peninsula Elementary. All Peninsula students continue to Roosevelt High School, along with Spanish Immersion.",
+                "Tubman also serves Irvington Elementary. All Irvington students continue to Grant High School."
+            ]
+        },
+        "Roosevelt": {
+            "high_school": "Roosevelt High School",
+            "forecast_name": "Roosevelt",
+            "page": 5,
+            "reflects_dual_assignment_sunset_2027_28": true,
+            "feeders": [
+                {
+                    "school": "George Middle School",
+                    "forecast_name": "George",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "James John Elementary",
+                            "forecast_name": "James John",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Sitton Elementary",
+                            "forecast_name": "Sitton",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Rosa Parks Elementary",
+                            "forecast_name": "Rosa Parks",
+                            "continues_to": null
+                        }
+                    ]
+                },
+                {
+                    "school": "Ockley Green Middle School",
+                    "forecast_name": "Ockley Green",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Peninsula Elementary",
+                            "forecast_name": "Peninsula",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Beach Elementary",
+                            "forecast_name": "Beach",
+                            "continues_to": "Jefferson"
+                        },
+                        {
+                            "school": "Chief Joseph Elementary",
+                            "forecast_name": "Chief Joseph",
+                            "continues_to": "Jefferson"
+                        },
+                        {
+                            "school": "Woodlawn Elementary",
+                            "forecast_name": "Woodlawn",
+                            "continues_to": "Jefferson"
+                        }
+                    ],
+                    "split_note": "Peninsula-area students go to Roosevelt. All other Ockley Green students continue to Jefferson."
+                },
+                {
+                    "school": "Cesar Chavez K-8 School",
+                    "forecast_name": "César Chávez",
+                    "kind": "k8",
+                    "pathway_to_high_school": "all",
+                    "note": "Students stay at one school from kindergarten through 8th grade."
+                },
+                {
+                    "school": "Astor K-8 School",
+                    "forecast_name": "Astor",
+                    "kind": "k8",
+                    "pathway_to_high_school": "all",
+                    "note": "Students stay at one school from kindergarten through 8th grade."
+                }
+            ],
+            "good_to_know": [
+                "All Peninsula students continue to Roosevelt. Ockley Green also serves Beach, Chief Joseph and Woodlawn, whose students continue to Jefferson High School."
+            ]
+        },
+        "Grant": {
+            "high_school": "Grant High School",
+            "forecast_name": "Grant",
+            "page": 6,
+            "reflects_dual_assignment_sunset_2027_28": true,
+            "feeders": [
+                {
+                    "school": "Beaumont Middle School",
+                    "forecast_name": "Beaumont",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Alameda Elementary",
+                            "forecast_name": "Alameda",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Rigler Elementary",
+                            "forecast_name": "Rigler",
+                            "continues_to": "McDaniel",
+                            "note": "Spanish Immersion - continues to McDaniel"
+                        }
+                    ],
+                    "split_note": "Rigler Spanish Immersion students go to McDaniel. Alameda-area students continue to Grant."
+                },
+                {
+                    "school": "Harriet Tubman Middle School",
+                    "forecast_name": "Harriet Tubman",
+                    "kind": "middle",
+                    "pathway_to_high_school": "some",
+                    "elementary_feeders": [
+                        {
+                            "school": "Irvington Elementary",
+                            "forecast_name": "Irvington",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Boise-Eliot/Humboldt Elementary",
+                            "forecast_name": "Boise-Eliot/Humboldt",
+                            "continues_to": "Jefferson"
+                        },
+                        {
+                            "school": "Martin Luther King Jr. Elementary",
+                            "forecast_name": "MLK Jr",
+                            "continues_to": "Jefferson"
+                        },
+                        {
+                            "school": "Sabin Elementary",
+                            "forecast_name": "Sabin",
+                            "continues_to": "Jefferson"
+                        }
+                    ],
+                    "split_note": "Only Irvington-area students go to Grant. Other Tubman students continue to Jefferson."
+                },
+                {
+                    "school": "Beverly Cleary K-8 School",
+                    "forecast_name": "Beverly Cleary",
+                    "kind": "k8",
+                    "pathway_to_high_school": "all",
+                    "note": "Students stay at one school from kindergarten through 8th grade."
+                },
+                {
+                    "school": "Laurelhurst K-8 School",
+                    "forecast_name": "Laurelhurst",
+                    "kind": "k8",
+                    "pathway_to_high_school": "all",
+                    "note": "Students stay at one school from kindergarten through 8th grade."
+                }
+            ],
+            "good_to_know": [
+                "Beaumont also serves Rigler Spanish Immersion students. Those students continue to McDaniel High School.",
+                "Tubman also serves Boise-Eliot/Humboldt, Martin Luther King Jr. and Sabin. Those students continue to Jefferson High School.",
+                "Richmond Japanese Immersion students continue to Grant by way of Mt. Tabor Middle School."
+            ]
+        },
+        "Lincoln": {
+            "high_school": "Lincoln High School",
+            "forecast_name": "Lincoln",
+            "page": 7,
+            "reflects_dual_assignment_sunset_2027_28": false,
+            "feeders": [
+                {
+                    "school": "West Sylvan Middle School",
+                    "forecast_name": "West Sylvan",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Ainsworth Elementary",
+                            "forecast_name": "Ainsworth",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Forest Park Elementary",
+                            "forecast_name": "Forest Park",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Chapman Elementary",
+                            "forecast_name": "Chapman",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Bridlemile Elementary",
+                            "forecast_name": "Bridlemile",
+                            "continues_to": null,
+                            "note": "Some students - based on home address"
+                        }
+                    ]
+                },
+                {
+                    "school": "Skyline K-8 School",
+                    "forecast_name": "Skyline",
+                    "kind": "k8",
+                    "pathway_to_high_school": "all",
+                    "note": "Students stay at one school from kindergarten through 8th grade."
+                }
+            ],
+            "good_to_know": [
+                "Bridlemile splits by home address: some students attend West Sylvan and go on to Lincoln; others attend Gray Middle School and go on to Ida B. Wells High School."
+            ]
+        },
+        "Ida B. Wells": {
+            "high_school": "Ida B. Wells High School",
+            "forecast_name": "Ida B Wells-Barnett",
+            "page": 8,
+            "reflects_dual_assignment_sunset_2027_28": false,
+            "feeders": [
+                {
+                    "school": "Jackson Middle School",
+                    "forecast_name": "Jackson",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Capitol Hill Elementary",
+                            "forecast_name": "Capitol Hill",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Maplewood Elementary",
+                            "forecast_name": "Maplewood",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Stephenson Elementary",
+                            "forecast_name": "Stephenson",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Markham Elementary",
+                            "forecast_name": "Markham",
+                            "continues_to": null
+                        }
+                    ]
+                },
+                {
+                    "school": "Gray Middle School",
+                    "forecast_name": "Gray",
+                    "kind": "middle",
+                    "pathway_to_high_school": "all",
+                    "elementary_feeders": [
+                        {
+                            "school": "Hayhurst Elementary",
+                            "forecast_name": "Hayhurst",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Rieke Elementary",
+                            "forecast_name": "Rieke",
+                            "continues_to": null
+                        },
+                        {
+                            "school": "Bridlemile Elementary",
+                            "forecast_name": "Bridlemile",
+                            "continues_to": null,
+                            "note": "Some students - based on home address"
+                        }
+                    ]
+                }
+            ],
+            "good_to_know": [
+                "Bridlemile splits by home address: Some Bridlemile students attend Gray and continue to Ida B. Wells; others attend West Sylvan Middle School and continue to Lincoln High School."
+            ]
+        }
+    },
+    "pathways": [
+        {
+            "elementary": "Whitman Elementary",
+            "elementary_forecast_name": "Whitman",
+            "middle": "Brentwood Middle School",
+            "middle_forecast_name": "Lane",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "shown_on_pages": [
+                2,
+                3
+            ]
+        },
+        {
+            "elementary": "Woodstock Elementary",
+            "elementary_forecast_name": "Woodstock",
+            "middle": "Brentwood Middle School",
+            "middle_forecast_name": "Lane",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "shown_on_pages": [
+                2,
+                3
+            ]
+        },
+        {
+            "elementary": "Abernethy Elementary",
+            "elementary_forecast_name": "Abernethy",
+            "middle": "Hosford Middle School",
+            "middle_forecast_name": "Hosford",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "shown_on_pages": [
+                2,
+                3
+            ]
+        },
+        {
+            "elementary": "Buckman Elementary",
+            "elementary_forecast_name": "Buckman",
+            "middle": "Hosford Middle School",
+            "middle_forecast_name": "Hosford",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "shown_on_pages": [
+                2,
+                3
+            ],
+            "note": "Focus option school; focus option students return to their neighborhood middle school for grades 6-8"
+        },
+        {
+            "elementary": "Grout Elementary",
+            "elementary_forecast_name": "Grout",
+            "middle": "Hosford Middle School",
+            "middle_forecast_name": "Hosford",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "shown_on_pages": [
+                2,
+                3
+            ]
+        },
+        {
+            "elementary": "Duniway Elementary",
+            "elementary_forecast_name": "Duniway",
+            "middle": "Sellwood Middle School",
+            "middle_forecast_name": "Sellwood",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "shown_on_pages": [
+                2
+            ]
+        },
+        {
+            "elementary": "Lewis Elementary",
+            "elementary_forecast_name": "Lewis",
+            "middle": "Sellwood Middle School",
+            "middle_forecast_name": "Sellwood",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "shown_on_pages": [
+                2
+            ]
+        },
+        {
+            "elementary": "Llewellyn Elementary",
+            "elementary_forecast_name": "Llewellyn",
+            "middle": "Sellwood Middle School",
+            "middle_forecast_name": "Sellwood",
+            "high_school": "Cleveland",
+            "high_school_forecast_name": "Cleveland",
+            "shown_on_pages": [
+                2
+            ]
+        },
+        {
+            "elementary": "Kelly Elementary",
+            "elementary_forecast_name": "Kelly",
+            "middle": "Brentwood Middle School",
+            "middle_forecast_name": "Lane",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "shown_on_pages": [
+                2,
+                3
+            ]
+        },
+        {
+            "elementary": "Woodmere Elementary",
+            "elementary_forecast_name": "Woodmere",
+            "middle": "Brentwood Middle School",
+            "middle_forecast_name": "Lane",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "shown_on_pages": [
+                2,
+                3
+            ]
+        },
+        {
+            "elementary": "Bridger Creative Science K-8 School",
+            "elementary_forecast_name": "Bridger Creative Science",
+            "middle": "Bridger Creative Science K-8 School",
+            "middle_forecast_name": "Bridger Creative Science",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "shown_on_pages": [
+                3
+            ],
+            "note": "Focus option K-8; focus option students continue to their neighborhood high school after 8th grade."
+        },
+        {
+            "elementary": "Atkinson Elementary",
+            "elementary_forecast_name": "Atkinson",
+            "middle": "Harrison Park Middle School",
+            "middle_forecast_name": "Harrison Park",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "shown_on_pages": [
+                1,
+                3
+            ]
+        },
+        {
+            "elementary": "Creston Elementary",
+            "elementary_forecast_name": "Creston",
+            "middle": "Hosford Middle School",
+            "middle_forecast_name": "Hosford",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "shown_on_pages": [
+                2,
+                3
+            ]
+        },
+        {
+            "elementary": "Arleta Elementary",
+            "elementary_forecast_name": "Arleta",
+            "middle": "Kellogg Middle School",
+            "middle_forecast_name": "Kellogg",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "shown_on_pages": [
+                3
+            ]
+        },
+        {
+            "elementary": "Lent Elementary",
+            "elementary_forecast_name": "Lent",
+            "middle": "Kellogg Middle School",
+            "middle_forecast_name": "Kellogg",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "shown_on_pages": [
+                3
+            ]
+        },
+        {
+            "elementary": "Marysville Elementary",
+            "elementary_forecast_name": "Marysville",
+            "middle": "Kellogg Middle School",
+            "middle_forecast_name": "Kellogg",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "shown_on_pages": [
+                3
+            ]
+        },
+        {
+            "elementary": "Glencoe Elementary",
+            "elementary_forecast_name": "Glencoe",
+            "middle": "Mt. Tabor Middle School",
+            "middle_forecast_name": "Mt Tabor",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "shown_on_pages": [
+                3
+            ]
+        },
+        {
+            "elementary": "Sunnyside Environmental K-8 School",
+            "elementary_forecast_name": "Sunnyside Environmental",
+            "middle": "Sunnyside Environmental K-8 School",
+            "middle_forecast_name": "Sunnyside Environmental",
+            "high_school": "Franklin",
+            "high_school_forecast_name": "Franklin",
+            "shown_on_pages": [
+                3
+            ],
+            "note": "Focus option K-8; focus option students continue to their neighborhood high school after 8th grade."
+        },
+        {
+            "elementary": "Alameda Elementary",
+            "elementary_forecast_name": "Alameda",
+            "middle": "Beaumont Middle School",
+            "middle_forecast_name": "Beaumont",
+            "high_school": "Grant",
+            "high_school_forecast_name": "Grant",
+            "shown_on_pages": [
+                1,
+                6
+            ]
+        },
+        {
+            "elementary": "Beverly Cleary K-8 School",
+            "elementary_forecast_name": "Beverly Cleary",
+            "middle": "Beverly Cleary K-8 School",
+            "middle_forecast_name": "Beverly Cleary",
+            "high_school": "Grant",
+            "high_school_forecast_name": "Grant",
+            "shown_on_pages": [
+                6
+            ]
+        },
+        {
+            "elementary": "Irvington Elementary",
+            "elementary_forecast_name": "Irvington",
+            "middle": "Harriet Tubman Middle School",
+            "middle_forecast_name": "Harriet Tubman",
+            "high_school": "Grant",
+            "high_school_forecast_name": "Grant",
+            "shown_on_pages": [
+                4,
+                6
+            ]
+        },
+        {
+            "elementary": "Laurelhurst K-8 School",
+            "elementary_forecast_name": "Laurelhurst",
+            "middle": "Laurelhurst K-8 School",
+            "middle_forecast_name": "Laurelhurst",
+            "high_school": "Grant",
+            "high_school_forecast_name": "Grant",
+            "shown_on_pages": [
+                6
+            ]
+        },
+        {
+            "elementary": "Richmond Elementary",
+            "elementary_forecast_name": "Richmond",
+            "middle": "Mt. Tabor Middle School",
+            "middle_forecast_name": "Mt Tabor",
+            "high_school": "Grant",
+            "high_school_forecast_name": "Grant",
+            "shown_on_pages": [
+                3
+            ],
+            "note": "Japanese Immersion"
+        },
+        {
+            "elementary": "Bridlemile Elementary",
+            "elementary_forecast_name": "Bridlemile",
+            "middle": "Gray Middle School",
+            "middle_forecast_name": "Gray",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "shown_on_pages": [
+                8
+            ],
+            "note": "Split by home address"
+        },
+        {
+            "elementary": "Hayhurst Elementary",
+            "elementary_forecast_name": "Hayhurst",
+            "middle": "Gray Middle School",
+            "middle_forecast_name": "Gray",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "shown_on_pages": [
+                8
+            ]
+        },
+        {
+            "elementary": "Rieke Elementary",
+            "elementary_forecast_name": "Rieke",
+            "middle": "Gray Middle School",
+            "middle_forecast_name": "Gray",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "shown_on_pages": [
+                8
+            ]
+        },
+        {
+            "elementary": "Capitol Hill Elementary",
+            "elementary_forecast_name": "Capitol Hill",
+            "middle": "Jackson Middle School",
+            "middle_forecast_name": "Jackson",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "shown_on_pages": [
+                8
+            ]
+        },
+        {
+            "elementary": "Maplewood Elementary",
+            "elementary_forecast_name": "Maplewood",
+            "middle": "Jackson Middle School",
+            "middle_forecast_name": "Jackson",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "shown_on_pages": [
+                8
+            ]
+        },
+        {
+            "elementary": "Markham Elementary",
+            "elementary_forecast_name": "Markham",
+            "middle": "Jackson Middle School",
+            "middle_forecast_name": "Jackson",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "shown_on_pages": [
+                8
+            ]
+        },
+        {
+            "elementary": "Stephenson Elementary",
+            "elementary_forecast_name": "Stephenson",
+            "middle": "Jackson Middle School",
+            "middle_forecast_name": "Jackson",
+            "high_school": "Ida B. Wells",
+            "high_school_forecast_name": "Ida B Wells-Barnett",
+            "shown_on_pages": [
+                8
+            ]
+        },
+        {
+            "elementary": "Faubion K-8 School",
+            "elementary_forecast_name": "Faubion",
+            "middle": "Faubion K-8 School",
+            "middle_forecast_name": "Faubion",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "shown_on_pages": [
+                4
+            ]
+        },
+        {
+            "elementary": "Boise-Eliot/Humboldt Elementary",
+            "elementary_forecast_name": "Boise-Eliot/Humboldt",
+            "middle": "Harriet Tubman Middle School",
+            "middle_forecast_name": "Harriet Tubman",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "shown_on_pages": [
+                4,
+                6
+            ]
+        },
+        {
+            "elementary": "Martin Luther King Jr. Elementary",
+            "elementary_forecast_name": "MLK Jr",
+            "middle": "Harriet Tubman Middle School",
+            "middle_forecast_name": "Harriet Tubman",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "shown_on_pages": [
+                4,
+                6
+            ]
+        },
+        {
+            "elementary": "Sabin Elementary",
+            "elementary_forecast_name": "Sabin",
+            "middle": "Harriet Tubman Middle School",
+            "middle_forecast_name": "Harriet Tubman",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "shown_on_pages": [
+                4,
+                6
+            ]
+        },
+        {
+            "elementary": "Beach Elementary",
+            "elementary_forecast_name": "Beach",
+            "middle": "Ockley Green Middle School",
+            "middle_forecast_name": "Ockley Green",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "shown_on_pages": [
+                4,
+                5
+            ]
+        },
+        {
+            "elementary": "Chief Joseph Elementary",
+            "elementary_forecast_name": "Chief Joseph",
+            "middle": "Ockley Green Middle School",
+            "middle_forecast_name": "Ockley Green",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "shown_on_pages": [
+                4,
+                5
+            ]
+        },
+        {
+            "elementary": "Woodlawn Elementary",
+            "elementary_forecast_name": "Woodlawn",
+            "middle": "Ockley Green Middle School",
+            "middle_forecast_name": "Ockley Green",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "shown_on_pages": [
+                4,
+                5
+            ]
+        },
+        {
+            "elementary": "Vernon K-8 School",
+            "elementary_forecast_name": "Vernon",
+            "middle": "Vernon K-8 School",
+            "middle_forecast_name": "Vernon",
+            "high_school": "Jefferson",
+            "high_school_forecast_name": "Jefferson",
+            "shown_on_pages": [
+                4
+            ]
+        },
+        {
+            "elementary": "Skyline K-8 School",
+            "elementary_forecast_name": "Skyline",
+            "middle": "Skyline K-8 School",
+            "middle_forecast_name": "Skyline",
+            "high_school": "Lincoln",
+            "high_school_forecast_name": "Lincoln",
+            "shown_on_pages": [
+                7
+            ]
+        },
+        {
+            "elementary": "Ainsworth Elementary",
+            "elementary_forecast_name": "Ainsworth",
+            "middle": "West Sylvan Middle School",
+            "middle_forecast_name": "West Sylvan",
+            "high_school": "Lincoln",
+            "high_school_forecast_name": "Lincoln",
+            "shown_on_pages": [
+                7
+            ]
+        },
+        {
+            "elementary": "Bridlemile Elementary",
+            "elementary_forecast_name": "Bridlemile",
+            "middle": "West Sylvan Middle School",
+            "middle_forecast_name": "West Sylvan",
+            "high_school": "Lincoln",
+            "high_school_forecast_name": "Lincoln",
+            "shown_on_pages": [
+                7
+            ],
+            "note": "Split by home address"
+        },
+        {
+            "elementary": "Chapman Elementary",
+            "elementary_forecast_name": "Chapman",
+            "middle": "West Sylvan Middle School",
+            "middle_forecast_name": "West Sylvan",
+            "high_school": "Lincoln",
+            "high_school_forecast_name": "Lincoln",
+            "shown_on_pages": [
+                7
+            ]
+        },
+        {
+            "elementary": "Forest Park Elementary",
+            "elementary_forecast_name": "Forest Park",
+            "middle": "West Sylvan Middle School",
+            "middle_forecast_name": "West Sylvan",
+            "high_school": "Lincoln",
+            "high_school_forecast_name": "Lincoln",
+            "shown_on_pages": [
+                7
+            ]
+        },
+        {
+            "elementary": "Rigler Elementary",
+            "elementary_forecast_name": "Rigler",
+            "middle": "Beaumont Middle School",
+            "middle_forecast_name": "Beaumont",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "shown_on_pages": [
+                1,
+                6
+            ],
+            "note": "Spanish Immersion students only (Rigler-area non-immersion students attend Scott Elementary)"
+        },
+        {
+            "elementary": "Clark Elementary",
+            "elementary_forecast_name": "Clark",
+            "middle": "Harrison Park Middle School",
+            "middle_forecast_name": "Harrison Park",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "shown_on_pages": [
+                1,
+                3
+            ]
+        },
+        {
+            "elementary": "Vestal Elementary",
+            "elementary_forecast_name": "Vestal",
+            "middle": "Harrison Park Middle School",
+            "middle_forecast_name": "Harrison Park",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "shown_on_pages": [
+                1,
+                3
+            ]
+        },
+        {
+            "elementary": "Rose City Park Elementary",
+            "elementary_forecast_name": "Rose City Park",
+            "middle": "Roseway Heights Middle School",
+            "middle_forecast_name": "Roseway Heights",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "shown_on_pages": [
+                1
+            ]
+        },
+        {
+            "elementary": "Scott Elementary",
+            "elementary_forecast_name": "Scott",
+            "middle": "Roseway Heights Middle School",
+            "middle_forecast_name": "Roseway Heights",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "shown_on_pages": [
+                1
+            ]
+        },
+        {
+            "elementary": "Sunrise Elementary",
+            "elementary_forecast_name": "Lee",
+            "middle": "Roseway Heights Middle School",
+            "middle_forecast_name": "Roseway Heights",
+            "high_school": "McDaniel",
+            "high_school_forecast_name": "McDaniel",
+            "shown_on_pages": [
+                1
+            ]
+        },
+        {
+            "elementary": "Astor K-8 School",
+            "elementary_forecast_name": "Astor",
+            "middle": "Astor K-8 School",
+            "middle_forecast_name": "Astor",
+            "high_school": "Roosevelt",
+            "high_school_forecast_name": "Roosevelt",
+            "shown_on_pages": [
+                5
+            ]
+        },
+        {
+            "elementary": "Cesar Chavez K-8 School",
+            "elementary_forecast_name": "César Chávez",
+            "middle": "Cesar Chavez K-8 School",
+            "middle_forecast_name": "César Chávez",
+            "high_school": "Roosevelt",
+            "high_school_forecast_name": "Roosevelt",
+            "shown_on_pages": [
+                5
+            ]
+        },
+        {
+            "elementary": "James John Elementary",
+            "elementary_forecast_name": "James John",
+            "middle": "George Middle School",
+            "middle_forecast_name": "George",
+            "high_school": "Roosevelt",
+            "high_school_forecast_name": "Roosevelt",
+            "shown_on_pages": [
+                5
+            ]
+        },
+        {
+            "elementary": "Rosa Parks Elementary",
+            "elementary_forecast_name": "Rosa Parks",
+            "middle": "George Middle School",
+            "middle_forecast_name": "George",
+            "high_school": "Roosevelt",
+            "high_school_forecast_name": "Roosevelt",
+            "shown_on_pages": [
+                5
+            ]
+        },
+        {
+            "elementary": "Sitton Elementary",
+            "elementary_forecast_name": "Sitton",
+            "middle": "George Middle School",
+            "middle_forecast_name": "George",
+            "high_school": "Roosevelt",
+            "high_school_forecast_name": "Roosevelt",
+            "shown_on_pages": [
+                5
+            ]
+        },
+        {
+            "elementary": "Peninsula Elementary",
+            "elementary_forecast_name": "Peninsula",
+            "middle": "Ockley Green Middle School",
+            "middle_forecast_name": "Ockley Green",
+            "high_school": "Roosevelt",
+            "high_school_forecast_name": "Roosevelt",
+            "shown_on_pages": [
+                4,
+                5
+            ]
+        }
+    ],
+    "dual_language_immersion": {
+        "description": "After finishing 8th grade in a dual language immersion program, students are assigned to a high school that continues their language - not always their neighborhood school.",
+        "spanish": {
+            "rule": "Upon completion of 8th grade Spanish DLI, students are assigned to a regional high school based on their home address.",
+            "regions": [
+                {
+                    "home_address_areas": [
+                        "Lincoln",
+                        "Ida B. Wells"
+                    ],
+                    "high_school": "Lincoln High School",
+                    "schools": [
+                        {
+                            "elementary": "Ainsworth Elementary",
+                            "middle": "West Sylvan Middle School"
+                        }
+                    ]
+                },
+                {
+                    "home_address_areas": [
+                        "Roosevelt",
+                        "Jefferson"
+                    ],
+                    "high_school": "Roosevelt High School",
+                    "schools": [
+                        {
+                            "elementary": "Beach Elementary",
+                            "middle": "Ockley Green Middle School"
+                        },
+                        {
+                            "elementary": "Sitton Elementary",
+                            "middle": "George Middle School"
+                        },
+                        {
+                            "elementary": "James John Elementary",
+                            "middle": "George Middle School"
+                        },
+                        {
+                            "elementary": "Cesar Chavez K-8 School",
+                            "middle": "Cesar Chavez K-8 School"
+                        }
+                    ]
+                },
+                {
+                    "home_address_areas": [
+                        "McDaniel",
+                        "Grant"
+                    ],
+                    "high_school": "Leodis V. McDaniel High School",
+                    "schools": [
+                        {
+                            "elementary": "Rigler Elementary",
+                            "middle": "Beaumont Middle School"
+                        },
+                        {
+                            "elementary": "Scott Elementary",
+                            "middle": "Roseway Heights Middle School"
+                        }
+                    ]
+                },
+                {
+                    "home_address_areas": [
+                        "Franklin",
+                        "Cleveland"
+                    ],
+                    "high_school": "Franklin High School",
+                    "schools": [
+                        {
+                            "elementary": "Atkinson Elementary",
+                            "middle": "Kellogg Middle School"
+                        },
+                        {
+                            "elementary": "Lent Elementary",
+                            "middle": "Kellogg Middle School"
+                        }
+                    ]
+                }
+            ],
+            "note": "James John, Rigler, Scott and Sitton primarily serve students who live in their neighborhoods."
+        },
+        "other_languages": [
+            {
+                "language": "Chinese",
+                "elementary": [
+                    "Martin Luther King Jr. Elementary"
+                ],
+                "middle": "Harriet Tubman Middle School",
+                "high_school": "Jefferson High School"
+            },
+            {
+                "language": "Chinese",
+                "elementary": [
+                    "Woodstock Elementary",
+                    "Clark Elementary"
+                ],
+                "middle": "Harrison Park Middle School",
+                "high_school": "Cleveland High School"
+            },
+            {
+                "language": "Japanese",
+                "elementary": [
+                    "Richmond Elementary"
+                ],
+                "middle": "Mt. Tabor Middle School",
+                "high_school": "Grant High School"
+            },
+            {
+                "language": "Russian",
+                "elementary": [
+                    "Kelly Elementary"
+                ],
+                "middle": "Brentwood Middle School",
+                "high_school": "Franklin High School"
+            },
+            {
+                "language": "Vietnamese",
+                "elementary": [
+                    "Rose City Park Elementary"
+                ],
+                "middle": "Roseway Heights Middle School",
+                "high_school": "Leodis V. McDaniel High School"
+            }
+        ]
+    }
+}

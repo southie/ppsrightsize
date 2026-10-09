@@ -10,7 +10,7 @@ Object.assign(global, { window: global, L: chain, innerWidth: 1200, addEventList
   document: { getElementById: el, querySelectorAll: () => [], createElement: el, createElementNS: el, documentElement: {} },
   getComputedStyle: () => ({ getPropertyValue: () => '#000' }), localStorage: { getItem: () => null, setItem() {} },
   location: { hash: '', pathname: '/x.html', search: '', href: '' }, history: { replaceState() {} } });
-const T = new Function(script + `;return { D, P, custom, buildCustom: () => buildCustom(), applyAdjust, ADJ, alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; }, applyAdjust, k5Of };`)();
+const T = new Function(script + `;return { D, P, custom, buildCustom: () => buildCustom(), applyAdjust, ADJ, alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; }, applyAdjust, k5Of, rpFlow };`)();
 const { D } = T;
 const ok = (c, msg) => { console.log((c ? 'PASS ' : 'FAIL ') + msg); if (!c) process.exitCode = 1; };
 
@@ -143,4 +143,30 @@ T.applyAdjust(false);
   T.applyAdjust(false);
   ok(D.series.A.Laurelhurst[I] === off.lau && D.series.A['Mt Tabor'][I] === off.tab, 'switching off restores the original model');
   T.applyAdjust(true);
+}
+
+// 10) school report: pathways and flows for one school
+{
+  const has = (m, k, side) => m.has(k) && m.get(k)[side];
+  const sw = T.rpFlow('Sellwood', 'A');
+  ok(has(sw.next, 'Hosford', 'sc') && has(sw.next, 'Lane', 'sc'), 'report: Sellwood (closes in A) sends its students to Hosford and Brentwood');
+  ok(['Duniway', 'Lewis', 'Llewellyn'].every(k => has(sw.inn, k, 'sq') && !has(sw.inn, k, 'sc')), 'report: Sellwood loses its three elementary feeders in A');
+  const sun = T.rpFlow('Sunnyside Environmental', 'A');
+  ok(has(sun.high, 'Cleveland', 'sc') && !has(sun.high, 'Cleveland', 'sq') && has(sun.high, 'Franklin', 'sq') && !has(sun.high, 'Franklin', 'sc'),
+     'report: Sunnyside moves from the Franklin to the Cleveland high-school pathway in A');
+  ok((has(sun.next, 'Hosford', 'sc') || sun.out.has('Hosford')) && has(sun.inn, 'Buckman', 'sc'), 'report: Sunnyside sends 6-8 to Hosford and takes Buckman students in A');
+  const sq = T.rpFlow('Sunnyside Environmental', 'SQ');
+  ok([...sq.inn.values(), ...sq.next.values(), ...sq.high.values()].every(e => e.sq === e.sc), 'report: Status Quo view shows no changes');
+}
+
+// 11) school report: relocations to a same-level school are listed under This school, with the mechanism
+{
+  const lane = T.rpFlow('Lane', 'A');
+  const hp = lane.out.get('Harrison Park');
+  ok(hp && hp.sc && hp.notes.some(n => /Boundary change/.test(n)) && !lane.next.has('Harrison Park'),
+     'report: part of Brentwood\'s area moving to Harrison Park is a boundary-change relocation, not a next school');
+  const sun = T.rpFlow('Sunnyside Environmental', 'A');
+  ok(sun.out.has('Hosford') && sun.out.get('Hosford').notes.some(n => /Grade change/.test(n)), 'report: Sunnyside\'s 6-8 grades moving to Hosford are listed as a grade change');
+  const sw = T.rpFlow('Sellwood', 'A');
+  ok(sw.next.has('Hosford') && sw.next.has('Lane') && !sw.out.has('Hosford'), 'report: a closing school\'s receivers stay under Students go to');
 }
