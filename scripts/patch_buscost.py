@@ -34,6 +34,13 @@ D['buscost'] = dict(
                    rider=[c['per_rider_year'][v] for v in V]) for k, c in E['cases'].items()},
     box=E['box_per_daily_student_mile'],
     M=M)
+# generated candidate routes and the bus-minutes heuristic fitted on them (scripts/build_bus_routes.py)
+GR = os.path.join(ROOT, 'source', 'pps-bus', 'generated-routes.json')
+if os.path.exists(GR):
+    J = json.load(open(GR, encoding='utf-8')); H = J['heuristic']
+    D['buscost']['gen'] = dict(year=J['year'], coef=H['minutes']['coef'], coef_miles=H['miles']['coef'], r2=H['minutes']['r2'],
+                               check=H['minutes']['change_pct'], totals=J['totals'], params=J['params'],
+                               posted=J['calibration']['posted'], cal=J['calibration']['generated'][str(J['params']['max_ride_min'])])
 html = html[:m.start(1)] + json.dumps(D, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + html[m.end(1):]
 
 def rep(a, b):

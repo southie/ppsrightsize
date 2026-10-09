@@ -24,6 +24,8 @@ try {
   if (['SQ', 'A', 'B'].includes(sc)) scen = sc;
 } catch (e) {}
 if (rpKey && !byKey[rpKey]) rpKey = null;
+// first visit (nothing saved, no ?school= link): open on a high school, the first alphabetically
+if (!rpKey) rpKey = D.schools.filter(s => D.types.SQ[s.key] === 'HS').map(s => s.key).sort((a, b) => short(byKey[a].name).localeCompare(short(byKey[b].name)))[0] || null;
 // keep the address in step with the report so it can be shared
 function rpSyncUrl() {
   try {

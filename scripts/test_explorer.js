@@ -10,7 +10,7 @@ Object.assign(global, { window: global, L: chain, innerWidth: 1200, addEventList
   document: { getElementById: el, querySelectorAll: () => [], createElement: el, createElementNS: el, documentElement: {} },
   getComputedStyle: () => ({ getPropertyValue: () => '#000' }), localStorage: { getItem: () => null, setItem() {} },
   location: { hash: '', pathname: '/x.html', search: '', href: '' }, history: { replaceState() {} } });
-const T = new Function(script + `;return { D, P, custom, buildCustom: () => buildCustom(), applyAdjust, ADJ, alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; }, applyAdjust, k5Of, rpFlow };`)();
+const T = new Function(script + `;return { D, P, custom, buildCustom: () => buildCustom(), applyAdjust, ADJ, busScen, busH, alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; }, applyAdjust, k5Of, rpFlow };`)();
 const { D } = T;
 const ok = (c, msg) => { console.log((c ? 'PASS ' : 'FAIL ') + msg); if (!c) process.exitCode = 1; };
 
@@ -169,4 +169,20 @@ T.applyAdjust(false);
   ok(sun.out.has('Hosford') && sun.out.get('Hosford').notes.some(n => /Grade change/.test(n)), 'report: Sunnyside\'s 6-8 grades moving to Hosford are listed as a grade change');
   const sw = T.rpFlow('Sellwood', 'A');
   ok(sw.next.has('Hosford') && sw.next.has('Lane') && !sw.out.has('Hosford'), 'report: a closing school\'s receivers stay under Students go to');
+}
+
+// 9) bus cost from the generated-route heuristic: A and B add bus time, and a custom closure is priced too
+{
+  T.applyAdjust(false);
+  const keys = Object.keys(D.region_of);
+  T.setScen('A'); const a = T.busScen(); T.setScen('B'); const b = T.busScen();
+  ok(a.d_pct > 0.03 && a.d_pct < 0.15 && b.d_pct > 0.03 && b.d_pct < 0.15 && isFinite(a.mid) && a.lo <= a.hi,
+     `bus cost: A ${(100 * a.d_pct).toFixed(1)}% bus-minutes (+$${(a.mid / 1e6).toFixed(2)}M), B ${(100 * b.d_pct).toFixed(1)}%`);
+  T.custom.base = 'SQ'; T.custom.name = ''; T.custom.actions = [];
+  const parts = T.describeClose(T.baseState('SQ'), 'Woodstock', 2);
+  T.custom.actions.push({ k: 'Woodstock', parts: parts.map(p => ({ band: p.band, to: p.c.map(c => c.k) })) });
+  T.buildCustom(); T.setScen('C'); const c = T.busScen();
+  const hq = T.busH('SQ', keys).h, hc = T.busH('C', keys).h;
+  ok(isFinite(c.mid) && Math.abs(hc - hq - c.d_h) < 1e-6 && Math.abs(c.d_elig) < 5000, `bus cost: custom (close Woodstock) ${c.d_h >= 0 ? '+' : ''}${Math.round(c.d_h)} bus-minutes a day, $${(c.mid / 1e3).toFixed(0)}k a year`);
+  T.setScen('A'); T.applyAdjust(true);
 }

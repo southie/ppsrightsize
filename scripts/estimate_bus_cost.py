@@ -36,7 +36,7 @@ from the current route PDFs (scripts/fetch_pps_bus.py) and the 2026-27 budget.
 
 Outputs: source/pps-bus/stop-locations.csv, source/pps-bus/bus-cost-estimate.json
 """
-import csv, json, math, os, re, sys, time, io
+import csv, json, math, os, re, sys, time, io, unicodedata
 import numpy as np
 import requests
 from scipy.sparse import csr_matrix
@@ -79,32 +79,51 @@ ABBR = {'N': 'NORTH', 'NE': 'NORTHEAST', 'NW': 'NORTHWEST', 'S': 'SOUTH', 'SE': 
         'ST': 'STREET', 'AV': 'AVENUE', 'AVE': 'AVENUE', 'BLVD': 'BOULEVARD', 'DR': 'DRIVE', 'RD': 'ROAD', 'CT': 'COURT', 'PL': 'PLACE',
         'LN': 'LANE', 'WY': 'WAY', 'TER': 'TERRACE', 'TERR': 'TERRACE', 'PKWY': 'PARKWAY', 'HWY': 'HIGHWAY', 'LP': 'LOOP', 'CIR': 'CIRCLE',
         'TRL': 'TRAIL', 'PT': 'POINT', 'HTS': 'HEIGHTS', 'JR': 'JUNIOR', 'MT': 'MOUNT', 'CRES': 'CRESCENT', 'SQ': 'SQUARE', 'BR': 'BRANCH',
-        'MLK': 'MARTIN LUTHER KING JUNIOR', 'CV': 'COVE', 'XING': 'CROSSING', 'VW': 'VIEW', 'BV': 'BOULEVARD'}
+        'MLK': 'MARTIN LUTHER KING JUNIOR', 'CV': 'COVE', 'XING': 'CROSSING', 'VW': 'VIEW', 'BV': 'BOULEVARD', 'BRG': 'BRIDGE'}
+DIRS = {'N', 'NE', 'NW', 'S', 'SE', 'SW', 'E', 'W'}
+def deaccent(n): return ''.join(c for c in unicodedata.normalize('NFKD', n) if not unicodedata.combining(c))
 def norm(n):
-    n = re.sub(r"[.'’,]", '', n.upper()); n = re.sub(r'\s+', ' ', n).strip()
-    return ' '.join(ABBR.get(t, t) for t in n.split(' '))
+    n = re.sub(r"[.'’,]", '', deaccent(n).upper()); n = re.sub(r'\s+', ' ', n).strip()
+    t = n.split(' ')
+    # "ST" before another word is Saint (NW ST HELENS RD, SW ST CLAIR AV); at the end it is Street
+    return ' '.join('SAINT' if w == 'ST' and i < len(t) - 1 and t[i + 1] not in ABBR else ABBR.get(w, w) for i, w in enumerate(t))
 byname = {}
 for w in S['ways']:
     nm = w['tags'].get('name')
     if not nm or w['tags'].get('highway') in ('footway', 'path', 'steps', 'cycleway', 'pedestrian', 'track', 'bridleway', 'corridor'): continue
     byname.setdefault(norm(nm), set()).update(idx[str(n)] for n in w['nodes'] if str(n) in idx)
 log(f'{len(byname):,} named streets')
+by_base = {}   # street name without its direction -> [(full name, nodes)]
+for k, v in byname.items():
+    by_base.setdefault(re.sub(r'^(NORTH|SOUTH|EAST|WEST|NORTHEAST|NORTHWEST|SOUTHEAST|SOUTHWEST) ', '', k), []).append((k, v))
 
 def clean(loc):
-    loc = re.sub(r'\s*\[[NSEW]{0,2}\]?\s*$', '', loc).strip()
-    m = re.match(r'^[^()]*\((\d[^()]*)\)\s*$', loc)   # 'CHIEF JOSEPH SCHOOL (2409 N SARATOGA ST)'
+    loc = re.sub(r'\s*\[[^\]]*\]?\s*$', '', loc).strip()            # trailing '[NE' / '[BLUFFS APT EAST ENTRANCE)'
+    m = re.match(r'^[^()]*\((\d[^()]*|[^()]*@[^()]*)\)\s*$', loc)   # 'CHIEF JOSEPH SCHOOL (2409 N SARATOGA ST)', 'MLK SCHOOL (NE 6TH AV @ NE ALBERTA ST)'
     if m: return m.group(1)
     return re.sub(r'\s*\([^)]*\)', '', loc).strip()
 
 def street_nodes(name):
-    n = norm(name)
+    # César E. Chávez Blvd (formerly 39th Avenue) is mostly still 39th Avenue in the street extract
+    n = re.sub(r'CESAR EAST CHAVEZ (BOULEVARD|BLV)$', '39TH AVENUE', norm(name))
     if n in byname: return byname[n]
     if not re.search(r'\b(STREET|AVENUE|BOULEVARD|DRIVE|ROAD|COURT|PLACE|LANE|WAY|TERRACE|PARKWAY|HIGHWAY|LOOP|CIRCLE|TRAIL)$', n):
         for suf in ('AVENUE', 'STREET'):   # 'SW 45TH@...' (no type)
             if f'{n} {suf}' in byname: return byname[f'{n} {suf}']
-    return None
+    # 'NE BROADWAY ST' is 'Northeast Broadway' in OpenStreetMap
+    t = re.sub(r' (STREET|AVENUE|BOULEVARD|DRIVE|ROAD)$', '', n)
+    if t != n and t in byname: return byname[t]
+    # the same street under another direction ('SE CESAR E CHAVEZ BLVD' is only 'Northeast César E. Chávez Boulevard'
+    # in the extract); the cross street keeps the match local
+    base = re.sub(r'^(NORTH|SOUTH|EAST|WEST|NORTHEAST|NORTHWEST|SOUTHEAST|SOUTHWEST) ', '', n)
+    alt = set().union(*[v for k, v in by_base.get(base, [])]) if base != n else set()
+    return alt or None
 
 def intersection(a, b):
+    # a street without a direction takes the other street's ('SW TERWILLIGER BLVD @ 6TH AV')
+    da, db = a.split(' ')[0].upper(), b.split(' ')[0].upper()
+    if da in DIRS and db not in DIRS: b = f'{da} {b}'
+    elif db in DIRS and da not in DIRS: a = f'{db} {a}'
     A, B = street_nodes(a), street_nodes(b)
     if not A or not B: return None
     common = A & B
@@ -112,7 +131,7 @@ def intersection(a, b):
     A, B = np.array(sorted(A)), np.array(sorted(B))
     d, j = cKDTree(np.c_[NX[B], NY[B]]).query(np.c_[NX[A], NY[A]])
     i = int(np.argmin(d))
-    if d[i] > 120: return None
+    if d[i] > 200: return None   # metres: cross streets that are offset rather than meeting
     k = A[i]; return float(LON[k]), float(LAT[k]), 'osm-nearest-pair'
 
 cache = json.load(open(GEOCACHE, encoding='utf-8')) if os.path.exists(GEOCACHE) else {}
@@ -127,8 +146,9 @@ for loc in locs:
         g = intersection(m[0], m[1])
         if g: geo[loc] = g
         continue
-    am = re.match(r'^(\d+)(?:/\d+)?\s+(.*)$', c)
+    am = re.match(r'^(\d+)(?:/\d+)*\s+(.*)$', c)   # '1258/1255/1266 SW TAYLORS FERRY RD': the first number
     if am: pending_addr[loc] = f'{am.group(1)} {am.group(2)}'
+pending_addr['__ACCESS__'] = '6318 SW CORBETT AV'   # ACCESS Academy at Terwilliger (not one of the explorer's schools)
 # addresses: US Census batch geocoder (cached)
 todo = {loc: a for loc, a in pending_addr.items() if a not in cache}
 if todo:
@@ -142,20 +162,44 @@ if todo:
             lon, lat = map(float, row[5].split(',')); cache[todo[keys[int(row[0])]]] = [lon, lat]
         elif row: cache[todo[keys[int(row[0])]]] = None
     json.dump(cache, open(GEOCACHE, 'w', encoding='utf-8'), indent=0)
+# addresses the Census geocoder cannot match (outside the city, private drives): OpenStreetMap Nominatim, inside the
+# Portland area only, about one request a second (cached)
+NOMI_BOX = '-123.0,45.75,-122.35,45.35'
+for loc, a in pending_addr.items():
+    if cache.get(a) is not None or cache.get('nominatim|' + a, 0) != 0: continue
+    time.sleep(1.1)
+    try:
+        j = requests.get('https://nominatim.openstreetmap.org/search', params=dict(q=f'{a}, Oregon', format='json', limit=1, viewbox=NOMI_BOX, bounded=1),
+                         headers={'User-Agent': 'pps-rightsizing-analysis (research; low volume)'}, timeout=30).json()
+        cache['nominatim|' + a] = [float(j[0]['lon']), float(j[0]['lat'])] if j else None
+    except Exception as e: log(f'nominatim failed for {a}: {e}')
+json.dump(cache, open(GEOCACHE, 'w', encoding='utf-8'), indent=0)
 for loc, a in pending_addr.items():
     if cache.get(a): geo[loc] = (cache[a][0], cache[a][1], 'census-address')
+    elif cache.get('nominatim|' + a): geo[loc] = (*cache['nominatim|' + a], 'osm-address')
 log(f'{len(locs):,} stop locations: {sum(1 for v in geo.values() if v[2].startswith("osm"))} intersections, '
     f'{sum(1 for v in geo.values() if v[2] == "census-address")} addresses located; {len(street_only)} street-only')
 
 # ---------- school end of each run ----------
-def snorm(n): return re.sub(r'[^a-z0-9]+', ' ', re.sub(r"\b(elementary|middle|high|school|k-8|k8|academy|program|of|the)\b", ' ', n.lower())).strip()
+# school pages and stop names that do not match a school name as written
+ALIAS = {'tubman': 'harriet tubman', 'dr martin luther king': 'mlk jr', 'mlk': 'mlk jr', 'bridger': 'bridger creative science',
+         'odyssey': 'hayhurst', 'art 4 life abernethy': 'abernethy', 'access terwilliger': '__access', 'access': '__access'}
+def snorm(n):
+    n = re.sub(r'[^a-z0-9]+', ' ', re.sub(r"\b(elementary|middle|high|school|k-8|k8|academy|program|of|the)\b", ' ', deaccent(n).lower())).strip()
+    return ALIAS.get(n, n)
 school_at = {snorm(s['name']): s for s in D['schools']} | {snorm(s['key']): s for s in D['schools']}
+if '__ACCESS__' in geo: g_ = geo.pop('__ACCESS__'); school_at['__access'] = dict(key='ACCESS', name='ACCESS Academy', lng=g_[0], lat=g_[1])
+def school_name(t): return snorm(re.sub(r'\b(GT|ST|CAB|LOADING|LOAD|ZONE|LZ|ON|AND|SUMMER)\b.*', '', clean(t or '').upper(), flags=re.I))
 def school_of(r):
     for p in r['pages']:
         s = school_at.get(snorm(p.replace('-', ' ')))
         if s: return s
-    an = snorm(re.sub(r'\b(GT|ST|CAB|LOADING|LOAD|ZONE|LZ|ON|AND)\b.*', '', (r['anchor'] or '').upper(), flags=re.I))
-    return school_at.get(an)
+    return school_at.get(school_name(r['anchor']))
+# stops that are another school (transfers, shuttles): that school's location
+for loc in locs:
+    if loc in geo or loc in street_only: continue
+    s = school_at.get(school_name(loc))
+    if s: geo[loc] = (s['lng'], s['lat'], 'school')
 
 # ---------- drive network by length ----------
 DRIVE = {'motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'primary_link', 'secondary', 'secondary_link',

@@ -1834,5 +1834,136 @@
 "161 NE 82ND AV": [
 -122.579132322029,
 45.524850737868
+],
+"1258 SW TAYLORS FERRY RD": [
+-122.690824128746,
+45.46214868766
+],
+"50 KERR PKWY": null,
+"6318 SW CORBETT AV": [
+-122.676802902461,
+45.47854019002
+],
+"nominatim|10614 NW ST HELENS RD": [
+-122.7852565,
+45.5986545
+],
+"nominatim|15610 NW GERMANTOWN RD": [
+-122.8367821,
+45.5808452
+],
+"nominatim|211 Hidalgo": [
+-122.722038,
+45.4400646
+],
+"nominatim|21555 NW SKYLINE BLVD": [
+-122.9116414,
+45.6681729
+],
+"nominatim|224 HIDALGO": [
+-122.7240064,
+45.4396711
+],
+"nominatim|2289 SW HUMPHREY PARK RD": [
+-122.7246043,
+45.5070017
+],
+"nominatim|3101 MCNARY PKWY": [
+-122.710657,
+45.4343524
+],
+"nominatim|318 SW PALATINE HILL RD": [
+-122.6821305,
+45.458884
+],
+"nominatim|3228 SW BEAVERTON HILLSDALE HWY": [
+-122.7097194,
+45.481653
+],
+"nominatim|3278 SW BEAVERTON HILLSDALE HWY": [
+-122.711686,
+45.4818123
+],
+"nominatim|3515 SW Barbur Blvd": [
+-122.6794347,
+45.4979206
+],
+"nominatim|3602 SW Beaverton Hillsdale Hwy": [
+-122.7138379,
+45.4827423
+],
+"nominatim|3648 SW Beaverton Hillsdale Hwy": [
+-122.7142156,
+45.4829113
+],
+"nominatim|4840 NE PORTLAND HWY": [
+-122.6129828,
+45.5690491
+],
+"nominatim|4912 NE PORTLAND HWY": [
+-122.612269,
+45.5689359
+],
+"nominatim|50 KERR PKWY": [
+-122.7214209,
+45.4344008
+],
+"nominatim|5131 SW 38th Pl": [
+-122.7161713,
+45.4853355
+],
+"nominatim|6019 SW Vermont St": [
+-122.738963,
+45.4766131
+],
+"nominatim|6042 SW CANBY ST": [
+-122.7392621,
+45.4691336
+],
+"nominatim|7326 SE FLAVEL ST": [
+-122.5877111,
+45.4673442
+],
+"nominatim|7501 SW CANYON RD": [
+-122.7543468,
+45.5000166
+],
+"nominatim|7555 SW Canyon Rd": [
+-122.7549329,
+45.4992941
+],
+"nominatim|7948 SE ASPEN SUMMIT DR": [
+-122.5633044,
+45.46523
+],
+"nominatim|8102 SW 61st/6033 SW Ga": null,
+"nominatim|8125 SW Canyon Rd": [
+-122.7600327,
+45.4987359
+],
+"nominatim|8149 SE ASPEN SUMMIT DR": [
+-122.562565,
+45.464095
+],
+"nominatim|8210 SE Aspen Summit Dr": [
+-122.561027,
+45.463855
+],
+"nominatim|8738 N BANK CIR": null,
+"nominatim|8760 N BANK ST": [
+-122.7526991,
+45.6032455
+],
+"nominatim|8970 N BANK ST": [
+-122.7296392,
+45.5968563
+],
+"nominatim|9000 NE MLK JR BLVD": [
+-122.6644854,
+45.5875223
+],
+"nominatim|9030 N Newman Ave": [
+-122.715152,
+45.5884404
 ]
 }
