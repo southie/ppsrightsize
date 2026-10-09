@@ -289,6 +289,50 @@ function rpDrawMap(k, sc) {
     (notes.length ? `<ul class="rplist">${notes.map(n => `<li>${n}</li>`).join('')}</ul>` : '');
 }
 
+// school suggestions under the search box: the page's own list rather than a <datalist>, whose
+// browser-drawn popup covers the keyboard on phones
+function rpMatches(v) {
+  v = v.trim().toLowerCase(); if (!v) return [];
+  const out = [];
+  for (const s of D.schools) {
+    const names = [rpTitle(s), short(s.name), s.name].map(x => x.toLowerCase());
+    const score = names.some(n => n.startsWith(v)) ? 0 : names.some(n => n.split(/[\s(]+/).some(w => w.startsWith(v))) ? 1 : names.some(n => n.includes(v)) ? 2 : -1;
+    if (score >= 0) out.push([score, rpTitle(s), s.key]);
+  }
+  return out.sort((a, b) => a[0] - b[0] || a[1].localeCompare(b[1])).slice(0, 6);
+}
+function rpSuggest(box, pick) {
+  box.removeAttribute('list'); document.getElementById('rplist')?.remove();
+  const wrap = document.createElement('span'); wrap.className = 'rpfindwrap';
+  box.before(wrap); wrap.append(box);
+  const ul = document.createElement('ul'); ul.className = 'rpsuggest'; ul.id = 'rpsuggest'; ul.setAttribute('role', 'listbox'); ul.hidden = true;
+  wrap.append(ul);
+  box.setAttribute('role', 'combobox'); box.setAttribute('aria-controls', 'rpsuggest'); box.setAttribute('aria-autocomplete', 'list');
+  let items = [], on = -1;
+  const hide = () => { ul.hidden = true; box.setAttribute('aria-expanded', 'false'); on = -1; };
+  const show = () => {
+    items = rpMatches(box.value); on = -1;
+    if (!items.length || (items.length === 1 && items[0][1] === box.value)) return hide();
+    ul.innerHTML = items.map(([, t], i) => `<li role="option" data-i="${i}">${esc(t)}</li>`).join('');
+    ul.hidden = false; box.setAttribute('aria-expanded', 'true');
+  };
+  const choose = i => { box.value = items[i][1]; hide(); pick(); };
+  const mark = () => [...ul.children].forEach((li, i) => li.classList.toggle('on', i === on));
+  box.addEventListener('input', show);
+  box.addEventListener('blur', () => setTimeout(hide, 150));
+  box.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (ul.hidden) show(); if (!items.length) return;
+      e.preventDefault(); const n = items.length; on = e.key === 'ArrowDown' ? (on + 1 >= n ? -1 : on + 1) : (on < 0 ? n - 1 : on - 1); mark();
+    } else if (e.key === 'Enter') {
+      e.preventDefault(); if (!ul.hidden && on >= 0) choose(on); else { hide(); pick(); }
+    } else if (e.key === 'Escape') hide();
+  });
+  // pointerdown keeps focus in the box, so the tap is not lost to blur
+  ul.addEventListener('pointerdown', e => { e.preventDefault(); const li = e.target.closest('li'); if (li) choose(+li.dataset.i); });
+  // on a phone, bring the box to the top of the screen so suggestions sit between it and the keyboard
+  box.addEventListener('focus', () => { if (innerWidth < 700) setTimeout(() => box.scrollIntoView({ block: 'start', behavior: 'smooth' }), 300); });
+}
 function renderReport() {
   const el = document.getElementById('report'); if (!el) return;
   const sel = document.getElementById('rpyear');
@@ -296,8 +340,6 @@ function renderReport() {
     sel.innerHTML = D.years.map(y => `<option${y === rpYear ? ' selected' : ''}>${y}</option>`).join('');
     sel.onchange = () => { rpYear = sel.value; try { localStorage.setItem('rsReportYear', rpYear); } catch (e) {} renderReport(); };
   }
-  const dl = document.getElementById('rplist');
-  if (dl && !dl.options.length) dl.innerHTML = [...D.schools].sort((a, b) => a.name.localeCompare(b.name)).map(s => `<option value="${esc(rpTitle(s))}"></option>`).join('');
   const box = document.getElementById('rpfind');
   if (box && !box.onchange) {
     const pick = () => {
@@ -306,7 +348,7 @@ function renderReport() {
       try { localStorage.setItem('rsReport', rpKey); } catch (e) {}
       renderReport();
     };
-    box.onchange = pick; box.onkeydown = e => { if (e.key === 'Enter') pick(); };
+    box.onchange = pick; rpSuggest(box, pick);
     const clr = document.getElementById('rpclear');
     if (clr) {
       clr.onclick = () => { rpKey = null; box.value = ''; try { localStorage.removeItem('rsReport'); } catch (e) {} renderReport(); };

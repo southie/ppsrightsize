@@ -168,7 +168,7 @@ tr.srow.closed td:first-child { opacity: 1; } tr.srow.closed td:first-child > * 
 .rpbox.add { box-shadow: inset 4px 0 0 var(--up); } .rpbox.rem { opacity: .65; box-shadow: inset 4px 0 0 var(--down); } .rpbox.rem b { text-decoration: line-through; }
 .rplink { color: inherit; text-decoration: underline dotted; text-underline-offset: 2px; cursor: pointer; } .rplink:hover { color: var(--change); text-decoration-style: solid; }
 .rpbox.self { border-width: 2px; border-color: var(--text-primary); } .rpbox.none { color: var(--text-muted); }
-.rpmoves { display: block; margin-top: 6px; font-weight: 400; } .rpmoves .h { display: block; font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .03em; }
+.rpmoves { display: block; margin-top: 6px; font-weight: 400; } .rpmoves .h { display: block; font-size: 12px; color: var(--text-secondary); }
 .rpmoves .mv { display: block; margin-top: 4px; font-size: 12.5px; } .rpmoves .why { display: block; font-size: 11.5px; color: var(--text-secondary); padding-left: 12px; }
 .rpbadge { display: inline-block; margin-left: 6px; font-size: 10.5px; padding: 0 6px; border-radius: 9px; border: 1px solid currentColor; }
 .rpbadge.add { color: var(--up); } .rpbadge.rem { color: var(--down); } .rpbadge.cl { color: #fff; background: var(--close); border-color: var(--close); }
@@ -190,6 +190,13 @@ tr.srow.closed td:first-child { opacity: 1; } tr.srow.closed td:first-child > * 
 .rplegend .k.thr { border-top-style: dotted; border-color: var(--text-secondary); } .rplegend .k.impl { border-top-style: dashed; border-color: var(--axis); }
 .rplegend .k.sqa { height: 10px; border: 2px dashed #33312c; width: 12px; vertical-align: -1px; } .rplegend .k.sca { height: 10px; border: 0; background: var(--change); opacity: .5; width: 14px; vertical-align: -1px; }
 .rplegend .k.chg { height: 10px; border: 0; background: #d4a017; opacity: .8; width: 14px; vertical-align: -1px; }
+.rpfindwrap { position: relative; display: inline-block; }
+.rpsuggest { position: absolute; left: 0; top: 100%; z-index: 1100; margin: 3px 0 0; padding: 4px 0; list-style: none; min-width: 100%; width: max-content; max-width: min(92vw, 420px);
+  background: var(--surface-1); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+.rpsuggest[hidden] { display: none; }
+.rpsuggest li { padding: 7px 12px; cursor: pointer; font-size: 13px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rpsuggest li:hover, .rpsuggest li.on { background: var(--surface-2); }
+@media (max-width: 700px) { #rpfind { font-size: 16px; } .rpsuggest li { padding: 11px 14px; font-size: 15px; } }
 /* end school report */
 
 .isoctl { margin: 0 0 10px; }
@@ -332,7 +339,7 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
   <section class="card" id="reportcard">
     <h2>School report</h2>
     <p class="sub">Search for a school to see what the selected scenario does to it, compared with Status Quo: where its students come from and go, building costs, its attendance area, staffing, enrollment against capacity, and students by grade.</p>
-    <div class="controls"><label>School <input type="search" id="rpfind" list="rplist" placeholder="e.g. Sunnyside Environmental" autocomplete="off"></label><datalist id="rplist"></datalist>
+    <div class="controls"><label>School <input type="search" id="rpfind" placeholder="e.g. Sunnyside Environmental" autocomplete="off"></label>
       <label>Staffing year <select id="rpyear"></select></label><button type="button" id="rpclear">Clear</button></div>
     <div id="report"></div>
   </section>
@@ -2976,6 +2983,50 @@ function rpDrawMap(k, sc) {
     (notes.length ? `<ul class="rplist">${notes.map(n => `<li>${n}</li>`).join('')}</ul>` : '');
 }
 
+// school suggestions under the search box: the page's own list rather than a <datalist>, whose
+// browser-drawn popup covers the keyboard on phones
+function rpMatches(v) {
+  v = v.trim().toLowerCase(); if (!v) return [];
+  const out = [];
+  for (const s of D.schools) {
+    const names = [rpTitle(s), short(s.name), s.name].map(x => x.toLowerCase());
+    const score = names.some(n => n.startsWith(v)) ? 0 : names.some(n => n.split(/[\s(]+/).some(w => w.startsWith(v))) ? 1 : names.some(n => n.includes(v)) ? 2 : -1;
+    if (score >= 0) out.push([score, rpTitle(s), s.key]);
+  }
+  return out.sort((a, b) => a[0] - b[0] || a[1].localeCompare(b[1])).slice(0, 6);
+}
+function rpSuggest(box, pick) {
+  box.removeAttribute('list'); document.getElementById('rplist')?.remove();
+  const wrap = document.createElement('span'); wrap.className = 'rpfindwrap';
+  box.before(wrap); wrap.append(box);
+  const ul = document.createElement('ul'); ul.className = 'rpsuggest'; ul.id = 'rpsuggest'; ul.setAttribute('role', 'listbox'); ul.hidden = true;
+  wrap.append(ul);
+  box.setAttribute('role', 'combobox'); box.setAttribute('aria-controls', 'rpsuggest'); box.setAttribute('aria-autocomplete', 'list');
+  let items = [], on = -1;
+  const hide = () => { ul.hidden = true; box.setAttribute('aria-expanded', 'false'); on = -1; };
+  const show = () => {
+    items = rpMatches(box.value); on = -1;
+    if (!items.length || (items.length === 1 && items[0][1] === box.value)) return hide();
+    ul.innerHTML = items.map(([, t], i) => `<li role="option" data-i="${i}">${esc(t)}</li>`).join('');
+    ul.hidden = false; box.setAttribute('aria-expanded', 'true');
+  };
+  const choose = i => { box.value = items[i][1]; hide(); pick(); };
+  const mark = () => [...ul.children].forEach((li, i) => li.classList.toggle('on', i === on));
+  box.addEventListener('input', show);
+  box.addEventListener('blur', () => setTimeout(hide, 150));
+  box.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (ul.hidden) show(); if (!items.length) return;
+      e.preventDefault(); const n = items.length; on = e.key === 'ArrowDown' ? (on + 1 >= n ? -1 : on + 1) : (on < 0 ? n - 1 : on - 1); mark();
+    } else if (e.key === 'Enter') {
+      e.preventDefault(); if (!ul.hidden && on >= 0) choose(on); else { hide(); pick(); }
+    } else if (e.key === 'Escape') hide();
+  });
+  // pointerdown keeps focus in the box, so the tap is not lost to blur
+  ul.addEventListener('pointerdown', e => { e.preventDefault(); const li = e.target.closest('li'); if (li) choose(+li.dataset.i); });
+  // on a phone, bring the box to the top of the screen so suggestions sit between it and the keyboard
+  box.addEventListener('focus', () => { if (innerWidth < 700) setTimeout(() => box.scrollIntoView({ block: 'start', behavior: 'smooth' }), 300); });
+}
 function renderReport() {
   const el = document.getElementById('report'); if (!el) return;
   const sel = document.getElementById('rpyear');
@@ -2983,8 +3034,6 @@ function renderReport() {
     sel.innerHTML = D.years.map(y => `<option${y === rpYear ? ' selected' : ''}>${y}</option>`).join('');
     sel.onchange = () => { rpYear = sel.value; try { localStorage.setItem('rsReportYear', rpYear); } catch (e) {} renderReport(); };
   }
-  const dl = document.getElementById('rplist');
-  if (dl && !dl.options.length) dl.innerHTML = [...D.schools].sort((a, b) => a.name.localeCompare(b.name)).map(s => `<option value="${esc(rpTitle(s))}"></option>`).join('');
   const box = document.getElementById('rpfind');
   if (box && !box.onchange) {
     const pick = () => {
@@ -2993,7 +3042,7 @@ function renderReport() {
       try { localStorage.setItem('rsReport', rpKey); } catch (e) {}
       renderReport();
     };
-    box.onchange = pick; box.onkeydown = e => { if (e.key === 'Enter') pick(); };
+    box.onchange = pick; rpSuggest(box, pick);
     const clr = document.getElementById('rpclear');
     if (clr) {
       clr.onclick = () => { rpKey = null; box.value = ''; try { localStorage.removeItem('rsReport'); } catch (e) {} renderReport(); };

@@ -99,7 +99,7 @@ CSS = """
 .rpbox.add { box-shadow: inset 4px 0 0 var(--up); } .rpbox.rem { opacity: .65; box-shadow: inset 4px 0 0 var(--down); } .rpbox.rem b { text-decoration: line-through; }
 .rplink { color: inherit; text-decoration: underline dotted; text-underline-offset: 2px; cursor: pointer; } .rplink:hover { color: var(--change); text-decoration-style: solid; }
 .rpbox.self { border-width: 2px; border-color: var(--text-primary); } .rpbox.none { color: var(--text-muted); }
-.rpmoves { display: block; margin-top: 6px; font-weight: 400; } .rpmoves .h { display: block; font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .03em; }
+.rpmoves { display: block; margin-top: 6px; font-weight: 400; } .rpmoves .h { display: block; font-size: 12px; color: var(--text-secondary); }
 .rpmoves .mv { display: block; margin-top: 4px; font-size: 12.5px; } .rpmoves .why { display: block; font-size: 11.5px; color: var(--text-secondary); padding-left: 12px; }
 .rpbadge { display: inline-block; margin-left: 6px; font-size: 10.5px; padding: 0 6px; border-radius: 9px; border: 1px solid currentColor; }
 .rpbadge.add { color: var(--up); } .rpbadge.rem { color: var(--down); } .rpbadge.cl { color: #fff; background: var(--close); border-color: var(--close); }
@@ -121,11 +121,18 @@ CSS = """
 .rplegend .k.thr { border-top-style: dotted; border-color: var(--text-secondary); } .rplegend .k.impl { border-top-style: dashed; border-color: var(--axis); }
 .rplegend .k.sqa { height: 10px; border: 2px dashed #33312c; width: 12px; vertical-align: -1px; } .rplegend .k.sca { height: 10px; border: 0; background: var(--change); opacity: .5; width: 14px; vertical-align: -1px; }
 .rplegend .k.chg { height: 10px; border: 0; background: #d4a017; opacity: .8; width: 14px; vertical-align: -1px; }
+.rpfindwrap { position: relative; display: inline-block; }
+.rpsuggest { position: absolute; left: 0; top: 100%; z-index: 1100; margin: 3px 0 0; padding: 4px 0; list-style: none; min-width: 100%; width: max-content; max-width: min(92vw, 420px);
+  background: var(--surface-1); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+.rpsuggest[hidden] { display: none; }
+.rpsuggest li { padding: 7px 12px; cursor: pointer; font-size: 13px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rpsuggest li:hover, .rpsuggest li.on { background: var(--surface-2); }
+@media (max-width: 700px) { #rpfind { font-size: 16px; } .rpsuggest li { padding: 11px 14px; font-size: 15px; } }
 /* end school report */"""
 SECTION = """  <section class="card" id="reportcard">
     <h2>School report</h2>
     <p class="sub">Search for a school to see what the selected scenario does to it, compared with Status Quo: where its students come from and go, building costs, its attendance area, staffing, enrollment against capacity, and students by grade.</p>
-    <div class="controls"><label>School <input type="search" id="rpfind" list="rplist" placeholder="e.g. Sunnyside Environmental" autocomplete="off"></label><datalist id="rplist"></datalist>
+    <div class="controls"><label>School <input type="search" id="rpfind" placeholder="e.g. Sunnyside Environmental" autocomplete="off"></label>
       <label>Staffing year <select id="rpyear"></select></label><button type="button" id="rpclear">Clear</button><button type="button" id="rpcopy">Copy link</button><span id="rpcopied" class="muted"></span></div>
     <div id="report"></div>
   </section>
@@ -143,6 +150,7 @@ if START in html:   # replace the injected code with the current file
     else:
         i = html.index(cs); j = html.index('\n.rplegend .k.chg', i); j = html.index('\n', j + 1)
         html = html[:i] + CSS + html[j:]
+    html = html.replace('<input type="search" id="rpfind" list="rplist" placeholder="e.g. Sunnyside Environmental" autocomplete="off"></label><datalist id="rplist"></datalist>', '<input type="search" id="rpfind" placeholder="e.g. Sunnyside Environmental" autocomplete="off"></label>')   # suggestions are the page's own list now
     print('report code and styles refreshed')
 else:
     rep('.legend label { cursor: pointer; }', '.legend label { cursor: pointer; }' + CSS)
