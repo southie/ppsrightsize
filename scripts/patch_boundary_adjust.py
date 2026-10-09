@@ -17,7 +17,7 @@ html = open(PAGE, encoding='utf-8').read()
 m = re.search(r'const D = (\{.*?\});\nconst esc', html, re.S)
 D = json.loads(m.group(1))
 D['adjust'] = {sc: [[x['frm'], x['to'], x['band'], x['share']] for x in v] for sc, v in A['moves'].items()}
-NOTE = ("Census boundary adjustment (checkbox beside the scenario buttons, on by default): for the attendance-area changes "
+NOTE = ("Census boundary adjustment (part of the \"Modified enrollment model\" checkbox beside the scenario buttons, on by default): for the attendance-area changes "
         "the enrollment model leaves out (Duniway's southern area to Llewellyn, part of Whitman to Lewis in B, part of Kellogg's "
         "6-8 area to Harrison Park, part of Hayhurst to Rieke, and small high-school edits), the share of the sending school's area "
         "residents of those ages who live in the moved area (2020 Census blocks) is applied to its Status Quo neighborhood students "

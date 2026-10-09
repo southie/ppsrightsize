@@ -10,7 +10,7 @@ Object.assign(global, { window: global, L: chain, innerWidth: 1200, addEventList
   document: { getElementById: el, querySelectorAll: () => [], createElement: el, createElementNS: el, documentElement: {} },
   getComputedStyle: () => ({ getPropertyValue: () => '#000' }), localStorage: { getItem: () => null, setItem() {} },
   location: { hash: '', pathname: '/x.html', search: '', href: '' }, history: { replaceState() {} } });
-const T = new Function(script + `;return { D, P, custom, buildCustom: () => buildCustom(), applyAdjust, ADJ, alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; } };`)();
+const T = new Function(script + `;return { D, P, custom, buildCustom: () => buildCustom(), applyAdjust, ADJ, alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; }, applyAdjust, k5Of };`)();
 const { D } = T;
 const ok = (c, msg) => { console.log((c ? 'PASS ' : 'FAIL ') + msg); if (!c) process.exitCode = 1; };
 
@@ -124,5 +124,23 @@ T.applyAdjust(false);
   ok(D.series.B.Lewis[Y] > 201, `B: Whitman -> Lewis (Lewis ${D.series.B.Lewis[Y]})`);
   T.applyAdjust(false);
   ok(D.series.A.Llewellyn[Y] === 312 && D.endpoints['Cleveland / Franklin'].A.schools_above === 71 && !Object.keys(T.ADJ.diff).length, 'turning it off restores the published figures');
+  T.applyAdjust(true);
+}
+
+// 9) Modified enrollment model: each K-8's own K-5 share (ODE fall 2025 by grade) instead of the district-wide share
+{
+  const I = D.years.indexOf(D.impl_year), Y = D.years.indexOf('2031-32'), yr = D.impl_year, d0 = D.k5_share[yr];
+  const sum = sc => Object.values(D.series[sc]).reduce((a, s) => a + (s[Y] || 0), 0);
+  T.applyAdjust(false);
+  ok(Math.abs(T.k5Of('Sunnyside Environmental', '2025-26') - D.k5_share['2025-26']) < 1e-9, 'switch off: K-8 splits use the district-wide share');
+  const off = { lau: D.series.A.Laurelhurst[I], tab: D.series.A['Mt Tabor'][I], tot: sum('A') };
+  T.applyAdjust(true);
+  ok(Math.abs(T.k5Of('Sunnyside Environmental', '2025-26') - 0.6021) < 0.001, `switch on: Sunnyside's own K-5 share ${(100 * T.k5Of('Sunnyside Environmental', '2025-26')).toFixed(1)}% (district ${(100 * D.k5_share['2025-26']).toFixed(1)}%)`);
+  const sq = D.series.SQ.Laurelhurst[I], own = T.k5Of('Laurelhurst', yr), shift = Math.round(sq * (d0 - own));
+  ok(Math.abs(D.series.A.Laurelhurst[I] - sq * own) <= 1, `Laurelhurst becoming K-5 keeps its own K-5 share in ${yr}: ${D.series.A.Laurelhurst[I]} of ${sq} (${(100 * own).toFixed(1)}%; the district share would keep ${off.lau})`);
+  ok(D.series.A['Mt Tabor'][I] - off.tab === shift, `Mt Tabor gains the ${shift} extra 6-8 students`);
+  ok(Math.abs(sum('A') - off.tot) < 0.01, `district 2031-32 total unchanged by the K-8 shares (${Math.round(sum('A'))})`);
+  T.applyAdjust(false);
+  ok(D.series.A.Laurelhurst[I] === off.lau && D.series.A['Mt Tabor'][I] === off.tab, 'switching off restores the original model');
   T.applyAdjust(true);
 }
