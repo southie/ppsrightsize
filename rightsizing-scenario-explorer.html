@@ -369,7 +369,7 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
 
   <section class="card">
     <h2>Building, staffing and land costs by region</h2>
-    <p class="sub">Capital needs of PPS's buildings (2026 dollars) from the 2021 Long-Range Facility Plan: <b>must-fix</b> = deferred maintenance + seismic retrofit; <b>modernize</b> = full modernization. Under Status Quo every building stays open; under a scenario, the costs of the buildings it closes are avoided (shown against the Status Quo total). Operating cost is the estimated annual custodial, utilities and maintenance cost of the closed buildings (square feet &times; PPS's rate). <b>Staffing</b> is school positions under PPS's staffing formula (licensed-equivalent FTE and salary + benefits, 2026-27 dollars; the year and class sizes are set in Staffing impact): Status Quo totals, or the change under a scenario. <b>Land value</b> is the Multnomah County assessor's real market value (2025 roll): all sites under Status Quo, or the sites a scenario closes. <b>Bond capital</b> is money from PPS's 2012, 2017, 2020 and 2025 bonds that PPS's bond reports assign to one school (mostly high school modernizations), paid out of allocated (<a href="https://ppsbondhub.com/wp-content/uploads/2026/09/Bond-Financials-as-of-07.01.26.pdf" target="_blank" rel="noopener">bond financials</a>); district-wide pools for roofs, seismic, accessibility, mechanical systems and technology are not reported by school (hover the district row). School rows list scheduled bond work from the <a href="https://ppsbondhub.com/wp-content/uploads/2026/09/PPS-Summary-Schedule-2026.09.02.pdf" target="_blank" rel="noopener">bond schedule</a>. Click a region to see its schools.</p>
+    <p class="sub">Capital needs of PPS's buildings (2026 dollars) from the 2021 Long-Range Facility Plan: <b>outstanding repairs</b> = deferred maintenance (the 2021 facility condition index &times; replacement value) + the remaining seismic retrofit (Holmes 2024, including unreinforced-masonry work). Under Status Quo every building stays open; under a scenario, the repairs of the buildings it closes are avoided (shown against the Status Quo total). Replacement value (building area &times; the plan's cost per square foot) is shown only for reference in the school rows and tooltips: it is what a new building would cost, not money owed. Operating cost is the estimated annual custodial, utilities and maintenance cost of the closed buildings (square feet &times; PPS's rate). <b>Staffing</b> is school positions under PPS's staffing formula (licensed-equivalent FTE and salary + benefits, 2026-27 dollars; the year and class sizes are set in Staffing impact): Status Quo totals, or the change under a scenario. <b>Land value</b> is the Multnomah County assessor's real market value (2025 roll): all sites under Status Quo, or the sites a scenario closes. <b>Bond capital</b> is money from PPS's 2012, 2017, 2020 and 2025 bonds that PPS's bond reports assign to one school (mostly high school modernizations), paid out of allocated (<a href="https://ppsbondhub.com/wp-content/uploads/2026/09/Bond-Financials-as-of-07.01.26.pdf" target="_blank" rel="noopener">bond financials</a>); district-wide pools for roofs, seismic, accessibility, mechanical systems and technology are not reported by school (hover the district row). School rows list scheduled bond work from the <a href="https://ppsbondhub.com/wp-content/uploads/2026/09/PPS-Summary-Schedule-2026.09.02.pdf" target="_blank" rel="noopener">bond schedule</a>. Click a region to see its schools.</p>
     <div class="controls tabletools"><button id="bc-expand">Expand all regions</button></div>
     <div class="tablewrap" id="bldcosts"></div>
   </section>
@@ -617,11 +617,11 @@ function extraKPIs() {
       `<div class="l">School-years over 2021 functional capacity, ${D.years[0]} to ${D.years[D.years.length - 1]}</div></div>` +
     commuteKPI() + busKPI() +
     ((a, t) => scen === 'SQ'
-      ? `<div class="kpi"><div class="v">${usdM(t.mf)}</div><div class="l">Must-fix building costs, all buildings (deferred maintenance + seismic retrofit, 2026 $)</div>` +
-        `<div class="s">Full modernization, all buildings: <b>${usdM(t.mod)}</b></div></div>`
+      ? `<div class="kpi"><div class="v">${usdM(t.mf)}</div><div class="l">Outstanding building repairs, all buildings (deferred maintenance + seismic retrofit, 2026 $)</div>` +
+        ((ks) => `<div class="s">Deferred maintenance: <b>${usdM(ks.reduce((s, k) => s + (D.costs[k]?.dm || 0), 0))}</b><br>Seismic retrofit: <b>${usdM(ks.reduce((s, k) => s + (D.costs[k]?.se || 0), 0))}</b><br><span class="pcs">Replacement value, for reference (not a cost): ${usdM(t.mod)}</span></div></div>`)(Object.keys(D.costs || {}))
       : `<div class="kpi"><div class="v">${usdM(a.mf)}<span class="d" style="color:var(--up)">${pctOf(-a.mf, t.mf)} vs SQ</span></div>` +
-        `<div class="l">Must-fix building costs avoided by closures, of ${usdM(t.mf)} under Status Quo (deferred maintenance + seismic retrofit, 2026 $)</div>` +
-        `<div class="s">Full modernization avoided: <b>${usdM(a.mod)}</b> (${pctOf(-a.mod, t.mod)} of ${usdM(t.mod)})${a.n ? ` &middot; ${a.n} building${a.n === 1 ? '' : 's'}` : ''}</div>` +
+        `<div class="l">Outstanding building repairs avoided by closures, of ${usdM(t.mf)} under Status Quo (deferred maintenance + seismic retrofit, 2026 $)</div>` +
+        ((ks) => `<div class="s">Deferred maintenance: <b>${usdM(ks.reduce((s, k) => s + (D.costs[k]?.dm || 0), 0))}</b> &middot; seismic retrofit: <b>${usdM(ks.reduce((s, k) => s + (D.costs[k]?.se || 0), 0))}</b>${a.n ? ` &middot; ${a.n} building${a.n === 1 ? '' : 's'}` : ''}<br><span class="pcs">Replacement value of the closed buildings, for reference (not a cost): ${usdM(a.mod)}</span></div>`)(Object.keys(D.costs || {}).filter(k => D.detail[scen]?.[k]?.closed)) +
         ((o) => o.n ? `<div class="s">Operating cost of the closed buildings (est.): <b>${usdM1(o.usd)}</b> a year (${Math.round(o.sf).toLocaleString()} sq ft at $${D.opex.rate.toFixed(2)}/sq ft)</div>` : '')(closedOpex(D.schools.map(s => s.key))) + '</div>')(avoidedCosts(D.schools.map(s => s.key)), totalCosts(D.schools.map(s => s.key))) + landKPI();
 }
 function renderKPIs() {
@@ -1247,9 +1247,11 @@ function cmPct(sh, p) {
 function cmWithin(sh, x) { const i = D.commute.hist_min.indexOf(x); return sh.slice(0, i + 1).reduce((a, y) => a + y, 0); }
 function cmPaneHtml() {
   const s = cmPaneSel; if (!s) return '';
-  const c = cmAgg(scen, s.keys, cmBand), isSQ = scen === 'SQ', q = isSQ ? null : cmAgg('SQ', s.keys, cmBand), m = s.m;
+  // a row may carry its own figures (school report): c, q (null = no comparison), scLabel, year, bandLabel
+  const c = s.c || cmAgg(scen, s.keys, cmBand), isSQ = s.c ? !s.q : scen === 'SQ', q = s.c ? s.q : isSQ ? null : cmAgg('SQ', s.keys, cmBand), m = s.m;
+  const scL = s.scLabel || LABEL[scen], yr = s.year || cmYear;
   const band = CM_BANDS.find(([v]) => v === cmBand)[1];
-  let h = `<div class="pop cmpane"><b>${esc(s.label)}</b><div class="muted">${LABEL[scen]}${isSQ ? '' : ' vs Status Quo'} &middot; ${band} &middot; ${cmYear}</div>` +
+  let h = `<div class="pop cmpane"><b>${esc(s.label)}</b><div class="muted">${scL}${isSQ ? '' : ' vs Status Quo'} &middot; ${s.bandLabel || band} &middot; ${yr}</div>` +
     `<div class="seg2 cmmodes">${Object.entries(CM_MODE).map(([k, [l]]) => `<button type="button" aria-pressed="${k === m}" onclick="cmPaneMode('${k}')">${l}</button>`).join('')}</div>`;
   const cs = c.r ? cmShares(c, m) : null, qs = q?.r ? cmShares(q, m) : null;
   if (!cs) return h + `<p class="muted">${m === 'bus' ? 'No bus-eligible K-8 students' : 'No students in these grades'} here in this scenario${qs ? ` (Status Quo: ${cmN(m === 'bus' ? q.be8 : q.r)})` : ''}.</p></div>`;
@@ -1271,7 +1273,7 @@ function cmPaneHtml() {
   g += `<line x1="${x15}" x2="${x15}" y1="${T0}" y2="${H}" stroke="var(--text-muted)" stroke-dasharray="3 3"/><text x="${x15 + 3}" y="${T0 - 4}" font-size="9" fill="var(--text-muted)">15 min</text>` +
     `<text x="${L0 + (W - L0) / 2}" y="${H + 27}" font-size="10" text-anchor="middle" fill="var(--text-muted)">minutes (${CM_MODE[m][0].toLowerCase()}, home to school)</text>`;
   h += `<svg class="cmbig" viewBox="0 0 ${W} ${H + B0}" role="img" aria-label="${CM_MODE[m][0]} time histogram">${g}</svg>` +
-    `<div class="muted cmleg"><span class="sw" style="background:var(--text-secondary);opacity:.85"></span>${LABEL[scen]}, within 15 min <span class="sw" style="background:var(--text-secondary);opacity:.3"></span>over 15 min` +
+    `<div class="muted cmleg"><span class="sw" style="background:var(--text-secondary);opacity:.85"></span>${scL}, within 15 min <span class="sw" style="background:var(--text-secondary);opacity:.3"></span>over 15 min` +
     (qs ? ` <span class="sw" style="border:1.5px solid var(--change)"></span>Status Quo` : '') + '</div>';
   // statistics
   const pc = (sh, p) => { const r = cmPct(sh, p); return r.open ? `${r.v}+ min` : `${r.v.toFixed(1)} min`; };
@@ -1285,9 +1287,9 @@ function cmPaneHtml() {
     ['90th percentile', pc(cs, .9), qs ? pc(qs, .9) : '', qs ? pcD(.9) : ''],
     ...[5, 10, 15, 20, 30, 45].map(x => [`Within ${x} min`, cmP(cmWithin(cs, x)), qs ? cmP(cmWithin(qs, x)) : '',
       qs ? cmDelta(100 * (cmWithin(cs, x) - cmWithin(qs, x)), ' pts', 0, false, true) : ''])];
-  h += `<h4>Summary statistics</h4><table class="cmstat"><thead><tr><th></th><th>${isSQ ? 'Status Quo' : LABEL[scen]}</th>${qs ? '<th>Status Quo</th><th>Change</th>' : ''}</tr></thead><tbody>` +
+  h += `<h4>Summary statistics</h4><table class="cmstat"><thead><tr><th></th><th>${isSQ ? 'Status Quo' : scL}</th>${qs ? '<th>Status Quo</th><th>Change</th>' : ''}</tr></thead><tbody>` +
     rows.map(r => `<tr><td>${r[0]}</td><td><b>${r[1]}</b></td>${qs ? `<td>${r[2]}</td><td>${r[3]}</td>` : ''}</tr>`).join('') + '</tbody></table>' +
-    `<p class="muted cmnote">Students are ${cmYear} enrollment (${cmYear === D.years[0] ? 'actual' : 'projected'}); where they live, and so their travel times, comes from the 2020 Census school-age residents of each attendance area. ` +
+    `<p class="muted cmnote">Students are ${yr} enrollment (${yr === D.years[0] ? 'actual' : 'projected'}); where they live, and so their travel times, comes from the 2020 Census school-age residents of each attendance area. ` +
     `Mean is exact; median and percentiles are interpolated within the time bands shown. ` +
     (m === 'bus' ? `Bus ride: K-8 students beyond bus distance only (K-5 over 1 mile, 6-8 over 1.5 miles), one way. Estimated as their walking distance &times; ${D.buscost.ratio.toFixed(1)} (buses wind past other stops; measured on PPS's posted routes) &times; ${D.buscost.min_per_mile.toFixed(1)} minutes per bus-mile (scheduled times from each stop to the school's loading zone on ${D.buscost.ride_stops.toLocaleString()} stops).`
       : `${CM_MODE[m][0]} times are along the OpenStreetMap network at ${m === 'walk' ? D.commute.walk_mph + ' mph' : m === 'bike' ? D.commute.bike_mph + ' mph' : 'free-flow speeds (no traffic)'}.`) + `</p></div>`;
@@ -1810,7 +1812,7 @@ const NOTES = [
   "Busing cost: estimated cost of PPS's general (home-to-school) yellow-bus routes and the added cost of each scenario. The 2026-27 adopted Student Transportation budget (function 2550), less the TriMet high school pass payment ($2.1M; for the lower value also taxis, field trips and other non-route transport, from the adopted budget's accounts), is split to general routes by buses needed (peak simultaneous runs from PPS's posted schedules) over all bus routes (293 in 2023-24). Scenario cost = that general-route cost x the change in bus-minutes a day: candidate routes were generated with Google OR-Tools for Status Quo, A and B (riders = half of each area's bus-eligible K-8 students in its census blocks; today's stops; limits on stops, riders and minutes a run; checked against PPS's posted routes), and each school's bus-minutes fitted as a fixed amount plus amounts per eligible student and per walking mile, which applies to any year or custom scenario. Bus utilization and ridership are not published. Built by scripts/estimate_bus_cost.py and scripts/build_bus_routes.py; embedded by scripts/patch_buscost.py and scripts/patch_bus_routes.py.",
   "Traffic drive times: the drive times listed in the school panes are free-flow (OSRM, no traffic). The car button next to each asks the Mapbox Directions API (driving-traffic profile) for the same trip on the next Tuesday (the slowest weekday in a test of 23 trips, though weekdays differ by only about 2%), leaving 30 minutes before the start time of the PPS school in the trip (the destination when it is a PPS school, otherwise the origin; PPS 2026-27 start times: elementary 8:00, K-8 8:45, middle 9:15, high 8:30, as reported by PDX Parent from PPS, Aug 12, 2026), which reflects typical traffic for that time; results are shown with Mapbox and OpenStreetMap attribution and kept for the visit. Added by scripts/patch_mapbox_drive.py.",
   'Travel time: with Walk, Bike or Drive selected, clicking a school shades everywhere within 10 and 15 minutes of it. Isochrones are from openrouteservice on the OpenStreetMap road and path network (foot-walking, cycling-regular and driving-car profiles; driving is free-flow with no traffic); where the openrouteservice free-tier quota ran out, the public Valhalla server (same OpenStreetMap data) was used and the legend says so. Built by pps-data/scripts/isochrones.py and embedded by scripts/patch_isochrones.py.',
-  'Building costs (2026 dollars): must-fix = deferred maintenance + remaining seismic retrofit; full modernization = replacement value. Replacement value is building area times the 2021 Long-Range Facility Plan regional cost per square foot (elementary and K-8 $510, middle $540, high $590); deferred maintenance is the plan facility condition index (FCI, repair cost over replacement value) times that value; seismic retrofit is the Holmes 2024 complete remaining cost for the campus, which already includes the unreinforced-masonry (URM) work (shown in each school tooltip, not added again). Escalated with the Turner Building Cost Index (2Q 2021 1187, 2Q 2024 1421, 2Q 2026 1552). Kellogg, Lincoln and McDaniel were new or rebuilt and have no FCI; Forest Park has no seismic estimate. Costs avoided are the totals for buildings a scenario closes; receiving schools may need added space, which is not counted. Built by scripts/extract_lrfp_fci.py and scripts/patch_costs.py.',
+  'Building costs (2026 dollars): outstanding repairs = deferred maintenance + remaining seismic retrofit (the plan\'s must-fix); replacement value (full modernization) is shown only for reference, not as a cost. Replacement value is building area times the 2021 Long-Range Facility Plan regional cost per square foot (elementary and K-8 $510, middle $540, high $590); deferred maintenance is the plan facility condition index (FCI, repair cost over replacement value) times that value; seismic retrofit is the Holmes 2024 complete remaining cost for the campus, which already includes the unreinforced-masonry (URM) work (shown in each school tooltip, not added again). Escalated with the Turner Building Cost Index (2Q 2021 1187, 2Q 2024 1421, 2Q 2026 1552). Kellogg, Lincoln and McDaniel were new or rebuilt and have no FCI; Forest Park has no seismic estimate. Costs avoided are the totals for buildings a scenario closes; receiving schools may need added space, which is not counted. Built by scripts/extract_lrfp_fci.py and scripts/patch_costs.py.',
   'Land value: Multnomah County assessor real market value (RMV) from the 2025 assessment roll, via the county public tax-lot service. A school site is every district-owned tax lot within 200 m of the school, each lot counted for its nearest school. School property is tax-exempt, so its assessed value is zero, but the assessor still records market value; values for exempt property may not be kept as current as taxable property, so treat them as a rough guide, not an appraisal. Land value is the better guide to what a buyer would pay; building value reflects the existing structure, which may add little. A sale would be one-time revenue and is not added to avoided building costs. West Sylvan is in Washington County and has no value here; Rosa Parks owns condominium units on a shared campus, so it shows building value but no land. Built by scripts/fetch_land_values.py and scripts/patch_land.py.',
   'Private schools: the NCES Private School Universe Survey (PSS), the most recent response from each school in 2023-24, 2021-22 or 2019-20 (schools last reported in 2017-18 or earlier are left out as likely closed); Oregon schools inside the district or within 2 miles of it. The PSS covers kindergarten through grade 12, so student counts are K-12 and pre-K-only programs are not included; schools that answered neither recent survey are missing. Inside/outside PPS and high-school area use the pps-data 2024-25 high-school boundaries, which still include the Jefferson shared zones. Distances for private alternatives and PPS reassignments are driving distance and time from OSRM (OpenStreetMap road network, public routing server; free-flow car travel, no traffic), precomputed for every PPS-to-PPS and PPS-to-private pair (source/osrm/osrm-matrix.json); only preschool/kindergarten-only sites, which are never alternatives, fall back to straight-line in their popups. Private alternatives: for a closing school, private schools serving its grades within the distance to its farthest neighborhood receiving school (immersion-only moves are not used unless they are the only receivers); for a K-8 becoming K-5, private schools serving grades 6-8 within the distance to the middle school taking those grades. Preschool/kindergarten-only sites are never counted as alternatives and are hidden by default.',
   'Building operating cost (estimate): PPS budgets $72.4M in 2026-27 for operation and maintenance of plant (custodial, utilities, grounds, maintenance and repair; General Fund, Adopted Budget Vol. 1 p. 108) across about 9 million sq ft of district buildings (p. 45), about $' + D.opex.rate.toFixed(2) + ' per sq ft per year. Closed buildings show that rate times their floor area as an annual expense attached to the building; it is an average, not a building-specific figure, and is not counted as savings.',
@@ -3048,8 +3050,11 @@ function rpAggV(list) {   // list of [per-area array in the D.commute.X layout, 
   o.busmin = o.be8 ? o.bm * K / o.be8 : 0;
   return o;
 }
-function rpTravRow(label, c, q, hs) {
+let RP_ROWS = [];   // the report's getting-to-school rows, for the detail pane (cmOpenPane)
+function rpTravRow(label, c, q, hs, sc) {
   if (!c || !c.r) return '';
+  const ri = RP_ROWS.push({ label: label.replace(/<[^>]+>/g, '').replace(/&rarr;/g, '\u2192').replace(/&amp;/g, '&').trim(), c, q: q || null,
+    scLabel: sc ? LABEL[sc] : 'Status Quo', year: rpYear, bandLabel: hs ? 'grades 9-12' : 'grades K-8' }) - 1;
   const keep = cmBand; cmBand = hs ? '912' : 'all';
   try {
     const n0 = v => Math.round(v).toLocaleString();
@@ -3058,7 +3063,7 @@ function rpTravRow(label, c, q, hs) {
     const cell = (m, mean, qm) => {
       const h = cmHist(c, q, m).replace(/^<td[^>]*>/, '').replace(/<\/td>$/, '');
       const noBus = m === 'bus' && (hs || !c.be8);
-      return `<td class="rph">${noBus ? '' : `<span class="main">${Math.round(mean)} min</span>${q && !(m === 'bus' && !q.be8) ? dm(mean, qm) : ''}<br>`}${h}</td>`;
+      return `<td class="rph${noBus ? '' : ' go'}"${noBus ? '' : ` data-rr="${ri}" data-m="${m}" tabindex="0" role="button" title="Show ${m} times in detail"`}>${noBus ? '' : `<span class="main">${Math.round(mean)} min</span>${q && !(m === 'bus' && !q.be8) ? dm(mean, qm) : ''}<br>`}${h}</td>`;
     };
     return `<tr><td>${label}</td><td><span class="main">${n0(c.r)}</span></td>` +
       `<td><span class="main">${n0(c.beyond)}</span> <span class="muted">${Math.round(100 * c.beyond / Math.max(1, c.r))}%</span>${q ? dm(c.beyond, q.beyond) : ''}</td>` +
@@ -3069,11 +3074,12 @@ function rpTravel(k, sc) {
   return cmAtYear(rpYear, () => {
     const base = rpBase(sc), d1 = (D.detail[sc] || {})[k] || {}, hs = D.types.SQ[k] === 'HS', nm = esc(rpName(k));
     const vec = (s, kk, b) => { const v = D.commute.S[s]?.[kk]?.[b]; return v ? [...v, D.buscost?.M?.[s]?.[kk]?.[b] ?? null, D.commute.BH?.[s]?.[kk]?.[b] || null] : null; };
-    let h = `<style>.rptrav td { vertical-align: top; } .rptrav td.rph { min-width: 128px; } .rptrav td.rph svg { display: block; margin-top: 2px; } .rptrav tr.rpsub td { background: var(--surface-2); font-size: 12px; color: var(--text-secondary); }</style>` +
+    RP_ROWS = [];
+    let h = `<style>.rptrav td.rph.go { cursor: pointer; } .rptrav td.rph.go:hover svg, .rptrav td.rph.go:focus-visible svg { outline: 2px solid var(--change); outline-offset: 2px; border-radius: 3px; } .rptrav td { vertical-align: top; } .rptrav td.rph { min-width: 128px; } .rptrav td.rph svg { display: block; margin-top: 2px; } .rptrav tr.rpsub td { background: var(--surface-2); font-size: 12px; color: var(--text-secondary); }</style>` +
       `<div class="tablewrap"><table class="rptable rptrav"><thead><tr><th></th><th>Students</th><th>Beyond bus distance</th><th>Walk</th><th>Bike</th><th>Drive</th><th>Bus${hs ? '' : ' (eligible K-8)'}</th></tr></thead><tbody>`;
     if (!d1.closed) {
       const c = cmAgg(sc, [k], 'all'), q = sc === 'SQ' ? null : cmAgg('SQ', [k], 'all');
-      if (c.r) h += rpTravRow(`${nm} students${sc === 'SQ' ? '' : `, ${esc(LABEL[sc])}`}`, c, q, hs);
+      if (c.r) h += rpTravRow(`${nm} students${sc === 'SQ' ? '' : `, ${esc(LABEL[sc])}`}`, c, q, hs, sc);
     }
     // areas the scenario takes away from this school, by the school each block is newly assigned to
     const R = base === 'SQ' ? null : D.commute.R?.[base]?.[k];
@@ -3084,15 +3090,24 @@ function rpTravel(k, sc) {
       const bus = b !== '912', q = rpAggV([[vec('SQ', k, b), n, bus]]);
       h += `<tr class="rpsub"><td colspan="7">${d1.closed ? `${nm} closes in ${esc(LABEL[base])}` : `${nm}'s ${RP_BL[b]} grades move in ${esc(LABEL[base])}`}: ` +
         `its ${RP_BL[b]} students' area by newly assigned school (Status Quo enrollment; outline and changes: their Status Quo trip to ${nm})</td></tr>`;
-      h += rpTravRow(`All ${RP_BL[b]} students from ${nm}'s area`, rpAggV(Object.values(to).map(v => [v, n * v[0] / tot, bus])), q, !bus);
+      h += rpTravRow(`All ${RP_BL[b]} students from ${nm}'s area`, rpAggV(Object.values(to).map(v => [v, n * v[0] / tot, bus])), q, !bus, base);
       for (const [t, v] of Object.entries(to).sort((x, y) => y[1][0] - x[1][0]))
-        h += rpTravRow(`&rarr; ${rpLink(t, esc(rpName(t)))} <span class="muted">${Math.round(100 * v[0] / tot)}% of the area</span>`, rpAggV([[v, n * v[0] / tot, bus]]), q, !bus);
+        h += rpTravRow(`&rarr; ${rpLink(t, esc(rpName(t)))} <span class="muted">${Math.round(100 * v[0] / tot)}% of the area</span>`, rpAggV([[v, n * v[0] / tot, bus]]), q, !bus, base);
       shown = true;
     }
     if (d1.closed && !shown) h += `<tr><td colspan="7" class="muted">${nm} closes in this custom scenario; see the getting-to-school table for its students' travel to their receiving schools.</td></tr>`;
-    return h + `</tbody></table></div><p class="muted rpnote">Bars: ${esc(LABEL[sc])}; outline: Status Quo. Shaded bars are trips of 15 minutes or less. Students beyond bus distance: K-5 more than 1 mile, 6-12 more than 1.5 miles of walking. Bus: eligible K-8 students' ride (walking miles &times; ${(D.buscost?.ratio || 0).toFixed(1)} &times; ${(D.buscost?.min_per_mile || 0).toFixed(1)} min per bus-mile); high school students get TriMet passes.</p>`;
+    return h + `</tbody></table></div><p class="muted rpnote">Click a chart for the detailed graph and statistics. Bars: ${esc(LABEL[sc])}; outline: Status Quo. Shaded bars are trips of 15 minutes or less. Students beyond bus distance: K-5 more than 1 mile, 6-12 more than 1.5 miles of walking. Bus: eligible K-8 students' ride (walking miles &times; ${(D.buscost?.ratio || 0).toFixed(1)} &times; ${(D.buscost?.min_per_mile || 0).toFixed(1)} min per bus-mile); high school students get TriMet passes.</p>`;
   });
 }
+addEventListener('click', e => {
+  const td = e.target.closest('.rptrav td.rph.go'); if (!td || e.target.closest('a')) return;
+  const r = RP_ROWS[+td.dataset.rr]; if (r) cmOpenPane(r, td.dataset.m);
+});
+addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const td = e.target.closest?.('.rptrav td.rph.go'); if (!td) return;
+  e.preventDefault(); const r = RP_ROWS[+td.dataset.rr]; if (r) cmOpenPane(r, td.dataset.m);
+});
 function rpCosts(k, sc) {
   const c = (D.costs || {})[k], l = (D.land || {})[k], closed = (D.detail[sc] || {})[k]?.closed, bd = D.bond?.schools?.[k];
   if (!c && !l && !bd) return '<p class="muted">No cost estimate for this school.</p>';
@@ -3113,11 +3128,12 @@ function rpCosts(k, sc) {
   }
   return (closed ? `<p class="rpline"><span class="stag closes">closes in ${esc(LABEL[sc])}</span> these costs are avoided</p>` : '') +
     (c || l ? `<table class="rptable"><tbody>` +
-    (c ? `<tr class="tot"><td>Must-fix</td><td>${v(c.mf)}</td></tr><tr><td>&nbsp;&nbsp;Deferred maintenance (2021 FCI ${c.fci ?? 'n/a'})</td><td>${v(c.dm)}</td></tr>` +
+    (c ? `<tr class="tot"><td>Outstanding repairs</td><td>${v(c.mf)}</td></tr><tr><td>&nbsp;&nbsp;Deferred maintenance (2021 FCI ${c.fci ?? 'n/a'})</td><td>${v(c.dm)}</td></tr>` +
       `<tr><td>&nbsp;&nbsp;Seismic retrofit${c.urm ? ` (URM part ${usdM(c.urm)})` : ''}</td><td>${v(c.se)}</td></tr>` +
-      `<tr class="tot"><td>Full modernization</td><td>${v(c.mod)}</td></tr><tr><td>&nbsp;&nbsp;Building area</td><td>${c.sf ? c.sf.toLocaleString() + ' sq ft' : '&mdash;'}</td></tr>` : '') +
+      `<tr><td>Building area</td><td>${c.sf ? c.sf.toLocaleString() + ' sq ft' : '&mdash;'}</td></tr>` +
+      `<tr><td class="muted">Replacement value, for reference (not a cost)</td><td class="muted">${v(c.mod)}</td></tr>` : '') +
     (l ? `<tr><td>Assessor land value (2025 roll)</td><td>${usdM(l.land)}</td></tr><tr><td>&nbsp;&nbsp;Land + buildings</td><td>${usdM(l.land + l.imp)}</td></tr>` : '') +
-    `</tbody></table><p class="muted rpnote">2026 dollars. Must-fix = deferred maintenance + remaining seismic retrofit (2021 Long-Range Facility Plan; bond work since 2021 is not subtracted); full modernization = replacement value (see Method).</p>` : '') + bond;
+    `</tbody></table><p class="muted rpnote">2026 dollars. Outstanding repairs = deferred maintenance + remaining seismic retrofit (2021 Long-Range Facility Plan; bond work since 2021 is not subtracted). Replacement value is what a new building would cost, shown for reference only (see Method).</p>` : '') + bond;
 }
 
 // boundary map: Status Quo area outlined, scenario area filled, changing parts in gold
@@ -3319,10 +3335,12 @@ function renderBuildings() {
   const host = document.getElementById('bldcosts'); if (!host) return;
   const isSQ = scen === 'SQ', C = D.costs || {}, det = D.detail[scen] || {};
   const keysOf = rn => Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn);
+  // sum of a cost field over schools (closed buildings only, under a scenario)
+  const sumC = (keys, f, closedOnly) => keys.reduce((s, k) => s + (!closedOnly || det[k]?.closed ? (C[k]?.[f] || 0) : 0), 0);
   const amt = (v, tot) => isSQ ? `<span class="main">${usdM(v)}</span>`
     : `<span class="main">${usdM(v)}</span><span class="muted" style="display:block;font-size:11px">of ${usdM(tot)} &middot; ${pctOf(-v, tot)}</span>`;
-  let h = `<table class="bltable"><thead><tr><th>Region</th><th>Must-fix<br><span style="font-weight:400">${isSQ ? 'all buildings' : 'avoided by closures'} (deferred maintenance + seismic)</span></th>` +
-    `<th>Full modernization<br><span style="font-weight:400">${isSQ ? 'all buildings' : 'avoided by closures'}</span></th><th>Operating cost<br><span style="font-weight:400">${isSQ ? 'all buildings, a year (est.)' : 'of closed buildings, a year (est.)'}</span></th>` +
+  let h = `<table class="bltable"><thead><tr><th>Region</th><th>Outstanding repairs<br><span style="font-weight:400">${isSQ ? 'all buildings' : 'avoided by closures'}: total</span></th>` +
+    `<th>Deferred maintenance<br><span style="font-weight:400">2021 condition (FCI) &times; replacement value</span></th><th>Seismic retrofit<br><span style="font-weight:400">remaining, incl. masonry</span></th><th>Operating cost<br><span style="font-weight:400">${isSQ ? 'all buildings, a year (est.)' : 'of closed buildings, a year (est.)'}</span></th>` +
     `<th>Buildings<br><span style="font-weight:400">${isSQ ? 'with cost data' : 'closed'}</span></th>` +
     `<th>Bond capital<br><span style="font-weight:400">school-specific projects: paid of allocated, as of ${bondMon(D.bond.as_of)}; scheduled work</span></th>` +
     `<th class="bl-staff">School staffing<br><span style="font-weight:400">${isSQ ? 'positions and cost a year' : 'positions no longer needed'} (${staffYear})</span></th>` +
@@ -3331,18 +3349,19 @@ function renderBuildings() {
     const keys = keysOf(rn), a = avoidedCosts(keys), t = totalCosts(keys), o = closedOpex(keys), isReg = rn !== 'District', open = bcOpen.has(rn);
     const allOpex = keys.reduce((s, k) => s + opexOf(k), 0), withData = keys.filter(k => C[k] && (C[k].mf != null || C[k].mod != null)).length;
     h += `<tr class="${isReg ? '' : 'dist'}"><td>${isReg ? `<button class="xbtn bc-x" data-r="${esc(rn)}" aria-expanded="${open}"><span class="car">&#9656;</span><span>${esc(rn)}</span></button>` : esc(rn)}</td>` +
-      `<td>${amt(isSQ ? t.mf : a.mf, t.mf)}</td><td>${amt(isSQ ? t.mod : a.mod, t.mod)}</td>` +
+      `<td title="${esc(`Replacement value of ${isSQ ? 'all these buildings' : 'the closed buildings'}, for reference (not a cost): ${usdM(isSQ ? t.mod : a.mod)}`)}">${amt(isSQ ? t.mf : a.mf, t.mf)}</td>` +
+      `<td>${amt(sumC(keys, 'dm', !isSQ), sumC(keys, 'dm', false))}</td><td>${amt(sumC(keys, 'se', !isSQ), sumC(keys, 'se', false))}</td>` +
       `<td><span class="main">${usdM1(isSQ ? allOpex : o.usd)}</span>${isSQ ? '' : `<span class="muted" style="display:block;font-size:11px">${Math.round(o.sf).toLocaleString()} sq ft</span>`}</td>` +
       `<td><span class="main">${isSQ ? withData : a.n}</span>${isSQ ? '' : `<span class="muted" style="display:block;font-size:11px">of ${keys.length}</span>`}</td>` + bondCell(keys) + staffCell(keys) + landCell(keys) + '</tr>';
     if (!isReg || !open) continue;
     for (const k of [...keys].sort(byStatusName)) {
       const c = C[k], closed = det[k]?.closed, sch = byKey[k];
       const tag = isSQ ? '' : `<span class="stag ${closed ? 'closes' : 'none'}">${closed ? 'Closes' : 'Open'}</span> `;
-      const tip = c ? `Deferred maintenance ${c.dm == null ? 'n/a' : usdM(c.dm)} + seismic retrofit ${c.se == null ? 'n/a' : usdM(c.se)}${c.urm ? ` (URM part ${usdM(c.urm)})` : ''}` : '';
+      const tip = c ? `Deferred maintenance ${c.dm == null ? 'n/a' : usdM(c.dm)} + seismic retrofit ${c.se == null ? 'n/a' : usdM(c.se)}${c.urm ? ` (URM part ${usdM(c.urm)})` : ''}. Replacement value, for reference (not a cost): ${c.mod == null ? 'n/a' : usdM(c.mod)}` : '';
       const cell = v => v == null ? '<td class="muted">&mdash;</td>' : `<td title="${esc(tip)}"><span class="main" style="${closed || isSQ ? '' : 'color:var(--text-muted)'}">${usdM(v)}</span>${closed ? '<span class="ca" style="display:block">avoided</span>' : ''}</td>`;
       h += `<tr class="srow${closed ? ' closed' : ''}"><td><span class="nm">${esc(short(sch ? sch.name : k))}</span><span class="ty">${TYPE_LABEL[D.types.SQ[k]] || ''}</span>` +
-        `<span class="muted" style="display:block;font-size:11px">${tag}${c?.fci != null ? `2021 FCI ${c.fci}` : ''}${c?.sf ? `${c?.fci != null ? ' &middot; ' : ''}${c.sf.toLocaleString()} sq ft` : ''}</span></td>` +
-        (c ? cell(c.mf) + cell(c.mod) : '<td class="muted">&mdash;</td><td class="muted">&mdash;</td>') +
+        `<span class="muted" style="display:block;font-size:11px">${tag}${c?.fci != null ? `2021 FCI ${c.fci}` : ''}${c?.sf ? `${c?.fci != null ? ' &middot; ' : ''}${c.sf.toLocaleString()} sq ft` : ''}${c?.mod ? ` &middot; replacement value ${usdM(c.mod)} (reference)` : ''}</span></td>` +
+        (c ? cell(c.mf) + cell(c.dm) + cell(c.se) : '<td class="muted">&mdash;</td><td class="muted">&mdash;</td><td class="muted">&mdash;</td>') +
         `<td>${c?.sf ? `<span class="main" style="${closed || isSQ ? '' : 'color:var(--text-muted)'}">${usdM1(opexOf(k))}</span>${closed ? '<span class="ca" style="display:block">saved</span>' : ''}` : '<span class="muted">&mdash;</span>'}</td><td></td>` + bondCell([k], closed) + staffCell([k]) + landCell([k]) + '</tr>';
     }
   }

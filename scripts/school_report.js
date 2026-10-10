@@ -298,8 +298,11 @@ function rpAggV(list) {   // list of [per-area array in the D.commute.X layout, 
   o.busmin = o.be8 ? o.bm * K / o.be8 : 0;
   return o;
 }
-function rpTravRow(label, c, q, hs) {
+let RP_ROWS = [];   // the report's getting-to-school rows, for the detail pane (cmOpenPane)
+function rpTravRow(label, c, q, hs, sc) {
   if (!c || !c.r) return '';
+  const ri = RP_ROWS.push({ label: label.replace(/<[^>]+>/g, '').replace(/&rarr;/g, '\u2192').replace(/&amp;/g, '&').trim(), c, q: q || null,
+    scLabel: sc ? LABEL[sc] : 'Status Quo', year: rpYear, bandLabel: hs ? 'grades 9-12' : 'grades K-8' }) - 1;
   const keep = cmBand; cmBand = hs ? '912' : 'all';
   try {
     const n0 = v => Math.round(v).toLocaleString();
@@ -308,7 +311,7 @@ function rpTravRow(label, c, q, hs) {
     const cell = (m, mean, qm) => {
       const h = cmHist(c, q, m).replace(/^<td[^>]*>/, '').replace(/<\/td>$/, '');
       const noBus = m === 'bus' && (hs || !c.be8);
-      return `<td class="rph">${noBus ? '' : `<span class="main">${Math.round(mean)} min</span>${q && !(m === 'bus' && !q.be8) ? dm(mean, qm) : ''}<br>`}${h}</td>`;
+      return `<td class="rph${noBus ? '' : ' go'}"${noBus ? '' : ` data-rr="${ri}" data-m="${m}" tabindex="0" role="button" title="Show ${m} times in detail"`}>${noBus ? '' : `<span class="main">${Math.round(mean)} min</span>${q && !(m === 'bus' && !q.be8) ? dm(mean, qm) : ''}<br>`}${h}</td>`;
     };
     return `<tr><td>${label}</td><td><span class="main">${n0(c.r)}</span></td>` +
       `<td><span class="main">${n0(c.beyond)}</span> <span class="muted">${Math.round(100 * c.beyond / Math.max(1, c.r))}%</span>${q ? dm(c.beyond, q.beyond) : ''}</td>` +
@@ -319,11 +322,12 @@ function rpTravel(k, sc) {
   return cmAtYear(rpYear, () => {
     const base = rpBase(sc), d1 = (D.detail[sc] || {})[k] || {}, hs = D.types.SQ[k] === 'HS', nm = esc(rpName(k));
     const vec = (s, kk, b) => { const v = D.commute.S[s]?.[kk]?.[b]; return v ? [...v, D.buscost?.M?.[s]?.[kk]?.[b] ?? null, D.commute.BH?.[s]?.[kk]?.[b] || null] : null; };
-    let h = `<style>.rptrav td { vertical-align: top; } .rptrav td.rph { min-width: 128px; } .rptrav td.rph svg { display: block; margin-top: 2px; } .rptrav tr.rpsub td { background: var(--surface-2); font-size: 12px; color: var(--text-secondary); }</style>` +
+    RP_ROWS = [];
+    let h = `<style>.rptrav td.rph.go { cursor: pointer; } .rptrav td.rph.go:hover svg, .rptrav td.rph.go:focus-visible svg { outline: 2px solid var(--change); outline-offset: 2px; border-radius: 3px; } .rptrav td { vertical-align: top; } .rptrav td.rph { min-width: 128px; } .rptrav td.rph svg { display: block; margin-top: 2px; } .rptrav tr.rpsub td { background: var(--surface-2); font-size: 12px; color: var(--text-secondary); }</style>` +
       `<div class="tablewrap"><table class="rptable rptrav"><thead><tr><th></th><th>Students</th><th>Beyond bus distance</th><th>Walk</th><th>Bike</th><th>Drive</th><th>Bus${hs ? '' : ' (eligible K-8)'}</th></tr></thead><tbody>`;
     if (!d1.closed) {
       const c = cmAgg(sc, [k], 'all'), q = sc === 'SQ' ? null : cmAgg('SQ', [k], 'all');
-      if (c.r) h += rpTravRow(`${nm} students${sc === 'SQ' ? '' : `, ${esc(LABEL[sc])}`}`, c, q, hs);
+      if (c.r) h += rpTravRow(`${nm} students${sc === 'SQ' ? '' : `, ${esc(LABEL[sc])}`}`, c, q, hs, sc);
     }
     // areas the scenario takes away from this school, by the school each block is newly assigned to
     const R = base === 'SQ' ? null : D.commute.R?.[base]?.[k];
@@ -334,15 +338,24 @@ function rpTravel(k, sc) {
       const bus = b !== '912', q = rpAggV([[vec('SQ', k, b), n, bus]]);
       h += `<tr class="rpsub"><td colspan="7">${d1.closed ? `${nm} closes in ${esc(LABEL[base])}` : `${nm}'s ${RP_BL[b]} grades move in ${esc(LABEL[base])}`}: ` +
         `its ${RP_BL[b]} students' area by newly assigned school (Status Quo enrollment; outline and changes: their Status Quo trip to ${nm})</td></tr>`;
-      h += rpTravRow(`All ${RP_BL[b]} students from ${nm}'s area`, rpAggV(Object.values(to).map(v => [v, n * v[0] / tot, bus])), q, !bus);
+      h += rpTravRow(`All ${RP_BL[b]} students from ${nm}'s area`, rpAggV(Object.values(to).map(v => [v, n * v[0] / tot, bus])), q, !bus, base);
       for (const [t, v] of Object.entries(to).sort((x, y) => y[1][0] - x[1][0]))
-        h += rpTravRow(`&rarr; ${rpLink(t, esc(rpName(t)))} <span class="muted">${Math.round(100 * v[0] / tot)}% of the area</span>`, rpAggV([[v, n * v[0] / tot, bus]]), q, !bus);
+        h += rpTravRow(`&rarr; ${rpLink(t, esc(rpName(t)))} <span class="muted">${Math.round(100 * v[0] / tot)}% of the area</span>`, rpAggV([[v, n * v[0] / tot, bus]]), q, !bus, base);
       shown = true;
     }
     if (d1.closed && !shown) h += `<tr><td colspan="7" class="muted">${nm} closes in this custom scenario; see the getting-to-school table for its students' travel to their receiving schools.</td></tr>`;
-    return h + `</tbody></table></div><p class="muted rpnote">Bars: ${esc(LABEL[sc])}; outline: Status Quo. Shaded bars are trips of 15 minutes or less. Students beyond bus distance: K-5 more than 1 mile, 6-12 more than 1.5 miles of walking. Bus: eligible K-8 students' ride (walking miles &times; ${(D.buscost?.ratio || 0).toFixed(1)} &times; ${(D.buscost?.min_per_mile || 0).toFixed(1)} min per bus-mile); high school students get TriMet passes.</p>`;
+    return h + `</tbody></table></div><p class="muted rpnote">Click a chart for the detailed graph and statistics. Bars: ${esc(LABEL[sc])}; outline: Status Quo. Shaded bars are trips of 15 minutes or less. Students beyond bus distance: K-5 more than 1 mile, 6-12 more than 1.5 miles of walking. Bus: eligible K-8 students' ride (walking miles &times; ${(D.buscost?.ratio || 0).toFixed(1)} &times; ${(D.buscost?.min_per_mile || 0).toFixed(1)} min per bus-mile); high school students get TriMet passes.</p>`;
   });
 }
+addEventListener('click', e => {
+  const td = e.target.closest('.rptrav td.rph.go'); if (!td || e.target.closest('a')) return;
+  const r = RP_ROWS[+td.dataset.rr]; if (r) cmOpenPane(r, td.dataset.m);
+});
+addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const td = e.target.closest?.('.rptrav td.rph.go'); if (!td) return;
+  e.preventDefault(); const r = RP_ROWS[+td.dataset.rr]; if (r) cmOpenPane(r, td.dataset.m);
+});
 function rpCosts(k, sc) {
   const c = (D.costs || {})[k], l = (D.land || {})[k], closed = (D.detail[sc] || {})[k]?.closed, bd = D.bond?.schools?.[k];
   if (!c && !l && !bd) return '<p class="muted">No cost estimate for this school.</p>';
@@ -363,11 +376,12 @@ function rpCosts(k, sc) {
   }
   return (closed ? `<p class="rpline"><span class="stag closes">closes in ${esc(LABEL[sc])}</span> these costs are avoided</p>` : '') +
     (c || l ? `<table class="rptable"><tbody>` +
-    (c ? `<tr class="tot"><td>Must-fix</td><td>${v(c.mf)}</td></tr><tr><td>&nbsp;&nbsp;Deferred maintenance (2021 FCI ${c.fci ?? 'n/a'})</td><td>${v(c.dm)}</td></tr>` +
+    (c ? `<tr class="tot"><td>Outstanding repairs</td><td>${v(c.mf)}</td></tr><tr><td>&nbsp;&nbsp;Deferred maintenance (2021 FCI ${c.fci ?? 'n/a'})</td><td>${v(c.dm)}</td></tr>` +
       `<tr><td>&nbsp;&nbsp;Seismic retrofit${c.urm ? ` (URM part ${usdM(c.urm)})` : ''}</td><td>${v(c.se)}</td></tr>` +
-      `<tr class="tot"><td>Full modernization</td><td>${v(c.mod)}</td></tr><tr><td>&nbsp;&nbsp;Building area</td><td>${c.sf ? c.sf.toLocaleString() + ' sq ft' : '&mdash;'}</td></tr>` : '') +
+      `<tr><td>Building area</td><td>${c.sf ? c.sf.toLocaleString() + ' sq ft' : '&mdash;'}</td></tr>` +
+      `<tr><td class="muted">Replacement value, for reference (not a cost)</td><td class="muted">${v(c.mod)}</td></tr>` : '') +
     (l ? `<tr><td>Assessor land value (2025 roll)</td><td>${usdM(l.land)}</td></tr><tr><td>&nbsp;&nbsp;Land + buildings</td><td>${usdM(l.land + l.imp)}</td></tr>` : '') +
-    `</tbody></table><p class="muted rpnote">2026 dollars. Must-fix = deferred maintenance + remaining seismic retrofit (2021 Long-Range Facility Plan; bond work since 2021 is not subtracted); full modernization = replacement value (see Method).</p>` : '') + bond;
+    `</tbody></table><p class="muted rpnote">2026 dollars. Outstanding repairs = deferred maintenance + remaining seismic retrofit (2021 Long-Range Facility Plan; bond work since 2021 is not subtracted). Replacement value is what a new building would cost, shown for reference only (see Method).</p>` : '') + bond;
 }
 
 // boundary map: Status Quo area outlined, scenario area filled, changing parts in gold
