@@ -1,4 +1,6 @@
 """Building, staffing and land costs by region: a "Staffing cost per displaced student" column after School staffing,
+(closed schools only: each closure's net staffing change over its students; regions and the district sum their
+closures; earlier versions also counted boundary and program moves, see displacedOf, now unused here),
 and set column widths for readability.
   region and district rows   the region's staffing cost change against Status Quo (staffing formula, the year set in
                              Staffing impact) divided by its displaced students: students who change school because of
@@ -68,29 +70,28 @@ function displacedOf(keys, yi) {
   }, 0);
 }
 function displacedCell(keys) {
+  // closed schools only: each closure's net staffing change (its Status Quo staffing less what its students add at
+  // the schools they go to) over its students; regions and the district sum their closures
   if (scen === 'SQ') return '<td class="muted dispc">&mdash;</td>';
-  const yi = D.years.indexOf(staffYear), det = D.detail[scen] || {};
+  const yi = D.years.indexOf(staffYear), det = D.detail[scen] || {}, base = scen === 'C' ? custom.base : scen;
   const fm = v => (v < 0 ? '&minus;' : '+') + '$' + Math.round(Math.abs(v)).toLocaleString();
+  const closed = keys.filter(k => det[k]?.closed && D.series.SQ[k]?.[yi]);
   if (keys.length === 1) {
-    const k = keys[0], n = displacedOf(keys, yi);
-    if (n < 0.5) return '<td class="muted dispc"></td>';
-    if (det[k]?.closed) {   // closing school: net of what its students add at the schools they go to
-      const r = closureStaffNet(k, scen === 'C' ? custom.base : scen, yi);
-      if (!r || !r.n) return '<td class="muted dispc">&mdash;</td>';
-      return `<td class="dispc" title="${esc(`Net staffing change of closing ${short(byKey[k].name)}, ${staffYear}: ${fm(r.usd).replace('&minus;', '-')} a year (its Status Quo staffing less what its students add at their new schools), for its ${Math.round(r.n)} students`)}"><span class="main">${fm(r.usd / r.n)}</span><span class="muted" style="display:block;font-size:11px">${Math.round(r.n)} students leave; net of receiving schools</span></td>`;
-    }
-    const d = staffDelta(keys);
-    return `<td class="dispc" title="${esc(`${short(byKey[k].name)}, ${staffYear}: about ${Math.round(n)} of its Status Quo students change school (boundary, grade or program moves); its staffing change ${fm(d.usd).replace('&minus;', '-')} a year`)}"><span class="main">${fm(d.usd / n)}</span><span class="muted" style="display:block;font-size:11px">${Math.round(n)} students leave</span></td>`;
+    if (!closed.length) return '<td class="muted dispc"></td>';
+    const r = closureStaffNet(keys[0], base, yi);
+    if (!r || !r.n) return '<td class="muted dispc">&mdash;</td>';
+    return `<td class="dispc" title="${esc(`Net staffing change of closing ${short(byKey[keys[0]].name)}, ${staffYear}: ${fm(r.usd).replace('&minus;', '-')} a year (its Status Quo staffing less what its students add at their new schools), for its ${Math.round(r.n)} students`)}"><span class="main">${fm(r.usd / r.n)}</span><span class="muted" style="display:block;font-size:11px">${Math.round(r.n)} students; net of receiving schools</span></td>`;
   }
-  const n = displacedOf(keys, yi);
-  if (n < 0.5) return '<td class="muted dispc">none</td>';
-  const d = staffDelta(keys), tot = keys.reduce((a, k) => a + (D.series.SQ[k]?.[yi] || 0), 0);
-  return `<td class="dispc" title="${esc(`${staffYear}: staffing change ${fm(d.usd).replace('&minus;', '-')} a year against Status Quo, divided by about ${Math.round(n).toLocaleString()} students who change school (closures, boundary changes and program or grade moves). That is ${Math.round(100 * n / tot)}% of ${Math.round(tot).toLocaleString()} Status Quo students${keys.length === Object.keys(D.region_of).length && D.endpoints.District[scen]?.change != null ? `; PPS reports ${D.endpoints.District[scen].change}% of students changing schools by its own count (2031-32), so this per-student figure is on the high side` : ''}.`)}"><span class="main">${fm(d.usd / n)}</span>` +
-    `<span class="muted" style="display:block;font-size:11px">${Math.round(n).toLocaleString()} students change school (${Math.round(100 * n / tot)}%)</span></td>`;
+  if (!closed.length) return '<td class="muted dispc">no closures</td>';
+  let usd = 0, n = 0;
+  for (const k of closed) { const r = closureStaffNet(k, base, yi); if (r) { usd += r.usd; n += r.n; } }
+  if (!n) return '<td class="muted dispc">&mdash;</td>';
+  return `<td class="dispc" title="${esc(`${staffYear}: the ${closed.length} closing school${closed.length === 1 ? '' : 's'}' net staffing change, ${fm(usd).replace('&minus;', '-')} a year (their Status Quo staffing less what their students add at receiving schools), over their ${Math.round(n).toLocaleString()} students`)}"><span class="main">${fm(usd / n)}</span>` +
+    `<span class="muted" style="display:block;font-size:11px">${Math.round(n).toLocaleString()} students at ${closed.length} closing school${closed.length === 1 ? '' : 's'}</span></td>`;
 }
 function renderBuildings() {""")
     rep("""    `<th>Land value (assessor)<br><span style="font-weight:400">${isSQ ? 'all sites' : 'sites closed'}; land, and land + buildings</span></th></tr></thead><tbody>`;""",
-        """    `<th class="dispc">Staffing cost per displaced student<br><span style="font-weight:400">a year: staffing change &divide; students who change school (closures, boundaries, program moves)</span></th>` +
+        """    `<th class="dispc">Staffing cost per displaced student<br><span style="font-weight:400">closed schools, a year: net staffing change &divide; their students</span></th>` +
     `<th>Land value (assessor)<br><span style="font-weight:400">${isSQ ? 'all sites' : 'sites closed'}; land, and land + buildings</span></th></tr></thead><tbody>`;""")
     rep("""+ bondCell(keys) + staffCell(keys) + landCell(keys) + '</tr>';""", """+ bondCell(keys) + staffCell(keys) + displacedCell(keys) + landCell(keys) + '</tr>';""")
     rep("""+ bondCell([k], closed) + staffCell([k]) + landCell([k]) + '</tr>';""", """+ bondCell([k], closed) + staffCell([k]) + displacedCell([k]) + landCell([k]) + '</tr>';""")
