@@ -12,7 +12,7 @@ html = open(PAGE, encoding='utf-8').read()
 m = re.search(r'const D = (\{.*?\});\nconst esc', html, re.S)
 D = json.loads(m.group(1))
 D['staff_actual'] = {k: S[k] for k in ('source', 'years', 'budget_year', 'district', 'reports', 'not_on_explorer')}
-D['staff_actual']['schools'] = {k: {f: v[f] for f in ('teachers', 'admin', 'clerical')} for k, v in S['schools'].items()}
+D['staff_actual']['schools'] = {k: {f: v.get(f) for f in ('teachers', 'admin', 'clerical', 'gf_fte', 'alloc_fte', 'salaries', 'payroll')} for k, v in S['schools'].items()}
 html = html[:m.start(1)] + json.dumps(D, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + html[m.end(1):]
 
 def rep(a, b):

@@ -5,6 +5,9 @@ school-allocated FTE by position for 2021-22 to 2025-26 (actual) and 2026-27 (bu
 education). 1.00 FTE = 40 hours a week in these reports.
 Schools are matched to the explorer's keys; program schools the explorer does not model (ACCESS, Alliance, Benson,
 da Vinci, Metropolitan Learning Center, ...) count in the district totals only.
+Also each school's FTE by funding source (General Fund rows and the school-allocated total) and its school financial data
+(salaries and associated payroll costs, all school-allocated funds: General Fund, Equity, Foundation, Title I, grants;
+2021-22 to 2024-25 actual, 2025-26 estimated, 2026-27 budget).
 Input: archive/budget/2026-27ProposedBudget-Volume2.pdf
 Output: source/staffing/school-staff-budget.json
 """
@@ -43,7 +46,34 @@ for i, p in enumerate(d):
     st = sorted([w for w in W if w[4] == 'Total' and w[0] < 125 and sy < w[1] < end
                  and any(x[4] == 'School' and abs(x[1] - w[1]) < 2 and x[0] < w[0] for x in W)], key=lambda w: w[1])
     if st: rec['school_total'] = vals(st[0][1])
-    title = ' '.join(w[4] for w in sorted([w for w in W if w[1] < 60 and w[0] < 200], key=lambda w: (round(w[1]), w[0])))
+    # FTE by funding source (school-allocated): the General Fund rows ("Gen Fund", "Gen Fund Equity", "Gen Fund K-5 Arts")
+    fs = sorted([w for w in W if w[4] == 'Funding' and 130 < w[0] < 150 and w[1] > sy], key=lambda w: w[1])
+    if fs:
+        fy = fs[0][1]
+        fend = min([w[1] for w in W if w[4] == 'Total' and w[0] < 125 and w[1] > fy] or [9e9])
+        gens = [w for w in W if w[4] == 'Gen' and 130 < w[0] < 145 and fy < w[1] < fend]
+        gf = [0.0] * 6
+        for w in gens:
+            for j, v in enumerate(vals(w[1])): gf[j] += v or 0
+        rec['gf_fte'] = [round(v, 2) for v in gf]
+        rec['alloc_fte'] = vals(fend)
+    # school financial data (next page): salaries and associated payroll costs, all school-allocated funds
+    if i + 1 < len(d):
+        W2 = d[i + 1].get_text('words')
+        h2 = sorted([w for w in W2 if w[4] in YRS and w[1] < 140], key=lambda w: w[0])
+        if len(h2) == 6:
+            hx2 = [w[2] for w in h2]
+            def money(y):
+                v = [None] * 6
+                for w in W2:
+                    if abs(w[1] - y) < 2.5 and re.fullmatch(r'[\d,]+', w[4]) and w[0] > 195:
+                        j = min(range(6), key=lambda j: abs(w[2] - hx2[j]))
+                        if abs(w[2] - hx2[j]) < 15: v[j] = float(w[4].replace(',', ''))
+                return v
+            for lab, key in (('Salaries', 'salaries'), ('Associated', 'payroll'), ('Total', 'fin_total')):
+                c = sorted([w for w in W2 if w[4] == lab and w[0] < 95 and w[1] < 260], key=lambda w: w[1])
+                if c: rec[key] = money(c[0][1])
+    title =' '.join(w[4] for w in sorted([w for w in W if w[1] < 60 and w[0] < 200], key=lambda w: (round(w[1]), w[0])))
     schools[title] = dict(page=i + 1, **rec)
 print(f'{len(schools)} school reports')
 
@@ -67,7 +97,7 @@ J = dict(source='PPS 2026-27 Proposed Budget, Volume 2, Individual School Report
          years=YRS, actual_years=YRS[:5], budget_year=YRS[5],
          district={f: [total(schools, f, j) for j in range(6)] for f in ('teachers', 'admin', 'clerical', 'school_total')},
          reports=len(schools), not_on_explorer=unused,
-         schools={k: {f: schools[t].get(f) for f in ('teachers', 'admin', 'clerical', 'school_total')} | dict(report=t, page=schools[t]['page']) for k, t in match.items()})
+         schools={k: {f: schools[t].get(f) for f in ('teachers', 'admin', 'clerical', 'school_total', 'gf_fte', 'alloc_fte', 'salaries', 'payroll', 'fin_total')} | dict(report=t, page=schools[t]['page']) for k, t in match.items()})
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 json.dump(J, open(OUT, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
 for f, v in J['district'].items(): print(f, dict(zip(YRS, v)))

@@ -215,6 +215,30 @@ function rpPat(k, sc, yi) {
   o.extra = o.extraK5 + o.extra68 + o.extra912;
   return o;
 }
+// actual staffing spending from PPS's budget school reports (D.staff_actual): salaries + associated payroll costs of the
+// school-allocated funds, the General Fund share estimated by its share of the school-allocated FTE, against this page's
+// formula for the same school (Status Quo)
+function rpActualStaff(k) {
+  const sa = D.staff_actual?.schools?.[k]; if (!sa?.salaries) return '';
+  const Y = D.staff_actual.years, cols = [3, 4, 5], lab = ['actual', 'estimated', 'budget'];
+  const usd = v => v == null ? '&mdash;' : '$' + (v / 1e6).toFixed(2) + 'M', per = v => v == null ? '&mdash;' : '$' + Math.round(v).toLocaleString();
+  const all = i => sa.salaries[i] == null ? null : sa.salaries[i] + (sa.payroll?.[i] || 0);
+  const gfShare = i => sa.alloc_fte?.[i] ? sa.gf_fte[i] / sa.alloc_fte[i] : null;
+  const gf = i => all(i) != null && gfShare(i) != null ? all(i) * gfShare(i) : null;
+  const yIdx = i => D.years.indexOf(Y[i]), enr = i => yIdx(i) >= 0 ? D.series.SQ[k]?.[yIdx(i)] : null;
+  const form = i => { const yi = yIdx(i); if (yi < 0) return null; const r = schoolFTE(k, 'SQ', yi); return r ? staffCost(r) : null; };
+  const row = (l, f, cls = '') => `<tr${cls ? ` class="${cls}"` : ''}><td>${l}</td>${cols.map(i => `<td>${f(i)}</td>`).join('')}</tr>`;
+  return `<h4>Actual staffing spending compared (PPS budget school report)</h4><table class="rptable"><thead><tr><th></th>` +
+    cols.map((i, j) => `<th>${Y[i]}<br><span style="font-weight:400">${lab[j]}</span></th>`).join('') + '</tr></thead><tbody>' +
+    row('Staffing spending, all school funds (salaries + payroll costs)', i => usd(all(i)), 'tot') +
+    row('&nbsp;&nbsp;General Fund share (est., by its share of FTE)', i => gf(i) == null ? '&mdash;' : `${usd(gf(i))} <span class="muted">(${Math.round(100 * gfShare(i))}%, ${sa.gf_fte[i]} of ${sa.alloc_fte[i]} FTE)</span>`) +
+    row("This page's formula, Status Quo", i => usd(form(i))) +
+    row('Students', i => enr(i) == null ? '&mdash;' : Math.round(enr(i)).toLocaleString()) +
+    row('Per student: all school funds', i => enr(i) ? per(all(i) / enr(i)) : '&mdash;') +
+    row('Per student: General Fund (est.)', i => enr(i) && gf(i) != null ? per(gf(i) / enr(i)) : '&mdash;') +
+    row('Per student: formula', i => enr(i) && form(i) != null ? per(form(i) / enr(i)) : '&mdash;') +
+    `</tbody></table><p class="muted rpnote">From PPS's 2026-27 Proposed Budget, Volume 2 (this school's report): salaries and associated payroll costs of the school-allocated funds (General Fund, Equity, Foundation, Title I and other grants; centrally allocated special education, ESL, nutrition and custodial staff are not included). The General Fund share is estimated from the share of the school's FTE that the General Fund pays for (Gen Fund, Equity and K-5 Arts rows). The formula is this page's estimate from PPS's staffing formula at average salaries; it leaves out Title I, SIA, Measure 98, grant and discretionary positions.</p>`;
+}
 function rpStaff(k, sc) {
   const yi = D.years.indexOf(rpYear), cols = rpCols(sc);
   const F = Object.fromEntries(cols.map(s => [s, (D.series[s] || {})[k] ? schoolFTE(k, s, yi) : null]));
@@ -261,7 +285,7 @@ function rpStaff(k, sc) {
   const grade = !pg || !pg.grades.length ? '' : `<h4>K-5 classes, ${esc(LABEL[P[sc] ? sc : 'SQ'])}${rpMark(k, P[sc] ? sc : 'SQ')}</h4><table class="rptable sm"><thead><tr><th>Grade</th><th>Students</th><th>Homerooms</th><th>Largest class</th><th>PAT threshold</th><th>Over</th></tr></thead><tbody>` +
     pg.grades.map(g => `<tr><td>${g.g}</td><td>${g.n}</td><td>${g.h}</td><td>${g.max}</td><td>${g.thr}</td><td${g.over ? ' class="over"' : ''}>${g.over || ''}</td></tr>`).join('') + '</tbody></table>';
   return `<table class="rptable"><thead><tr><th>${rpYear}</th>${cols.map(s => `<th${s === sc ? ' class="cur"' : ''}>${esc(LABEL[s])}${rpMark(k, s)}</th>`).join('')}</tr></thead><tbody>${rows}` +
-    `<tr><td>Staffing cost</td>${cols.map(cost).join('')}</tr></tbody></table>` +
+    `<tr><td>Staffing cost</td>${cols.map(cost).join('')}</tr></tbody></table>` + rpActualStaff(k) +
     `<h4>Under the PAT thresholds (K over 24, grades 1-3 over 26, 4-5 over 28; 6-8 over ${PAT_MS} and 9-12 over ${PAT_HS} students a day)</h4>` +
     cols.map(s => `<p class="rpline${s === sc ? ' cur' : ''}">${esc(LABEL[s])}${rpMark(k, s)}: ${pat(P[s])}</p>`).join('') + grade +
     `<p class="muted rpnote">Budget formula FTE: PPS 2026-27 adopted staffing formula at its largest class sizes. "More FTE to stay under" adds the homeroom teachers needed to keep every K-5 class at or under its PAT threshold, and the 6-8 and 9-12 teachers needed to keep daily student loads at or under ${PAT_MS} and ${PAT_HS}.` +
