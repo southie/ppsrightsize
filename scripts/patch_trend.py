@@ -21,7 +21,7 @@ def rep(a, b):
 if 'function renderTrend' not in html:
     rep("""  <section class="card">
     <h2>Building, staffing and land costs by region</h2>""", """  <section class="card">
-    <h2>Small schools and staffing cost over time</h2>
+    <h2>Small schools and staffing cost over time - How much does it cost to wait?</h2>
     <p class="sub">Schools below their size threshold each year (K-5 under 360 students, K-8 and middle under 500, high under 1,100), from this page's enrollment projection, as a count and a share of that scenario's open schools; and cumulative school staffing cost compared with Status Quo under PPS's staffing formula (salary + benefits, 2026-27 dollars; class sizes as set in Staffing impact), summed from ${D.years[0]}; below zero is savings. The scenarios take effect in ${D.impl_year}; before that they match Status Quo. Hover a point for the values.</p>
     <div id="trend"></div>
   </section>
