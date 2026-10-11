@@ -142,7 +142,7 @@ adjBox.onchange = () => { try { localStorage.setItem('rsAdj', adjBox.checked ? '
     # district cards: mark measures that differ from PPS's published values
     rep("""    return `<div class="kpi"><div class="v">${cur[k]}${u}${dt}</div><div class="l">District, 2031-32: ${l}</div></div>`;""",
         """    const at = scen === 'A' || scen === 'B' ? adjTip('District', scen, k) : '';
-    return `<div class="kpi${at ? ' adjd' : ''}"${at ? ` data-adjtip="${esc(at)}"` : ''}><div class="v">${cur[k]}${u}${dt}${at ? `<span class="adjm" title="${esc(at)}">&#9670;</span>` : ''}</div><div class="l">District, 2031-32: ${l}</div></div>`;""")
+    return `<div class="kpi${at ? ' adjd' : ''}"${at ? ` data-adjtip="${esc(at)}"` : ''}><div class="v">${cur[k]}${u}${dt}${at ? `<span class="adjm" title="${esc(at)}">&#9670;</span>` : ''}<span class="vt">${l}</span></div><div class="l">District, 2031-32</div></div>`;""")
     # region table: measures and the district change cell
     rep("""      h += `<td>${cell}</td>`;
     }

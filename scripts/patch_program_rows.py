@@ -60,7 +60,7 @@ function cmCells(c, q, row) {""")
         h += `<tr class="srow prog"><td>${nm}</td><td><span class="main">${cmN(pg.n)}</span></td><td colspan="8" style="text-align:left"><span class="stag other">Program school</span> ` +
           `<span class="muted">no neighborhood attendance area for these grades, so where its students live is not known; not in the distance or bus figures. ` +
           `${nr ? `${nr} general bus run${nr === 1 ? '' : 's'} on PPS's posted routes` : 'No general bus routes on PPS\\'s posted schedules'}` +
-          `${q.r ? ` (Status Quo: ${cmN(q.r)} neighborhood students, ${cmN(q.beyond)} beyond bus distance)` : ''}.</span></td></tr>`;
+          `${q.r ? ` (Status Quo: ${cmN(q.r)} neighborhood students, ${cmN(q.beyond)} eligible for bus service)` : ''}.</span></td></tr>`;
         continue;
       }
       if (closed || !c.r) {

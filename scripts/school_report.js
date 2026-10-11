@@ -93,9 +93,9 @@ function rpFlow(k, sc) {
     for (const r of fl.receivers) {
       if (r.adj) continue;   // the modified enrollment model's own moves are listed below with their estimate
       const sh = r.share != null ? ` (${rpPct(r.share)})` : '';
-      if (r.to_key === k) rpAdd(inn, r.from_key, 'sc', `${det[r.from_key]?.closed ? 'closes; ' : ''}${r.group}${sh}`);
+      if (r.to_key === k) rpAdd(inn, r.from_key, 'sc', `${r.group}${sh}`);   // a closing origin already shows a "Closed" badge
       if (r.from_key === k) {
-        if (det[k]?.closed) rpAdd(next, r.to_key, 'sc', `closes; ${r.group}${sh}`);
+        if (det[k]?.closed) rpAdd(next, r.to_key, 'sc', `${r.group}${sh}`);
         else rpAdd(out, r.to_key, 'sc', `Receiving share: ${r.group}${sh}`);
       }
     }
@@ -270,7 +270,7 @@ function rpStaff(k, sc) {
 }
 // costs and land
 // ---------- getting to school ----------
-// The school's students in the report year: students beyond bus distance and walk / bike / drive / bus time histograms
+// The school's students in the report year: students eligible for bus service and walk / bike / drive / bus time histograms
 // (bars: the scenario; outline: Status Quo). For an area the scenario takes away from the school (a closure, or a K-8's
 // 6-8 grades), its students by their newly assigned school (D.commute.R, scripts/build_closure_access.py), against
 // those students' Status Quo trips to this school. Uses the getting-to-school table's helpers (cmAgg, cmHist).
@@ -324,7 +324,7 @@ function rpTravel(k, sc) {
     const vec = (s, kk, b) => { const v = D.commute.S[s]?.[kk]?.[b]; return v ? [...v, D.buscost?.M?.[s]?.[kk]?.[b] ?? null, D.commute.BH?.[s]?.[kk]?.[b] || null] : null; };
     RP_ROWS = [];
     let h = `<style>.rptrav td.rph.go { cursor: pointer; } .rptrav td.rph.go:hover svg, .rptrav td.rph.go:focus-visible svg { outline: 2px solid var(--change); outline-offset: 2px; border-radius: 3px; } .rptrav td { vertical-align: top; } .rptrav td.rph { min-width: 128px; } .rptrav td.rph svg { display: block; margin-top: 2px; } .rptrav tr.rpsub td { background: var(--surface-2); font-size: 12px; color: var(--text-secondary); }</style>` +
-      `<div class="tablewrap"><table class="rptable rptrav"><thead><tr><th></th><th>Students</th><th>Beyond bus distance</th><th>Walk</th><th>Bike</th><th>Drive</th><th>Bus${hs ? '' : ' (eligible K-8)'}</th></tr></thead><tbody>`;
+      `<div class="tablewrap"><table class="rptable rptrav"><thead><tr><th></th><th>Students</th><th>Eligible for bus service</th><th>Walk</th><th>Bike</th><th>Drive</th><th>Bus${hs ? '' : ' (eligible K-8)'}</th></tr></thead><tbody>`;
     if (!d1.closed) {
       const c = cmAgg(sc, [k], 'all'), q = sc === 'SQ' ? null : cmAgg('SQ', [k], 'all');
       if (c.r) h += rpTravRow(`${nm} students${sc === 'SQ' ? '' : `, ${esc(LABEL[sc])}`}`, c, q, hs, sc);
@@ -344,7 +344,7 @@ function rpTravel(k, sc) {
       shown = true;
     }
     if (d1.closed && !shown) h += `<tr><td colspan="7" class="muted">${nm} closes in this custom scenario; see the getting-to-school table for its students' travel to their receiving schools.</td></tr>`;
-    return h + `</tbody></table></div><p class="muted rpnote">Click a chart for the detailed graph and statistics. Bars: ${esc(LABEL[sc])}; outline: Status Quo. Shaded bars are trips of 15 minutes or less. Students beyond bus distance: K-5 more than 1 mile, 6-12 more than 1.5 miles of walking. Bus: eligible K-8 students' ride (walking miles &times; ${(D.buscost?.ratio || 0).toFixed(1)} &times; ${(D.buscost?.min_per_mile || 0).toFixed(1)} min per bus-mile); high school students get TriMet passes.</p>`;
+    return h + `</tbody></table></div><p class="muted rpnote">Click a chart for the detailed graph and statistics. Bars: ${esc(LABEL[sc])}; outline: Status Quo. Shaded bars are trips of 15 minutes or less. Students eligible for bus service: K-5 more than 1 mile, 6-12 more than 1.5 miles of walking. Bus: eligible K-8 students' ride (walking miles &times; ${(D.buscost?.ratio || 0).toFixed(1)} &times; ${(D.buscost?.min_per_mile || 0).toFixed(1)} min per bus-mile); high school students get TriMet passes.</p>`;
   });
 }
 addEventListener('click', e => {

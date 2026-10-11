@@ -79,7 +79,7 @@ if "bus: ['Bus', 'busmin']" not in html:
     [m === 'bus' ? 'Bus-eligible students' : 'Students', cmN(nOf(c)), qs ? cmN(nOf(q)) : '', qs ? cmDelta(nOf(c) - nOf(q), '', 0, true) : ''],""")
     rep("""Mean is exact; median and percentiles are interpolated within the time bands shown. ${CM_MODE[m][0]} times are along the OpenStreetMap network at ${m === 'walk' ? D.commute.walk_mph + ' mph' : m === 'bike' ? D.commute.bike_mph + ' mph' : 'free-flow speeds (no traffic)'}.</p></div>`;""",
         """Mean is exact; median and percentiles are interpolated within the time bands shown. ` +
-    (m === 'bus' ? `Bus ride: K-8 students beyond bus distance only (K-5 over 1 mile, 6-8 over 1.5 miles), one way. Estimated as their walking distance &times; ${D.buscost.ratio.toFixed(1)} (buses wind past other stops; measured on PPS's posted routes) &times; ${D.buscost.min_per_mile.toFixed(1)} minutes per bus-mile (scheduled times from each stop to the school's loading zone on ${D.buscost.ride_stops.toLocaleString()} stops).`
+    (m === 'bus' ? `Bus ride: K-8 students eligible for bus service only (K-5 over 1 mile, 6-8 over 1.5 miles), one way. Estimated as their walking distance &times; ${D.buscost.ratio.toFixed(1)} (buses wind past other stops; measured on PPS's posted routes) &times; ${D.buscost.min_per_mile.toFixed(1)} minutes per bus-mile (scheduled times from each stop to the school's loading zone on ${D.buscost.ride_stops.toLocaleString()} stops).`
       : `${CM_MODE[m][0]} times are along the OpenStreetMap network at ${m === 'walk' ? D.commute.walk_mph + ' mph' : m === 'bike' ? D.commute.bike_mph + ' mph' : 'free-flow speeds (no traffic)'}.`) + `</p></div>`;""")
 
     # ---- summary card: average ride in the first year ----

@@ -26,14 +26,14 @@ function busKPI() {
     const rq = cmAgg('SQ', keys, 'all');
     return `<div class="kpi"><div class="v">${bcM((BC.gt[0] + BC.gt[1]) / 2)}<span class="d" style="color:var(--text-muted)">a year</span></div>` +
       `<div class="l">General yellow-bus routes (est.; home-to-school, 2026-27 budget)</div>` +
-      `<div class="s">Range: ${bcRange(...BC.gt)} a year<br>${cmN(rq.be8)} K-8 students beyond bus distance, ${cmYear}<br>` +
+      `<div class="s">Range: ${bcRange(...BC.gt)} a year<br>${cmN(rq.be8)} K-8 students eligible for bus service, ${cmYear}<br>` +
       `Average bus ride, eligible K-8: <b>${rq.busmin.toFixed(0)} min</b> one way <span class="pcs">at ${K}</span><br>` +
       `${bcD(BC.box.low)}&ndash;${bcD(BC.box.high)} a year per daily student-mile</div></div>`;
   }
   const s = cmAtYear(D.impl_year, busScen), save = s.hi < 0;
   const rc = cmAtYear(D.impl_year, () => cmAgg(scen, keys, 'all')), rq = cmAtYear(D.impl_year, () => cmAgg('SQ', keys, 'all'));
   const dm = rc.busmin - rq.busmin;
-  let sub = `Range: ${bcMoney(s.lo, s.hi)} a year<br>K-8 students beyond bus distance: <b>${s.d_elig >= 0 ? '+' : '&minus;'}${cmN(Math.abs(s.d_elig))}</b> <span class="pcs">(${cmN(rc.be8)} in all)</span>`;
+  let sub = `Range: ${bcMoney(s.lo, s.hi)} a year<br>K-8 students eligible for bus service: <b>${s.d_elig >= 0 ? '+' : '&minus;'}${cmN(Math.abs(s.d_elig))}</b> <span class="pcs">(${cmN(rc.be8)} in all)</span>`;
   if (cmYear !== D.impl_year) { const t = busScen(); sub += `<br>${cmYear}: <b>${bcMoney(t.lo, t.hi)}</b> a year`; }
   sub += `<br>Average bus ride, eligible K-8: <b>${rc.busmin.toFixed(0)} min</b> one way` +
     (Math.abs(dm) >= 0.05 ? ` <span class="pcs">(${dm > 0 ? '+' : '&minus;'}${Math.abs(dm).toFixed(1)} min)</span>` : '') + ` <span class="pcs">at ${K}</span>`;

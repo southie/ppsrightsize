@@ -88,7 +88,7 @@ function busLine() {
   if (scen === 'SQ') return `<br>General yellow-bus routes: about <b>${bcRange(...BC.gt)}</b> a year (est.)`;
   const s = cmAtYear(D.impl_year, busScen), more = s.d_elig >= 0;
   let h = `<br>Added yellow-bus cost in ${D.impl_year}, the first year: <b>${bcRange(s.lo, s.hi)}</b> a year (est.; ` +
-    `${cmN(Math.abs(s.d_elig))} ${more ? 'more' : 'fewer'} K-8 students beyond bus distance)`;
+    `${cmN(Math.abs(s.d_elig))} ${more ? 'more' : 'fewer'} K-8 students eligible for bus service)`;
   if (cmYear !== D.impl_year) { const t = busScen(); h += `<br><span class="pcs">${cmYear}: ${bcRange(t.lo, t.hi)} a year</span>`; }
   return h;
 }
@@ -156,8 +156,8 @@ if 'function cmBus' not in html:
     rep("""  if (!c.r) return '<td class="muted">&mdash;</td>'.repeat(7);""", """  if (!c.r) return '<td class="muted">&mdash;</td>'.repeat(9);""")
     rep("""    `<td class="reach">${w15}</td>` + cmHist(c, q, 'walk')""", """    cmBus(c, q) + `<td class="reach">${w15}</td>` + cmHist(c, q, 'walk')""")
     rep("""<td colspan="7" style="text-align:left">""", """<td colspan="9" style="text-align:left">""")
-    rep("""    `<th>Beyond bus distance<br><span style="font-weight:400">(walking route, ${thr})</span></th>` +""",
-        """    `<th>Beyond bus distance<br><span style="font-weight:400">(walking route, ${thr})</span></th>` +
+    rep("""    `<th>Eligible for bus service<br><span style="font-weight:400">(walking route, ${thr})</span></th>` +""",
+        """    `<th>Eligible for bus service<br><span style="font-weight:400">(walking route, ${thr})</span></th>` +
     `<th>Bus student-miles a day<br><span style="font-weight:400">(eligible K-8 students, est.)</span></th>` +
     `<th>Yellow-bus cost a year<br><span style="font-weight:400">(est., ${bcD(BC.box.central)} per daily student-mile)</span></th>` +""")
     rep("function renderBusCost() {", r"""// bus columns of the getting-to-school table: student-miles a school day = eligible K-8 students' walking miles x

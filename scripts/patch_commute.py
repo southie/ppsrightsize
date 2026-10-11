@@ -70,7 +70,7 @@ if 'function renderCommute' not in html:
     <h2>Staffing impact: positions no longer needed</h2>""",
 """  <section class="card">
     <h2>Getting to school: walk, bike and drive times, and bus distance</h2>
-    <p class="sub">For each school's students, the walking, biking and driving route from home to school over the OpenStreetMap street and path network. <b>Students</b> are the school's enrollment in the selected year (this page's projection; K-8 schools split into K-5 and 6-8 by the district's K-5 share). <b>Where they live</b>, and so the share beyond bus distance, travel times and their spread, comes from the 2020 Census school-age residents of the school's attendance area. <b>Beyond bus distance</b> counts students who live farther than Oregon's state-reimbursed transportation distances (ORS 327.043) by walking route: more than 1 mile for K-5, more than 1.5 miles for grades 6-12. PPS gives high school students TriMet passes rather than yellow buses, so 9-12 counts are students who would need transit. Under a scenario, changes are against Status Quo in the same year.</p>
+    <p class="sub">For each school's students, the walking, biking and driving route from home to school over the OpenStreetMap street and path network. <b>Students</b> are the school's enrollment in the selected year (this page's projection; K-8 schools split into K-5 and 6-8 by the district's K-5 share). <b>Where they live</b>, and so the share beyond bus distance, travel times and their spread, comes from the 2020 Census school-age residents of the school's attendance area. <b>Eligible for bus service</b> counts students who live farther than Oregon's state-reimbursed transportation distances (ORS 327.043) by walking route: more than 1 mile for K-5, more than 1.5 miles for grades 6-12. PPS gives high school students TriMet passes rather than yellow buses, so 9-12 counts are students who would need transit. Under a scenario, changes are against Status Quo in the same year.</p>
     <div class="controls"><label>Grades <select id="cm-band"></select></label><label>Year <select id="cm-year"></select></label></div>
     <p class="sub" id="commutesum"></p>
     <div class="tablewrap" id="commute"></div>
@@ -170,7 +170,7 @@ function commuteKPI() {
     return `${l}: <b>${cmN(x.beyond)}</b> <span class="pcs">(${cmP(x.beyond / x.r)}${!isSQ && Math.round(dd) ? `, ${dd > 0 ? '+' : '&minus;'}${cmN(Math.abs(dd))}` : ''})</span>`; };
   const wd = Math.round(100 * c.w15) - Math.round(100 * q.w15);
   return `<div class="kpi"><div class="v">${cmN(c.beyond)}${isSQ || !Math.round(d) ? '' : `<span class="d" style="color:${d > 0 ? 'var(--down)' : 'var(--up)'}">${d > 0 ? '+' : '&minus;'}${cmN(Math.abs(d))} vs SQ</span>`}</div>` +
-    `<div class="l">Students beyond bus distance from their school, ${cmYear} (walking route: K-5 over ${B.k5} mile, 6-12 over ${B['912']} miles)</div>` +
+    `<div class="l">Students eligible for bus service from their school, ${cmYear} (walking route: K-5 over ${B.k5} mile, 6-12 over ${B['912']} miles)</div>` +
     `<div class="s">${line('k5', 'K-5')}<br>${line('68', '6-8')}<br>${line('912', '9-12 (TriMet)')}<br>` +
     `Within a 15-minute walk: <b>${cmP(c.w15)}</b>${isSQ || !wd ? '' : ` <span class="pcs">(${wd > 0 ? '+' : '&minus;'}${Math.abs(wd)} pts)</span>`}</div></div>`;
 }
@@ -191,7 +191,7 @@ function renderCommute() {
   const keysOf = rn => Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn);
   const B = D.commute.bus, thr = cmBand === 'all' ? `K-5 over ${B.k5} mi, 6-12 over ${B['912']} mi` : `over ${B[cmBand]} ${B[cmBand] === 1 ? 'mile' : 'miles'}`;
   let h = `<table class="commutetable"><thead><tr><th>Region</th><th>Students<br><span style="font-weight:400">(${cmYear} enrollment, ${cmYear === D.years[0] ? 'actual' : 'projected'})</span></th>` +
-    `<th>Beyond bus distance<br><span style="font-weight:400">(walking route, ${thr})</span></th>` +
+    `<th>Eligible for bus service<br><span style="font-weight:400">(walking route, ${thr})</span></th>` +
     `<th>Within 15 min of school<br><span style="font-weight:400">(share of students${scen === 'SQ' ? '' : '; change vs SQ in pts'})</span></th>` +
     ['Walk', 'Bike', 'Drive'].map(l => `<th>${l} time<br><span style="font-weight:400">(minutes)</span></th>`).join('') +
     `<th>Assigned school is their nearest</th></tr></thead><tbody>`;
@@ -205,7 +205,7 @@ function renderCommute() {
       const nm = `<span class="nm">${esc(short(byKey[k].name))}</span><span class="ty">${TYPE_LABEL[(!closed && D.detail[scen]?.[k]?.type) || D.detail.SQ[k].type]}</span>`;
       if (closed || !c.r) {
         h += `<tr class="srow closed"><td>${nm}</td><td colspan="7" style="text-align:left">${closed ? '<span class="stag closes">Closes</span> ' : ''}<span class="muted">` +
-          `${closed ? 'its students are assigned to other schools' : 'no students in these grades in this scenario'}${q.r ? ` (Status Quo: ${cmN(q.r)} students, ${cmN(q.beyond)} beyond bus distance)` : ''}</span></td></tr>`;
+          `${closed ? 'its students are assigned to other schools' : 'no students in these grades in this scenario'}${q.r ? ` (Status Quo: ${cmN(q.r)} students, ${cmN(q.beyond)} eligible for bus service)` : ''}</span></td></tr>`;
         continue;
       }
       h += `<tr class="srow"><td>${nm}</td>${cmCells(c, scen === 'SQ' ? null : (q.r ? q : null))}</tr>`;
