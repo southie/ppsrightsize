@@ -496,7 +496,7 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
   </section>
 
   <section class="card">
-    <h2>Staffing impact: positions no longer needed</h2>
+    <h2>Staffing impact: consolidated positions</h2>
     <p class="sub">Applies PPS's 2026-27 school staffing formula (Adopted Budget, Volume 1, pp. 232-238) to every school's projected enrollment under the selected scenario and under Status Quo in the same year; the difference is positions the formula no longer funds. K-5 homerooms are counted grade by grade from each school's 2025-26 grade mix, so they capture students filling open seats at receiving schools. Counts are licensed-equivalent FTE (an administrative assistant counts as half). Positions funded by equity, Title I, special education, multilingual, Measure 98 and grants, which largely follow students, are excluded. Whether reductions become layoffs, reassignments or attrition is PPS's decision. Costs use 2026-27 General Fund salary per budgeted FTE by employee type plus associated payroll costs (pension, FICA, health and other benefits, about 56% of salaries; Adopted Budget p. 105): about $159k per licensed FTE (matching the roughly $159.5k per formula FTE implied by PPS's October 6 board slide 7), $265k per principal or assistant/vice principal, and $81k per administrative assistant. They are averages in 2026-27 dollars, without raises or cost escalation, and exclude custodial, utilities and other building operating costs.</p>
     <p class="sub" id="staffsum"></p>
     <div id="staffing"></div>
@@ -732,14 +732,14 @@ function extraKPIs() {
   const delta = (d, unit, worseUp) => scen === 'SQ' || !d ? '' :
     `<span class="d" style="color:${(worseUp ? d < 0 : d > 0) ? 'var(--up)' : 'var(--down)'}">${d > 0 ? '+' : '&minus;'}${Math.abs(d)}${unit}</span>`;
   const ov = overSchoolYears(scen), ovSq = overSchoolYears('SQ');
-  return `<div class="kpi"><div class="v">${ov}${delta(ov - ovSq, ' vs SQ', true)}${scen !== 'SQ' && ovSq && ov !== ovSq ? `<span class="d" style="color:${ov > ovSq ? 'var(--down)' : 'var(--up)'}">(${ov > ovSq ? '+' : '&minus;'}${Math.abs(Math.round(100 * (ov - ovSq) / ovSq))}%)</span>` : ''}</div>` +
-      `<div class="l">School-years over 2021 functional capacity, ${D.years[0]} to ${D.years[D.years.length - 1]}</div></div>` +
+  return `<div class="kpi"><div class="v">${ov}${delta(ov - ovSq, ' vs SQ', true)}${scen !== 'SQ' && ovSq && ov !== ovSq ? `<span class="d" style="color:${ov > ovSq ? 'var(--down)' : 'var(--up)'}">(${ov > ovSq ? '+' : '&minus;'}${Math.abs(Math.round(100 * (ov - ovSq) / ovSq))}%)</span>` : ''}<span class="vt">School-years over capacity</span></div>` +
+      `<div class="l">${D.years[0]} to ${D.years[D.years.length - 1]}</div></div>` +
     commuteKPI() + busKPI() +
     ((a, t) => scen === 'SQ'
       ? `<div class="kpi"><div class="v">${usdM(t.mf)}</div><div class="l">Outstanding building repairs, all buildings (deferred maintenance + seismic retrofit, 2026 $)</div>` +
         ((ks) => `<div class="s">Deferred maintenance: <b>${usdM(ks.reduce((s, k) => s + (D.costs[k]?.dm || 0), 0))}</b><br>Seismic retrofit: <b>${usdM(ks.reduce((s, k) => s + (D.costs[k]?.se || 0), 0))}</b><br><span class="pcs" style="white-space:normal">Replacement value, for reference (not a cost): ${usdM(t.mod)}</span></div></div>`)(Object.keys(D.costs || {}))
-      : `<div class="kpi"><div class="v">${usdM(a.mf)}<span class="d" style="color:var(--up)">${pctOf(-a.mf, t.mf)} vs SQ</span></div>` +
-        `<div class="l">Outstanding building repairs avoided by closures, of ${usdM(t.mf)} under Status Quo (deferred maintenance + seismic retrofit, 2026 $)</div>` +
+      : `<div class="kpi"><div class="v">${usdM(a.mf)}<span class="d" style="color:var(--up)">${pctOf(-a.mf, t.mf)} vs SQ</span><span class="vt">In building repairs avoided</span></div>` +
+        `<div class="l">By closures, of ${usdM(t.mf)} under Status Quo (deferred maintenance + seismic retrofit, 2026 $)</div>` +
         ((ks) => `<div class="s">Deferred maintenance: <b>${usdM(ks.reduce((s, k) => s + (D.costs[k]?.dm || 0), 0))}</b> &middot; seismic retrofit: <b>${usdM(ks.reduce((s, k) => s + (D.costs[k]?.se || 0), 0))}</b>${a.n ? ` &middot; ${a.n} building${a.n === 1 ? '' : 's'}` : ''}<br><span class="pcs" style="white-space:normal">Replacement value of the closed buildings, for reference (not a cost): ${usdM(a.mod)}</span></div>`)(Object.keys(D.costs || {}).filter(k => D.detail[scen]?.[k]?.closed)) +
         ((o) => o.n ? `<div class="s">Operating cost of the closed buildings (est.): <b>${usdM1(o.usd)}</b> a year (${Math.round(o.sf).toLocaleString()} sq ft at $${D.opex.rate.toFixed(2)}/sq ft)</div>` : '')(closedOpex(D.schools.map(s => s.key))) + '</div>')(avoidedCosts(D.schools.map(s => s.key)), totalCosts(D.schools.map(s => s.key))) + landKPI();
 }
@@ -1626,8 +1626,8 @@ function commuteKPI() {
   const line = (b, l) => { const x = by(b), y = bq(b), dd = x.beyond - y.beyond;
     return `${l}: <b>${cmN(x.beyond)}</b> <span class="pcs">(${cmP(x.beyond / x.r)}${!isSQ && Math.round(dd) ? `, ${dd > 0 ? '+' : '&minus;'}${cmN(Math.abs(dd))}` : ''})</span>`; };
   const wd = Math.round(100 * c.w15) - Math.round(100 * q.w15);
-  return `<div class="kpi"><div class="v">${cmN(c.beyond)}${isSQ || !Math.round(d) ? '' : `<span class="d" style="color:${d > 0 ? 'var(--down)' : 'var(--up)'}">${d > 0 ? '+' : '&minus;'}${cmN(Math.abs(d))} vs SQ</span>`}</div>` +
-    `<div class="l">Students eligible for bus service from their school, ${cmYear} (walking route: K-5 over ${B.k5} mile, 6-12 over ${B['912']} miles)</div>` +
+  return `<div class="kpi"><div class="v">${cmN(c.beyond)}${isSQ || !Math.round(d) ? '' : `<span class="d" style="color:${d > 0 ? 'var(--down)' : 'var(--up)'}">${d > 0 ? '+' : '&minus;'}${cmN(Math.abs(d))} vs SQ</span>`}<span class="vt">Students in bus service boundaries</span></div>` +
+    `<div class="l">${cmYear} (walking route: K-5 over ${B.k5} mile, 6-12 over ${B['912']} miles)</div>` +
     `<div class="s">${line('k5', 'K-5')}<br>${line('68', '6-8')}<br>${line('912', '9-12 (TriMet)')}<br>` +
     `Within a 15-minute walk: <b>${cmP(c.w15)}</b>${isSQ || !wd ? '' : ` <span class="pcs">(${wd > 0 ? '+' : '&minus;'}${Math.abs(wd)} pts)</span>`}</div></div>`;
 }
@@ -1842,8 +1842,8 @@ function busKPI() {
     (Math.abs(dm) >= 0.05 ? ` <span class="pcs">(${dm > 0 ? '+' : '&minus;'}${Math.abs(dm).toFixed(1)} min)</span>` : '') + ` <span class="pcs">at ${K}</span>` +
     `<br>plus <b>${rc.swmin.toFixed(0)} min</b> walking to the stop, one way` +
     (Math.abs(dw) >= 0.05 ? ` <span class="pcs">(${dw > 0 ? '+' : '&minus;'}${Math.abs(dw).toFixed(1)} min)</span>` : '');
-  return `<div class="kpi"><div class="v">${save ? '&minus;' : '+'}${bcM(s.mid)}<span class="d" style="color:var(--text-muted)">a year</span></div>` +
-    `<div class="l">${save ? 'Change in' : 'Added'} general yellow-bus cost in ${D.impl_year}, the first year (est.)${scen === 'C' ? `; ${esc(custom.name || 'custom scenario')}` : ''}</div>` +
+  return `<div class="kpi"><div class="v">${save ? '&minus;' : '+'}${bcM(s.mid)}<span class="d" style="color:var(--text-muted)">a year</span><span class="vt">Yellow-bus cost</span></div>` +
+    `<div class="l">${D.impl_year}, the first year (est.)${scen === 'C' ? `; ${esc(custom.name || 'custom scenario')}` : ''}</div>` +
     `<div class="s">${sub}</div></div>`;
 }
 // bus columns of the getting-to-school table: student-miles a school day = eligible K-8 students' walking miles x
@@ -2016,14 +2016,16 @@ function staffKPI() {
       `<div class="s">Administration: <b>${f1(s.base.aFte)}</b> <span class="pcs">(${sh(s.base.aFte)})</span><br>` +
       `Teachers &amp; direct support: <b>${f1(s.base.tFte)}</b> <span class="pcs">(${sh(s.base.tFte)})</span><br>` +
       `Cost: <b>${pos(s.base.usd)}</b> a year (salary + benefits, 2026-27 $)` +
+      `<br><span title="${sgfTip}">General Fund est.: <b>${pos(staffGF(D.schools.map(x => x.key), 'SQ', D.years.indexOf(staffYear)))}</b> a year</span>` +
       ((x) => x ? `<br><span title="${esc(`PPS ${x.y} budget, Volume 2 school reports (${x.n} schools and programs; 1.00 FTE = 40 hours a week). ${x.ya} actual: ${n0s(x.ta)} teachers, ${n0s(x.aa)} administrators.`)}">PPS budget, ${x.y}: <b>${n0s(x.t)}</b> teachers, <b>${n0s(x.a)}</b> principals &amp; APs district-wide</span>` : '')(staffActual()) +
       `</div></div>`;
   }
-  return `<div class="kpi"><div class="v">${Math.round(Math.abs(s.fte))}<span class="d" style="color:var(--text-muted)">positions &middot; ${pctOf(s.fte, s.base.fte)} vs SQ</span></div>` +
-    `<div class="l">School positions no longer needed under PPS's staffing formula, ${staffYear} vs Status Quo (licensed-equivalent FTE)</div>` +
+  return `<div class="kpi"><div class="v">${Math.round(Math.abs(s.fte))}<span class="d" style="color:var(--text-muted)">positions &middot; ${pctOf(s.fte, s.base.fte)} vs SQ</span><span class="vt">Consolidated</span></div>` +
+    `<div class="l">School positions under PPS's staffing formula, ${staffYear} vs Status Quo (licensed-equivalent FTE)</div>` +
     `<div class="s">Administration: <b>${f1(s.aFte)}</b>${pcS(s.aFte, s.base.aFte)}<br>` +
     `Teachers &amp; direct support: <b>${f1(s.tFte)}</b>${pcS(s.tFte, s.base.tFte)}<br>` +
-    `Cost: about <b>${pos(s.usd)}</b> a year${pcS(s.usd, s.base.usd)} (salary + benefits, 2026-27 $)</div></div>`;
+    `Cost: about <b>${pos(s.usd)}</b> a year${pcS(s.usd, s.base.usd)} (salary + benefits, 2026-27 $)` +
+    ((ks, yi) => { const g0 = staffGF(ks, 'SQ', yi), g1 = staffGF(ks, scen, yi); return `<br><span title="${sgfTip}">General Fund est.: about <b>${pos(g1 - g0)}</b> a year${pcS(g1 - g0, g0)}</span>`; })(D.schools.map(x => x.key), D.years.indexOf(staffYear)) + `</div></div>`;
 }
 // closed schools only (scripts/patch_impact_closed_filter.py)
 let exClosed = false;
@@ -2837,6 +2839,20 @@ function staffAgg(keys, sc, yi) {
 }
 const fte1 = v => (Math.abs(v) < 0.05 ? '0' : (v > 0 ? '+' : '&minus;') + Math.abs(v).toFixed(Math.abs(v) >= 100 ? 0 : 1));
 function staffChanged() { renderKPIs(); renderEndpoints(); renderStaffing(); renderTrend(); renderGFPer(); renderCostCurve(); }
+// General Fund estimate (scripts/patch_staff_gf.py): formula cost x the school's General Fund-to-formula ratio
+let SGF_CACHE = { key: '', r: {} };
+function staffGFRatio(k) {
+  const key = JSON.stringify(caps);
+  if (SGF_CACHE.key !== key) {
+    const y0 = D.years.indexOf('2026-27'), r = {}; let g = 0, f = 0;
+    for (const t of Object.keys(D.region_of)) { const gf = gfOf(t), fs = schoolFTE(t, 'SQ', y0), c = fs ? staffCost(fs) : 0;
+      if (gf != null && c) { r[t] = gf / c; g += gf; f += c; } }
+    r.__all = f ? g / f : 1; SGF_CACHE = { key, r };
+  }
+  return SGF_CACHE.r[k] ?? SGF_CACHE.r.__all;
+}
+function staffGF(keys, s, yi) { return keys.reduce((a, k) => { const f = schoolFTE(k, s, yi); return a + (f ? staffCost(f) * staffGFRatio(k) : 0); }, 0); }
+const sgfTip = 'General Fund estimate: each school\u2019s formula staffing cost times its own ratio of actual 2026-27 General Fund staffing (budget school report) to the formula\u2019s 2026-27 staffing; schools without a budget report use the all-school ratio';
 function renderStaffing() {
   const host = document.getElementById('staffing'); if (!host) return;
   const yi = D.years.indexOf(staffYear), isSQ = scen === 'SQ';
@@ -2854,7 +2870,7 @@ function renderStaffing() {
     <div id="st-capgrid" class="capgrid" data-open="${document.getElementById('st-capgrid')?.dataset.open || '0'}" ${document.getElementById('st-capgrid')?.dataset.open === '1' ? '' : 'hidden'}>
       <table><thead><tr><th>Students per homeroom, at most</th>${GRADE_LABELS.map(g => `<th>${g === 'K' ? 'K' : 'Grade ' + g}</th>`).join('')}</tr></thead><tbody>${capRow('title1')}${capRow('other')}</tbody></table></div>`;
   // table
-  h += `<div class="tablewrap"><table class="stafftable"><thead><tr><th>Region</th><th>Buildings closed</th>${STAFF_COLS.map(([, l]) => `<th>${l}</th>`).join('')}<th>Annual cost (2026-27 $)</th></tr></thead><tbody>`;
+  h += `<div class="tablewrap"><table class="stafftable"><thead><tr><th>Region</th><th>Buildings closed</th>${STAFF_COLS.map(([, l]) => `<th>${l}</th>`).join('')}<th>Annual cost (2026-27 $)<br><span style="font-weight:400" title="${sgfTip}">formula; General Fund est.</span></th></tr></thead><tbody>`;
   for (const rn of rows) {
     const keys = keysOf(rn), sq = staffAgg(keys, 'SQ', yi), cur = staffAgg(keys, scen, yi), isReg = rn !== 'District', open = staffOpen.has(rn);
     h += `<tr class="${isReg ? '' : 'dist'}"><td>${isReg ? `<button class="xbtn st-x" data-r="${esc(rn)}" aria-expanded="${open}"><span class="car">&#9656;</span><span>${esc(rn)}</span></button>` : esc(rn)}</td><td>${isSQ ? 0 : cur.closed}</td>`;
@@ -2863,8 +2879,10 @@ function renderStaffing() {
       h += isSQ ? `<td>${sq[c].toFixed(c === 'principal' || c === 'ap' ? 0 : 1)}</td>`
         : `<td><span class="main">${fte1(d)}</span><span class="muted" style="display:block;font-size:11px">of ${sq[c].toFixed(c === 'principal' || c === 'ap' ? 0 : 1)}</span></td>`;
     }
-    const cs = staffCost(sq), cc = staffCost(cur);
-    h += isSQ ? `<td>${staffUSD(cs)}</td>` : `<td><span class="main">${staffUSD(cc - cs)}</span><span class="muted" style="display:block;font-size:11px">of ${staffUSD(cs)}</span></td>`;
+    const cs = staffCost(sq), cc = staffCost(cur), gs = staffGF(keys, 'SQ', yi), gc = isSQ ? gs : staffGF(keys, scen, yi);
+    h += isSQ ? `<td>${staffUSD(cs)}<span class="muted" style="display:block;font-size:11px" title="${sgfTip}">General Fund ${staffUSD(gs)}</span></td>`
+      : `<td><span class="main">${staffUSD(cc - cs)}</span><span class="muted" style="display:block;font-size:11px">of ${staffUSD(cs)}</span>` +
+        `<span style="display:block;font-size:12px;margin-top:2px" title="${sgfTip}">General Fund <b>${staffUSD(gc - gs)}</b> <span class="muted" style="font-size:11px">of ${staffUSD(gs)}</span></span></td>`;
     h += '</tr>';
     if (isReg && open) {
       for (const k of keys.sort(byStatusName)) {
@@ -2873,7 +2891,8 @@ function renderStaffing() {
           `<span class="muted" style="display:block;font-size:11px">${Math.round(a.enroll)}${isSQ ? '' : ` &rarr; ${b ? Math.round(b.enroll) : 'closed'}`} students${a.homeroomsByGrade && !isSQ && b?.homeroomsByGrade ? ` &middot; homerooms ${a.homeroom} &rarr; ${b.homeroom}` : a.homeroomsByGrade ? ` &middot; ${a.homeroom} homerooms` : ''}</span></td>` +
           `<td>${b ? '' : '<span class="stag closes">Closes</span>'}</td>` +
           STAFF_COLS.map(([c]) => isSQ ? `<td>${a[c].toFixed(c === 'principal' || c === 'ap' ? 0 : 1)}</td>` : `<td>${fte1((b ? b[c] : 0) - a[c])}</td>`).join('') +
-          (isSQ ? `<td>${staffUSD(staffCost(a))}</td>` : `<td>${staffUSD((b ? staffCost(b) : 0) - staffCost(a))}</td>`) + '</tr>';
+          (isSQ ? `<td>${staffUSD(staffCost(a))}<span class="muted" style="display:block;font-size:11px" title="${sgfTip}">GF ${staffUSD(staffCost(a) * staffGFRatio(k))}</span></td>`
+            : `<td>${staffUSD((b ? staffCost(b) : 0) - staffCost(a))}<span class="muted" style="display:block;font-size:11px" title="${esc(`${sgfTip}. This school: ${staffGFRatio(k).toFixed(2)}`)}">GF ${staffUSD(((b ? staffCost(b) : 0) - staffCost(a)) * staffGFRatio(k))}</span></td>`) + '</tr>';
       }
     }
   }
@@ -2885,8 +2904,8 @@ function renderStaffing() {
   const saLine = sa ? `<span style="display:block;margin-top:6px">Check against PPS's ${sa.y} budget (school reports, 1.00 FTE = 40 hours a week): at the ${sa.k} schools on this page, <b>${n0s(sa.mt)}</b> teachers vs the formula's ${n0s(sa.ft)} (homeroom, specialist and 6-12 teachers, Status Quo ${sa.y}), and <b>${n0s(sa.ma)}</b> principals and assistant principals vs the formula's ${n0s(sa.fa)}; ${n0s(sa.mc)} clerical staff vs the formula's ${sa.fo.toFixed(0)} licensed-equivalent office FTE (about ${n0s(2 * sa.fo)} positions). ` +
     `District-wide, with ${sa.others.length} programs this page does not model, the budget has <b>${n0s(sa.t)}</b> teachers and <b>${n0s(sa.a)}</b> administrators (${sa.ya} actual: ${n0s(sa.ta)} and ${n0s(sa.aa)}).</span>` : '';
   document.getElementById('staffsum').innerHTML = (isSQ
-    ? `Status Quo in ${staffYear}: the formula allocates <b>${dsq.total.toFixed(0)}</b> licensed-equivalent FTE to these ${dsq.open} schools. Pick Scenario A, B or Custom to see positions no longer needed.`
-    : `${LABEL[scen]} in ${staffYear}, compared with Status Quo the same year: about <b>${(dsq.total - dist.total).toFixed(0)}</b> formula positions no longer needed (licensed-equivalent FTE), about <b>${staffUSD(staffCost(dsq) - staffCost(dist)).replace('&minus;', '')}</b> a year in salary plus benefits (2026-27 dollars): <b>${(dsq.principal - dist.principal).toFixed(0)}</b> principals, <b>${(dsq.ap - dist.ap).toFixed(0)}</b> assistant/vice principals and <b>${(dsq.office - dist.office).toFixed(1)}</b> office FTE (administration ${admin.toFixed(1)} in all), and <b>${teach.toFixed(1)}</b> classroom teachers, of which <b>${(dsq.homeroom - dist.homeroom).toFixed(0)}</b> are K-5 homerooms freed when students fill open seats at receiving schools.`) + saLine;
+    ? `Status Quo in ${staffYear}: the formula allocates <b>${dsq.total.toFixed(0)}</b> licensed-equivalent FTE to these ${dsq.open} schools, about ${staffUSD(staffCost(dsq))} a year (about ${staffUSD(staffGF(keysOf('District'), 'SQ', yi))} at each school's actual General Fund staffing rate). Pick Scenario A, B or Custom to see consolidated positions.`
+    : `${LABEL[scen]} in ${staffYear}, compared with Status Quo the same year: about <b>${(dsq.total - dist.total).toFixed(0)}</b> formula positions consolidated (licensed-equivalent FTE), about <b>${staffUSD(staffCost(dsq) - staffCost(dist)).replace('&minus;', '')}</b> a year in salary plus benefits (2026-27 dollars; about <b>${staffUSD(staffGF(keysOf('District'), 'SQ', yi) - staffGF(keysOf('District'), scen, yi)).replace('&minus;', '')}</b> at each school's actual General Fund staffing rate): <b>${(dsq.principal - dist.principal).toFixed(0)}</b> principals, <b>${(dsq.ap - dist.ap).toFixed(0)}</b> assistant/vice principals and <b>${(dsq.office - dist.office).toFixed(1)}</b> office FTE (administration ${admin.toFixed(1)} in all), and <b>${teach.toFixed(1)}</b> classroom teachers, of which <b>${(dsq.homeroom - dist.homeroom).toFixed(0)}</b> are K-5 homerooms freed when students fill open seats at receiving schools.`) + saLine;
   host.innerHTML = h;
   // wiring
   document.getElementById('st-year').onchange = e => { staffYear = e.target.value; staffChanged(); };
@@ -2963,8 +2982,8 @@ function classTotals(sc) {
 function classKPI() {
   const c = classTotals(scen), q = scen === 'SQ' ? null : classTotals('SQ'), d = q ? c.over - q.over : 0;
   const pct = c.h ? Math.round(100 * c.over / c.h) : 0;
-  return `<div class="kpi"><div class="v">${c.over.toLocaleString()}${q && d ? `<span class="d" style="color:${d > 0 ? 'var(--down)' : 'var(--up)'}">${d > 0 ? '+' : '&minus;'}${Math.abs(d)} vs SQ</span>` : ''}</div>` +
-    `<div class="l">K-5 classes over the PAT overload-pay threshold, ${csYear}, at the budget's largest class sizes (K over 24, grades 1-3 over 26, 4-5 over 28)</div>` +
+  return `<div class="kpi"><div class="v">${c.over.toLocaleString()}${q && d ? `<span class="d" style="color:${d > 0 ? 'var(--down)' : 'var(--up)'}">${d > 0 ? '+' : '&minus;'}${Math.abs(d)} vs SQ</span>` : ''}<span class="vt">K-5 classes over PAT threshold</span></div>` +
+    `<div class="l">${csYear}, using minimum staffing allocations (the budget's largest class sizes; PAT overload thresholds: K over 24, grades 1-3 over 26, 4-5 over 28)</div>` +
     `<div class="s">${pct}% of ${c.h.toLocaleString()} K-5 homerooms &middot; ${Math.round(c.overStu).toLocaleString()} students over the thresholds` +
     `${q ? ` <span class="pcs">(Status Quo ${q.over.toLocaleString()} of ${q.h.toLocaleString()})</span>` : ''}<br>` +
     `Grades 6-8: <b>${c.msOver} of ${c.ms}</b> schools over ${PAT_MS} students a day per teacher <span class="pcs">(about ${Math.round(c.msFte)} teachers)</span><br>` +
@@ -4146,7 +4165,7 @@ function renderBuildings() {
     `<th>Deferred maintenance<br><span style="font-weight:400">2021 condition (FCI) &times; replacement value</span></th><th>Seismic retrofit<br><span style="font-weight:400">remaining, incl. masonry</span></th><th>Operating cost<br><span style="font-weight:400">${isSQ ? 'all buildings, a year (est.)' : 'of closed buildings, a year (est.)'}</span></th>` +
     `<th>Buildings<br><span style="font-weight:400">${isSQ ? 'with cost data' : 'closed'}</span></th>` +
     `<th>Bond capital<br><span style="font-weight:400">school-specific projects: paid of allocated, as of ${bondMon(D.bond.as_of)}; scheduled work</span></th>` +
-    `<th class="bl-staff">School staffing<br><span style="font-weight:400">${isSQ ? 'positions and cost a year' : 'positions no longer needed'} (${staffYear})</span></th>` +
+    `<th class="bl-staff">School staffing<br><span style="font-weight:400">${isSQ ? 'positions and cost a year' : 'positions consolidated'} (${staffYear})</span></th>` +
     `<th class="dispc">Staffing cost per displaced student, formula estimate<br><span style="font-weight:400">closed schools, a year: net staffing change &divide; their students, from PPS's staffing formula at average salaries (actual-budget estimate on hover)</span></th>` +
     `<th>Land value (assessor)<br><span style="font-weight:400">${isSQ ? 'all sites' : 'sites closed'}; land, and land + buildings</span></th></tr></thead><tbody>`;
   for (const rn of [...D.region_order, 'District']) {
@@ -4634,8 +4653,8 @@ function splitKPI() {
   const minor = S => Math.round(Object.values(S).reduce((a, v) => a + (v.minor || 0), 0)), m0 = minor(S0), m1 = minor(S1);
   const fixed = Object.keys(S0).filter(k => !S1[k]).length, added = Object.keys(S1).filter(k => !S0[k]).length;
   const nm = k => esc(short(byKey[k]?.name || k));
-  return `<div class="kpi"><div class="v">${n1}${!isSQ && d ? `<span class="d" style="color:${d > 0 ? 'var(--down)' : 'var(--up)'}">${d > 0 ? '+' : '&minus;'}${Math.abs(d)} vs SQ</span>` : ''}</div>` +
-    `<div class="l">Split-feeder schools (neighborhood students go on to two different schools)</div>` +
+  return `<div class="kpi"><div class="v">${n1}${!isSQ && d ? `<span class="d" style="color:${d > 0 ? 'var(--down)' : 'var(--up)'}">${d > 0 ? '+' : '&minus;'}${Math.abs(d)} vs SQ</span>` : ''}<span class="vt">Split-feeder schools</span></div>` +
+    `<div class="l">Neighborhood students go on to two different schools</div>` +
     `<div class="s">${isSQ ? '' : `<b>${fixed}</b> resolved${added ? `, <b>${added}</b> new` : ''} <span class="pcs">(Status Quo ${n0})</span><br>`}` +
     `About <b>${m1.toLocaleString()}</b> students on a smaller pathway, ${sfYear}${isSQ || m1 === m0 ? '' : ` <span class="pcs">(Status Quo ${m0.toLocaleString()})</span>`}<br>` +
     `<span class="pcs" style="white-space:normal">${isSQ ? 'Split' : 'Still split'}: ${Object.keys(S1).sort().map(nm).join(', ') || 'none'}</span></div></div>`;
