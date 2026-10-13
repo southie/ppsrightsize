@@ -73,25 +73,25 @@ function displacedCell(keys) {
   // closed schools only: each closure's net staffing change (its Status Quo staffing less what its students add at
   // the schools they go to) over its students; regions and the district sum their closures
   if (scen === 'SQ') return '<td class="muted dispc">&mdash;</td>';
-  const yi = D.years.indexOf(staffYear), det = D.detail[scen] || {}, base = scen === 'C' ? custom.base : scen;
+  const yi = D.years.indexOf(staffYear), det = D.detail[scen] || {}, base = scen;   // a custom scenario uses its own receiving schools (D.flows.C)
   const fm = v => (v < 0 ? '&minus;' : '+') + '$' + Math.round(Math.abs(v)).toLocaleString();
   const closed = keys.filter(k => det[k]?.closed && D.series.SQ[k]?.[yi]);
   if (keys.length === 1) {
     if (!closed.length) return '<td class="muted dispc"></td>';
     const r = closureStaffNet(keys[0], base, yi);
     if (!r || !r.n) return '<td class="muted dispc">&mdash;</td>';
-    return `<td class="dispc" title="${esc(`Net staffing change of closing ${short(byKey[keys[0]].name)}, ${staffYear}: ${fm(r.usd).replace('&minus;', '-')} a year (its Status Quo staffing less what its students add at their new schools), for its ${Math.round(r.n)} students`)}"><span class="main">${fm(r.usd / r.n)}</span><span class="muted" style="display:block;font-size:11px">${Math.round(r.n)} students; net of receiving schools</span></td>`;
+    return `<td class="dispc" title="${esc(`Net staffing change of closing ${short(byKey[keys[0]].name)}, ${staffYear}: ${fm(r.usd).replace('&minus;', '-')} a year (its Status Quo staffing less what its students add at their new schools), for its ${Math.round(r.n)} students. Formula estimate: PPS's staffing formula at average salaries.${(a => a && a.n ? ` Actual-budget estimate (from its actual 2026-27 General Fund staffing; the General Fund cost chart's closures): ${fm(a.net / a.n).replace('&minus;', '-')} per student, ${fm(a.net).replace('&minus;', '-')} a year.` : '')(typeof gfCloseNet === 'function' ? gfCloseNet(keys[0], base, yi) : null)}`)}"><span class="main">${fm(r.usd / r.n)}</span><span class="muted" style="display:block;font-size:11px">${Math.round(r.n)} students; net of receiving schools</span></td>`;
   }
   if (!closed.length) return '<td class="muted dispc">no closures</td>';
   let usd = 0, n = 0;
   for (const k of closed) { const r = closureStaffNet(k, base, yi); if (r) { usd += r.usd; n += r.n; } }
   if (!n) return '<td class="muted dispc">&mdash;</td>';
-  return `<td class="dispc" title="${esc(`${staffYear}: the ${closed.length} closing school${closed.length === 1 ? '' : 's'}' net staffing change, ${fm(usd).replace('&minus;', '-')} a year (their Status Quo staffing less what their students add at receiving schools), over their ${Math.round(n).toLocaleString()} students`)}"><span class="main">${fm(usd / n)}</span>` +
+  return `<td class="dispc" title="${esc(`${staffYear}: the ${closed.length} closing school${closed.length === 1 ? '' : 's'}' net staffing change, ${fm(usd).replace('&minus;', '-')} a year (their Status Quo staffing less what their students add at receiving schools), over their ${Math.round(n).toLocaleString()} students. Formula estimate: PPS's staffing formula at average salaries.${(a => a.n ? ` Actual-budget estimate (from actual 2026-27 General Fund staffing): ${fm(a.net / a.n).replace('&minus;', '-')} per student, ${fm(a.net).replace('&minus;', '-')} a year.` : '')(closed.reduce((t, k) => { const a = typeof gfCloseNet === 'function' ? gfCloseNet(k, base, yi) : null; if (a) { t.net += a.net; t.n += a.n; } return t; }, { net: 0, n: 0 }))}`)}"><span class="main">${fm(usd / n)}</span>` +
     `<span class="muted" style="display:block;font-size:11px">${Math.round(n).toLocaleString()} students at ${closed.length} closing school${closed.length === 1 ? '' : 's'}</span></td>`;
 }
 function renderBuildings() {""")
     rep("""    `<th>Land value (assessor)<br><span style="font-weight:400">${isSQ ? 'all sites' : 'sites closed'}; land, and land + buildings</span></th></tr></thead><tbody>`;""",
-        """    `<th class="dispc">Staffing cost per displaced student<br><span style="font-weight:400">closed schools, a year: net staffing change &divide; their students</span></th>` +
+        """    `<th class="dispc">Staffing cost per displaced student, formula estimate<br><span style="font-weight:400">closed schools, a year: net staffing change &divide; their students, from PPS's staffing formula at average salaries (actual-budget estimate on hover)</span></th>` +
     `<th>Land value (assessor)<br><span style="font-weight:400">${isSQ ? 'all sites' : 'sites closed'}; land, and land + buildings</span></th></tr></thead><tbody>`;""")
     rep("""+ bondCell(keys) + staffCell(keys) + landCell(keys) + '</tr>';""", """+ bondCell(keys) + staffCell(keys) + displacedCell(keys) + landCell(keys) + '</tr>';""")
     rep("""+ bondCell([k], closed) + staffCell([k]) + landCell([k]) + '</tr>';""", """+ bondCell([k], closed) + staffCell([k]) + displacedCell([k]) + landCell([k]) + '</tr>';""")
