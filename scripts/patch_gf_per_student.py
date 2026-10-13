@@ -22,7 +22,7 @@ if 'function renderGFPer' not in html:
     rep("""  <section class="card">
     <h2>The sustainability threshold impact on cost per student by school size</h2>""",
         """  <section class="card">
-    <h2>General Fund cost per student by school, against the sustainability threshold</h2>
+    <h2><span id="gfpertitle">General Fund cost per student by school, against the sustainability threshold</span></h2>
     <p class="sub" id="gfpersub"></p>
     <div class="controls"><label>Show <select id="gf-mode"><option value="pp">Per student</option><option value="sub">Net total subsidy</option></select></label><label>Enrollment year <select id="gf-year"></select></label><button type="button" id="gf-shut" onclick="gfToggle('*')">Collapse all</button></div>
     <div class="gfperwrap" id="gfper"></div>
@@ -62,7 +62,7 @@ function gfPerData() {
     // in the chosen year: the actual 2026-27 General Fund staffing scaled by the formula's change from Status Quo
     // 2026-27 to the scenario (or Status Quo) in that year, over the enrollment then
     if ((scen !== 'SQ' || gfYear !== '2026-27') && typeof schoolFTE === 'function') {
-      const ys = D.years.indexOf(gfYear), sc = scen, cl = D.detail[sc === 'C' ? custom.base : sc]?.[k]?.closed || (sc === 'C' && !D.series.C?.[k]?.[ys]);
+      const ys = D.years.indexOf(gfYear), sc = scen, cl = D.detail[sc]?.[k]?.closed || (sc === 'C' && !D.series.C?.[k]?.[ys]);   // a custom scenario's own closures
       if (cl) row.closed = true;
       else {
         const f0 = schoolFTE(k, 'SQ', yi), f1 = schoolFTE(k, sc, ys), e1 = D.series[sc]?.[k]?.[ys];
@@ -76,9 +76,15 @@ function gfPerData() {
 function renderGFPer() {
   const host = document.getElementById('gfper'); if (!host) return;
   // the two charts share one year and one view; their two sets of controls stay in step
+  // years: from the budget year under Status Quo; from the year scenarios take effect under a scenario (a scenario has no
+  // meaning before then, so an earlier year would project it into the past)
+  const yFirst = scen === 'SQ' ? '2026-27' : D.impl_year;
+  if (gfYear < yFirst) gfYear = yFirst;
+  const yopts = D.years.filter(y => y >= yFirst);
   for (const id of ['gf-year', 'gf-year2']) {
     const ysel = document.getElementById(id); if (!ysel) continue;
-    if (!ysel.options.length) ysel.innerHTML = D.years.filter(y => y >= '2026-27').map(y => `<option value="${y}">${y}${y === '2026-27' ? ' (budget year)' : y === D.impl_year ? ' (scenarios take effect)' : ''}</option>`).join('');
+    if ([...ysel.options].map(o => o.value).join() !== yopts.join())
+      ysel.innerHTML = yopts.map(y => `<option value="${y}">${y}${y === '2026-27' ? ' (budget year)' : y === D.impl_year ? ' (scenarios take effect)' : ''}</option>`).join('');
     ysel.value = gfYear;
     ysel.onchange = () => { gfYear = ysel.value; try { localStorage.setItem('rsGfYear', gfYear); } catch (e) {} renderGFPer(); };
   }
@@ -91,7 +97,7 @@ function renderGFPer() {
   const usd = gfUsd, SUB = gfMode === 'sub';
   const TYPES = [['ES', 'K-5'], ['K8', 'K-8'], ['MS', 'Middle (6-8)'], ['HS', 'High (9-12)']];
   const dist = rows.reduce((a, r) => a + r.gf, 0) / rows.reduce((a, r) => a + r.e, 0);
-  const closesIn = k => (scen === 'SQ' ? ['A', 'B'] : [scen === 'C' ? custom.base : scen]).filter(s => D.detail[s]?.[k]?.closed);
+  const closesIn = k => (scen === 'SQ' ? ['A', 'B'] : [scen]).filter(s => D.detail[s]?.[k]?.closed);
   const groups = TYPES.map(([t, lab]) => {
     const g = rows.filter(r => r.t === t); if (!g.length) return null;
     const avg = g.reduce((a, r) => a + r.gf, 0) / g.reduce((a, r) => a + r.e, 0);
@@ -124,10 +130,11 @@ function renderGFPer() {
     G.g.sort((p, q) => SUB ? v0(q) - v0(p) : q.c - p.c);
     const shut = gfShut.has(G.t), top = y0 + GH, bot = top + nRows(G) * BH;
     const gSub = G.g.reduce((a, r) => a + v0(r), 0);
+    const gSub1 = SC ? G.g.reduce((a, r) => a + (v1(r) ?? 0), 0) : null;   // the projected year (closed schools add nothing)
     s += `<g class="gfgh" data-gfg="${G.t}" role="button" tabindex="0" aria-expanded="${!shut}" style="cursor:pointer"><title>${shut ? 'Show' : 'Hide'} the ${G.lab} schools</title>` +
       `<rect x="0" y="${y0 + 2}" width="${W}" height="${GH - 6}" fill="var(--surface-2, rgba(0,0,0,.035))"/>` +
       `<text x="8" y="${y0 + 18}" font-size="13" font-weight="700" fill="var(--text-primary)">${shut ? '&#9656;' : '&#9662;'} ${G.lab} (${G.g.length} schools)${shut ? ' <tspan font-size="10.5" font-weight="400" fill="var(--text-muted)">click to show</tspan>' : ''}</text>` +
-      (SUB ? `<text x="8" y="${y0 + 32}" font-size="10.5" fill="var(--text-muted)">together ${gSub >= 0 ? gfM(gSub) + ' above' : gfM(-gSub) + ' below'} the district-average rate, 2026-27</text>`
+      (SUB ? `<text x="8" y="${y0 + 32}" font-size="10.5" fill="var(--text-muted)">net subsidy together: <tspan font-weight="700" fill="var(--text-primary)">${gSub >= 0 ? '+' : ''}${gfM(gSub)}</tspan> a year in 2026-27${SC ? `; <tspan font-weight="700" fill="var(--text-primary)">${gSub1 >= 0 ? '+' : ''}${gfM(gSub1)}</tspan> in ${gfYear} under ${esc(scen === 'SQ' ? 'Status Quo' : LABEL[scen])} (est.)` : ''} (vs the ${usd(Z)} district-average rate)</text>`
         : `<text x="8" y="${y0 + 32}" font-size="10.5"><tspan fill="var(--change)" font-weight="700">target ${usd(G.target)}</tspan><tspan fill="var(--text-muted)"> per student at the ${G.thr}-student threshold &middot; group average ${usd(G.avg)}</tspan></text>`) + '</g>';
     if (shut) { y0 = bot + GAP; continue; }
     G.g.forEach((r, j) => {
@@ -162,45 +169,55 @@ function renderGFPer() {
     `<span>&#9679; bold name, outlined bar: closes</span>${SC ? `<span><i class="k" style="height:8px;width:14px;border:1px solid var(--down);background:color-mix(in srgb, var(--down) 38%, transparent);vertical-align:-1px"></i>lower bar: ${esc(LABEL[scen])}, ${gfYear} (est.)</span>` : ''}</div>`;
   host.querySelectorAll('[data-gfg]').forEach(g => { g.onclick = () => gfToggle(g.dataset.gfg); g.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); gfToggle(g.dataset.gfg); } }; });
   const sb = document.getElementById('gf-shut'); if (sb) sb.textContent = groups.every(G => gfShut.has(G.t)) ? 'Expand all' : 'Collapse all';
+  const tt = document.getElementById('gfpertitle');
+  if (tt) tt.textContent = SUB ? `General Fund net subsidy by school: 2026-27${SC ? ` and ${scen === 'SQ' ? 'Status Quo' : LABEL[scen]} ${gfYear} (est.)` : ''}` : `General Fund cost per student by school, against the sustainability threshold${SC ? `: 2026-27 and ${scen === 'SQ' ? 'Status Quo' : LABEL[scen]} ${gfYear} (est.)` : ''}`;
   const over = groups.reduce((a, G) => a + G.g.filter(r => r.c > G.target).length, 0);
   document.getElementById('gfpersub').innerHTML = (SUB
     ? `<b>Net total subsidy</b>: each bar is how many General Fund staffing dollars a year a school gets above (right) or below (left) what its students would get at the <b style="color:#6d28d9">current district-wide average</b> (${usd(dist)} per student, the zero line): its cost per student less the average, times its enrollment. <span style="color:var(--down);font-weight:600">Red</span>: above the average rate (subsidized by the rest of the district); <span style="color:var(--up);font-weight:600">green</span>: below it. Schools run from most subsidized to least. `
     : `Each bar is a school's 2026-27 General Fund staffing cost per student above (right) or below (left) the <b style="color:#6d28d9">current district-wide average</b> (the zero line, ${usd(dist)}, enrollment-weighted across all schools); bars are red where the school is above its group's target and green at or below it (${over} of ${rows.length} above), and schools run from most above the target to least. ` +
       `<b style="color:var(--change)">Target</b> (solid blue; value in each group's heading): the General Fund cost per student of a school at the sustainability threshold size for its type, from a fit of that type's schools (a fixed cost spread over the students plus a cost per student). <b>Group average</b> (dashed) is enrollment-weighted. `) +
-    `The cost: the salaries and payroll costs of each school's school-allocated staff paid from the General Fund (estimated by the General Fund's share of the school's positions; PPS 2026-27 Proposed Budget, Volume 2, school reports), over projected 2026-27 enrollment. Outlined bars and bold names: schools closing in ${scen === 'SQ' ? 'Scenario A or B' : esc(LABEL[scen === 'C' ? custom.base : scen])}. ` +
+    `The cost: the salaries and payroll costs of each school's school-allocated staff paid from the General Fund (estimated by the General Fund's share of the school's positions; PPS 2026-27 Proposed Budget, Volume 2, school reports), over projected 2026-27 enrollment. Outlined bars and bold names: schools closing in ${scen === 'SQ' ? 'Scenario A or B' : esc(LABEL[scen])}. ` +
     (SC ? `Under each school, the lighter bar estimates the same measure ${scen === 'SQ' ? 'under Status Quo' : `after ${esc(LABEL[scen])}`} in ${gfYear}: its General Fund staffing projected forward with its own General Fund-to-formula ratio (2026-27 General Fund staffing over 2026-27 formula staffing) applied to PPS's formula staffing for it ${scen === 'SQ' ? 'under Status Quo' : 'in the scenario'} in that year, over its projected enrollment then (hover a lighter bar for the figures)${scen === 'SQ' ? '' : '; schools that close have none'}. ` : 'Pick a later year or a scenario to add bars estimating each school then. ') +
     'Click a group heading to hide or show its schools. Hover a bar or line for its figures. Centrally allocated staff (special education, ESL, custodial, nutrition) and non-staff costs are not included.';
   renderGFClose(rows);
 }
 // closures in the scenario: the General Fund staffing saved at each closed school against the staff its receiving schools
 // add for its students, in the chosen year
+// actual-budget estimate of one closure's net General Fund staffing change in year index ys: the closed school's 2026-27
+// General Fund staffing carried forward by its own General Fund-to-formula ratio, against the formula's added staffing
+// at each receiving school at that school's ratio (the table's formula estimate is closureStaffNet)
+function gfCloseNet(k, base, ys) {
+  const y0 = D.years.indexOf('2026-27');
+  const ratio = t => { const g = gfOf(t), f = schoolFTE(t, 'SQ', y0); return g != null && f ? g / staffCost(f) : 1; };
+  const fk0 = schoolFTE(k, 'SQ', y0), fk = schoolFTE(k, 'SQ', ys), g = gfOf(k); if (!fk || !fk0 || g == null) return null;
+  const saved = g * staffCost(fk) / staffCost(fk0), n = D.series.SQ[k][ys] || 0;
+  let added = 0; const to = [];
+  for (const { to: t, w } of reopenWeights(k, base, ys)) {
+    const ser = (D.series[base] || {})[t]; if (!ser || ser[ys] == null || !w) continue;
+    const sent = w * n, withS = schoolFTE(t, base, ys), keep = ser[ys]; ser[ys] = Math.max(0, keep - sent);
+    let without; try { without = schoolFTE(t, base, ys); } finally { ser[ys] = keep; }
+    const a = (staffCost(withS) - (without ? staffCost(without) : 0)) * ratio(t);
+    added += a; to.push([t, Math.round(sent), a, ratio(t)]);
+  }
+  return { k, saved, added, net: added - saved, n, to, g, fk0: staffCost(fk0), fk: staffCost(fk) };
+}
 function renderGFClose(rows) {
   const host = document.getElementById('gfclose'), sub = document.getElementById('gfclosesub'); if (!host) return;
-  const base = scen === 'C' ? custom.base : scen;
-  if (base === 'SQ') { host.innerHTML = ''; sub.innerHTML = 'Pick Scenario A or B (or a custom scenario) at the top to see the net effect of each closure.'; return; }
+  const base = scen;   // a custom scenario uses its own closures, receiving schools and enrollment (D.detail.C, D.flows.C, D.series.C)
+  if (base === 'SQ' || !D.flows[base]) { host.innerHTML = ''; sub.innerHTML = 'Pick Scenario A or B (or a custom scenario) at the top to see the net effect of each closure.'; return; }
   const y0 = D.years.indexOf('2026-27'), ys = D.years.indexOf(gfYear) >= D.years.indexOf(D.impl_year) ? D.years.indexOf(gfYear) : D.years.indexOf(D.impl_year), yr = D.years[ys];
   const by = Object.fromEntries((rows || []).map(r => [r.k, r]));
   const ratio = k => { const g = gfOf(k), f = schoolFTE(k, 'SQ', y0); return g != null && f ? g / staffCost(f) : 1; };   // actual General Fund over formula, 2026-27
   const out = [];
   for (const k of Object.keys(D.region_of)) {
     if (!D.detail[base]?.[k]?.closed) continue;
-    const fk0 = schoolFTE(k, 'SQ', y0), fk = schoolFTE(k, 'SQ', ys), g = gfOf(k); if (!fk || !fk0 || g == null) continue;
-    const saved = g * staffCost(fk) / staffCost(fk0), n = D.series.SQ[k][ys] || 0;
-    let added = 0; const to = [];
-    for (const { to: t, w } of reopenWeights(k, base, ys)) {
-      const ser = (D.series[base] || {})[t]; if (!ser || ser[ys] == null || !w) continue;
-      const sent = w * n, withS = schoolFTE(t, base, ys), keep = ser[ys]; ser[ys] = Math.max(0, keep - sent);
-      let without; try { without = schoolFTE(t, base, ys); } finally { ser[ys] = keep; }
-      const a = (staffCost(withS) - (without ? staffCost(without) : 0)) * ratio(t);
-      added += a; to.push([t, Math.round(sent), a, ratio(t)]);
-    }
-    out.push({ k, saved, added, net: added - saved, n, to, g, fk0: staffCost(fk0), fk: staffCost(fk) });
+    const c = gfCloseNet(k, base, ys); if (c) out.push(c);
   }
   if (!out.length) { host.innerHTML = '<p class="muted">No closures with budget data in this scenario.</p>'; sub.innerHTML = ''; return; }
   // per student moved, or totals a year (the view chosen above)
   const PS = gfMode !== 'sub';
   const hd = document.getElementById('gfcloseheadtxt');
-  if (hd) hd.textContent = PS ? 'Closures: net change in General Fund staffing per student moved' : 'Closures: net change in General Fund staffing, total a year';
+  if (hd) hd.textContent = PS ? 'Closures: net change in General Fund staffing per student moved (actual-budget estimate)' : 'Closures: net change in General Fund staffing, total a year (actual-budget estimate)';
   const S = r => PS ? 1 / Math.max(1, r.n) : 1;
   const money = v => PS ? (v < 0 ? '&minus;' : '') + gfUsd(Math.abs(v)) : gfM(v);
   out.forEach(r => { r.vs = r.saved * S(r); r.va = r.added * S(r); r.vn = r.net * S(r); });
@@ -220,7 +237,8 @@ function renderGFClose(rows) {
     let g = `<text x="${Lm - 8}" y="${yy + 12}" text-anchor="end" font-size="11.5" font-weight="${bold ? 700 : 600}" fill="var(--text-primary)">${esc(nm)}</text>` +
       `<text x="${Lm - 8}" y="${yy + 24}" text-anchor="end" font-size="9.5" fill="var(--text-muted)">${Math.round(r.n).toLocaleString()} students &middot; ${PS ? `net ${gfM(r.net)} in total` : `net ${(r.net < 0 ? '&minus;' : '') + gfUsd(Math.abs(r.net) / Math.max(1, r.n))} each`}</text>`;
     const tip = r.k ? `${nm} closes (${LABEL[base]}, ${yr}): ${gfM(r.saved).replace('&minus;', '-')} of General Fund staffing saved; ${gfM(r.added).replace('&minus;', '-')} added at ${r.to.map(([t, n_, a, q]) => `${short(byKey[t]?.name || t)} (${n_} students, ${gfM(a).replace('&minus;', '-')} at its ${q.toFixed(2)} ratio)`).join(', ')}; net ${r.net < 0 ? gfM(-r.net).replace('&minus;', '-') + ' a year saved' : gfM(r.net).replace('&minus;', '-') + ' a year more'}. ` +
-      `Projected forward: saved = ${nm}'s 2026-27 General Fund staffing ${gfUsd(r.g)} / its 2026-27 formula staffing ${gfUsd(r.fk0)} = ${(r.g / r.fk0).toFixed(2)} (its General Fund-to-formula ratio), x its formula staffing in ${yr} ${gfUsd(r.fk)}; added = the formula's added staffing for the students each receiving school takes, x that school's own ratio (its 2026-27 General Fund staffing over its 2026-27 formula staffing).` : `All ${out.length} closures: net ${r.net < 0 ? gfM(-r.net) + ' a year saved' : gfM(r.net) + ' a year more'}`;
+      `Projected forward: saved = ${nm}'s 2026-27 General Fund staffing ${gfUsd(r.g)} / its 2026-27 formula staffing ${gfUsd(r.fk0)} = ${(r.g / r.fk0).toFixed(2)} (its General Fund-to-formula ratio), x its formula staffing in ${yr} ${gfUsd(r.fk)}; added = the formula's added staffing for the students each receiving school takes, x that school's own ratio (its 2026-27 General Fund staffing over its 2026-27 formula staffing). ` +
+      ((f => f && f.n ? `Formula estimate (Building, staffing and land costs table: PPS's staffing formula at average salaries): net ${f.usd < 0 ? '-' : '+'}${gfM(Math.abs(f.usd))} a year, ${f.usd < 0 ? '-' : '+'}${gfUsd(Math.abs(f.usd) / f.n)} per student.` : '')(closureStaffNet(r.k, base, ys))).replace(/&minus;/g, '-') : `All ${out.length} closures: net ${r.net < 0 ? gfM(-r.net) + ' a year saved' : gfM(r.net) + ' a year more'}`;
     g += `<rect x="${x(-r.vs)}" y="${yy + 3}" width="${Math.max(0.5, x(0) - x(-r.vs))}" height="8" fill="var(--up)" opacity=".8"><title>${esc(tip)}</title></rect>` +
       `<rect x="${x(0)}" y="${yy + 3}" width="${Math.max(0.5, x(r.va) - x(0))}" height="8" fill="var(--down)" opacity=".7"><title>${esc(tip)}</title></rect>` +
       `<rect x="${Math.min(x(r.vn), x(0))}" y="${yy + 14}" width="${Math.max(1, Math.abs(x(r.vn) - x(0)))}" height="9" fill="var(--text-primary)" opacity=".85"><title>${esc(tip)}</title></rect>` +
@@ -239,6 +257,7 @@ function renderGFClose(rows) {
   host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;height:auto" role="img" aria-label="Net General Fund staffing change of each closure">${s}</svg>` +
     `<div class="rplegend" style="margin-top:2px"><span><i class="k" style="height:8px;width:14px;border:0;background:var(--up);vertical-align:-1px"></i>saved at the closed school${PS ? ', per student moved' : ''}</span><span><i class="k" style="height:8px;width:14px;border:0;background:var(--down);opacity:.7;vertical-align:-1px"></i>added at the receiving schools${PS ? ', per student moved' : ''}</span><span><i class="k" style="height:9px;width:14px;border:0;background:var(--text-primary);vertical-align:-1px"></i>net change${PS ? ' per student moved' : ' a year'}</span></div>`;
   sub.innerHTML = `${esc(LABEL[base])}, ${yr}${D.years.indexOf(gfYear) < D.years.indexOf(D.impl_year) ? ` (closures take effect in ${D.impl_year}, so that year is shown)` : ''}: for each school the scenario closes, the General Fund staffing saved there against the staff its receiving schools add for its students. Both are projected forward with each school's General Fund-to-formula ratio (its 2026-27 General Fund staffing over its 2026-27 formula staffing): saved = the closed school's ratio x its formula staffing in ${yr}; added = the formula's added staffing for the students each receiving school takes x that school's ratio (hover a row for the figures). ` +
+    `<b>Actual-budget estimate</b>: built from each school's actual 2026-27 General Fund staffing, so it differs from the <b>formula estimate</b> in the Building, staffing and land costs table (PPS's staffing formula at average salaries) wherever a school's actual staffing is above or below what the formula gives it; hover a row for both. ` +
     `${PS ? 'Shown per student moved (each closure\'s figures over its students); switch Show to Net total for dollars a year. ' : 'Shown in total dollars a year; switch Show to Per student for each closure over its students. '}Closures run from the largest net saving${PS ? ' per student moved' : ''}. All ${out.length}: <b>${tot.net < 0 ? gfM(-tot.net) + ' a year saved' : gfM(tot.net) + ' a year more'}</b> net (${gfM(tot.saved)} saved, ${gfM(tot.added)} added), about ${gfUsd(Math.abs(tot.net) / Math.max(1, tot.n))} per student moved. Staffing only: building operating costs, transportation and centrally allocated staff are not included. Hover a row for the receiving schools.`;
 }
 function renderCostCurve() {""")
