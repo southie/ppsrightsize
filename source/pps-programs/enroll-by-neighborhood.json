@@ -1,0 +1,3389 @@
+{
+ "source": "PPS Enrollment Summary, October 2025, by K-12 Students' School and High School Area (archive/SchoolProfiles-EnrollByNeighborhood25-26.pdf)",
+ "schools": {
+  "Abernethy": {
+   "Total": {
+    "total": 269,
+    "nbhd": 249,
+    "nbhd_share": 0.9257,
+    "areas": {
+     "Cleveland": 11,
+     "Franklin": 6,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 1
+    },
+    "outside": 1
+   }
+  },
+  "Ainsworth": {
+   "Neighborhood Program": {
+    "total": 273,
+    "nbhd": 256,
+    "nbhd_share": 0.9377,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 3,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 8,
+     "McDaniel": 1,
+     "Roosevelt": 0
+    },
+    "outside": 3
+   },
+   "Spanish Immersion": {
+    "total": 287,
+    "nbhd": 137,
+    "nbhd_share": 0.4774,
+    "areas": {
+     "Cleveland": 6,
+     "Franklin": 2,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 76,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 54,
+     "McDaniel": 1,
+     "Roosevelt": 0
+    },
+    "outside": 5
+   },
+   "Total": {
+    "total": 560,
+    "nbhd": 393,
+    "nbhd_share": 0.7018,
+    "areas": {
+     "Cleveland": 6,
+     "Franklin": 2,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 79,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 4,
+     "Lincoln": 62,
+     "McDaniel": 2,
+     "Roosevelt": 0
+    },
+    "outside": 8
+   }
+  },
+  "Alameda": {
+   "Total": {
+    "total": 513,
+    "nbhd": 469,
+    "nbhd_share": 0.9142,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 6,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 7,
+     "Jefferson / McDaniel": 9,
+     "Jefferson / Roosevelt": 8,
+     "Lincoln": 0,
+     "McDaniel": 12,
+     "Roosevelt": 0
+    },
+    "outside": 2
+   }
+  },
+  "Arleta": {
+   "Total": {
+    "total": 230,
+    "nbhd": 186,
+    "nbhd_share": 0.8087,
+    "areas": {
+     "Cleveland": 5,
+     "Franklin": 27,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 2,
+     "Roosevelt": 0
+    },
+    "outside": 9
+   }
+  },
+  "Astor": {
+   "Total": {
+    "total": 400,
+    "nbhd": 333,
+    "nbhd_share": 0.8325,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 19,
+     "Lincoln": 0,
+     "McDaniel": 1,
+     "Roosevelt": 45
+    },
+    "outside": 0
+   }
+  },
+  "Atkinson": {
+   "Neighborhood Program": {
+    "total": 188,
+    "nbhd": 156,
+    "nbhd_share": 0.8298,
+    "areas": {
+     "Cleveland": 8,
+     "Franklin": 15,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 2,
+     "Roosevelt": 2
+    },
+    "outside": 1
+   },
+   "Spanish Immersion": {
+    "total": 178,
+    "nbhd": 60,
+    "nbhd_share": 0.3371,
+    "areas": {
+     "Cleveland": 29,
+     "Franklin": 55,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 21,
+     "Roosevelt": 0
+    },
+    "outside": 11
+   },
+   "Total": {
+    "total": 366,
+    "nbhd": 216,
+    "nbhd_share": 0.5902,
+    "areas": {
+     "Cleveland": 37,
+     "Franklin": 70,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 23,
+     "Roosevelt": 2
+    },
+    "outside": 12
+   }
+  },
+  "Beach": {
+   "Neighborhood Program": {
+    "total": 133,
+    "nbhd": 120,
+    "nbhd_share": 0.9023,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 8,
+     "Lincoln": 1,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 2
+   },
+   "Spanish Immersion": {
+    "total": 155,
+    "nbhd": 73,
+    "nbhd_share": 0.471,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 5,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 17,
+     "Jefferson / McDaniel": 8,
+     "Jefferson / Roosevelt": 38,
+     "Lincoln": 0,
+     "McDaniel": 3,
+     "Roosevelt": 11
+    },
+    "outside": 0
+   },
+   "Total": {
+    "total": 288,
+    "nbhd": 193,
+    "nbhd_share": 0.6701,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 5,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 19,
+     "Jefferson / McDaniel": 8,
+     "Jefferson / Roosevelt": 46,
+     "Lincoln": 1,
+     "McDaniel": 3,
+     "Roosevelt": 11
+    },
+    "outside": 2
+   }
+  },
+  "Beverly Cleary": {
+   "Total": {
+    "total": 480,
+    "nbhd": 428,
+    "nbhd_share": 0.8917,
+    "areas": {
+     "Cleveland": 4,
+     "Franklin": 0,
+     "Grant": 5,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 18,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 6,
+     "Lincoln": 1,
+     "McDaniel": 9,
+     "Roosevelt": 3
+    },
+    "outside": 4
+   }
+  },
+  "Boise-Eliot/Humboldt": {
+   "Total": {
+    "total": 294,
+    "nbhd": 218,
+    "nbhd_share": 0.7415,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 2,
+     "Grant": 7,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 8,
+     "Jefferson / McDaniel": 6,
+     "Jefferson / Roosevelt": 22,
+     "Lincoln": 3,
+     "McDaniel": 8,
+     "Roosevelt": 9
+    },
+    "outside": 9
+   }
+  },
+  "Bridger Creative Science": {
+   "Total": {
+    "total": 446,
+    "nbhd": 143,
+    "nbhd_share": 0.3206,
+    "areas": {
+     "Cleveland": 23,
+     "Franklin": 137,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 118,
+     "Roosevelt": 1
+    },
+    "outside": 21
+   }
+  },
+  "Bridlemile": {
+   "Total": {
+    "total": 423,
+    "nbhd": 385,
+    "nbhd_share": 0.9102,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 20,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 11,
+     "McDaniel": 0,
+     "Roosevelt": 1
+    },
+    "outside": 6
+   }
+  },
+  "Buckman": {
+   "Total": {
+    "total": 283,
+    "nbhd": 133,
+    "nbhd_share": 0.47,
+    "areas": {
+     "Cleveland": 24,
+     "Franklin": 42,
+     "Grant": 3,
+     "Ida B. Wells-Barnett": 3,
+     "Jefferson / Grant": 12,
+     "Jefferson / McDaniel": 9,
+     "Jefferson / Roosevelt": 12,
+     "Lincoln": 3,
+     "McDaniel": 37,
+     "Roosevelt": 2
+    },
+    "outside": 3
+   }
+  },
+  "Capitol Hill": {
+   "Total": {
+    "total": 325,
+    "nbhd": 303,
+    "nbhd_share": 0.9323,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 18,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 4
+   }
+  },
+  "César Chávez": {
+   "Neighborhood Program": {
+    "total": 143,
+    "nbhd": 99,
+    "nbhd_share": 0.6923,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 5,
+     "Lincoln": 3,
+     "McDaniel": 2,
+     "Roosevelt": 28
+    },
+    "outside": 4
+   },
+   "Spanish Immersion": {
+    "total": 300,
+    "nbhd": 115,
+    "nbhd_share": 0.3833,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 3,
+     "Jefferson / McDaniel": 3,
+     "Jefferson / Roosevelt": 38,
+     "Lincoln": 0,
+     "McDaniel": 2,
+     "Roosevelt": 138
+    },
+    "outside": 1
+   },
+   "Total": {
+    "total": 443,
+    "nbhd": 214,
+    "nbhd_share": 0.4831,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 5,
+     "Jefferson / McDaniel": 3,
+     "Jefferson / Roosevelt": 43,
+     "Lincoln": 3,
+     "McDaniel": 4,
+     "Roosevelt": 166
+    },
+    "outside": 5
+   }
+  },
+  "Chapman": {
+   "Total": {
+    "total": 330,
+    "nbhd": 322,
+    "nbhd_share": 0.9758,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 2,
+     "McDaniel": 0,
+     "Roosevelt": 1
+    },
+    "outside": 3
+   }
+  },
+  "Chief Joseph": {
+   "Total": {
+    "total": 242,
+    "nbhd": 222,
+    "nbhd_share": 0.9174,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 1,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 9,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 7
+    },
+    "outside": 1
+   }
+  },
+  "Clark": {
+   "Mandarin Immersion": {
+    "total": 91,
+    "nbhd": 71,
+    "nbhd_share": 0.7802,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 9,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 10
+   },
+   "Neighborhood Program": {
+    "total": 273,
+    "nbhd": 247,
+    "nbhd_share": 0.9048,
+    "areas": {
+     "Cleveland": 5,
+     "Franklin": 9,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 2,
+     "Roosevelt": 1
+    },
+    "outside": 8
+   },
+   "Total": {
+    "total": 364,
+    "nbhd": 318,
+    "nbhd_share": 0.8736,
+    "areas": {
+     "Cleveland": 5,
+     "Franklin": 18,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 2,
+     "Roosevelt": 1
+    },
+    "outside": 18
+   }
+  },
+  "Creston": {
+   "Total": {
+    "total": 213,
+    "nbhd": 162,
+    "nbhd_share": 0.7606,
+    "areas": {
+     "Cleveland": 12,
+     "Franklin": 7,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 5,
+     "Roosevelt": 2
+    },
+    "outside": 21
+   }
+  },
+  "Duniway": {
+   "Total": {
+    "total": 362,
+    "nbhd": 348,
+    "nbhd_share": 0.9613,
+    "areas": {
+     "Cleveland": 10,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 3
+   }
+  },
+  "Faubion": {
+   "Total": {
+    "total": 600,
+    "nbhd": 521,
+    "nbhd_share": 0.8683,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 5,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 15,
+     "Jefferson / McDaniel": 5,
+     "Jefferson / Roosevelt": 16,
+     "Lincoln": 3,
+     "McDaniel": 14,
+     "Roosevelt": 10
+    },
+    "outside": 10
+   }
+  },
+  "Glencoe": {
+   "Total": {
+    "total": 339,
+    "nbhd": 295,
+    "nbhd_share": 0.8702,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 26,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 4,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 3,
+     "Roosevelt": 2
+    },
+    "outside": 6
+   }
+  },
+  "Grout": {
+   "Total": {
+    "total": 327,
+    "nbhd": 298,
+    "nbhd_share": 0.9113,
+    "areas": {
+     "Cleveland": 6,
+     "Franklin": 15,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 2,
+     "Lincoln": 1,
+     "McDaniel": 2,
+     "Roosevelt": 0
+    },
+    "outside": 2
+   }
+  },
+  "Hayhurst": {
+   "Neighborhood Program": {
+    "total": 290,
+    "nbhd": 262,
+    "nbhd_share": 0.9034,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 4,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 19,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 1,
+     "McDaniel": 0,
+     "Roosevelt": 1
+    },
+    "outside": 1
+   },
+   "Total": {
+    "total": 290,
+    "nbhd": 262,
+    "nbhd_share": 0.9034,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 4,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 19,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 1,
+     "McDaniel": 0,
+     "Roosevelt": 1
+    },
+    "outside": 1
+   }
+  },
+  "Irvington": {
+   "Total": {
+    "total": 259,
+    "nbhd": 212,
+    "nbhd_share": 0.8185,
+    "areas": {
+     "Cleveland": 4,
+     "Franklin": 1,
+     "Grant": 3,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 14,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 2,
+     "Lincoln": 1,
+     "McDaniel": 7,
+     "Roosevelt": 7
+    },
+    "outside": 5
+   }
+  },
+  "James John": {
+   "Neighborhood Program": {
+    "total": 232,
+    "nbhd": 199,
+    "nbhd_share": 0.8578,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 3,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 24
+    },
+    "outside": 4
+   },
+   "Spanish Immersion": {
+    "total": 133,
+    "nbhd": 96,
+    "nbhd_share": 0.7218,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 6,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 28
+    },
+    "outside": 1
+   },
+   "Total": {
+    "total": 365,
+    "nbhd": 295,
+    "nbhd_share": 0.8082,
+    "areas": {
+     "Cleveland": 3,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 3,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 7,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 52
+    },
+    "outside": 5
+   }
+  },
+  "Kelly": {
+   "Neighborhood Program": {
+    "total": 268,
+    "nbhd": 213,
+    "nbhd_share": 0.7948,
+    "areas": {
+     "Cleveland": 12,
+     "Franklin": 20,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 9,
+     "Roosevelt": 3
+    },
+    "outside": 9
+   },
+   "Russian Immersion": {
+    "total": 143,
+    "nbhd": 13,
+    "nbhd_share": 0.0909,
+    "areas": {
+     "Cleveland": 6,
+     "Franklin": 14,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 1,
+     "McDaniel": 7,
+     "Roosevelt": 0
+    },
+    "outside": 98
+   },
+   "Total": {
+    "total": 411,
+    "nbhd": 226,
+    "nbhd_share": 0.5499,
+    "areas": {
+     "Cleveland": 18,
+     "Franklin": 34,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 1,
+     "McDaniel": 16,
+     "Roosevelt": 3
+    },
+    "outside": 107
+   }
+  },
+  "Laurelhurst": {
+   "Total": {
+    "total": 610,
+    "nbhd": 572,
+    "nbhd_share": 0.9377,
+    "areas": {
+     "Cleveland": 4,
+     "Franklin": 5,
+     "Grant": 8,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 5,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 5,
+     "Lincoln": 0,
+     "McDaniel": 7,
+     "Roosevelt": 0
+    },
+    "outside": 2
+   }
+  },
+  "Lee": {
+   "Total": {
+    "total": 251,
+    "nbhd": 208,
+    "nbhd_share": 0.8287,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 4,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 2,
+     "Lincoln": 0,
+     "McDaniel": 25,
+     "Roosevelt": 2
+    },
+    "outside": 6
+   }
+  },
+  "Lent": {
+   "Spanish Immersion": {
+    "total": 256,
+    "nbhd": 80,
+    "nbhd_share": 0.3125,
+    "areas": {
+     "Cleveland": 22,
+     "Franklin": 92,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 32,
+     "Roosevelt": 0
+    },
+    "outside": 28
+   },
+   "Total": {
+    "total": 256,
+    "nbhd": 80,
+    "nbhd_share": 0.3125,
+    "areas": {
+     "Cleveland": 22,
+     "Franklin": 92,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 32,
+     "Roosevelt": 0
+    },
+    "outside": 28
+   }
+  },
+  "Lewis": {
+   "Total": {
+    "total": 259,
+    "nbhd": 180,
+    "nbhd_share": 0.695,
+    "areas": {
+     "Cleveland": 47,
+     "Franklin": 14,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 4,
+     "Roosevelt": 0
+    },
+    "outside": 13
+   }
+  },
+  "Llewellyn": {
+   "Total": {
+    "total": 345,
+    "nbhd": 303,
+    "nbhd_share": 0.8783,
+    "areas": {
+     "Cleveland": 17,
+     "Franklin": 6,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 3,
+     "McDaniel": 2,
+     "Roosevelt": 1
+    },
+    "outside": 11
+   }
+  },
+  "Maplewood": {
+   "Total": {
+    "total": 287,
+    "nbhd": 256,
+    "nbhd_share": 0.892,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 23,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 7,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 1
+   }
+  },
+  "Markham": {
+   "Total": {
+    "total": 339,
+    "nbhd": 322,
+    "nbhd_share": 0.9499,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 11,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 3,
+     "McDaniel": 0,
+     "Roosevelt": 1
+    },
+    "outside": 2
+   }
+  },
+  "Marysville": {
+   "Total": {
+    "total": 307,
+    "nbhd": 167,
+    "nbhd_share": 0.544,
+    "areas": {
+     "Cleveland": 5,
+     "Franklin": 115,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 6,
+     "Roosevelt": 0
+    },
+    "outside": 13
+   }
+  },
+  "MLK Jr": {
+   "Mandarin Immersion": {
+    "total": 193,
+    "nbhd": 41,
+    "nbhd_share": 0.2124,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 2,
+     "Grant": 5,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 47,
+     "Jefferson / McDaniel": 15,
+     "Jefferson / Roosevelt": 42,
+     "Lincoln": 2,
+     "McDaniel": 15,
+     "Roosevelt": 12
+    },
+    "outside": 10
+   },
+   "Neighborhood Program": {
+    "total": 126,
+    "nbhd": 74,
+    "nbhd_share": 0.5873,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 0,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 14,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 17,
+     "Lincoln": 3,
+     "McDaniel": 4,
+     "Roosevelt": 2
+    },
+    "outside": 4
+   },
+   "Total": {
+    "total": 319,
+    "nbhd": 115,
+    "nbhd_share": 0.3605,
+    "areas": {
+     "Cleveland": 3,
+     "Franklin": 2,
+     "Grant": 7,
+     "Ida B. Wells-Barnett": 3,
+     "Jefferson / Grant": 61,
+     "Jefferson / McDaniel": 17,
+     "Jefferson / Roosevelt": 59,
+     "Lincoln": 5,
+     "McDaniel": 19,
+     "Roosevelt": 14
+    },
+    "outside": 14
+   }
+  },
+  "Odyssey": {
+   "Total": {
+    "total": 217,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 4,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 151,
+     "Jefferson / Grant": 6,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 4,
+     "Lincoln": 46,
+     "McDaniel": 2,
+     "Roosevelt": 1
+    },
+    "outside": 3
+   }
+  },
+  "Peninsula": {
+   "Total": {
+    "total": 239,
+    "nbhd": 195,
+    "nbhd_share": 0.8159,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 3,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 7,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 5,
+     "Lincoln": 1,
+     "McDaniel": 1,
+     "Roosevelt": 26
+    },
+    "outside": 1
+   }
+  },
+  "Richmond": {
+   "Total": {
+    "total": 512,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 117,
+     "Franklin": 213,
+     "Grant": 20,
+     "Ida B. Wells-Barnett": 14,
+     "Jefferson / Grant": 8,
+     "Jefferson / McDaniel": 13,
+     "Jefferson / Roosevelt": 27,
+     "Lincoln": 14,
+     "McDaniel": 55,
+     "Roosevelt": 11
+    },
+    "outside": 20
+   }
+  },
+  "Rieke": {
+   "Total": {
+    "total": 264,
+    "nbhd": 243,
+    "nbhd_share": 0.9205,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 18,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 1,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 0
+   }
+  },
+  "Rigler": {
+   "Total": {
+    "total": 289,
+    "nbhd": 215,
+    "nbhd_share": 0.7439,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 1,
+     "Grant": 13,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 5,
+     "Jefferson / McDaniel": 7,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 1,
+     "McDaniel": 17,
+     "Roosevelt": 2
+    },
+    "outside": 25
+   }
+  },
+  "Rosa Parks": {
+   "Total": {
+    "total": 160,
+    "nbhd": 129,
+    "nbhd_share": 0.8063,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 4,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 25
+    },
+    "outside": 0
+   }
+  },
+  "Rose City Park": {
+   "Neighborhood Program": {
+    "total": 210,
+    "nbhd": 187,
+    "nbhd_share": 0.8905,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 2,
+     "Grant": 6,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 10,
+     "Roosevelt": 0
+    },
+    "outside": 3
+   },
+   "Vietnamese Immersion": {
+    "total": 207,
+    "nbhd": 69,
+    "nbhd_share": 0.3333,
+    "areas": {
+     "Cleveland": 8,
+     "Franklin": 25,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 5,
+     "Jefferson / Roosevelt": 4,
+     "Lincoln": 0,
+     "McDaniel": 57,
+     "Roosevelt": 0
+    },
+    "outside": 36
+   },
+   "Total": {
+    "total": 417,
+    "nbhd": 256,
+    "nbhd_share": 0.6139,
+    "areas": {
+     "Cleveland": 8,
+     "Franklin": 27,
+     "Grant": 8,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 6,
+     "Jefferson / Roosevelt": 5,
+     "Lincoln": 0,
+     "McDaniel": 67,
+     "Roosevelt": 0
+    },
+    "outside": 39
+   }
+  },
+  "Sabin": {
+   "Total": {
+    "total": 269,
+    "nbhd": 215,
+    "nbhd_share": 0.7993,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 1,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 8,
+     "Jefferson / McDaniel": 7,
+     "Jefferson / Roosevelt": 10,
+     "Lincoln": 5,
+     "McDaniel": 19,
+     "Roosevelt": 1
+    },
+    "outside": 0
+   }
+  },
+  "Scott": {
+   "Neighborhood Program": {
+    "total": 254,
+    "nbhd": 136,
+    "nbhd_share": 0.5354,
+    "areas": {
+     "Cleveland": 3,
+     "Franklin": 1,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 0,
+     "McDaniel": 105,
+     "Roosevelt": 1
+    },
+    "outside": 1
+   },
+   "Spanish Immersion": {
+    "total": 222,
+    "nbhd": 182,
+    "nbhd_share": 0.8198,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 0,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 27,
+     "Roosevelt": 1
+    },
+    "outside": 6
+   },
+   "Total": {
+    "total": 476,
+    "nbhd": 318,
+    "nbhd_share": 0.6681,
+    "areas": {
+     "Cleveland": 5,
+     "Franklin": 1,
+     "Grant": 3,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 4,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 0,
+     "McDaniel": 132,
+     "Roosevelt": 2
+    },
+    "outside": 7
+   }
+  },
+  "Sitton": {
+   "Neighborhood Program": {
+    "total": 207,
+    "nbhd": 180,
+    "nbhd_share": 0.8696,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 4,
+     "Lincoln": 2,
+     "McDaniel": 2,
+     "Roosevelt": 15
+    },
+    "outside": 1
+   },
+   "Spanish Immersion": {
+    "total": 138,
+    "nbhd": 118,
+    "nbhd_share": 0.8551,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 16
+    },
+    "outside": 0
+   },
+   "Total": {
+    "total": 345,
+    "nbhd": 298,
+    "nbhd_share": 0.8638,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 3,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 7,
+     "Lincoln": 2,
+     "McDaniel": 2,
+     "Roosevelt": 31
+    },
+    "outside": 1
+   }
+  },
+  "Skyline": {
+   "Total": {
+    "total": 207,
+    "nbhd": 194,
+    "nbhd_share": 0.9372,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 1,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 2,
+     "Lincoln": 3,
+     "McDaniel": 0,
+     "Roosevelt": 4
+    },
+    "outside": 3
+   }
+  },
+  "Stephenson": {
+   "Total": {
+    "total": 281,
+    "nbhd": 250,
+    "nbhd_share": 0.8897,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 23,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 2,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 6
+   }
+  },
+  "Sunnyside Environmental": {
+   "Total": {
+    "total": 485,
+    "nbhd": 219,
+    "nbhd_share": 0.4515,
+    "areas": {
+     "Cleveland": 76,
+     "Franklin": 98,
+     "Grant": 16,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 12,
+     "Jefferson / McDaniel": 10,
+     "Jefferson / Roosevelt": 9,
+     "Lincoln": 3,
+     "McDaniel": 33,
+     "Roosevelt": 1
+    },
+    "outside": 6
+   }
+  },
+  "Vernon": {
+   "Total": {
+    "total": 541,
+    "nbhd": 433,
+    "nbhd_share": 0.8004,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 3,
+     "Grant": 4,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 12,
+     "Jefferson / McDaniel": 14,
+     "Jefferson / Roosevelt": 38,
+     "Lincoln": 2,
+     "McDaniel": 23,
+     "Roosevelt": 4
+    },
+    "outside": 6
+   }
+  },
+  "Vestal": {
+   "Total": {
+    "total": 283,
+    "nbhd": 241,
+    "nbhd_share": 0.8516,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 7,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 3,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 1,
+     "McDaniel": 12,
+     "Roosevelt": 2
+    },
+    "outside": 10
+   }
+  },
+  "Whitman": {
+   "Total": {
+    "total": 194,
+    "nbhd": 183,
+    "nbhd_share": 0.9433,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 5,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 5
+   }
+  },
+  "Winterhaven": {
+   "Total": {
+    "total": 316,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 161,
+     "Franklin": 71,
+     "Grant": 9,
+     "Ida B. Wells-Barnett": 8,
+     "Jefferson / Grant": 13,
+     "Jefferson / McDaniel": 5,
+     "Jefferson / Roosevelt": 9,
+     "Lincoln": 6,
+     "McDaniel": 18,
+     "Roosevelt": 1
+    },
+    "outside": 15
+   }
+  },
+  "Woodlawn": {
+   "Total": {
+    "total": 323,
+    "nbhd": 270,
+    "nbhd_share": 0.8359,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 1,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 7,
+     "Jefferson / McDaniel": 7,
+     "Jefferson / Roosevelt": 18,
+     "Lincoln": 0,
+     "McDaniel": 4,
+     "Roosevelt": 11
+    },
+    "outside": 3
+   }
+  },
+  "Woodmere": {
+   "Total": {
+    "total": 227,
+    "nbhd": 141,
+    "nbhd_share": 0.6211,
+    "areas": {
+     "Cleveland": 12,
+     "Franklin": 50,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 1,
+     "McDaniel": 5,
+     "Roosevelt": 0
+    },
+    "outside": 13
+   }
+  },
+  "Woodstock": {
+   "Mandarin Immersion": {
+    "total": 190,
+    "nbhd": 49,
+    "nbhd_share": 0.2579,
+    "areas": {
+     "Cleveland": 53,
+     "Franklin": 55,
+     "Grant": 3,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 1,
+     "McDaniel": 17,
+     "Roosevelt": 0
+    },
+    "outside": 10
+   },
+   "Neighborhood Program": {
+    "total": 177,
+    "nbhd": 118,
+    "nbhd_share": 0.6667,
+    "areas": {
+     "Cleveland": 39,
+     "Franklin": 13,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 1,
+     "McDaniel": 4,
+     "Roosevelt": 0
+    },
+    "outside": 1
+   },
+   "Total": {
+    "total": 367,
+    "nbhd": 167,
+    "nbhd_share": 0.455,
+    "areas": {
+     "Cleveland": 92,
+     "Franklin": 68,
+     "Grant": 3,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 2,
+     "McDaniel": 21,
+     "Roosevelt": 0
+    },
+    "outside": 11
+   }
+  },
+  "3% 19,071 Beaumont": {
+   "Neighborhood Program": {
+    "total": 315,
+    "nbhd": 271,
+    "nbhd_share": 0.8603,
+    "areas": {
+     "Cleveland": 3,
+     "Franklin": 0,
+     "Grant": 3,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 3,
+     "Jefferson / McDaniel": 18,
+     "Jefferson / Roosevelt": 9,
+     "Lincoln": 1,
+     "McDaniel": 7,
+     "Roosevelt": 0
+    },
+    "outside": 0
+   },
+   "Spanish Immersion": {
+    "total": 101,
+    "nbhd": 74,
+    "nbhd_share": 0.7327,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 1,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 6,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 12,
+     "Roosevelt": 1
+    },
+    "outside": 4
+   }
+  },
+  "Beaumont": {
+   "Total": {
+    "total": 416,
+    "nbhd": 345,
+    "nbhd_share": 0.8293,
+    "areas": {
+     "Cleveland": 3,
+     "Franklin": 1,
+     "Grant": 5,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 3,
+     "Jefferson / McDaniel": 24,
+     "Jefferson / Roosevelt": 10,
+     "Lincoln": 1,
+     "McDaniel": 19,
+     "Roosevelt": 1
+    },
+    "outside": 4
+   }
+  },
+  "da Vinci": {
+   "Total": {
+    "total": 429,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 67,
+     "Franklin": 86,
+     "Grant": 27,
+     "Ida B. Wells-Barnett": 4,
+     "Jefferson / Grant": 56,
+     "Jefferson / McDaniel": 21,
+     "Jefferson / Roosevelt": 63,
+     "Lincoln": 7,
+     "McDaniel": 62,
+     "Roosevelt": 30
+    },
+    "outside": 6
+   }
+  },
+  "George": {
+   "Total": {
+    "total": 358,
+    "nbhd": 333,
+    "nbhd_share": 0.9302,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 10,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 13
+    },
+    "outside": 0
+   }
+  },
+  "Gray": {
+   "Total": {
+    "total": 432,
+    "nbhd": 408,
+    "nbhd_share": 0.9444,
+    "areas": {
+     "Cleveland": 3,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 14,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 5,
+     "McDaniel": 0,
+     "Roosevelt": 1
+    },
+    "outside": 1
+   }
+  },
+  "Harriet Tubman": {
+   "Mandarin Immersion": {
+    "total": 48,
+    "nbhd": 19,
+    "nbhd_share": 0.3958,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 1,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 13,
+     "Lincoln": 2,
+     "McDaniel": 6,
+     "Roosevelt": 2
+    },
+    "outside": 0
+   },
+   "Neighborhood Program": {
+    "total": 354,
+    "nbhd": 329,
+    "nbhd_share": 0.9294,
+    "areas": {
+     "Cleveland": 3,
+     "Franklin": 1,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 3,
+     "Jefferson / Roosevelt": 6,
+     "Lincoln": 3,
+     "McDaniel": 5,
+     "Roosevelt": 2
+    },
+    "outside": 1
+   },
+   "Total": {
+    "total": 402,
+    "nbhd": 348,
+    "nbhd_share": 0.8657,
+    "areas": {
+     "Cleveland": 3,
+     "Franklin": 2,
+     "Grant": 3,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 5,
+     "Jefferson / Roosevelt": 19,
+     "Lincoln": 5,
+     "McDaniel": 11,
+     "Roosevelt": 4
+    },
+    "outside": 1
+   }
+  },
+  "Harrison Park": {
+   "Mandarin Immersion": {
+    "total": 111,
+    "nbhd": 36,
+    "nbhd_share": 0.3243,
+    "areas": {
+     "Cleveland": 40,
+     "Franklin": 20,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 13
+   },
+   "Neighborhood Program": {
+    "total": 308,
+    "nbhd": 273,
+    "nbhd_share": 0.8864,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 14,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 1,
+     "McDaniel": 2,
+     "Roosevelt": 0
+    },
+    "outside": 16
+   },
+   "Total": {
+    "total": 419,
+    "nbhd": 309,
+    "nbhd_share": 0.7375,
+    "areas": {
+     "Cleveland": 42,
+     "Franklin": 34,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 1,
+     "McDaniel": 2,
+     "Roosevelt": 0
+    },
+    "outside": 29
+   }
+  },
+  "Hosford": {
+   "Total": {
+    "total": 528,
+    "nbhd": 487,
+    "nbhd_share": 0.9223,
+    "areas": {
+     "Cleveland": 20,
+     "Franklin": 9,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 1,
+     "McDaniel": 3,
+     "Roosevelt": 0
+    },
+    "outside": 5
+   }
+  },
+  "Jackson": {
+   "Total": {
+    "total": 689,
+    "nbhd": 678,
+    "nbhd_share": 0.984,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 7,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 2,
+     "McDaniel": 0,
+     "Roosevelt": 1
+    },
+    "outside": 1
+   }
+  },
+  "Kellogg": {
+   "Neighborhood Program": {
+    "total": 330,
+    "nbhd": 300,
+    "nbhd_share": 0.9091,
+    "areas": {
+     "Cleveland": 5,
+     "Franklin": 13,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 2,
+     "Lincoln": 1,
+     "McDaniel": 6,
+     "Roosevelt": 0
+    },
+    "outside": 3
+   },
+   "Spanish Immersion": {
+    "total": 201,
+    "nbhd": 45,
+    "nbhd_share": 0.2239,
+    "areas": {
+     "Cleveland": 24,
+     "Franklin": 93,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 19,
+     "Roosevelt": 0
+    },
+    "outside": 19
+   },
+   "Total": {
+    "total": 531,
+    "nbhd": 345,
+    "nbhd_share": 0.6497,
+    "areas": {
+     "Cleveland": 29,
+     "Franklin": 106,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 2,
+     "Lincoln": 1,
+     "McDaniel": 25,
+     "Roosevelt": 0
+    },
+    "outside": 22
+   }
+  },
+  "Lane": {
+   "Neighborhood Program": {
+    "total": 411,
+    "nbhd": 384,
+    "nbhd_share": 0.9343,
+    "areas": {
+     "Cleveland": 3,
+     "Franklin": 9,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 6,
+     "Roosevelt": 0
+    },
+    "outside": 8
+   },
+   "Russian Immersion": {
+    "total": 36,
+    "nbhd": 8,
+    "nbhd_share": 0.2222,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 5,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 3,
+     "Roosevelt": 0
+    },
+    "outside": 19
+   },
+   "Total": {
+    "total": 447,
+    "nbhd": 392,
+    "nbhd_share": 0.877,
+    "areas": {
+     "Cleveland": 4,
+     "Franklin": 14,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 9,
+     "Roosevelt": 0
+    },
+    "outside": 27
+   }
+  },
+  "Mt Tabor": {
+   "Japanese Immersion": {
+    "total": 222,
+    "nbhd": 26,
+    "nbhd_share": 0.1171,
+    "areas": {
+     "Cleveland": 35,
+     "Franklin": 66,
+     "Grant": 17,
+     "Ida B. Wells-Barnett": 7,
+     "Jefferson / Grant": 10,
+     "Jefferson / McDaniel": 11,
+     "Jefferson / Roosevelt": 10,
+     "Lincoln": 2,
+     "McDaniel": 33,
+     "Roosevelt": 1
+    },
+    "outside": 4
+   },
+   "Neighborhood Program": {
+    "total": 208,
+    "nbhd": 170,
+    "nbhd_share": 0.8173,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 15,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 3,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 8,
+     "Roosevelt": 1
+    },
+    "outside": 6
+   },
+   "Total": {
+    "total": 430,
+    "nbhd": 196,
+    "nbhd_share": 0.4558,
+    "areas": {
+     "Cleveland": 37,
+     "Franklin": 81,
+     "Grant": 18,
+     "Ida B. Wells-Barnett": 8,
+     "Jefferson / Grant": 13,
+     "Jefferson / McDaniel": 11,
+     "Jefferson / Roosevelt": 11,
+     "Lincoln": 2,
+     "McDaniel": 41,
+     "Roosevelt": 2
+    },
+    "outside": 10
+   }
+  },
+  "Ockley Green": {
+   "Neighborhood Program": {
+    "total": 397,
+    "nbhd": 374,
+    "nbhd_share": 0.9421,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 1,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 4,
+     "Jefferson / McDaniel": 5,
+     "Jefferson / Roosevelt": 2,
+     "Lincoln": 0,
+     "McDaniel": 2,
+     "Roosevelt": 8
+    },
+    "outside": 0
+   },
+   "Spanish Immersion": {
+    "total": 63,
+    "nbhd": 52,
+    "nbhd_share": 0.8254,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 7,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 2
+    },
+    "outside": 0
+   },
+   "Total": {
+    "total": 460,
+    "nbhd": 426,
+    "nbhd_share": 0.9261,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 1,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 11,
+     "Jefferson / McDaniel": 7,
+     "Jefferson / Roosevelt": 2,
+     "Lincoln": 0,
+     "McDaniel": 2,
+     "Roosevelt": 10
+    },
+    "outside": 0
+   }
+  },
+  "Roseway Heights": {
+   "Neighborhood Program": {
+    "total": 415,
+    "nbhd": 307,
+    "nbhd_share": 0.7398,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 7,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 4,
+     "Jefferson / Roosevelt": 2,
+     "Lincoln": 0,
+     "McDaniel": 79,
+     "Roosevelt": 0
+    },
+    "outside": 12
+   },
+   "Spanish Immersion": {
+    "total": 93,
+    "nbhd": 72,
+    "nbhd_share": 0.7742,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 1,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 11,
+     "Roosevelt": 0
+    },
+    "outside": 7
+   },
+   "Vietnamese Immersion": {
+    "total": 64,
+    "nbhd": 22,
+    "nbhd_share": 0.3438,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 7,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 2,
+     "Lincoln": 0,
+     "McDaniel": 15,
+     "Roosevelt": 0
+    },
+    "outside": 14
+   },
+   "Total": {
+    "total": 572,
+    "nbhd": 401,
+    "nbhd_share": 0.701,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 15,
+     "Grant": 6,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 5,
+     "Jefferson / Roosevelt": 4,
+     "Lincoln": 0,
+     "McDaniel": 105,
+     "Roosevelt": 0
+    },
+    "outside": 33
+   }
+  },
+  "Sellwood": {
+   "Total": {
+    "total": 564,
+    "nbhd": 534,
+    "nbhd_share": 0.9468,
+    "areas": {
+     "Cleveland": 16,
+     "Franklin": 2,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 1,
+     "McDaniel": 0,
+     "Roosevelt": 1
+    },
+    "outside": 7
+   }
+  },
+  "West Sylvan": {
+   "Neighborhood Program": {
+    "total": 567,
+    "nbhd": 539,
+    "nbhd_share": 0.9506,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 1,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 12,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 4,
+     "McDaniel": 1,
+     "Roosevelt": 2
+    },
+    "outside": 6
+   },
+   "Spanish Immersion": {
+    "total": 116,
+    "nbhd": 74,
+    "nbhd_share": 0.6379,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 1,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 36,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 1,
+     "Roosevelt": 0
+    },
+    "outside": 2
+   },
+   "Total": {
+    "total": 683,
+    "nbhd": 613,
+    "nbhd_share": 0.8975,
+    "areas": {
+     "Cleveland": 3,
+     "Franklin": 2,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 48,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 4,
+     "McDaniel": 2,
+     "Roosevelt": 2
+    },
+    "outside": 8
+   }
+  },
+  "Middle Schools": {
+   "Total": {
+    "total": 7360,
+    "nbhd": 5815,
+    "nbhd_share": 0.7901,
+    "areas": {
+     "Cleveland": 230,
+     "Franklin": 353,
+     "Grant": 61,
+     "Ida B. Wells-Barnett": 84,
+     "Jefferson / Grant": 86,
+     "Jefferson / McDaniel": 77,
+     "Jefferson / Roosevelt": 124,
+     "Lincoln": 30,
+     "McDaniel": 281,
+     "Roosevelt": 65
+    },
+    "outside": 154
+   }
+  },
+  "Benson": {
+   "Total": {
+    "total": 1025,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 225,
+     "Franklin": 173,
+     "Grant": 36,
+     "Ida B. Wells-Barnett": 45,
+     "Jefferson / Grant": 78,
+     "Jefferson / McDaniel": 39,
+     "Jefferson / Roosevelt": 143,
+     "Lincoln": 14,
+     "McDaniel": 145,
+     "Roosevelt": 73
+    },
+    "outside": 54
+   },
+   "Mandarin Immersion": {
+    "total": 115,
+    "nbhd": 69,
+    "nbhd_share": 0.6,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 27,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 9,
+     "Roosevelt": 0
+    },
+    "outside": 7
+   },
+   "Neighborhood Program": {
+    "total": 1336,
+    "nbhd": 1265,
+    "nbhd_share": 0.9469,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 34,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 2,
+     "McDaniel": 10,
+     "Roosevelt": 1
+    },
+    "outside": 15
+   }
+  },
+  "Cleveland": {
+   "Total": {
+    "total": 1451,
+    "nbhd": 1334,
+    "nbhd_share": 0.9194,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 61,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 3,
+     "Jefferson / Grant": 3,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 4,
+     "Lincoln": 2,
+     "McDaniel": 19,
+     "Roosevelt": 1
+    },
+    "outside": 22
+   },
+   "Neighborhood Program": {
+    "total": 1578,
+    "nbhd": 1481,
+    "nbhd_share": 0.9385,
+    "areas": {
+     "Cleveland": 45,
+     "Franklin": 0,
+     "Grant": 5,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 0,
+     "McDaniel": 13,
+     "Roosevelt": 1
+    },
+    "outside": 29
+   },
+   "Russian Immersion": {
+    "total": 29,
+    "nbhd": 13,
+    "nbhd_share": 0.4483,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 1,
+     "Roosevelt": 0
+    },
+    "outside": 14
+   },
+   "Spanish Immersion": {
+    "total": 173,
+    "nbhd": 144,
+    "nbhd_share": 0.8324,
+    "areas": {
+     "Cleveland": 20,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 5,
+     "Roosevelt": 0
+    },
+    "outside": 4
+   }
+  },
+  "Franklin": {
+   "Total": {
+    "total": 1780,
+    "nbhd": 1638,
+    "nbhd_share": 0.9202,
+    "areas": {
+     "Cleveland": 66,
+     "Franklin": 0,
+     "Grant": 5,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 0,
+     "McDaniel": 19,
+     "Roosevelt": 1
+    },
+    "outside": 47
+   },
+   "Japanese Immersion": {
+    "total": 265,
+    "nbhd": 28,
+    "nbhd_share": 0.1057,
+    "areas": {
+     "Cleveland": 47,
+     "Franklin": 75,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 14,
+     "Jefferson / Grant": 10,
+     "Jefferson / McDaniel": 19,
+     "Jefferson / Roosevelt": 13,
+     "Lincoln": 3,
+     "McDaniel": 40,
+     "Roosevelt": 5
+    },
+    "outside": 11
+   },
+   "Neighborhood Program": {
+    "total": 1809,
+    "nbhd": 1039,
+    "nbhd_share": 0.5744,
+    "areas": {
+     "Cleveland": 14,
+     "Franklin": 28,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 652,
+     "Jefferson / McDaniel": 17,
+     "Jefferson / Roosevelt": 17,
+     "Lincoln": 1,
+     "McDaniel": 23,
+     "Roosevelt": 9
+    },
+    "outside": 7
+   }
+  },
+  "Grant": {
+   "Total": {
+    "total": 2074,
+    "nbhd": 1067,
+    "nbhd_share": 0.5145,
+    "areas": {
+     "Cleveland": 61,
+     "Franklin": 103,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 16,
+     "Jefferson / Grant": 662,
+     "Jefferson / McDaniel": 36,
+     "Jefferson / Roosevelt": 30,
+     "Lincoln": 4,
+     "McDaniel": 63,
+     "Roosevelt": 14
+    },
+    "outside": 18
+   }
+  },
+  "Ida B. Wells-Barnett": {
+   "Total": {
+    "total": 1574,
+    "nbhd": 1539,
+    "nbhd_share": 0.9778,
+    "areas": {
+     "Cleveland": 4,
+     "Franklin": 3,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 10,
+     "McDaniel": 1,
+     "Roosevelt": 0
+    },
+    "outside": 13
+   }
+  },
+  "Jefferson": {
+   "Mandarin Immersion": {
+    "total": 14,
+    "nbhd": 9,
+    "nbhd_share": 0.6429,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 3
+    },
+    "outside": 1
+   },
+   "Neighborhood Program": {
+    "total": 1469,
+    "nbhd": 1302,
+    "nbhd_share": 0.8863,
+    "areas": {
+     "Cleveland": 16,
+     "Franklin": 11,
+     "Grant": 9,
+     "Ida B. Wells-Barnett": 48,
+     "Jefferson / Grant": 14,
+     "Jefferson / McDaniel": 3,
+     "Jefferson / Roosevelt": 16,
+     "Lincoln": 0,
+     "McDaniel": 5,
+     "Roosevelt": 8
+    },
+    "outside": 37
+   },
+   "Total": {
+    "total": 391,
+    "nbhd": 331,
+    "nbhd_share": 0.8465,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 3,
+     "Grant": 3,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 3,
+     "McDaniel": 10,
+     "Roosevelt": 29
+    },
+    "outside": 8
+   },
+   "Spanish Immersion": {
+    "total": 178,
+    "nbhd": 116,
+    "nbhd_share": 0.6517,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 2,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 52,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 1
+    },
+    "outside": 2
+   }
+  },
+  "Lincoln": {
+   "Total": {
+    "total": 1647,
+    "nbhd": 1418,
+    "nbhd_share": 0.861,
+    "areas": {
+     "Cleveland": 17,
+     "Franklin": 13,
+     "Grant": 9,
+     "Ida B. Wells-Barnett": 100,
+     "Jefferson / Grant": 15,
+     "Jefferson / McDaniel": 3,
+     "Jefferson / Roosevelt": 19,
+     "Lincoln": 0,
+     "McDaniel": 5,
+     "Roosevelt": 9
+    },
+    "outside": 39
+   },
+   "Neighborhood Program": {
+    "total": 1325,
+    "nbhd": 975,
+    "nbhd_share": 0.7358,
+    "areas": {
+     "Cleveland": 9,
+     "Franklin": 39,
+     "Grant": 7,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 10,
+     "Jefferson / McDaniel": 208,
+     "Jefferson / Roosevelt": 14,
+     "Lincoln": 1,
+     "McDaniel": 0,
+     "Roosevelt": 8
+    },
+    "outside": 54
+   }
+  },
+  "Portland International Scholars": {
+   "Total": {
+    "total": 38,
+    "nbhd": 33,
+    "nbhd_share": 0.8684,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 5,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 0
+   },
+   "Spanish Immersion": {
+    "total": 299,
+    "nbhd": 218,
+    "nbhd_share": 0.7291,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 5,
+     "Jefferson / Roosevelt": 73,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 2
+   },
+   "Vietnamese Immersion": {
+    "total": 34,
+    "nbhd": 16,
+    "nbhd_share": 0.4706,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 5,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 8
+   }
+  },
+  "McDaniel": {
+   "Total": {
+    "total": 1629,
+    "nbhd": 1207,
+    "nbhd_share": 0.7409,
+    "areas": {
+     "Cleveland": 13,
+     "Franklin": 49,
+     "Grant": 11,
+     "Ida B. Wells-Barnett": 3,
+     "Jefferson / Grant": 14,
+     "Jefferson / McDaniel": 216,
+     "Jefferson / Roosevelt": 15,
+     "Lincoln": 7,
+     "McDaniel": 0,
+     "Roosevelt": 9
+    },
+    "outside": 85
+   },
+   "Neighborhood Program": {
+    "total": 1082,
+    "nbhd": 659,
+    "nbhd_share": 0.6091,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 10,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 395,
+     "Lincoln": 3,
+     "McDaniel": 7,
+     "Roosevelt": 0
+    },
+    "outside": 5
+   }
+  },
+  "Roosevelt": {
+   "Total": {
+    "total": 1419,
+    "nbhd": 910,
+    "nbhd_share": 0.6413,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 11,
+     "Jefferson / McDaniel": 7,
+     "Jefferson / Roosevelt": 473,
+     "Lincoln": 3,
+     "McDaniel": 7,
+     "Roosevelt": 0
+    },
+    "outside": 7
+   }
+  },
+  "2% 12,990 ACCESS": {
+   "Total": {
+    "total": 324,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 54,
+     "Franklin": 46,
+     "Grant": 34,
+     "Ida B. Wells-Barnett": 56,
+     "Jefferson / Grant": 31,
+     "Jefferson / McDaniel": 7,
+     "Jefferson / Roosevelt": 22,
+     "Lincoln": 27,
+     "McDaniel": 29,
+     "Roosevelt": 12
+    },
+    "outside": 6
+   }
+  },
+  "Alliance Alliance - Alder": {
+   "Total": {
+    "total": 130,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 14,
+     "Franklin": 7,
+     "Grant": 14,
+     "Ida B. Wells-Barnett": 7,
+     "Jefferson / Grant": 16,
+     "Jefferson / McDaniel": 5,
+     "Jefferson / Roosevelt": 16,
+     "Lincoln": 7,
+     "McDaniel": 28,
+     "Roosevelt": 12
+    },
+    "outside": 4
+   }
+  },
+  "Alliance - Cedar": {
+   "Total": {
+    "total": 87,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 14,
+     "Franklin": 5,
+     "Grant": 5,
+     "Ida B. Wells-Barnett": 3,
+     "Jefferson / Grant": 9,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 17,
+     "Lincoln": 9,
+     "McDaniel": 9,
+     "Roosevelt": 13
+    },
+    "outside": 1
+   }
+  },
+  "Alliance": {
+   "Total": {
+    "total": 217,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 28,
+     "Franklin": 12,
+     "Grant": 19,
+     "Ida B. Wells-Barnett": 10,
+     "Jefferson / Grant": 25,
+     "Jefferson / McDaniel": 7,
+     "Jefferson / Roosevelt": 33,
+     "Lincoln": 16,
+     "McDaniel": 37,
+     "Roosevelt": 25
+    },
+    "outside": 5
+   }
+  },
+  "Metro. Learning Center": {
+   "Total": {
+    "total": 275,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 19,
+     "Franklin": 10,
+     "Grant": 10,
+     "Ida B. Wells-Barnett": 35,
+     "Jefferson / Grant": 25,
+     "Jefferson / McDaniel": 11,
+     "Jefferson / Roosevelt": 63,
+     "Lincoln": 49,
+     "McDaniel": 14,
+     "Roosevelt": 32
+    },
+    "outside": 7
+   }
+  },
+  "Selected Focus/Alternative Programs": {
+   "Total": {
+    "total": 816,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 101,
+     "Franklin": 68,
+     "Grant": 63,
+     "Ida B. Wells-Barnett": 101,
+     "Jefferson / Grant": 81,
+     "Jefferson / McDaniel": 25,
+     "Jefferson / Roosevelt": 118,
+     "Lincoln": 92,
+     "McDaniel": 80,
+     "Roosevelt": 69
+    },
+    "outside": 18
+   }
+  },
+  "Mt Scott Learning Center": {
+   "Total": {
+    "total": 84,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 16,
+     "Franklin": 42,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 4,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 11,
+     "Roosevelt": 0
+    },
+    "outside": 7
+   }
+  },
+  "NAYA Many Nations Academy": {
+   "Total": {
+    "total": 55,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 4,
+     "Franklin": 5,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 4,
+     "Jefferson / McDaniel": 2,
+     "Jefferson / Roosevelt": 7,
+     "Lincoln": 4,
+     "McDaniel": 16,
+     "Roosevelt": 4
+    },
+    "outside": 8
+   }
+  },
+  "PCC P.C.C. H.S. Completion": {
+   "Total": {
+    "total": 207,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 21,
+     "Franklin": 40,
+     "Grant": 15,
+     "Ida B. Wells-Barnett": 46,
+     "Jefferson / Grant": 17,
+     "Jefferson / McDaniel": 7,
+     "Jefferson / Roosevelt": 12,
+     "Lincoln": 21,
+     "McDaniel": 14,
+     "Roosevelt": 11
+    },
+    "outside": 3
+   }
+  },
+  "P.C.C. YES!": {
+   "Total": {
+    "total": 192,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 20,
+     "Franklin": 32,
+     "Grant": 4,
+     "Ida B. Wells-Barnett": 19,
+     "Jefferson / Grant": 11,
+     "Jefferson / McDaniel": 11,
+     "Jefferson / Roosevelt": 15,
+     "Lincoln": 24,
+     "McDaniel": 30,
+     "Roosevelt": 24
+    },
+    "outside": 2
+   }
+  },
+  "PCC": {
+   "Total": {
+    "total": 399,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 41,
+     "Franklin": 72,
+     "Grant": 19,
+     "Ida B. Wells-Barnett": 65,
+     "Jefferson / Grant": 28,
+     "Jefferson / McDaniel": 18,
+     "Jefferson / Roosevelt": 27,
+     "Lincoln": 45,
+     "McDaniel": 44,
+     "Roosevelt": 35
+    },
+    "outside": 5
+   }
+  },
+  "Rosemary Anderson": {
+   "Total": {
+    "total": 193,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 5,
+     "Franklin": 26,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 6,
+     "Jefferson / Grant": 18,
+     "Jefferson / McDaniel": 6,
+     "Jefferson / Roosevelt": 34,
+     "Lincoln": 4,
+     "McDaniel": 30,
+     "Roosevelt": 51
+    },
+    "outside": 11
+   }
+  },
+  "Youth Builders": {
+   "Total": {
+    "total": 6,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 2,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 1,
+     "Roosevelt": 0
+    },
+    "outside": 0
+   }
+  },
+  "Community Based Programs": {
+   "Total": {
+    "total": 740,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 71,
+     "Franklin": 147,
+     "Grant": 24,
+     "Ida B. Wells-Barnett": 75,
+     "Jefferson / Grant": 52,
+     "Jefferson / McDaniel": 27,
+     "Jefferson / Roosevelt": 68,
+     "Lincoln": 53,
+     "McDaniel": 102,
+     "Roosevelt": 90
+    },
+    "outside": 31
+   }
+  },
+  "CTC Northeast": {
+   "Total": {
+    "total": 41,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 7,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 8,
+     "Lincoln": 0,
+     "McDaniel": 7,
+     "Roosevelt": 16
+    },
+    "outside": 1
+   }
+  },
+  "CTC Southeast": {
+   "Total": {
+    "total": 88,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 29,
+     "Franklin": 29,
+     "Grant": 4,
+     "Ida B. Wells-Barnett": 6,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 4,
+     "McDaniel": 7,
+     "Roosevelt": 1
+    },
+    "outside": 2
+   }
+  },
+  "DART Programs Counterpoint": {
+   "Total": {
+    "total": 9,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 7
+   }
+  },
+  "Edwards": {
+   "Total": {
+    "total": 19,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 1,
+     "Franklin": 2,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 1,
+     "Roosevelt": 0
+    },
+    "outside": 13
+   }
+  },
+  "SAGE": {
+   "Total": {
+    "total": 10,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 6,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 0,
+     "Roosevelt": 0
+    },
+    "outside": 4
+   }
+  },
+  "Souther School": {
+   "Total": {
+    "total": 43,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 34,
+     "Franklin": 1,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 1,
+     "Roosevelt": 1
+    },
+    "outside": 5
+   }
+  },
+  "DART Programs": {
+   "Total": {
+    "total": 82,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 36,
+     "Franklin": 9,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 0,
+     "Jefferson / Grant": 4,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 0,
+     "Lincoln": 0,
+     "McDaniel": 2,
+     "Roosevelt": 1
+    },
+    "outside": 29
+   }
+  },
+  "PPS Pioneer Programs Pioneer 5-8 Youngson": {
+   "Total": {
+    "total": 20,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 5,
+     "Franklin": 5,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 3,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 1,
+     "McDaniel": 0,
+     "Roosevelt": 1
+    },
+    "outside": 1
+   }
+  },
+  "Pioneer H.S.": {
+   "Total": {
+    "total": 19,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 4,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 3,
+     "Lincoln": 2,
+     "McDaniel": 3,
+     "Roosevelt": 2
+    },
+    "outside": 2
+   }
+  },
+  "Pioneer K-6 Holladay Center": {
+   "Total": {
+    "total": 24,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 2,
+     "Franklin": 5,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 3,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 2,
+     "Lincoln": 2,
+     "McDaniel": 3,
+     "Roosevelt": 3
+    },
+    "outside": 1
+   }
+  },
+  "PPS Pioneer Programs": {
+   "Total": {
+    "total": 63,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 9,
+     "Franklin": 14,
+     "Grant": 1,
+     "Ida B. Wells-Barnett": 5,
+     "Jefferson / Grant": 4,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 8,
+     "Lincoln": 5,
+     "McDaniel": 6,
+     "Roosevelt": 6
+    },
+    "outside": 4
+   }
+  },
+  "Serendipity": {
+   "Total": {
+    "total": 4,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 0,
+     "Franklin": 0,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 0,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 1,
+     "Roosevelt": 1
+    },
+    "outside": 0
+   }
+  },
+  "Special Education Instruction SPED Instruction": {
+   "Total": {
+    "total": 51,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 4,
+     "Franklin": 9,
+     "Grant": 5,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 9,
+     "Lincoln": 2,
+     "McDaniel": 3,
+     "Roosevelt": 0
+    },
+    "outside": 16
+   }
+  },
+  "Special Education Instruction": {
+   "Total": {
+    "total": 51,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 4,
+     "Franklin": 9,
+     "Grant": 5,
+     "Ida B. Wells-Barnett": 1,
+     "Jefferson / Grant": 1,
+     "Jefferson / McDaniel": 1,
+     "Jefferson / Roosevelt": 9,
+     "Lincoln": 2,
+     "McDaniel": 3,
+     "Roosevelt": 0
+    },
+    "outside": 16
+   }
+  },
+  "Special Services": {
+   "Total": {
+    "total": 342,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 78,
+     "Franklin": 61,
+     "Grant": 25,
+     "Ida B. Wells-Barnett": 14,
+     "Jefferson / Grant": 18,
+     "Jefferson / McDaniel": 3,
+     "Jefferson / Roosevelt": 29,
+     "Lincoln": 11,
+     "McDaniel": 26,
+     "Roosevelt": 25
+    },
+    "outside": 52
+   }
+  },
+  "Arthur Academy": {
+   "Total": {
+    "total": 167,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 15,
+     "Franklin": 41,
+     "Grant": 0,
+     "Ida B. Wells-Barnett": 2,
+     "Jefferson / Grant": 2,
+     "Jefferson / McDaniel": 0,
+     "Jefferson / Roosevelt": 1,
+     "Lincoln": 0,
+     "McDaniel": 35,
+     "Roosevelt": 0
+    },
+    "outside": 71
+   }
+  },
+  "Emerson School": {
+   "Total": {
+    "total": 139,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 12,
+     "Franklin": 11,
+     "Grant": 2,
+     "Ida B. Wells-Barnett": 11,
+     "Jefferson / Grant": 12,
+     "Jefferson / McDaniel": 6,
+     "Jefferson / Roosevelt": 19,
+     "Lincoln": 20,
+     "McDaniel": 12,
+     "Roosevelt": 9
+    },
+    "outside": 25
+   }
+  },
+  "Kairos PDX": {
+   "Total": {
+    "total": 178,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 6,
+     "Franklin": 6,
+     "Grant": 3,
+     "Ida B. Wells-Barnett": 6,
+     "Jefferson / Grant": 45,
+     "Jefferson / McDaniel": 9,
+     "Jefferson / Roosevelt": 29,
+     "Lincoln": 3,
+     "McDaniel": 20,
+     "Roosevelt": 11
+    },
+    "outside": 40
+   }
+  },
+  "Le Monde": {
+   "Total": {
+    "total": 385,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 52,
+     "Franklin": 66,
+     "Grant": 32,
+     "Ida B. Wells-Barnett": 31,
+     "Jefferson / Grant": 54,
+     "Jefferson / McDaniel": 11,
+     "Jefferson / Roosevelt": 26,
+     "Lincoln": 38,
+     "McDaniel": 44,
+     "Roosevelt": 12
+    },
+    "outside": 19
+   }
+  },
+  "Portland Village School": {
+   "Total": {
+    "total": 434,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 38,
+     "Franklin": 19,
+     "Grant": 3,
+     "Ida B. Wells-Barnett": 68,
+     "Jefferson / Grant": 34,
+     "Jefferson / McDaniel": 15,
+     "Jefferson / Roosevelt": 55,
+     "Lincoln": 25,
+     "McDaniel": 26,
+     "Roosevelt": 46
+    },
+    "outside": 105
+   }
+  },
+  "Public Charter Schools": {
+   "Total": {
+    "total": 1303,
+    "nbhd": 0,
+    "nbhd_share": 0.0,
+    "areas": {
+     "Cleveland": 123,
+     "Franklin": 143,
+     "Grant": 40,
+     "Ida B. Wells-Barnett": 118,
+     "Jefferson / Grant": 147,
+     "Jefferson / McDaniel": 41,
+     "Jefferson / Roosevelt": 130,
+     "Lincoln": 86,
+     "McDaniel": 137,
+     "Roosevelt": 78
+    },
+    "outside": 260
+   }
+  }
+ }
+}
