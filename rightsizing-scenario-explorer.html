@@ -466,7 +466,7 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
 
   <section class="card">
     <h2>The sustainability threshold impact on cost per student by school size</h2>
-    <p class="sub">PPS's staffing formula cost per student (salary + benefits, 2026-27 dollars; year and class sizes as set in Staffing impact) for a school of each type at each enrollment, with that type's average grade mix: solid line non-Title I, dashed Title I where it differs. Steps are where the formula adds a homeroom, an assistant principal or a support position. The shaded line marks the sustainability threshold. Dots are current schools at their Status Quo enrollment (hover for the school); ringed dots are schools closing in the scenario being viewed (in Scenario A or B when viewing Status Quo). Base formula staffing only: Title I, equity, SIA, Measure 98 and grant positions are not included, so PPS's published dollars per student run higher.</p>
+    <p class="sub">PPS's staffing formula cost per student (salary + benefits, 2026-27 dollars; year and class sizes as set in Staffing impact) for a school of each type at each enrollment, with that type's average grade mix: solid line non-Title I, dashed Title I where it differs. Steps are where the formula adds a homeroom, an assistant principal or a support position. The shaded line marks the sustainability threshold: the filled dot is the formula's cost per student there, and the hollow diamond is the General Fund cost per student chart's target (a fit of each type's actual 2026-27 General Fund staffing at the threshold size), which runs higher because schools carry General Fund positions beyond the base formula. Dots are current schools at their Status Quo enrollment (hover for the school); ringed dots are schools closing in the scenario being viewed (in Scenario A or B when viewing Status Quo). Base formula staffing only: Title I, equity, SIA, Measure 98 and grant positions are not included, so PPS's published dollars per student run higher.</p>
     <div id="costcurve" class="ccgrid"></div>
   </section>
 
@@ -4332,6 +4332,27 @@ function gfPerData() {
   }
   return rows;
 }
+// both threshold figures on both charts (scripts/patch_threshold_both.py)
+// the General Fund target for a school type: cost per student = a + b / enrollment, least squares over the type's
+// schools (actual 2026-27 General Fund staffing), at the threshold size; the group average where there is no size trend
+function gfFit(g, t) {
+  const avg = g.reduce((a, r) => a + r.gf, 0) / g.reduce((a, r) => a + r.e, 0);
+  const thr = D.thresholds[t], n = g.length, xs = g.map(r => 1 / r.e), ys = g.map(r => r.c);
+  const mx = xs.reduce((a, v) => a + v, 0) / n, my = ys.reduce((a, v) => a + v, 0) / n;
+  const sxx = xs.reduce((a, v) => a + (v - mx) ** 2, 0), b = n > 2 && sxx > 0 ? xs.reduce((a, v, j) => a + (v - mx) * (ys[j] - my), 0) / sxx : 0;
+  const fitOK = b > 0, a = my - b * mx;
+  return { avg, thr, target: fitOK ? a + b / thr : avg, a, b, fitOK };
+}
+function gfTargetOf(t) { const g = (gfPerData() || []).filter(r => r.t === t); return g.length ? gfFit(g, t) : null; }
+// PPS's base staffing formula cost per student at the threshold size: a non-Title I school with the type's average
+// grade mix (the cost curve's solid line)
+function ccThrCost(t, yi) {
+  const ks = Object.keys(D.region_of).filter(k => D.types.SQ[k] === t && D.series.SQ[k]?.[yi] > 0);
+  const gs = ks.map(k => D.staff.schools[k]?.grades_2526).filter(Boolean);
+  D.staff.schools.__cc_nt = { title1: false, grades_2526: gs.length ? gs[0].map((_, i) => gs.reduce((a, g) => a + (g[i] || 0), 0) / gs.length) : null };
+  const thr = D.thresholds[t], r = schoolFTE('__cc_nt', 'SQ', yi, thr, t);
+  return r ? staffCost(r) / thr : null;
+}
 function renderGFPer() {
   const host = document.getElementById('gfper'); if (!host) return;
   // the two charts share one year and one view; their two sets of controls stay in step
@@ -4359,16 +4380,13 @@ function renderGFPer() {
   const closesIn = k => (scen === 'SQ' ? ['A', 'B'] : [scen]).filter(s => D.detail[s]?.[k]?.closed);
   const groups = TYPES.map(([t, lab]) => {
     const g = rows.filter(r => r.t === t); if (!g.length) return null;
-    const avg = g.reduce((a, r) => a + r.gf, 0) / g.reduce((a, r) => a + r.e, 0);
     // target: cost per student = a + b / enrollment, least squares over the type's schools, at the threshold size
-    const thr = D.thresholds[t], n = g.length, xs = g.map(r => 1 / r.e), ys = g.map(r => r.c);
-    const mx = xs.reduce((a, v) => a + v, 0) / n, my = ys.reduce((a, v) => a + v, 0) / n;
-    const sxx = xs.reduce((a, v) => a + (v - mx) ** 2, 0), b = n > 2 && sxx > 0 ? xs.reduce((a, v, j) => a + (v - mx) * (ys[j] - my), 0) / sxx : 0;
-    const fitOK = b > 0, a = my - b * mx, target = fitOK ? a + b / thr : avg;
+    const { avg, thr, target, a, b, fitOK } = gfFit(g, t);
+    const form = typeof schoolFTE === 'function' ? ccThrCost(t, D.years.indexOf('2026-27')) : null;   // formula at the threshold
     // the group's average in the chosen year under the scenario (open schools, lower bars' estimate; scripts/patch_gf_group_avg.py)
     const g1 = g.filter(r => r.c1 != null && !r.closed), e1 = g1.reduce((a, r) => a + r.e1, 0);
     const avg1 = (scen !== 'SQ' || gfYear !== '2026-27') && e1 ? g1.reduce((a, r) => a + r.gf1, 0) / e1 : null;
-    return { t, lab, g, avg, avg1, n1: g1.length, thr, target, a, b, fitOK };
+    return { t, lab, g, avg, avg1, n1: g1.length, thr, target, a, b, fitOK, form };
   }).filter(Boolean);
   // what a bar measures, from zero = the current district-wide average: per student, or the school's total subsidy
   // (General Fund staffing above what its students would get at the district-average rate)
@@ -4376,7 +4394,7 @@ function renderGFPer() {
   const v0 = r => SUB ? (r.c - Z) * r.e : r.c - Z, v1 = r => r.c1 == null ? null : SUB ? (r.c1 - Z) * r.e1 : r.c1 - Z;
   const fmt = v => SUB ? (v > 0 ? '+' : '') + gfM(v) : usd(v + Z), fmtTick = v => SUB ? (v > 0 ? '+' : v < 0 ? '&minus;' : '') + '$' + (Math.abs(v) / 1e6).toFixed(1) + 'M' : (v > 0 ? '+' : v < 0 ? '&minus;' : '') + '$' + Math.abs(v).toLocaleString();
   const SC = scen !== 'SQ' || gfYear !== '2026-27', W = 900, Lm = 210, R = 20, BH = SC ? 24 : 15, GH = 40, GAP = 14, T = 8, AX = 30;
-  const vals = [0, ...groups.flatMap(G => [...G.g.flatMap(r => [v0(r), ...(v1(r) != null ? [v1(r)] : [])]), ...(SUB ? [] : [G.avg - Z, G.target - Z, ...(G.avg1 != null ? [G.avg1 - Z] : [])])])];
+  const vals = [0, ...groups.flatMap(G => [...G.g.flatMap(r => [v0(r), ...(v1(r) != null ? [v1(r)] : [])]), ...(SUB ? [] : [G.avg - Z, G.target - Z, ...(G.avg1 != null ? [G.avg1 - Z] : []), ...(G.form != null ? [G.form - Z] : [])])])];
   const span = Math.max(...vals) - Math.min(...vals);
   const step = SUB ? (span > 6e6 ? 1e6 : span > 2.4e6 ? 5e5 : 2.5e5) : span > 6000 ? 1000 : 500;
   const xlo = Math.floor((Math.min(...vals) - span * 0.08) / step) * step, xhi = Math.ceil((Math.max(...vals) + span * 0.1) / step) * step;
@@ -4397,7 +4415,7 @@ function renderGFPer() {
       `<rect x="0" y="${y0 + 2}" width="${W}" height="${GH - 6}" fill="var(--surface-2, rgba(0,0,0,.035))"/>` +
       `<text x="8" y="${y0 + 18}" font-size="13" font-weight="700" fill="var(--text-primary)">${shut ? '&#9656;' : '&#9662;'} ${G.lab} (${G.g.length} schools)${shut ? ' <tspan font-size="10.5" font-weight="400" fill="var(--text-muted)">click to show</tspan>' : ''}</text>` +
       (SUB ? `<text x="8" y="${y0 + 32}" font-size="10.5" fill="var(--text-muted)">net subsidy together: <tspan font-weight="700" fill="var(--text-primary)">${gSub >= 0 ? '+' : ''}${gfM(gSub)}</tspan> a year in 2026-27${SC ? `; <tspan font-weight="700" fill="var(--text-primary)">${gSub1 >= 0 ? '+' : ''}${gfM(gSub1)}</tspan> in ${gfYear} under ${esc(scen === 'SQ' ? 'Status Quo' : LABEL[scen])} (est.)` : ''} (vs the ${usd(Z)} district-average rate)</text>`
-        : `<text x="8" y="${y0 + 32}" font-size="10.5"><tspan fill="var(--change)" font-weight="700">target ${usd(G.target)}</tspan><tspan fill="var(--text-muted)"> per student at the ${G.thr}-student threshold &middot; group average ${usd(G.avg)} (2026-27)${G.avg1 != null ? `; <tspan font-weight="700" fill="var(--text-primary)">${usd(G.avg1)}</tspan> in ${gfYear} under ${esc(scen === 'SQ' ? 'Status Quo' : LABEL[scen])} (est.)` : ''}</tspan></text>`) + '</g>';
+        : `<text x="8" y="${y0 + 32}" font-size="10.5"><tspan fill="var(--change)" font-weight="700">target ${usd(G.target)}</tspan><tspan fill="var(--text-muted)"> per student at the ${G.thr}-student threshold${G.form != null ? ` <tspan fill="var(--text-secondary)">(formula ${usd(G.form)})</tspan>` : ''} &middot; group average ${usd(G.avg)} (2026-27)${G.avg1 != null ? `; <tspan font-weight="700" fill="var(--text-primary)">${usd(G.avg1)}</tspan> in ${gfYear} under ${esc(scen === 'SQ' ? 'Status Quo' : LABEL[scen])} (est.)` : ''}</tspan></text>`) + '</g>';
     if (shut) { y0 = bot + GAP; continue; }
     G.g.forEach((r, j) => {
       const yy = top + j * BH, cl = closesIn(r.k), d = r.c - G.target, val = v0(r), nm = short(byKey[r.k]?.name || r.k);
@@ -4423,12 +4441,13 @@ function renderGFPer() {
     s += `<line x1="${x(0)}" x2="${x(0)}" y1="${top - 2}" y2="${bot + 2}" stroke="#6d28d9" stroke-width="2.4"><title>${esc(`District average: ${usd(Z)} General Fund staffing per student (2026-27, enrollment-weighted, all ${rows.length} schools)`)}</title></line>`;
     if (!SUB) s += `<line x1="${x(G.target - Z)}" x2="${x(G.target - Z)}" y1="${top - 2}" y2="${bot + 2}" stroke="var(--change)" stroke-width="2.4"><title>${esc(`${G.lab} target: ${usd(G.target)} per student, the General Fund cost per student of a school at the ${G.thr}-student threshold${G.fitOK ? ` (fit to ${G.lab} schools: ${usd(G.a)} + ${usd(G.b)} / enrollment)` : ' (no size trend in the data: group average used)'}`)}</title></line>` +
       `<line x1="${x(G.avg - Z)}" x2="${x(G.avg - Z)}" y1="${top - 2}" y2="${bot + 2}" stroke="var(--text-primary)" stroke-width="1.6" stroke-dasharray="6 4"><title>${esc(`${G.lab} average: ${usd(G.avg)} per student (enrollment-weighted), ${G.avg >= G.target ? usd(G.avg - G.target) + ' above' : usd(G.target - G.avg) + ' below'} the target`)}</title></line>` +
+      (G.form != null ? `<line x1="${x(G.form - Z)}" x2="${x(G.form - Z)}" y1="${top - 2}" y2="${bot + 2}" stroke="var(--text-secondary)" stroke-width="1.6" stroke-dasharray="8 3 2 3"><title>${esc(`${G.lab}, PPS base staffing formula at the ${G.thr}-student threshold: ${usd(G.form)} per student (2026-27; non-Title I, the type's average grade mix; the marker on the cost-by-size chart). Lower than the target (${usd(G.target)}), which is fit to actual General Fund staffing: schools carry General Fund positions beyond the base formula.`)}</title></line>` : '') +
       (G.avg1 != null ? `<line x1="${x(G.avg1 - Z)}" x2="${x(G.avg1 - Z)}" y1="${top - 2}" y2="${bot + 2}" stroke="#c2410c" stroke-width="2" stroke-dasharray="2 3"><title>${esc(`${G.lab} average, ${scen === 'SQ' ? 'Status Quo' : LABEL[scen]} ${gfYear} (est.): ${usd(G.avg1)} per student (enrollment-weighted over the ${G.n1} schools still open; the lower bars' General Fund staffing over projected enrollment), ${G.avg1 <= G.avg ? usd(G.avg - G.avg1) + ' less' : usd(G.avg1 - G.avg) + ' more'} than in 2026-27; ${G.avg1 >= G.target ? usd(G.avg1 - G.target) + ' above' : usd(G.target - G.avg1) + ' below'} the target`)}</title></line>` : '');
     y0 = bot + GAP;
   }
   host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;height:auto" role="img" aria-label="General Fund staffing by school against the district average, grouped by school type">${s}</svg>` +
     `<div class="rplegend" style="margin-top:2px"><span><i class="k" style="border-top:2.5px solid #6d28d9;width:18px"></i>0 = district average (${usd(Z)} per student)</span>` +
-    (SUB ? '' : `<span><i class="k" style="border-top:2.5px solid var(--change);width:18px"></i>target: a school at the threshold size</span><span><i class="k" style="border-top:2px dashed var(--text-primary);width:18px"></i>group average${SC ? ', 2026-27' : ''}</span>${SC ? `<span><i class="k" style="border-top:2px dotted #c2410c;width:18px"></i>group average, ${esc(scen === 'SQ' ? 'Status Quo' : LABEL[scen])} ${gfYear} (est.)</span>` : ''}`) +
+    (SUB ? '' : `<span><i class="k" style="border-top:2.5px solid var(--change);width:18px"></i>target: a school at the threshold size</span><span><i class="k" style="border-top:2px dashed var(--text-primary);width:18px"></i>group average${SC ? ', 2026-27' : ''}</span><span><i class="k" style="border-top:2px dashed var(--text-secondary);width:18px"></i>formula cost at the threshold (base staffing formula, as on the cost-by-size chart)</span>${SC ? `<span><i class="k" style="border-top:2px dotted #c2410c;width:18px"></i>group average, ${esc(scen === 'SQ' ? 'Status Quo' : LABEL[scen])} ${gfYear} (est.)</span>` : ''}`) +
     `<span>&#9679; bold name, outlined bar: closes</span>${SC ? `<span><i class="k" style="height:8px;width:14px;border:1px solid var(--down);background:color-mix(in srgb, var(--down) 38%, transparent);vertical-align:-1px"></i>lower bar: ${esc(LABEL[scen])}, ${gfYear} (est.)</span>` : ''}</div>`;
   host.querySelectorAll('[data-gfg]').forEach(g => { g.onclick = () => gfToggle(g.dataset.gfg); g.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); gfToggle(g.dataset.gfg); } }; });
   const sb = document.getElementById('gf-shut'); if (sb) sb.textContent = groups.every(G => gfShut.has(G.t)) ? 'Expand all' : 'Collapse all';
@@ -4544,7 +4563,8 @@ function renderCostCurve() {
     const xs = []; for (let E = lo; E <= hi; E += step) xs.push(E);
     const cNT = xs.map(E => per('__cc_nt', E, t)), cT1 = xs.map(E => per('__cc_t1', E, t));
     const same = cNT.every((v, i) => Math.abs(v - cT1[i]) < 1);
-    const all = [...cNT, ...(same ? [] : cT1), ...pts.map(p => p.c)].filter(v => v != null);
+    const gT = gfTargetOf(t);   // the General Fund chart's target (scripts/patch_threshold_both.py)
+    const all = [...cNT, ...(same ? [] : cT1), ...pts.map(p => p.c), ...(gT ? [gT.target] : [])].filter(v => v != null);
     const yLo = Math.floor(Math.min(...all) / 1000) * 1000, yHi = Math.ceil(Math.max(...all) / 1000) * 1000;
     const W = 360, H = 220, L = 54, R = 10, T = 12, B = 30;
     const x = E => L + (W - L - R) * (E - lo) / (hi - lo), y = v => T + (H - T - B) * (1 - (v - yLo) / ((yHi - yLo) || 1));
@@ -4558,7 +4578,9 @@ function renderCostCurve() {
     const cThr = per('__cc_nt', thr, t);
     g += `<rect x="${x(thr) - 3}" y="${T}" width="6" height="${H - T - B}" fill="var(--change)" opacity=".18"/><line x1="${x(thr)}" x2="${x(thr)}" y1="${T}" y2="${H - B}" stroke="var(--change)" stroke-width="1.5"/>` +
       `<circle cx="${x(thr)}" cy="${y(cThr)}" r="4.5" fill="var(--change)" stroke="#fff" stroke-width="1.2"><title>${esc(`Threshold ${thr} students: ${usd(cThr)} per student (formula, non-Title I)`)}</title></circle>` +
-      `<text x="${x(thr) + (x(thr) > W - 120 ? -6 : 6)}" y="${T + 11}" font-size="10.5" font-weight="600" text-anchor="${x(thr) > W - 120 ? 'end' : 'start'}" fill="var(--change)">threshold ${thr}: ${usd(cThr)}</text>`;
+      `<text x="${x(thr) + (x(thr) > W - 120 ? -6 : 6)}" y="${T + 11}" font-size="10.5" font-weight="600" text-anchor="${x(thr) > W - 120 ? 'end' : 'start'}" fill="var(--change)">threshold ${thr}: ${usd(cThr)} formula</text>` +
+      (gT ? `<path d="M${x(thr)},${y(gT.target) - 6} l6,6 l-6,6 l-6,-6 Z" fill="var(--surface-1)" stroke="var(--change)" stroke-width="1.8"><title>${esc(`General Fund target at ${thr} students: ${usd(gT.target)} per student (the General Fund cost per student chart's target: a fit of ${title.toLowerCase()}' actual 2026-27 General Fund staffing${gT.fitOK ? `, ${usd(gT.a)} + ${usd(gT.b)} / enrollment` : '; no size trend, group average'}). Higher than the formula (${usd(cThr)}): schools carry General Fund positions beyond the base formula.`)}</title></path>` +
+        `<text x="${x(thr) + (x(thr) > W - 120 ? -6 : 6)}" y="${T + 24}" font-size="10.5" font-weight="600" text-anchor="${x(thr) > W - 120 ? 'end' : 'start'}" fill="var(--change)">&#9671; ${usd(gT.target)} General Fund (actual)</text>` : '');
     // curves (stepped where the formula adds staff)
     const path = cs => xs.map((E, i) => `${i ? 'L' : 'M'}${x(E).toFixed(1)},${y(cs[i]).toFixed(1)}`).join('');
     g += `<path d="${path(cNT)}" fill="none" stroke="var(--text-secondary)" stroke-width="1.8"/>`;
