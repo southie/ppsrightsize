@@ -79,5 +79,35 @@ document.getElementById('dockbody').addEventListener('click', async e => {""")
 .popreport:hover { background: var(--change); color: #fff; }
 .popabove { font-weight: 700; color: #17803a; } .popsave { font-weight: 600; color: #17803a; }
 details.popalt { margin-top: 8px; } details.popalt > summary { cursor: pointer; font-weight: 600; font-size: 12.5px; margin: 4px 0; }""")
+# feeder chain in the map's school panel: the schools a school feeds from and into under the scenario being viewed
+# (D.feeders), each a link that opens that school's panel and moves the map to it, like clicking it on the map
+if 'function popFeeders' not in html:
+    rep("""function popFacts(s) {""", """function popFeeders(k, sqOnly) {
+  const base = sqOnly ? 'SQ' : scen === 'C' ? custom.base : scen, F = (D.feeders || {})[base] || D.feeders?.SQ || [];
+  const closed = x => (D.detail[scen] || {})[x]?.closed;
+  const lk = x => byKey[x] ? `<a href="#" class="popfeed" data-k="${esc(x)}" title="Show ${esc(short(byKey[x].name))} on the map">${esc(short(byKey[x].name))}</a>${closed(x) ? ' <span class="muted">(closes)</span>' : ''}` : esc(x);
+  const prog = p => p && !/^neighborhood$/i.test(p) ? ` <span class="muted">(${esc(p)})</span>` : '';
+  const uniq = a => [...new Map(a.map(x => [x.join('|'), x])).values()];
+  const up = [], down = [];
+  for (const [es, ms, hs, pg] of F) {
+    if (es === k) { if (ms && ms !== k) down.push([ms, pg]); if (hs && hs !== k) down.push([hs, pg]); }
+    if (ms === k) { if (es && es !== k) up.push([es, pg]); if (hs && hs !== k) down.push([hs, pg]); }
+    if (hs === k) { if (ms && ms !== k) up.push([ms, pg]); else if (es && es !== k) up.push([es, pg]); }
+  }
+  const order = { ES: 0, K8: 1, MS: 2, HS: 3 }, t = x => D.types[base]?.[x] || D.types.SQ[x];
+  const fmt = a => uniq(a).sort((x, y) => (order[t(x[0])] ?? 9) - (order[t(y[0])] ?? 9) || short(byKey[x[0]]?.name || x[0]).localeCompare(short(byKey[y[0]]?.name || y[0]))).map(([x, pg]) => lk(x) + prog(pg)).join(', ');
+  if (!up.length && !down.length) return !sqOnly && base !== 'SQ' && closed(k) ? popFeeders(k, true) : '';   // a closing school: its Status Quo chain
+  return `<h4>Feeder chain, ${esc(base === 'SQ' ? 'Status Quo' : LABEL[base])}${sqOnly ? ` <span style="text-transform:none;font-weight:400">(closes in ${esc(LABEL[scen])})</span>` : ''}</h4>` +
+    (up.length ? `<div class="row">Fed by: ${fmt(up)}</div>` : '') + (down.length ? `<div class="row">Feeds into: ${fmt(down)}</div>` : '') +
+    `<div class="row muted" style="font-size:11.5px">Click a school to show it on the map.</div>`;
+}
+function popFacts(s) {""")
+    rep("""    `<div class="row"><button type="button" class="popreport" data-k="${esc(s.key)}">Open school report &rarr;</button></div>` +""",
+        """    `<div class="row"><button type="button" class="popreport" data-k="${esc(s.key)}">Open school report &rarr;</button></div>` + popFeeders(s.key) +""")
+    rep("""  const b = e.target.closest('.popreport'); if (!b) return;""",
+        """  const f = e.target.closest('.popfeed');
+  if (f) { e.preventDefault(); const x = byKey[f.dataset.k]; if (!x) return; openDock(() => popup(x), ll(x), x.key); map.panTo(ll(x)); return; }
+  const b = e.target.closest('.popreport'); if (!b) return;""")
+    rep(".popabove {", ".popfeed { color: var(--change); text-decoration: underline dotted; text-underline-offset: 2px; } .popfeed:hover { text-decoration-style: solid; }\n.popabove {")
 open(PAGE, 'w', encoding='utf-8', newline='\n').write(html)
 print('patched')

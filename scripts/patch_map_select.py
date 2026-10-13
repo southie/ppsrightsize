@@ -36,19 +36,6 @@ if 'pickClosed = !!(pick' not in html:
         .bindTooltip(`From ${esc(short(byKey[pick].name))}'s area to ${to}: ${['3-10%', '10-25%', '25-50%', '50%+'][lv]} of those residents ${m === 'bike' ? 'would ride' : 'would be driven'} along here`, { sticky: true }).addTo(mlLayer);
     }""")
     rep("  isoSel = key || null; renderIso(); markSel();", "  isoSel = key || null; renderIso(); markSel(); renderMapLayers();")
-# clicking a school switches the grade filter to its level
-if "switch the grade filter to the clicked school's level" not in html:
-    rep("""  isoSel = key || null; renderIso(); markSel(); renderMapLayers();""", """  isoSel = key || null; markSel();
-  // switch the grade filter to the clicked school's level (a K-8 keeps 6-8 if shown, else K-5)
-  if (key && byKey[key] && typeof gBand !== 'undefined') {
-    const t = (D.types[scen === 'C' ? custom.base : scen] || {})[key] || D.types.SQ[key];
-    const gb = t === 'HS' ? '912' : t === 'MS' ? '68' : t === 'K8' ? (gBand === '68' ? '68' : 'k5') : 'k5';
-    if (gb !== gBand) { gBand = gb; try { localStorage.setItem('rsGrade2', gBand); } catch (e) {}
-      if (bBand) { bBand = gBand; try { localStorage.setItem('rsBand2', bBand); } catch (e) {} }
-      renderMap(); return; }
-  }
-  renderIso(); renderMapLayers();""")
-    rep("  isoSel = null; renderIso(); markSel();", "  isoSel = null; renderIso(); markSel(); renderMapLayers();")
 # the clicked school's attendance area: Status Quo outline (dashed) and its area under the scenario (filled); a closing
 # school's Status Quo area is shaded in the closure color
 if 'const selArea' not in html:
