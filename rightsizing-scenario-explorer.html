@@ -425,7 +425,7 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
   <section class="card">
     <h2>Map: closures, receiving schools and moves</h2>
     <p class="sub" id="mapsub"></p>
-    <div class="controls isoctl maplyr"><span>Layers</span><label><input type="checkbox" id="ml-flows"> Closure arrows</label><label>Bus routes <select id="ml-bus"><option value="">Off</option><option value="posted">Current (PPS posted)</option><option value="gen">Simulated, selected scenario</option></select></label>
+    <div class="controls isoctl maplyr"><span>Layers</span><label><input type="checkbox" id="ml-flows"> Closure arrows</label><label title="Arrows from each school to the school its students go on to, in the scenario being viewed"><input type="checkbox" id="ml-feed"> <span class="ln" style="border-top:3px solid #7c3aed;width:8px;margin-right:1px"></span><span class="ln" style="border-top:3px solid #0e7490;width:8px;margin-right:1px"></span><span class="ln" style="border-top:3px solid #be185d;width:8px;margin-right:1px"></span>Feeder arrows</label><label>Bus routes <select id="ml-bus"><option value="">Off</option><option value="posted">Current (PPS posted)</option><option value="gen">Simulated, selected scenario</option></select></label>
       <label><input type="checkbox" id="ml-walk"> <span class="ln" style="border-top:3px solid #2563eb;width:16px"></span>Walk corridors</label>
       <label><input type="checkbox" id="ml-bike"> <span class="ln" style="border-top:3px solid #15803d;width:16px"></span>Bike corridors</label>
       <label><input type="checkbox" id="ml-drive"> <span class="ln" style="border-top:3px solid #b45309;width:16px"></span>Drive corridors</label>
@@ -524,6 +524,14 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
     <p class="sub">Students per grade in the selected scenario and school year (this page's projection, split into grades with the grade progression ratios of PPS's district enrollment forecast, Table 5.2 medium scenario, starting from each school's 2025-26 grades), at the <b>largest class sizes and staffing ratios PPS's 2026-27 budget allows</b>: K-5 homerooms at the maximum class size (Title I or other schools); grades 6-8 at 23.5 students per teacher (plus 1.0 in Title I middle schools) on a 5-of-7 schedule; grades 9-12 at 25 per teacher plus a base. <span class="csover-key">Highlighted</span> cells are above the PAT contract's overload-pay thresholds (2023-2026 agreement, Article 8.3.3.2): K over 24 students in a class, grades 1-3 over 26, grades 4-5 over 28; teachers over 150 students a day in grades 6-8 and over 160 in 9-12. Click a region to see its schools; hover a cell for details. The last two rows check the district totals by grade against the forecast's Table 5.2 (all PPS schools, including those not on this page): within each grade band the share should be about even.</p>
     <div class="controls"><label>School year <select id="cs-year"></select></label></div>
     <div class="tablewrap" id="classsize"></div>
+  </section>
+
+  <section class="card">
+    <h2>Split feeders: schools whose students go on to different schools</h2>
+    <p class="sub">A split feeder sends its neighborhood students on to more than one next school: an elementary or K-8 school whose area feeds two middle (or high) schools, or a middle school whose students go on to two high schools. Classmates are separated at the next step, and the receiving schools draw from partial cohorts. This compares PPS's feeder patterns under Status Quo with the selected scenario's (a custom scenario uses its base scenario's patterns, less the schools it closes). Immersion and other program pathways are left out: they send students on by program by design. <b>Pathway shares</b> at a split middle school are estimated from the projected enrollment of the elementary schools feeding each pathway; an elementary school split by address within its area has no published share. <b>Students on a smaller pathway</b> are the school's projected students times the shares of its pathways other than the largest: students who go on to a different school than most of their classmates.</p>
+    <div class="controls"><label>School year <select id="sf-year"></select></label></div>
+    <div class="kpis" id="sfkpis"></div>
+    <div class="tablewrap" id="sftable"></div>
   </section>
 
   <section class="card">
@@ -675,7 +683,7 @@ function overSchoolYears(sc) {
 // ---------- summary cards link to their detail ----------
 // cards render in this order: the four PPS district measures, then extraKPIs() (over capacity, 15-minute access,
 // building costs, land value), then staffKPI(); keep this list in step if cards are added or reordered
-const KPI_TARGETS = ['closures', 'schools_above', 'students_above', 'change', 'overcap', 'commute', 'bus', 'cost', 'land', 'staff', 'classsize'];
+const KPI_TARGETS = ['closures', 'schools_above', 'students_above', 'change', 'overcap', 'commute', 'bus', 'cost', 'land', 'staff', 'classsize', 'splitfeed'];
 // columns of the measures table, in header order (see renderEndpoints)
 function endpointCols() { return ['region', ...MEAS.map(m => m.key), 'util', 'change']; }
 function flash(els) {
@@ -687,8 +695,8 @@ function goTo(target) {
     const t = document.getElementById('bldcosts'); if (!t) return;
     t.scrollIntoView({ behavior: 'smooth', block: 'start' }); flash([t]); return;
   }
-  if (target === 'classsize') {
-    const t = document.getElementById('classsize'); if (!t) return;
+  if (target === 'classsize' || target === 'splitfeed') {
+    const t = document.getElementById(target === 'splitfeed' ? 'sftable' : 'classsize'); if (!t) return;
     t.scrollIntoView({ behavior: 'smooth', block: 'start' }); flash([t]); return;
   }
   if (target === 'bus') {
@@ -715,7 +723,7 @@ function wireKPIs() {
   document.querySelectorAll('#kpis .kpi').forEach((k, i) => {
     const t = KPI_TARGETS[i]; if (!t) return;
     k.classList.add('go'); k.tabIndex = 0; k.setAttribute('role', 'link');
-    k.title = (k.dataset.adjtip ? k.dataset.adjtip + ' Click the card: ' : '') + (t === 'overcap' ? 'Show the schools over capacity' : t === 'commute' ? 'Show getting to school by region' : t === 'bus' ? 'Show how the bus cost is estimated' : t === 'classsize' ? 'Show class sizes and teacher loads by grade' : t === 'cost' || t === 'staff' || t === 'land' ? 'Show building, staffing and land costs by region' : 'Show this in the table by region');
+    k.title = (k.dataset.adjtip ? k.dataset.adjtip + ' Click the card: ' : '') + (t === 'overcap' ? 'Show the schools over capacity' : t === 'commute' ? 'Show getting to school by region' : t === 'bus' ? 'Show how the bus cost is estimated' : t === 'classsize' ? 'Show class sizes and teacher loads by grade' : t === 'splitfeed' ? 'Show the split feeders by school' : t === 'cost' || t === 'staff' || t === 'land' ? 'Show building, staffing and land costs by region' : 'Show this in the table by region');
     k.onclick = () => goTo(t);
     k.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo(t); } };
   });
@@ -743,7 +751,7 @@ function renderKPIs() {
     const dt = scen === 'SQ' || k === 'closures' || k === 'change' ? '' : `<span class="d" style="color:${d > 0 ? 'var(--up)' : d < 0 ? 'var(--down)' : 'var(--text-muted)'}">${d > 0 ? '+' : ''}${d} pts</span>`;
     const at = scen === 'A' || scen === 'B' ? adjTip('District', scen, k) : '';
     return `<div class="kpi${at ? ' adjd' : ''}"${at ? ` data-adjtip="${esc(at)}"` : ''}><div class="v">${cur[k]}${u}${dt}${at ? `<span class="adjm" title="${esc(at)}">&#9670;</span>` : ''}<span class="vt">${l}</span></div><div class="l">District, 2031-32</div></div>`;
-  }).join('') + extraKPIs() + staffKPI() + classKPI();
+  }).join('') + extraKPIs() + staffKPI() + classKPI() + splitKPI();
   wireKPIs();
   document.getElementById('desc').textContent = scen === 'SQ' ? 'No schools close and no boundaries change.' :
     scen === 'A' ? '14 closures; 7 K-8s become K-5; 13 program moves.' : scen === 'B' ? '11 closures (Stephenson, Rose City Park and Lewis stay open).' :
@@ -919,11 +927,14 @@ const gradeOK = t => !gBand || BAND_T[gBand].includes(t || 'ES');
 const privGradeOK = x => { if (!gBand) return true; const [a, b] = BAND_RANGE[gBand]; return [...(x.g || [])].some(k => k >= a && k <= b); };
 map.createPane('routes').style.zIndex = 360;   // above boundaries (340) and travel-time areas (350), under flows (390)
 const mlRenderer = L.canvas({ pane: 'routes', tolerance: 5 }), mlLayer = L.layerGroup().addTo(map);
-let mlBus = '', mlBike = true, mlDrive = false, mlWalk = false, mlHz = true;
-try { const v = JSON.parse(localStorage.getItem('rsMapLayers2') || 'null'); if (v) { mlBus = v.bus || ''; mlBike = !!v.bike; mlDrive = !!v.drive; mlWalk = !!v.walk; mlHz = v.hz !== false; } } catch (e) {}
+const feedLayer = L.layerGroup().addTo(map);   // feeder arrows (scripts/patch_feeder_arrows.py)
+// by grade transition (scripts/patch_feeder_colors.py)
+const FEED_COL = { em: ['#7c3aed', 'elementary to middle'], mh: ['#0e7490', 'middle to high'], kh: ['#be185d', 'K-8 or elementary to high'] };
+let mlBus = '', mlBike = true, mlDrive = false, mlWalk = false, mlHz = true, mlFeed = false;
+try { const v = JSON.parse(localStorage.getItem('rsMapLayers2') || 'null'); if (v) { mlBus = v.bus || ''; mlBike = !!v.bike; mlDrive = !!v.drive; mlWalk = !!v.walk; mlHz = v.hz !== false; mlFeed = !!v.feed; } } catch (e) {}
 const mlDec = p => { const out = []; let a = p[0], b = p[1]; out.push([a / 1e5, b / 1e5]); for (let i = 2; i < p.length; i += 2) { a += p[i]; b += p[i + 1]; out.push([a / 1e5, b / 1e5]); } return out; };
 const mlHue = k => { let h = 0; for (const c of k) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
-function mlSave() { try { localStorage.setItem('rsMapLayers2', JSON.stringify({ bus: mlBus, bike: mlBike, drive: mlDrive, walk: mlWalk, hz: mlHz })); } catch (e) {} }
+function mlSave() { try { localStorage.setItem('rsMapLayers2', JSON.stringify({ bus: mlBus, bike: mlBike, drive: mlDrive, walk: mlWalk, hz: mlHz, feed: mlFeed })); } catch (e) {} }
 function renderGradeSeg() {
   const seg = document.getElementById('gseg'); if (!seg) return;
   seg.innerHTML = G_LABEL.map(([k, l]) => `<button data-g="${k}" aria-pressed="${k === gBand}">${l}</button>`).join('');
@@ -986,6 +997,8 @@ function renderMapLayers() {
   const wk = document.getElementById('ml-walk'), hzb = document.getElementById('ml-hz');
   if (wk) { wk.checked = mlWalk; wk.onchange = () => { mlWalk = wk.checked; mlSave(); renderMapLayers(); }; }
   if (hzb) { hzb.checked = mlHz; hzb.onchange = () => { mlHz = hzb.checked; mlSave(); renderMapLayers(); }; }
+  const fdb = document.getElementById('ml-feed');
+  if (fdb) { fdb.checked = mlFeed; fdb.onchange = () => { mlFeed = fdb.checked; mlSave(); renderMapLayers(); }; }
   const base = scen === 'C' ? custom.base : scen, typ = k => (D.types[base] || {})[k] || D.types.SQ[k], B = D.busmap, notes = [];
   // a school picked on the map: only its routes (a closing school: the routes to the schools receiving its students)
   const pick = isoSel && byKey[isoSel] ? isoSel : null, pickClosed = !!(pick && D.detail[base]?.[pick]?.closed);
@@ -1026,8 +1039,40 @@ function renderMapLayers() {
     notes.push(`<b>${{ walk: 'Walk', bike: 'Bike', drive: 'Drive' }[m]} corridors</b> for ${n} schools: the streets each school's attendance-area residents would use ${{ walk: 'on foot by the shortest walking route', bike: 'by bike on the lowest-stress route', drive: 'by car on the fastest route' }[m]}; width = share of the school's residents (3-10%, 10-25%, 25-50%, 50%+). Modelled from 2020 Census residents, not counts of trips; the school report lists each school's streets.` +
       (m !== 'drive' && mlHz ? ` <span class="hzsym">&#9888;</span> Hazards: where these routes cross a major arterial or run along one${m === 'bike' ? ' outside a path or protected / buffered bike lane' : ''}${pick ? '' : ' (on at least 10% of a school\'s residents\' routes; click a school for all of its own)'}; signals and crosswalks are not known.` : ''));
   }
+  const fn = renderFeeders(); if (fn) notes.push(fn);
   document.getElementById('mlnote').innerHTML = notes.join('<br>');
 }
+// feeder arrows (scripts/patch_feeder_arrows.py): D.feeders[base] rows [elementary, middle, high, program, note, ...]
+function renderFeeders() {
+  feedLayer.clearLayers(); lHits = lHits.filter(h => h.set !== 'fd'); if (bHover && bHover.set === 'fd') setBHover(null);
+  if (!mlFeed) return '';
+  const base = scen === 'C' ? custom.base : scen, F = (D.feeders || {})[base] || D.feeders?.SQ || [];
+  const typ = k => (D.types[base] || {})[k] || D.types.SQ[k], shut = k => (D.detail[scen] || {})[k]?.closed;
+  const pick = isoSel && byKey[isoSel] ? isoSel : null;
+  const E = new Map();
+  for (const [es, ms, hs, pg] of F) {
+    if (pick && ![es, ms, hs].includes(pick)) continue;
+    const prog = pg && !/^neighborhood$/i.test(pg) ? pg : '';
+    for (const [a, b] of [[es, ms || hs], [ms, hs]]) {
+      if (!a || !b || a === b || !byKey[a] || !byKey[b] || shut(a) || shut(b)) continue;
+      if (!pick && !gradeOK(typ(a)) && !gradeOK(typ(b))) continue;
+      const id = a + '|' + b, e = E.get(id) || { a, b, progs: new Set(), nb: false };
+      if (prog) e.progs.add(prog); else e.nb = true;
+      E.set(id, e);
+    }
+  }
+  const used = new Set();
+  for (const e of E.values()) {
+    const g = flowGeometry(byKey[e.a], byKey[e.b]), progOnly = !e.nb;
+    const tr = typ(e.b) === 'HS' ? (typ(e.a) === 'MS' ? 'mh' : 'kh') : 'em', col = FEED_COL[tr][0]; used.add(tr);
+    const what = [e.nb ? 'neighborhood students' : '', ...[...e.progs].map(p => p + ' students')].filter(Boolean).join('; ');
+    regLine('fd', L.polyline(g.pts, { pane: 'flows', interactive: false, color: col, weight: 2.5, opacity: .85, dashArray: progOnly ? '6 5' : null }),
+      `Feeder, ${FEED_COL[tr][1]}: ${esc(short(byKey[e.a].name))} → ${esc(short(byKey[e.b].name))} (${esc(what)})`).addTo(feedLayer);
+    arrow(g, col).addTo(feedLayer);
+  }
+  return `<b>Feeder arrows:</b> ${E.size} links, ${esc(base === 'SQ' ? 'Status Quo' : LABEL[base])} feeder patterns${scen === 'C' ? ' (the custom scenario\u2019s base)' : ''}${pick ? `, ${esc(short(byKey[pick].name))}\u2019s chain only` : ''}: each school to the school its students go on to (${Object.keys(FEED_COL).filter(t => used.has(t)).map(t => `<span style="color:${FEED_COL[t][0]};font-weight:600">&#9632;</span> ${FEED_COL[t][1]}`).join(', ')}); dashed = program students only (immersion etc.). Schools that close are left out.`;
+}
+map.on('zoomend', () => { if (mlFeed) renderFeeders(); });
 function renderIso() {
   isoLayer.clearLayers();
   const seg2 = document.getElementById('isoseg');
@@ -4320,7 +4365,10 @@ function renderGFPer() {
     const mx = xs.reduce((a, v) => a + v, 0) / n, my = ys.reduce((a, v) => a + v, 0) / n;
     const sxx = xs.reduce((a, v) => a + (v - mx) ** 2, 0), b = n > 2 && sxx > 0 ? xs.reduce((a, v, j) => a + (v - mx) * (ys[j] - my), 0) / sxx : 0;
     const fitOK = b > 0, a = my - b * mx, target = fitOK ? a + b / thr : avg;
-    return { t, lab, g, avg, thr, target, a, b, fitOK };
+    // the group's average in the chosen year under the scenario (open schools, lower bars' estimate; scripts/patch_gf_group_avg.py)
+    const g1 = g.filter(r => r.c1 != null && !r.closed), e1 = g1.reduce((a, r) => a + r.e1, 0);
+    const avg1 = (scen !== 'SQ' || gfYear !== '2026-27') && e1 ? g1.reduce((a, r) => a + r.gf1, 0) / e1 : null;
+    return { t, lab, g, avg, avg1, n1: g1.length, thr, target, a, b, fitOK };
   }).filter(Boolean);
   // what a bar measures, from zero = the current district-wide average: per student, or the school's total subsidy
   // (General Fund staffing above what its students would get at the district-average rate)
@@ -4328,7 +4376,7 @@ function renderGFPer() {
   const v0 = r => SUB ? (r.c - Z) * r.e : r.c - Z, v1 = r => r.c1 == null ? null : SUB ? (r.c1 - Z) * r.e1 : r.c1 - Z;
   const fmt = v => SUB ? (v > 0 ? '+' : '') + gfM(v) : usd(v + Z), fmtTick = v => SUB ? (v > 0 ? '+' : v < 0 ? '&minus;' : '') + '$' + (Math.abs(v) / 1e6).toFixed(1) + 'M' : (v > 0 ? '+' : v < 0 ? '&minus;' : '') + '$' + Math.abs(v).toLocaleString();
   const SC = scen !== 'SQ' || gfYear !== '2026-27', W = 900, Lm = 210, R = 20, BH = SC ? 24 : 15, GH = 40, GAP = 14, T = 8, AX = 30;
-  const vals = [0, ...groups.flatMap(G => [...G.g.flatMap(r => [v0(r), ...(v1(r) != null ? [v1(r)] : [])]), ...(SUB ? [] : [G.avg - Z, G.target - Z])])];
+  const vals = [0, ...groups.flatMap(G => [...G.g.flatMap(r => [v0(r), ...(v1(r) != null ? [v1(r)] : [])]), ...(SUB ? [] : [G.avg - Z, G.target - Z, ...(G.avg1 != null ? [G.avg1 - Z] : [])])])];
   const span = Math.max(...vals) - Math.min(...vals);
   const step = SUB ? (span > 6e6 ? 1e6 : span > 2.4e6 ? 5e5 : 2.5e5) : span > 6000 ? 1000 : 500;
   const xlo = Math.floor((Math.min(...vals) - span * 0.08) / step) * step, xhi = Math.ceil((Math.max(...vals) + span * 0.1) / step) * step;
@@ -4349,7 +4397,7 @@ function renderGFPer() {
       `<rect x="0" y="${y0 + 2}" width="${W}" height="${GH - 6}" fill="var(--surface-2, rgba(0,0,0,.035))"/>` +
       `<text x="8" y="${y0 + 18}" font-size="13" font-weight="700" fill="var(--text-primary)">${shut ? '&#9656;' : '&#9662;'} ${G.lab} (${G.g.length} schools)${shut ? ' <tspan font-size="10.5" font-weight="400" fill="var(--text-muted)">click to show</tspan>' : ''}</text>` +
       (SUB ? `<text x="8" y="${y0 + 32}" font-size="10.5" fill="var(--text-muted)">net subsidy together: <tspan font-weight="700" fill="var(--text-primary)">${gSub >= 0 ? '+' : ''}${gfM(gSub)}</tspan> a year in 2026-27${SC ? `; <tspan font-weight="700" fill="var(--text-primary)">${gSub1 >= 0 ? '+' : ''}${gfM(gSub1)}</tspan> in ${gfYear} under ${esc(scen === 'SQ' ? 'Status Quo' : LABEL[scen])} (est.)` : ''} (vs the ${usd(Z)} district-average rate)</text>`
-        : `<text x="8" y="${y0 + 32}" font-size="10.5"><tspan fill="var(--change)" font-weight="700">target ${usd(G.target)}</tspan><tspan fill="var(--text-muted)"> per student at the ${G.thr}-student threshold &middot; group average ${usd(G.avg)}</tspan></text>`) + '</g>';
+        : `<text x="8" y="${y0 + 32}" font-size="10.5"><tspan fill="var(--change)" font-weight="700">target ${usd(G.target)}</tspan><tspan fill="var(--text-muted)"> per student at the ${G.thr}-student threshold &middot; group average ${usd(G.avg)} (2026-27)${G.avg1 != null ? `; <tspan font-weight="700" fill="var(--text-primary)">${usd(G.avg1)}</tspan> in ${gfYear} under ${esc(scen === 'SQ' ? 'Status Quo' : LABEL[scen])} (est.)` : ''}</tspan></text>`) + '</g>';
     if (shut) { y0 = bot + GAP; continue; }
     G.g.forEach((r, j) => {
       const yy = top + j * BH, cl = closesIn(r.k), d = r.c - G.target, val = v0(r), nm = short(byKey[r.k]?.name || r.k);
@@ -4374,12 +4422,13 @@ function renderGFPer() {
     // reference lines down the group: district average (0); per student also the target and the group average
     s += `<line x1="${x(0)}" x2="${x(0)}" y1="${top - 2}" y2="${bot + 2}" stroke="#6d28d9" stroke-width="2.4"><title>${esc(`District average: ${usd(Z)} General Fund staffing per student (2026-27, enrollment-weighted, all ${rows.length} schools)`)}</title></line>`;
     if (!SUB) s += `<line x1="${x(G.target - Z)}" x2="${x(G.target - Z)}" y1="${top - 2}" y2="${bot + 2}" stroke="var(--change)" stroke-width="2.4"><title>${esc(`${G.lab} target: ${usd(G.target)} per student, the General Fund cost per student of a school at the ${G.thr}-student threshold${G.fitOK ? ` (fit to ${G.lab} schools: ${usd(G.a)} + ${usd(G.b)} / enrollment)` : ' (no size trend in the data: group average used)'}`)}</title></line>` +
-      `<line x1="${x(G.avg - Z)}" x2="${x(G.avg - Z)}" y1="${top - 2}" y2="${bot + 2}" stroke="var(--text-primary)" stroke-width="1.6" stroke-dasharray="6 4"><title>${esc(`${G.lab} average: ${usd(G.avg)} per student (enrollment-weighted), ${G.avg >= G.target ? usd(G.avg - G.target) + ' above' : usd(G.target - G.avg) + ' below'} the target`)}</title></line>`;
+      `<line x1="${x(G.avg - Z)}" x2="${x(G.avg - Z)}" y1="${top - 2}" y2="${bot + 2}" stroke="var(--text-primary)" stroke-width="1.6" stroke-dasharray="6 4"><title>${esc(`${G.lab} average: ${usd(G.avg)} per student (enrollment-weighted), ${G.avg >= G.target ? usd(G.avg - G.target) + ' above' : usd(G.target - G.avg) + ' below'} the target`)}</title></line>` +
+      (G.avg1 != null ? `<line x1="${x(G.avg1 - Z)}" x2="${x(G.avg1 - Z)}" y1="${top - 2}" y2="${bot + 2}" stroke="#c2410c" stroke-width="2" stroke-dasharray="2 3"><title>${esc(`${G.lab} average, ${scen === 'SQ' ? 'Status Quo' : LABEL[scen]} ${gfYear} (est.): ${usd(G.avg1)} per student (enrollment-weighted over the ${G.n1} schools still open; the lower bars' General Fund staffing over projected enrollment), ${G.avg1 <= G.avg ? usd(G.avg - G.avg1) + ' less' : usd(G.avg1 - G.avg) + ' more'} than in 2026-27; ${G.avg1 >= G.target ? usd(G.avg1 - G.target) + ' above' : usd(G.target - G.avg1) + ' below'} the target`)}</title></line>` : '');
     y0 = bot + GAP;
   }
   host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;height:auto" role="img" aria-label="General Fund staffing by school against the district average, grouped by school type">${s}</svg>` +
     `<div class="rplegend" style="margin-top:2px"><span><i class="k" style="border-top:2.5px solid #6d28d9;width:18px"></i>0 = district average (${usd(Z)} per student)</span>` +
-    (SUB ? '' : `<span><i class="k" style="border-top:2.5px solid var(--change);width:18px"></i>target: a school at the threshold size</span><span><i class="k" style="border-top:2px dashed var(--text-primary);width:18px"></i>group average</span>`) +
+    (SUB ? '' : `<span><i class="k" style="border-top:2.5px solid var(--change);width:18px"></i>target: a school at the threshold size</span><span><i class="k" style="border-top:2px dashed var(--text-primary);width:18px"></i>group average${SC ? ', 2026-27' : ''}</span>${SC ? `<span><i class="k" style="border-top:2px dotted #c2410c;width:18px"></i>group average, ${esc(scen === 'SQ' ? 'Status Quo' : LABEL[scen])} ${gfYear} (est.)</span>` : ''}`) +
     `<span>&#9679; bold name, outlined bar: closes</span>${SC ? `<span><i class="k" style="height:8px;width:14px;border:1px solid var(--down);background:color-mix(in srgb, var(--down) 38%, transparent);vertical-align:-1px"></i>lower bar: ${esc(LABEL[scen])}, ${gfYear} (est.)</span>` : ''}</div>`;
   host.querySelectorAll('[data-gfg]').forEach(g => { g.onclick = () => gfToggle(g.dataset.gfg); g.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); gfToggle(g.dataset.gfg); } }; });
   const sb = document.getElementById('gf-shut'); if (sb) sb.textContent = groups.every(G => gfShut.has(G.t)) ? 'Expand all' : 'Collapse all';
@@ -4536,7 +4585,88 @@ function wrapTables(root = document) {
 }
 renderReport = (f => function (...a) { const r = f.apply(this, a); if (typeof document.querySelectorAll === 'function') wrapTables(); return r; })(renderReport);
 document.getElementById('lineswrap')?.addEventListener('toggle', e => { if (e.target.open) renderLines(); });
-function renderAll() { renderReport(); renderFcAcc(); segcList(); renderKPIs(); renderCustomPanel(); renderMap(); renderEndpoints(); renderTrend(); renderGFPer(); renderCostCurve(); renderBuildings(); renderCommute(); renderStaffing(); renderLines(); renderClassSizes(); renderPrivShare(); renderPrivCap(); renderHomeschool(); renderHsDistricts(); renderVirtual(); renderBusMap(); if (typeof document.querySelectorAll === 'function') wrapTables(); }
+// ---------- split feeders (scripts/patch_split_feeders.py) ----------
+let sfYear = '2031-32';
+function sfSplits(sc, yi) {   // {school: {lvl, paths: [[to, share | null]], enr}}
+  const base = sc === 'C' ? custom.base : sc, shut = k => sc !== 'SQ' && (D.detail[sc] || {})[k]?.closed;
+  const F = ((D.feeders || {})[base] || D.feeders?.SQ || []).filter(r => (!r[3] || /^neighborhood$/i.test(r[3])) && ![r[0], r[1], r[2]].some(x => x && shut(x)));
+  const nxt = {}, ms = {};
+  for (const [es, m, hs] of F) {
+    if (es && (m || hs) && es !== (m || hs)) (nxt[es] = nxt[es] || new Set()).add(m || hs);
+    if (m && hs && m !== hs) (ms[m] = ms[m] || new Map()).set(hs, 0);
+  }
+  const ser = k => D.series[sc]?.[k]?.[yi] || 0, out = {};
+  for (const [k, s] of Object.entries(nxt)) if (s.size > 1) out[k] = { lvl: 'ES', paths: [...s].sort().map(t => [t, null]), enr: ser(k) };
+  for (const [m, h] of Object.entries(ms)) {
+    if (h.size < 2) continue;
+    for (const [es, m2, hs] of F) if (m2 === m && es && hs) h.set(hs, h.get(hs) + ser(es) / (nxt[es]?.size || 1));
+    const tot = [...h.values()].reduce((a, v) => a + v, 0);
+    out[m] = { lvl: 'MS', paths: [...h].sort((a, b) => b[1] - a[1]).map(([t, w]) => [t, tot ? w / tot : null]), enr: ser(m) };
+  }
+  for (const v of Object.values(out)) { const sh = v.paths.map(p => p[1]); v.minor = sh.every(x => x != null) ? v.enr * (1 - Math.max(...sh)) : null; }
+  return out;
+}
+// summary card (scripts/patch_split_kpi.py)
+function splitKPI() {
+  if (!D.feeders) return '';
+  const yi = D.years.indexOf(sfYear), isSQ = scen === 'SQ', S0 = sfSplits('SQ', yi), S1 = isSQ ? S0 : sfSplits(scen, yi);
+  const n0 = Object.keys(S0).length, n1 = Object.keys(S1).length, d = n1 - n0;
+  const minor = S => Math.round(Object.values(S).reduce((a, v) => a + (v.minor || 0), 0)), m0 = minor(S0), m1 = minor(S1);
+  const fixed = Object.keys(S0).filter(k => !S1[k]).length, added = Object.keys(S1).filter(k => !S0[k]).length;
+  const nm = k => esc(short(byKey[k]?.name || k));
+  return `<div class="kpi"><div class="v">${n1}${!isSQ && d ? `<span class="d" style="color:${d > 0 ? 'var(--down)' : 'var(--up)'}">${d > 0 ? '+' : '&minus;'}${Math.abs(d)} vs SQ</span>` : ''}</div>` +
+    `<div class="l">Split-feeder schools (neighborhood students go on to two different schools)</div>` +
+    `<div class="s">${isSQ ? '' : `<b>${fixed}</b> resolved${added ? `, <b>${added}</b> new` : ''} <span class="pcs">(Status Quo ${n0})</span><br>`}` +
+    `About <b>${m1.toLocaleString()}</b> students on a smaller pathway, ${sfYear}${isSQ || m1 === m0 ? '' : ` <span class="pcs">(Status Quo ${m0.toLocaleString()})</span>`}<br>` +
+    `<span class="pcs" style="white-space:normal">${isSQ ? 'Split' : 'Still split'}: ${Object.keys(S1).sort().map(nm).join(', ') || 'none'}</span></div></div>`;
+}
+function renderSplitFeeders() {
+  const host = document.getElementById('sftable'), kp = document.getElementById('sfkpis'); if (!host || !D.feeders) return;
+  const yrs = D.years.slice(Math.max(0, D.years.indexOf(D.impl_year)));
+  if (!yrs.includes(sfYear)) sfYear = yrs.includes('2031-32') ? '2031-32' : yrs[0];
+  const sel = document.getElementById('sf-year');
+  if (sel) { sel.innerHTML = yrs.map(y => `<option${y === sfYear ? ' selected' : ''}>${y}</option>`).join(''); sel.onchange = () => { sfYear = sel.value; renderSplitFeeders(); renderKPIs(); }; }
+  const yi = D.years.indexOf(sfYear), isSQ = scen === 'SQ', S0 = sfSplits('SQ', yi), S1 = isSQ ? S0 : sfSplits(scen, yi);
+  const nm = k => esc(short(byKey[k]?.name || k)), n0 = v => Math.round(v).toLocaleString();
+  const sum = (S, f) => Object.values(S).reduce((a, v) => a + (f(v) || 0), 0);
+  const unk = S => Object.values(S).some(v => v.minor == null);
+  const dl = (c, q, lowGood = true) => { const d = Math.round(c - q); return isSQ || !d ? '' : `<span class="d" style="color:${(d > 0) === lowGood ? 'var(--down)' : 'var(--up)'}">${d > 0 ? '+' : '&minus;'}${Math.abs(d).toLocaleString()} vs SQ</span>`; };
+  const keys = [...new Set([...Object.keys(S0), ...Object.keys(S1)])];
+  const status = k => isSQ ? 'split' : S0[k] && S1[k] ? 'still' : S0[k] ? ((D.detail[scen] || {})[k]?.closed ? 'closes' : 'resolved') : 'new';
+  const ST = { split: ['Split', 'var(--text-secondary)'], still: ['Still split', 'var(--down)'], new: ['New split', 'var(--down)'], resolved: ['Resolved', 'var(--up)'], closes: ['School closes', 'var(--text-secondary)'] };
+  const cnt = s => keys.filter(k => status(k) === s).length;
+  const lab = isSQ ? 'Status Quo' : esc(LABEL[scen]);
+  kp.innerHTML = `<div class="kpi"><div class="v">${Object.keys(S1).length}${dl(Object.keys(S1).length, Object.keys(S0).length)}</div><div class="l">Split-feeder schools, ${lab}</div>` +
+      `<div class="s">${isSQ ? `${Object.values(S0).filter(v => v.lvl === 'MS').length} middle schools feeding two high schools; ${Object.values(S0).filter(v => v.lvl === 'ES').length} elementary or K-8 feeding two next schools` : `<b>${cnt('resolved') + cnt('closes')}</b> resolved${cnt('closes') ? ` (${cnt('closes')} by closing)` : ''} &middot; <b>${cnt('still')}</b> still split &middot; <b>${cnt('new')}</b> new`}</div></div>` +
+    `<div class="kpi"><div class="v">${n0(sum(S1, v => v.enr))}${dl(sum(S1, v => v.enr), sum(S0, v => v.enr))}</div><div class="l">Students at split-feeder schools, ${sfYear} (projected)</div>` +
+      `<div class="s">${isSQ ? '' : `Status Quo: <b>${n0(sum(S0, v => v.enr))}</b>`}</div></div>` +
+    `<div class="kpi"><div class="v">${n0(sum(S1, v => v.minor))}${dl(sum(S1, v => v.minor), sum(S0, v => v.minor))}</div><div class="l">Students on a smaller pathway, ${sfYear} (est.)</div>` +
+      `<div class="s">Go on to a different school than most of their classmates${isSQ ? '' : `; Status Quo <b>${n0(sum(S0, v => v.minor))}</b>`}${unk(S0) || unk(S1) ? '; excludes elementary splits with no published share' : ''}</div></div>`;
+  const order = { new: 0, still: 1, split: 1, resolved: 2, closes: 3 };
+  keys.sort((a, b) => order[status(a)] - order[status(b)] || ((S1[a] || S0[a]).lvl === 'MS') - ((S1[b] || S0[b]).lvl === 'MS') || short(byKey[a]?.name || a).localeCompare(short(byKey[b]?.name || b)));
+  const paths = v => v ? v.paths.map(([t, s]) => `${nm(t)}${s != null ? ` <span class="muted">${Math.round(100 * s)}%</span>` : ''}`).join('<br>') : '<span class="muted">&mdash;</span>';
+  const typ = k => TYPE_LABEL[(D.types[scen === 'C' ? custom.base : scen] || {})[k] || D.types.SQ[k]] || '';
+  const enrC = (v, q) => v ? `${n0(v.enr)}${q && !isSQ ? ` <span class="muted" style="display:block;font-size:11px">SQ ${n0(q.enr)}</span>` : ''}` : '<span class="muted">&mdash;</span>';
+  const minC = v => !v ? '<span class="muted">&mdash;</span>' : v.minor == null ? '<span class="muted" title="Split by address within the school\u2019s area; PPS publishes no share">not known</span>' : n0(v.minor);
+  let h = `<table style="min-width:640px"><thead><tr><th style="text-align:left">School</th><th style="text-align:left">Status Quo pathways</th>${isSQ ? '' : `<th style="text-align:left">${lab} pathways</th><th style="text-align:left">Change</th>`}` +
+    `<th>Students, ${sfYear}</th><th>On a smaller pathway</th></tr></thead><tbody>`;
+  for (const k of keys) {
+    const st = status(k), v = S1[k], q = S0[k], show = isSQ ? q : v;
+    h += `<tr><td style="text-align:left"><b>${nm(k)}</b> <span class="muted">${esc(typ(k))}${D.region_of[k] ? ' &middot; ' + esc(D.region_of[k]) : ''}</span></td><td style="text-align:left">${paths(q)}</td>` +
+      (isSQ ? '' : `<td style="text-align:left">${st === 'resolved' ? (() => { const one = sfOne(k); return one ? `${nm(one)} <span class="muted">(all)</span>` : '<span class="muted">one pathway</span>'; })() : st === 'closes' ? '<span class="muted">closes</span>' : paths(v)}</td>` +
+        `<td style="text-align:left"><span style="color:${ST[st][1]};font-weight:600">${ST[st][0]}</span></td>`) +
+      `<td style="text-align:right">${st === 'closes' ? '<span class="muted">&mdash;</span>' : enrC(show || { enr: D.series[scen]?.[k]?.[yi] || 0 }, q)}</td><td style="text-align:right">${minC(show)}</td></tr>`;
+  }
+  if (!keys.length) h += `<tr><td colspan="6" class="muted">No split feeders.</td></tr>`;
+  host.innerHTML = h + '</tbody></table>';
+}
+// a resolved split: the one school its neighborhood students now go on to
+function sfOne(k) {
+  const base = scen === 'C' ? custom.base : scen, F = ((D.feeders || {})[base] || []).filter(r => !r[3] || /^neighborhood$/i.test(r[3]));
+  const t = new Set(); for (const [es, m, hs] of F) { if (es === k && (m || hs)) t.add(m || hs); if (m === k && hs) t.add(hs); }
+  return t.size === 1 ? [...t][0] : null;
+}
+function renderAll() { renderReport(); renderFcAcc(); segcList(); renderKPIs(); renderCustomPanel(); renderMap(); renderEndpoints(); renderTrend(); renderGFPer(); renderCostCurve(); renderBuildings(); renderCommute(); renderStaffing(); renderLines(); renderSplitFeeders(); renderClassSizes(); renderPrivShare(); renderPrivCap(); renderHomeschool(); renderHsDistricts(); renderVirtual(); renderBusMap(); if (typeof document.querySelectorAll === 'function') wrapTables(); }
 let rsT; let lastW = innerWidth; addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rsT); rsT = setTimeout(renderLines, 150); });
 // ---------- SEGC Phase 2 notes (scripts/patch_segc.py) ----------
 const segcOf = k => D.segc?.sch?.[k];
@@ -4613,7 +4743,7 @@ function renderFcAcc() {
 const LINK_TABLES = [['report', 'rpfind'], ['endpoints', 'endpoints'], ['trend', 'trend'], ['costcurve', 'costcurve'], ['bldcosts', 'bldcosts'],
   ['commute', 'commute'], ['busmap', 'bmwrap'], ['staffing', 'staffing'], ['lines', 'lineswrap'], ['classsize', 'classsize'], ['privshare', 'privshare'],
   ['privcap', 'privcap'], ['homeschool', 'homeschool'], ['virtual', 'virtual'], ['fcacc', 'fcacc'],
-  ['map', 'map'], ['gfper', 'gfper'], ['gfclose', 'gfclose'], ['hstrends', 'hsdistrict']];
+  ['map', 'map'], ['gfper', 'gfper'], ['gfclose', 'gfclose'], ['hstrends', 'hsdistrict'], ['splitfeed', 'sftable']];
 const rIdx = set => [...set].map(r => D.region_order.indexOf(r)).filter(i => i >= 0).join('.');
 const rSet = (str, set) => { set.clear(); (str || '').split('.').forEach(i => { const r = D.region_order[+i]; if (r) set.add(r); }); };
 function linkParams(key) {
@@ -4629,13 +4759,14 @@ function linkParams(key) {
   }
   if (key === 'lines') { const r = document.getElementById('region')?.value, f = document.getElementById('find')?.value; if (r) p.set('lr', r); if (f) p.set('lf', f); }
   if (key === 'classsize') p.set('csy', csYear);
+  if (key === 'splitfeed') p.set('sfy', sfYear);
   if (key === 'fcacc' && faOpen.size) p.set('fao', rIdx(faOpen));
   if (key === 'privcap') { p.set('pcb', pcBand); if (pcOpen.size) p.set('pco', rIdx(pcOpen)); }
   if (key === 'report' && rpKey) { p.set('school', rpKey); p.set('year', rpYear); }
   if (key === 'gfper' || key === 'gfclose') { p.set('gfm', gfMode); p.set('gfy', gfYear); }
   if (key === 'map') {
     p.set('mg', gBand || 'all');
-    p.set('mly', [mlBus ? 'bus-' + mlBus : '', mlWalk ? 'w' : '', mlBike ? 'b' : '', mlDrive ? 'd' : '', mlHz ? 'h' : '', showFlows ? 'f' : ''].filter(Boolean).join('.') || 'none');
+    p.set('mly', [mlBus ? 'bus-' + mlBus : '', mlWalk ? 'w' : '', mlBike ? 'b' : '', mlDrive ? 'd' : '', mlHz ? 'h' : '', showFlows ? 'f' : '', mlFeed ? 'fd' : ''].filter(Boolean).join('.') || 'none');
     if (bBand) p.set('mbd', bBand);
     if (isoMode) p.set('mis', isoMode);
     if (isoSel && byKey[isoSel]) p.set('ms', isoSel);
@@ -4661,6 +4792,7 @@ let LINK_TARGET = null, LINK_MS = null;
   if (q.get('stp') === 'contract') { capPreset = 'contract'; caps = JSON.parse(JSON.stringify(SF.caps_contract)); }
   if (q.get('sto')) rSet(q.get('sto'), staffOpen);
   if (D.years.includes(q.get('csy'))) csYear = q.get('csy');
+  if (D.years.includes(q.get('sfy'))) sfYear = q.get('sfy');
   if (PC_BANDS.some(b => b[0] === q.get('pcb'))) pcBand = q.get('pcb');
   if (q.get('pco')) rSet(q.get('pco'), pcOpen);
   if (q.get('fao')) rSet(q.get('fao'), faOpen);
@@ -4670,7 +4802,7 @@ let LINK_TARGET = null, LINK_MS = null;
   if (D.years.includes(q.get('gfy'))) gfYear = q.get('gfy');
   if (q.get('mg')) gBand = q.get('mg') === 'all' ? '' : ['k5', '68', '912'].includes(q.get('mg')) ? q.get('mg') : gBand;
   if (q.get('mly')) { const f = q.get('mly').split('.'), bus = f.find(x => x.startsWith('bus-'));
-    mlBus = bus ? bus.slice(4) : ''; mlWalk = f.includes('w'); mlBike = f.includes('b'); mlDrive = f.includes('d'); mlHz = f.includes('h'); showFlows = f.includes('f'); }
+    mlBus = bus ? bus.slice(4) : ''; mlWalk = f.includes('w'); mlBike = f.includes('b'); mlDrive = f.includes('d'); mlHz = f.includes('h'); showFlows = f.includes('f'); mlFeed = f.includes('fd'); }
   if (q.has('mbd') || q.get('t') === 'map') bBand = ['k5', '68', '912'].includes(q.get('mbd')) ? q.get('mbd') : '';
   if (q.has('mis') || q.get('t') === 'map') isoMode = ['walk', 'bike', 'drive'].includes(q.get('mis')) ? q.get('mis') : '';
   LINK_MS = byKey[q.get('ms')] ? q.get('ms') : null;
