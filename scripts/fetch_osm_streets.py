@@ -15,7 +15,10 @@ SERVERS = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.sys
 UA = 'pps-rightsizing-analysis/1.0 (personal research, low volume)'
 BUFFER = 0.03   # degrees (~2.5-3 km) beyond the attendance areas, so routes can leave and re-enter the district
 KEEP = {'highway', 'oneway', 'junction', 'maxspeed', 'access', 'foot', 'bicycle', 'motor_vehicle', 'motorcar', 'vehicle',
-        'service', 'oneway:bicycle', 'cycleway', 'sidewalk', 'area', 'name'}
+        'service', 'oneway:bicycle', 'cycleway', 'sidewalk', 'area', 'name',
+        # low-stress bike routing (scripts/build_block_access.py): bike lanes by side, lanes, surface
+        'cycleway:left', 'cycleway:right', 'cycleway:both', 'cycleway:lane', 'cycleway:right:separation', 'cycleway:left:separation',
+        'lanes', 'surface', 'bicycle_road', 'cyclestreet', 'bridge', 'tunnel'}
 
 def polys_of(g):
     return [g['coordinates']] if g['type'] == 'Polygon' else g['coordinates']

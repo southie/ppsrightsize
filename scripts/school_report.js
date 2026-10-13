@@ -178,6 +178,51 @@ function rpPlot(k, sc) {
     (cols.some(s => rpMark(k, s)) ? `<p class="muted rpnote">&#9670; marks a scenario whose figures for this school include the modified enrollment model (each K-8's own grade mix and Census estimates of boundary changes PPS's enrollment figures do not move); hover it for the moves. ${esc(ADJ_OFF)}</p>` : '');
 }
 
+// Southeast enrollment balancing, Phase 2 (fall 2023): the school's changes (D.segc, scripts/patch_segc.py)
+function rpSegc(k) {
+  const s = D.segc?.sch?.[k]; if (!s) return '';
+  return `<div class="rppanel rpwide rpsegc"><h3>Southeast enrollment balancing: SEGC Phase 2 changes (fall 2023)</h3>` +
+    `<ul>${s.p2.map(t => `<li>${esc(t)}</li>`).join('')}</ul>${s.p1 ? `<p class="muted rpnote">${esc(s.p1)}</p>` : ''}` +
+    (typeof segcEst === 'function' && segcEst(k) ? `<p class="rpnote">${segcEst(k)}</p>` : '') +
+    `<p class="muted rpnote">Adopted by the PPS Board in Resolution 6513 (May 2022) from the Southeast Guiding Coalition process. ${esc(D.segc.phase_in)} Student counts are those enrolled in 2021-22 in each area or program moved (PPS's school-by-school impact analysis). PSU's forecasts from 2023-24 on, and this page's projections, include these changes. Sources: ${D.segc.sources.map(x => `<a href="${esc(x[1])}">${esc(x[0])}</a>`).join('; ')}.</p></div>`;
+}
+
+// past PSU forecasts for this school against its actual enrollment (D.fcacc, scripts/patch_forecast_accuracy.py)
+function rpFcAcc(k) {
+  const F = D.fcacc, s = F?.sch?.[k];
+  if (!s) return `<h4>How accurate have past forecasts been for this school?</h4><p class="muted rpnote">PSU's past forecasts do not include this school separately (a new school or one forecast with another).</p>`;
+  const y0 = Math.min(...Object.keys(s.a).map(y => +y.slice(0, 4)), ...Object.keys(s.f).map(e => +e.slice(0, 4)));
+  const Y = []; for (let i = y0; i <= +D.years[D.years.length - 1].slice(0, 4); i++) Y.push(`${i}-${String((i + 1) % 100).padStart(2, '0')}`);
+  const W = 620, H = 230, M = { l: 44, r: 12, t: 12, b: 26 }, cur = F.eds[F.eds.length - 1];
+  const vals = [...Object.values(s.a), ...Object.values(s.f).flat()].filter(v => v != null);
+  const ymax = Math.max(...vals) * 1.1 || 1;
+  const x = i => M.l + (W - M.l - M.r) * i / (Y.length - 1), y = v => M.t + (H - M.t - M.b) * (1 - v / ymax);
+  const ticks = []; const step = ymax > 1500 ? 500 : ymax > 600 ? 200 : 100;
+  for (let v = 0; v <= ymax; v += step) ticks.push(`<line class="grid" x1="${M.l}" x2="${W - M.r}" y1="${y(v)}" y2="${y(v)}"/><text class="ax" x="${M.l - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`);
+  const xl = Y.map((yr, i) => i % 3 ? '' : `<text class="ax" x="${x(i)}" y="${H - 8}" text-anchor="middle">${yr}</text>`).join('');
+  // each edition's line starts from the last actual it knew (the year before its first forecast year)
+  const fl = e => {
+    const i0 = Y.indexOf(e), prev = s.a[Y[i0 - 1]], pts = s.f[e].map((v, j) => [i0 + j, v]);
+    if (prev != null) pts.unshift([i0 - 1, prev]);
+    const cls = e === cur ? 'fa-cur' : F.post.includes(e) ? 'fa-post' : 'fa-pre';
+    return `<path class="${cls}${s.bc.includes(e) ? ' fa-rs' : ''}" d="${pts.map(([i, v], j) => (j ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(v).toFixed(1)).join('')}"><title>${e} edition forecast: ${s.f[e].map((v, j) => `${Y[i0 + j]} ${v}`).join(', ')}${s.bc.includes(e) ? ' (counted differently: a later edition restated this school\'s enrollment)' : ''}</title></path>`;
+  };
+  const act = Object.entries(s.a).filter(([yr]) => Y.includes(yr)), ap = act.map(([yr, v]) => [Y.indexOf(yr), v]);
+  const plot = `<svg class="rpplot" viewBox="0 0 ${W} ${H}" role="img" aria-label="Past forecasts and actual enrollment">${ticks.join('')}${xl}` +
+    F.eds.filter(e => s.f[e]?.length && e !== cur).map(fl).join('') + (s.f[cur]?.length ? fl(cur) : '') +
+    `<path class="fa-act" d="${ap.map(([i, v], j) => (j ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(v).toFixed(1)).join('')}"/>` +
+    ap.map(([i, v]) => `<circle class="fa-act" cx="${x(i)}" cy="${y(v)}" r="2.6"><title>Actual, ${Y[i]}: ${v}</title></circle>`).join('') + '</svg>' +
+    `<div class="rplegend"><span><i class="k fa-act"></i>Actual enrollment</span><span><i class="k fa-pre"></i>Pre-COVID editions (${F.pre[0]} to ${F.pre[F.pre.length - 1]})</span>` +
+    `<span><i class="k fa-post"></i>Post-COVID editions (${F.post[0]} to ${F.post[F.post.length - 2]})</span><span><i class="k fa-cur"></i>${cur} edition (this page's Status Quo)</span></div>`;
+  const cell = st => st ? `<td>${st[1].toFixed(1)}%</td><td>${st[2] > 0 ? '+' : st[2] < 0 ? '&minus;' : ''}${Math.abs(st[2]).toFixed(1)}%</td><td class="muted">${st[0]}</td>` : '<td class="muted">&mdash;</td><td class="muted">&mdash;</td><td class="muted"></td>';
+  const typ = (era, h) => { const t = F.dist.typ[era]?.[h]; return t ? `${t[1].toFixed(1)}%` : '&mdash;'; };
+  const rows = [1, 2, 3, 5].map(h => `<tr><td>${h} year${h === 1 ? '' : 's'} ahead</td>${cell(s.st.post?.[h])}${cell(s.st.pre?.[h])}<td class="muted">${typ('post', h)} / ${typ('pre', h)}</td></tr>`).join('');
+  return `<h4>How accurate have past forecasts been for this school?</h4>${plot}` +
+    `<table class="rptable"><thead><tr><th rowspan="2"></th><th colspan="3">Post-COVID editions</th><th colspan="3">Pre-COVID editions</th><th rowspan="2">Typical school<br><span style="font-weight:400">post / pre</span></th></tr>` +
+    `<tr><th>average miss</th><th>lean</th><th>n</th><th>average miss</th><th>lean</th><th>n</th></tr></thead><tbody>${rows}</tbody></table>` +
+    `<p class="muted rpnote">Each line is one PSU edition's medium forecast for this school, starting from the last enrollment it knew; hover a line for its numbers. Average miss is the typical size of the error, either way; lean is the average signed error (positive: forecasts were too high). Actuals are the enrollment PSU reported the following year. Post-COVID editions (2022-23 on) were made after the pandemic enrollment drop; the pre-COVID ones forecast into it.${s.bc.length ? ` Dashed: editions ${s.bc.join(', ')}, which a later edition counted differently (a program moved in or out), left out of the averages.` : ''} The typical school column is the average miss across all PPS schools.</p>`;
+}
+
 // grade-by-grade projection (this page's model: the school's grade mix progressed and scaled to its enrollment)
 function rpGrades(k, sc) {
   const Y = D.years, G = CS_GRADES;
@@ -420,7 +465,15 @@ function rpDrawMap(k, sc) {
     rpMap = L.map(el, { scrollWheelZoom: false, zoomControl: true });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(rpMap);
     rpLayer = L.layerGroup().addTo(rpMap);
+    // maximize: the map's panel (map, controls and notes) fills the window; Esc or the button restores it
+    const Max = L.Control.extend({ options: { position: 'topright' }, onAdd() {
+      const a = L.DomUtil.create('a', 'leaflet-bar rpmaxbtn'); a.href = '#'; a.setAttribute('role', 'button');
+      L.DomEvent.on(a, 'click', e => { L.DomEvent.preventDefault(e); L.DomEvent.stopPropagation(e); rpMaximize(!rpMax); });
+      return a; } });
+    new Max().addTo(rpMap);
+    rpMaximize(rpMax, true);
   }
+  if (!rpMap._loaded) rpMap.setView(ll(byKey[k]), 13);   // a view before adding layers (permanent labels need one)
   rpLayer.clearLayers();
   const base = rpBase(sc).toLowerCase(), t0 = D.types.SQ[k], t1 = (D.types[sc] || {})[k] || t0, closed = (D.detail[sc] || {})[k]?.closed;
   const bands = [...new Set([...(RP_BANDS[t0] || []), ...(RP_BANDS[t1] || [])])];
@@ -439,7 +492,30 @@ function rpDrawMap(k, sc) {
     });
   }
   const s = byKey[k];
-  L.circleMarker(ll(s), { radius: 6, color: '#fff', weight: 2, fillColor: closed ? css('--close') : css('--change'), fillOpacity: 1, interactive: false }).addTo(rpLayer);
+  // the other schools involved: where a closing school's area goes (with residents of the grades' ages), and the
+  // schools a boundary change takes area to or brings it from
+  const rel = new Map();
+  const addRel = (key, kind, note) => { if (!key || key === k || !byKey[key]) return; const r = rel.get(key) || { to: false, from: false, notes: [] };
+    r[kind] = true; if (note && !r.notes.includes(note)) r.notes.push(note); rel.set(key, r); };
+  if (sc !== 'SQ') {
+    for (const b of bands) { const B = D.bounds[base + '_' + b]; if (B && B.ckeys) B.ckeys.forEach(([f, t]) => { if (f === k) addRel(t, 'to', `${RP_BL[b]}: takes part of this area`); if (t === k) addRel(f, 'from', `${RP_BL[b]}: gives part of its area to this school`); }); }
+    const RR = D.commute?.R?.[rpBase(sc)]?.[k];
+    if (RR) for (const [b, m] of Object.entries(RR)) for (const [to, v] of Object.entries(m)) addRel(to, 'to', `${RP_BL[b] || b}: about ${Math.round(v[0]).toLocaleString()} school-age residents of this area`);
+  }
+  for (const [key, r] of rel) {
+    const p = ll(byKey[key]), to = r.to;
+    L.circleMarker(p, { radius: 7, color: '#fff', weight: 2, fillColor: to ? '#1f9d47' : '#7c5cbf', fillOpacity: 1 })
+      .bindTooltip(`<b>${esc(rpName(key))}</b>${closed ? ' (new school)' : to ? ' (gains area)' : ' (gives area)'}`, { direction: 'top', offset: [0, -6], className: 'rpmlabel' })   // hover only; the school itself is labelled
+      .bindPopup(`<b>${esc(rpTitle(byKey[key]))}</b><br>${r.notes.map(esc).join('<br>')}<br><a href="${esc(rpHref(key))}" class="rplink" data-k="${esc(key)}">Open its report</a>`)
+      .on('popupopen', e => { const a = e.popup.getElement()?.querySelector('a.rplink'); if (a) a.onclick = ev => { ev.preventDefault(); rpOpen(key); }; })
+      .addTo(rpLayer);
+    all.push(L.latLngBounds([p, p]));
+  }
+  const busNote = (rel.size ? `<div class="rplegend">${[...rel.values()].some(r => r.to) ? `<span><i class="k" style="width:10px;height:10px;border:0;border-radius:50%;background:#1f9d47;vertical-align:-1px"></i>${closed ? 'new school for this area' : 'school gaining part of this area'}</span>` : ''}` +
+      `${[...rel.values()].some(r => r.from && !r.to) ? '<span><i class="k" style="width:10px;height:10px;border:0;border-radius:50%;background:#7c5cbf;vertical-align:-1px"></i>school giving area to this one</span>' : ''}<span class="muted">hover a marker for its name, click for details</span></div>` : '') +
+    rpCorrLayer(k, sc, closed, all) + rpBusLayer(k, sc, bands, closed, all);
+  L.circleMarker(ll(s), { radius: 7, color: '#fff', weight: 2, fillColor: closed ? css('--close') : css('--change'), fillOpacity: 1, interactive: false })
+    .bindTooltip(`${esc(rpName(k))}${closed ? ` (closes in ${esc(LABEL[sc])})` : ''}`, { permanent: true, direction: 'top', offset: [0, -7], className: 'rpmlabel rpmself' }).addTo(rpLayer);
   setTimeout(() => {
     rpMap.invalidateSize();
     if (all.length) { const bb = all.reduce((a, b) => a.extend(b), L.latLngBounds(all[0].getSouthWest(), all[0].getNorthEast())); rpMap.fitBounds(bb, { padding: [12, 12] }); }
@@ -448,7 +524,182 @@ function rpDrawMap(k, sc) {
   return (all.length ? '' : '<p class="muted">No neighborhood attendance area for this school (focus option or program school).</p>') +
     `<div class="rplegend"><span><i class="k sqa"></i>Status Quo area</span>${sc !== 'SQ' && !closed ? `<span><i class="k sca"></i>${esc(LABEL[sc])} area</span>` : ''}${jn ? '<span><i class="k jn"></i>area joining this school</span>' : ''}${lv ? '<span><i class="k lv"></i>area leaving this school</span>' : ''}</div>` +
     (notes.length ? `<p class="muted rpnote">Joining and leaving areas are drawn on top of the other shading and overlap it: an area joining this school lies inside its ${esc(LABEL[sc])} area, and an area leaving it lies inside its Status Quo area (dashed outline).</p>` : '') +
-    (notes.length ? `<ul class="rplist">${notes.map(n => `<li>${n}</li>`).join('')}</ul>` : '');
+    (notes.length ? `<ul class="rplist">${notes.map(n => `<li>${n}</li>`).join('')}</ul>` : '') + busNote;
+}
+
+// bus routes on the report map (D.busmap): PPS's current posted morning runs to this school, and this page's simulated
+// candidate runs (scripts/build_bus_routes.py) for the scenario's base (Status Quo, A or B). For a school the scenario
+// closes: the simulated runs that pick up in its Status Quo attendance area, to the schools its students go to.
+// defaults: bike corridors and projected (simulated) bus routes on, current bus routes off (remembered as rsRpBus2)
+let rpBus = { cur: false, sim: true, corr: 'bike' };
+try { const v = JSON.parse(localStorage.getItem('rsRpBus2') || 'null'); if (v) rpBus = v; } catch (e) {}
+function rpBusToggle(which, on) {
+  rpBus[which] = on; try { localStorage.setItem('rsRpBus2', JSON.stringify(rpBus)); } catch (e) {}
+  const n = document.getElementById('rpmapnote'); if (n && rpKey) n.innerHTML = rpDrawMap(rpKey, scen);
+}
+// programs and designations under the school's name (D.progs, scripts/patch_programs.py): immersion, Title I and ODE
+// status, SUN Community School, special education staff; and what the scenario being viewed changes
+function rpDesig(k, sc) {
+  const P = D.progs?.sch?.[k]; if (!P) return '';
+  const chip = (txt, tip, cls = '') => `<span class="rpchip${cls ? ' ' + cls : ''}"${tip ? ` title="${esc(tip)}"` : ''}>${txt}</span>`;
+  const chips = [];
+  const tot = P.total || D.series.SQ[k]?.[0];
+  for (const [p, n] of Object.entries(P.dli || {})) chips.push(chip(`${esc(p.replace('Immersion', 'immersion (DLI)'))} <span class="muted">${n}${tot ? ` of ${tot}` : ''} students</span>`, `2025-26 enrollment in the program (PPS 2026-27 Proposed Budget, Vol. 2)`));
+  if (P.programs && !/Immersion/.test(P.programs)) chips.push(chip(esc(P.programs), 'School program (PPS budget)'));
+  chips.push(P.title1 ? chip('Title I', `Title I school in 2026-27; ${P.dc_2425 ?? '?'}% of students qualified for free meals by Direct Certification in 2024-25. ${D.progs.rule}`, 'on')
+                      : chip(`Not Title I <span class="muted">(${P.dc_2425 ?? '?'}% DC)</span>`, `${P.dc_2425 ?? '?'}% of students qualified for free meals by Direct Certification in 2024-25. ${D.progs.rule}`));
+  if (P.ode) chips.push(chip(P.ode, P.ode === 'CSI' ? 'ODE Comprehensive Support and Improvement school' : 'ODE Targeted Support and Improvement school', 'on'));
+  chips.push(P.sun ? chip('SUN Community School', 'Multnomah County SUN Community School site (contact list, August 2026)', 'on') : chip('Not a SUN school', 'Not on the Multnomah County SUN Community School list (August 2026)'));
+  if (P.sped && (P.sped[0] || P.sped[1])) chips.push(chip(`Special education staff <span class="muted">${P.sped[0] || 0} licensed, ${P.sped[1] || 0} classified FTE</span>`,
+    'Special education staff allocated centrally to this school, 2026-27 budget (PPS 2026-27 Proposed Budget, Vol. 2). PPS does not publish which schools host special education focus classrooms.'));
+  const base = rpBase(sc), ch = sc === 'SQ' ? null : (D.progs.chg[base] || {})[k] || [];
+  const t1 = sc === 'SQ' ? null : D.progs.t1?.[base]?.[k];
+  return `<div class="rpdesig">${chips.join('')}</div>` + (ch == null ? '' : `<div class="rpdesig chg"><b>${esc(LABEL[sc])}:</b> ` +
+    (ch.length ? ch.map(t => chip(esc(t), '', /no longer|closes|need a new/.test(t) ? 'loss' : /Receives|qualify/.test(t) ? 'gain' : '')).join('') : '<span class="muted">no change to immersion programs, Title I (est.), SUN or special education</span>') +
+    (t1 && !ch.some(t => t.startsWith('Title I')) ? `<span class="muted" title="${esc(`Estimated: this school's 2024-25 Direct Certification share mixed with that of the closing schools whose students it receives (${t1[2].map(x => `${x[0]} about ${x[1]} students at ${x[2]}%`).join(', ')}).`)}"> Title I unchanged (est. ${t1[0]}% DC)</span>` : '') +
+    (sc === 'C' ? `<span class="muted"> (shown for ${esc(LABEL[base])}, the custom scenario's starting point)</span>` : '') + '</div>');
+}
+
+// maximized report map (kept across re-renders of the report)
+let rpMax = false;
+function rpMaximize(on, quiet) {
+  rpMax = on;
+  const el = document.getElementById('rpmap'), panel = el?.closest('.rppanel'); if (!panel || !rpMap) return;
+  panel.classList.toggle('rpmax', on); document.body.classList.toggle('rpmax-open', on);
+  const b = el.querySelector('.rpmaxbtn');
+  if (b) { b.innerHTML = on ? '&#x2715;' : '&#x26F6;'; b.title = on ? 'Restore the map (Esc)' : 'Maximize the map'; b.setAttribute('aria-label', b.title); }
+  if (!quiet) { const c = rpMap.getCenter(), z = rpMap.getZoom(); setTimeout(() => { rpMap.invalidateSize(); rpMap.setView(c, on ? z + 1 : Math.max(z - 1, 10)); }, 60); }
+  else setTimeout(() => rpMap && rpMap.invalidateSize(), 60);
+}
+if (typeof addEventListener === 'function') addEventListener('keydown', e => { if (e.key === 'Escape' && rpMax) rpMaximize(false); });
+
+// trip corridors (D.corr, scripts/build_block_access.py): the streets the school's trips would use if every school-age
+// resident of its attendance area went by bike (lowest-stress route) or by car (fastest), line width by share
+function rpCorrToggle(v) {
+  rpBus.corr = v; try { localStorage.setItem('rsRpBus2', JSON.stringify(rpBus)); } catch (e) {}
+  const n = document.getElementById('rpmapnote'); if (n && rpKey) n.innerHTML = rpDrawMap(rpKey, scen);
+}
+// arterial hazard marker (bike and walk corridors): x = crossing a major arterial, f = a stretch along one
+const RP_HZ_SVG = '<svg width="18" height="16" viewBox="0 0 18 16"><path d="M9 1 L17 15 L1 15 Z" fill="#f2b705" stroke="#5a3d00" stroke-width="1.3" stroke-linejoin="round"/><path d="M9 5.5 V10" stroke="#3a2a00" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="12.6" r="1" fill="#3a2a00"/></svg>';
+const rpHzIcon = () => L.divIcon({ className: 'hzicon', iconSize: [18, 16], iconAnchor: [9, 9], html: RP_HZ_SVG });
+function rpHazardText(h, mode, who) {
+  const pct = Math.round(100 * h[3]), nm = esc(h[4] || 'a major arterial');
+  return h[0] === 'x' ? `Crosses ${nm} (major arterial): ${pct}% of ${who} ${mode === 'bike' ? 'ride' : 'walk'} through here`
+    : `Runs along ${nm} (major arterial) for about ${Math.round(h[5]).toLocaleString()} m${mode === 'bike' ? ' without a protected or buffered bike lane' : ''}: up to ${pct}% of ${who}`;
+}
+function rpCorrLayer(k, sc, closed, all) {
+  const C = D.corr; if (!C) return '';
+  const mode = rpBus.corr || '', gsc = ['SQ', 'A', 'B'].includes(rpBase(sc)) ? rpBase(sc) : 'SQ', lab = gsc === 'SQ' ? 'Status Quo' : LABEL[gsc];
+  const sel = `<div class="rpbusctl"><label>Trip corridors <select onchange="rpCorrToggle(this.value)">` +
+    [['', 'Off'], ['walk', 'On foot (shortest walk)'], ['bike', 'By bike (lowest-stress route)'], ['drive', 'By car (fastest route)']].map(([v, l]) => `<option value="${v}"${v === mode ? ' selected' : ''}>${l}</option>`).join('') + '</select></label></div>';
+  if (!mode) return sel;
+  const dec = p => { const out = []; let a = p[0], b = p[1]; out.push([a / 1e5, b / 1e5]); for (let i = 2; i < p.length; i += 2) { a += p[i]; b += p[i + 1]; out.push([a / 1e5, b / 1e5]); } return out; };
+  const W = [2, 3.5, 5.5, 8], col0 = { walk: '#2563eb', bike: '#15803d', drive: '#b45309' }[mode];
+  const verb = { walk: 'would walk', bike: 'would ride', drive: 'would be driven' }[mode], how = { walk: 'on foot', bike: 'by bike', drive: 'by car' }[mode];
+  const draw = (r, col, tip) => r.L.forEach(([lv, p]) => L.polyline(dec(p), { color: col, weight: W[lv], opacity: .7, lineCap: 'round', className: 'rproute' }).bindTooltip(tip(lv), { sticky: true }).addTo(rpLayer));
+  const hz = (r, who) => (r.H || []).forEach(h => L.marker([h[1], h[2]], { icon: rpHzIcon(), keyboard: false, zIndexOffset: 500 }).bindTooltip(rpHazardText(h, mode, who)).addTo(rpLayer));
+  const hzLine = r => { if (!r.H) return ''; const nx = r.H.filter(h => h[0] === 'x').length, nf = r.H.length - nx;
+    return ` <span class="hztxt"><span class="hzsym">&#9888;</span> ${Math.round(100 * r.hx)}% of them would cross or run along a major arterial (${nx} crossing${nx === 1 ? '' : 's'}, ${nf} stretch${nf === 1 ? '' : 'es'} along one).</span>`; };
+  const lvTxt = lv => ['3-10%', '10-25%', '25-50%', '50%+'][lv];
+  // named streets by role: bikeways (with facility), arterials / collectors, then the busiest local streets
+  const FACN = { NG: 'neighborhood greenway', TRL: 'path', PBL: 'protected bike lane', SIR: 'separated bike lane', BBL: 'buffered bike lane', BBBL: 'buffered bike lane',
+    SBBL: 'buffered bike lane', BL: 'bike lane', ABL: 'advisory bike lane', ESR: 'enhanced shared roadway', SHARED: 'shared-lane markings' };
+  const li = (a, n, f) => a.slice(0, n).map(x => `${esc(x[0])} ${Math.round(100 * x[1])}%${f ? f(x) : ''}`).join(', ');
+  const streets = st => {
+    if (!st.length) return 'no single named street carries 5% or more.';
+    const out = [];
+    if (mode === 'bike') {
+      const bw = st.filter(x => x[3]), art = st.filter(x => !x[3] && x[2] !== 'L'), loc = st.filter(x => !x[3] && x[2] === 'L');
+      if (bw.length) out.push(`<b>bikeways</b> ${li(bw, 5, x => ` (${FACN[x[3]] || x[3]})`)}`);
+      if (art.length) out.push(`<b>arterials and collectors without a bike facility</b> ${li(art, 4)}`);
+      if (loc.length) out.push(`<b>local streets</b> ${li(loc, 3)}`);
+    } else {
+      const art = st.filter(x => x[2] === 'A'), col = st.filter(x => x[2] === 'C'), loc = st.filter(x => x[2] === 'L');
+      if (art.length) out.push(`<b>arterials</b> ${li(art, 5)}`);
+      if (col.length) out.push(`<b>collectors</b> ${li(col, 4)}`);
+      if (loc.length) out.push(`<b>local streets</b> ${li(loc, 3)}`);
+    }
+    return out.join('; ') + '.';
+  };
+  let txt = '';
+  if (!closed) {
+    const r = C.S[mode]?.[gsc]?.[k] || C.S[mode]?.SQ?.[k];
+    if (!r) return sel + '<p class="muted rpnote">No corridor data for this school (no neighborhood attendance area).</p>';
+    draw(r, col0, lv => `${lvTxt(lv)} of the area's ${Math.round(r.w).toLocaleString()} school-age residents ${verb} along here`);
+    hz(r, "the area's school-age residents");
+    txt = `<b>Streets used ${how}, ${esc(lab)}</b> (share of the area's ${Math.round(r.w).toLocaleString()} school-age residents whose route uses each): ${streets(r.st)}${hzLine(r)}`;
+  } else {
+    const F = C.F[mode]?.[gsc]?.[k] || [];
+    F.forEach(r => { const col = `hsl(${rpHue(r.to)} 60% 38%)`;
+      draw(r, col, lv => `${lvTxt(lv)} of this area's residents going to ${esc(rpName(r.to))} would use this street`);
+      hz(r, `this area's residents going to ${esc(rpName(r.to))}`);
+      r.L.forEach(([, p]) => all.push(L.polyline(dec(p)).getBounds())); });
+    txt = F.length ? `<b>From this area to its new schools ${how}, ${esc(lab)}:</b> ` + F.sort((a, b) => b.w - a.w).map(r => `to ${rpLink(r.to)} (${Math.round(r.w)} residents): ${streets(r.st)}${hzLine(r)}`).join(' ') : 'No corridor data for this area.';
+  }
+  const hzKey = mode === 'drive' ? '' : `<span><svg width="14" height="12" viewBox="0 0 18 16" style="vertical-align:-1px;margin-right:4px"><path d="M9 1 L17 15 L1 15 Z" fill="#f2b705" stroke="#5a3d00" stroke-width="1.3"/></svg>crosses or runs along a major arterial</span>`;
+  return sel + `<div class="rplegend">${[0, 1, 2, 3].map(lv => `<span><i class="k" style="border-top:${W[lv]}px solid ${closed ? '#6b7280' : col0};width:18px"></i>${lvTxt(lv)}</span>`).join('')}${hzKey}</div>` +
+    `<p class="rpnote">${txt}</p><p class="muted rpnote">Trip corridors: where trips would concentrate if every school-age resident of the attendance area (2020 Census, not enrolled students) made the trip ${mode === 'bike' ? 'by bike, on the lowest-stress route (bike paths, protected lanes and neighborhood greenways preferred, busy arterials avoided, hills penalised)' : mode === 'walk' ? 'on foot, by the shortest walking route' : 'by car, on the fastest route (free-flow, no traffic)'}; line width is the share of those residents using the street. Modelled, not counts of actual trips.` +
+    (mode === 'drive' ? '' : ` Hazard markers: where these routes cross a major arterial (state highways and primary or secondary arterials) or run along one for 40 m or more${mode === 'bike' ? ' outside a path or a protected, separated or buffered bike lane (standard and advisory bike lanes count as hazards)' : ''}. Traffic signals and crosswalks are not known, so a signalized crossing is still marked.`) +
+    `${closed ? ' Closed school: corridors from its Status Quo area to the schools its students go to, colored by school.' : ''}</p>`;
+}
+// is [lat, lng] inside a GeoJSON Polygon / MultiPolygon (or a Feature of one)?
+function rpInGeom(lat, lng, g) {
+  if (!g) return false;
+  if (g.type === 'Feature') return rpInGeom(lat, lng, g.geometry);
+  if (g.type === 'FeatureCollection') return g.features.some(f => rpInGeom(lat, lng, f));
+  const polys = g.type === 'Polygon' ? [g.coordinates] : g.type === 'MultiPolygon' ? g.coordinates : [];
+  const inRing = r => { let c = false; for (let i = 0, j = r.length - 1; i < r.length; j = i++) {
+    const [xi, yi] = r[i], [xj, yj] = r[j];
+    if ((yi > lat) !== (yj > lat) && lng < (xj - xi) * (lat - yi) / (yj - yi) + xi) c = !c; } return c; };
+  return polys.some(p => inRing(p[0]) && !p.slice(1).some(inRing));
+}
+const rpHue = k => { let h = 0; for (const c of k) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
+function rpBusLayer(k, sc, bands, closed, all) {
+  const BM = D.busmap; if (!BM) return '';
+  const dec = p => { const out = []; let a = p[0], b = p[1]; out.push([a / 1e5, b / 1e5]); for (let i = 2; i < p.length; i += 2) { a += p[i]; b += p[i + 1]; out.push([a / 1e5, b / 1e5]); } return out; };
+  const gsc = ['SQ', 'A', 'B'].includes(rpBase(sc)) ? rpBase(sc) : 'SQ', G = BM.generated[gsc] || {};
+  const simLab = gsc === 'SQ' ? 'Status Quo' : LABEL[gsc];
+  const line = (run, sll, style, tip) => {
+    const pts = run.s.map(p => [p[0], p[1]]);
+    const lyr = L.polyline(run.p ? dec(run.p) : [...pts, sll], { ...style, className: 'rproute' }).bindTooltip(tip, { sticky: true }).addTo(rpLayer);
+    for (const p of pts) L.circleMarker(p, { radius: 2.4, stroke: false, fillColor: style.color, fillOpacity: .9, interactive: false }).addTo(rpLayer);
+    return lyr;
+  };
+  const cur = BM.posted[k] || [], parts = [];
+  if (rpBus.cur) cur.forEach(r => line(r, BM.schools[k], { color: '#4b5563', weight: 2, opacity: .7, dashArray: '4 4' }, `Current PPS route to ${esc(rpName(k))}: ${r.s.length} stop${r.s.length === 1 ? '' : 's'}`));
+  parts.push(`<b>Current:</b> ${cur.length ? `${cur.length} PPS morning run${cur.length === 1 ? '' : 's'}, ${cur.reduce((a, r) => a + r.s.length, 0)} stops` : 'no PPS yellow-bus runs posted for this school'}`);
+  let simRuns = 0, simRiders = 0;
+  const dests = new Map();
+  if (!closed) {
+    const rs = G[k] || [];
+    simRuns = rs.length; simRiders = rs.reduce((a, r) => a + r.s.reduce((b, p) => b + (p[2] || 0), 0), 0);
+    if (rpBus.sim) rs.forEach(r => line(r, BM.schools[k], { color: '#7c3aed', weight: 2.6, opacity: .8 }, `Simulated ${esc(simLab)} run to ${esc(rpName(k))}: ${r.s.length} stops, about ${Math.round(r.s.reduce((a, p) => a + (p[2] || 0), 0))} riders`));
+    parts.push(`<b>Simulated, ${esc(simLab)}:</b> ${simRuns ? `${simRuns} run${simRuns === 1 ? '' : 's'}, about ${Math.round(simRiders)} riders` : 'no runs (few or no students beyond walking distance)'}`);
+  } else {
+    // runs in the scenario that pick up inside this school's Status Quo area go to the schools its students now attend
+    const geoms = [];
+    for (const b of bands) { const S = D.bounds['sq_' + b]; if (S && S.akeys) S.areas.forEach(([, g], i) => { if (S.akeys[i] === k) geoms.push(g); }); }
+    // only runs to schools serving this school's grades in the scenario (a K-5's area also has middle school riders)
+    const t0 = D.types.SQ[k], serves = to => { const t = (D.types[gsc] || {})[to] || D.types.SQ[to];
+      return t0 === 'K8' || t === 'K8' || t === t0; };
+    for (const [to, rs] of Object.entries(G)) for (const r of rs) {
+      if (!serves(to)) continue;
+      const inside = r.s.filter(p => geoms.some(g => rpInGeom(p[0], p[1], g)));
+      if (!inside.length) continue;
+      const d = dests.get(to) || { runs: 0, riders: 0 }; d.runs++; d.riders += inside.reduce((a, p) => a + (p[2] || 0), 0); dests.set(to, d);
+      if (rpBus.sim) {
+        const lyr = line(r, BM.schools[to], { color: `hsl(${rpHue(to)} 60% 40%)`, weight: 2.6, opacity: .8 }, `Simulated ${esc(simLab)} run to ${esc(rpName(to))}: picks up ${inside.length} of its ${r.s.length} stops in ${esc(rpName(k))}'s area`);
+        all.push(lyr.getBounds());
+      }
+    }
+    if (rpBus.sim) for (const to of dests.keys()) if (BM.schools[to])
+      L.circleMarker(BM.schools[to], { radius: 6, color: '#fff', weight: 2, fillColor: `hsl(${rpHue(to)} 60% 35%)`, fillOpacity: 1 }).bindTooltip(`${esc(rpName(to))} (new school)`).addTo(rpLayer);
+    parts.push(`<b>Simulated, ${esc(simLab)}:</b> ` + (dests.size ? [...dests].sort((a, b) => b[1].riders - a[1].riders).map(([to, d]) => `${d.runs} run${d.runs === 1 ? '' : 's'} to ${rpLink(to)} (about ${Math.round(d.riders)} rider${Math.round(d.riders) === 1 ? '' : 's'} from this area)`).join('; ') : 'no simulated runs pick up in this area'));
+  }
+  return `<div class="rpbusctl"><label><input type="checkbox" ${rpBus.cur ? 'checked' : ''} onchange="rpBusToggle('cur', this.checked)"> <i class="k bcur"></i>Current bus routes (PPS)</label>` +
+    `<label><input type="checkbox" ${rpBus.sim ? 'checked' : ''} onchange="rpBusToggle('sim', this.checked)"> <i class="k bsim"></i>Simulated routes, ${esc(simLab)}${closed ? ' (to new schools)' : ''}</label></div>` +
+    `<p class="rpnote">${parts.join('<br>')}</p>` +
+    `<p class="muted rpnote"><b>Simulated, for illustration only.</b> The simulated routes are not PPS plans: this page generates candidate morning runs for ${esc(BM.year)} from projected enrollment to estimate bus costs (see Estimated yellow-bus cost). Current routes are PPS's posted morning runs (located stops only). Lines follow the shortest drive path between stops in pickup order and on to the school, not the exact bus path.${sc === 'C' ? ` Custom scenarios show their starting scenario's simulated routes (${esc(simLab)}).` : ''}${closed ? ` Closed school: the simulated runs shown are those that pick up inside its Status Quo attendance area, colored by the school they go to.` : ''}</p>`;
 }
 
 // school suggestions under the search box: the page's own list rather than a <datalist>, whose
@@ -545,7 +796,7 @@ function renderReport() {
   const nextCol = t0 === 'HS' || t0 === 'MS' ? fl.next : new Map([...fl.next].filter(([key]) => D.types.SQ[key] !== 'HS'));
   const highCol = t0 === 'HS' ? new Map() : fl.high;
   el.innerHTML =
-    `<div class="rphead"><div><h3>${esc(rpTitle(s))}</h3><span class="muted">${esc(D.region_of[k] || s.region || '')} &middot; ${RP_TL[t0]}${t1 !== t0 ? ` &rarr; ${RP_TL[t1]} in ${esc(LABEL[sc])}` : ''}</span></div>` +
+    `<div class="rphead"><div><h3>${esc(rpTitle(s))}</h3><span class="muted">${esc(D.region_of[k] || s.region || '')} &middot; ${RP_TL[t0]}${t1 !== t0 ? ` &rarr; ${RP_TL[t1]} in ${esc(LABEL[sc])}` : ''}</span>${rpDesig(k, sc)}</div>` +
     `<span class="stag ${rl}">${tag}</span>${typeof adjMark === 'function' ? adjMark(k, sc) : ''}</div>` +
     `<div class="rpkpis"><div><b>${D.series.SQ[k][0] ?? '&mdash;'}</b><span>2025-26 enrollment</span></div>` +
     `<div><b>${e0 == null ? '&mdash;' : Math.round(e0)}</b><span>${rpYear} Status Quo</span></div>` +
@@ -561,10 +812,11 @@ function renderReport() {
       (nextCol.size ? `<div class="rparrow">&rarr;</div><div class="rpcol"><h4>${d1.closed ? 'Students go to' : t0 === 'HS' ? 'Students go to' : 'Next school'}</h4>${rpBoxes(nextCol, sc)}</div>` : '') +
       (highCol.size ? `<div class="rparrow">&rarr;</div><div class="rpcol"><h4>High school</h4>${rpBoxes(highCol, sc)}</div>` : '') +
     `</div><p class="muted rpnote">${sc === 'SQ' ? 'Status Quo pathways.' : `Green: new in ${esc(LABEL[sc])}; struck through: no longer. Next school is where students normally go next (or, if the school closes, where its students go); students moved to another school at the same level are listed under This school with the mechanism: PPS boundary change, grade change, program move, receiving share, or the modified enrollment model's estimate.`}</p>${sc === 'SQ' ? '' : rpChanges(k, sc)}</div>` +
+    rpSegc(k) +
     `<div class="rppanel"><h3>Building costs</h3>${rpCosts(k, sc)}</div>` +
     `<div class="rppanel"><h3>Attendance area</h3><div id="rpmap"></div><div id="rpmapnote"></div></div>` +
     `<div class="rppanel rpwide"><h3>Getting to school, ${rpYear}${sc === 'SQ' ? '' : `: ${esc(LABEL[sc])} and Status Quo`}</h3>${rpTravel(k, sc)}</div>` +
-    `<div class="rppanel rpwide"><h3>Enrollment and capacity, ${D.years[0]} to ${D.years[D.years.length - 1]}: Status Quo and scenarios</h3>${rpPlot(k, sc)}</div>` +
+    `<div class="rppanel rpwide"><h3>Enrollment and capacity, ${D.years[0]} to ${D.years[D.years.length - 1]}: Status Quo and scenarios</h3>${rpPlot(k, sc)}${D.segc?.sch?.[k] ? `<p class="muted rpnote">This school changed in Southeast enrollment balancing Phase 2 (fall 2023; see the SEGC panel above). Boundary changes phase in with new kindergarten and 6th-grade students, so PSU's projection still carries part of the shift.</p>` : ''}${rpFcAcc(k)}</div>` +
     `<div class="rppanel rpwide"><h3>Staffing changes, ${rpYear}: Status Quo and scenarios</h3>${rpStaff(k, sc)}</div>` +
     `<div class="rppanel rpwide"><h3>Students by grade${rpMark(k, sc)}</h3>${rpGrades(k, sc)}</div>` +
     `</div>`;

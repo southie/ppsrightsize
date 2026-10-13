@@ -106,6 +106,21 @@ CSS = """
 .rplist { margin: 4px 0 0; padding-left: 18px; font-size: 12.5px; } .rpline { margin: 4px 0; font-size: 12.5px; }
 .rpnote { font-size: 11.5px; margin: 6px 0 0; }
 #rpmap { height: 300px; border-radius: 8px; }
+.rppanel.rpmax { position: fixed; inset: 10px; z-index: 4000; overflow: auto; margin: 0; max-width: none; background: var(--surface-1); box-shadow: 0 12px 48px rgba(0, 0, 0, .35); }
+.rppanel.rpmax #rpmap { height: calc(100vh - 150px); min-height: 320px; }
+body.rpmax-open { overflow: hidden; }
+.rpmaxbtn { display: block; width: 30px; height: 30px; line-height: 30px; text-align: center; font-size: 17px; background: #fff; color: #333 !important; text-decoration: none; cursor: pointer; }
+.rpmaxbtn:hover { background: #f4f4f4; }
+.rpdesig { display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 6px 0 0; font-size: 12px; align-items: center; }
+.rpdesig.chg { margin-top: 4px; } .rpdesig.chg > b { font-weight: 600; margin-right: 2px; }
+.rpchip { display: inline-block; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-1); color: var(--text-secondary); cursor: default; }
+.rpchip.on { border-color: var(--change); color: var(--text-primary); } .rpchip.loss { border-color: #d6452c; color: #b3361f; } .rpchip.gain { border-color: #1f9d47; color: #17803a; }
+.hzicon { background: none; border: 0; } .hztxt { display: block; margin-top: 4px; } .hzsym { color: #b98900; font-weight: 700; }
+.leaflet-tooltip.rpmlabel { font-size: 11px; font-weight: 600; padding: 1px 5px; }
+/* routes and corridors: hover text only, not clickable (no pointer, no focus box) */
+.leaflet-interactive.rproute { cursor: grab; } .leaflet-container path.leaflet-interactive:focus { outline: none; }
+#busmap .leaflet-interactive { cursor: grab; }
+.leaflet-tooltip.rpmself { font-size: 12.5px; font-weight: 700; padding: 2px 7px; border: 1.5px solid #33312c; }
 .rpplot { width: 100%; max-width: 760px; height: auto; display: block; }
 .rpplot .grid { stroke: var(--grid); } .rpplot .ax { font-size: 10px; fill: var(--text-muted); } .rpplot .lab { font-size: 10px; }
 .rpplot path.lsq, .rpplot path.la, .rpplot path.lb, .rpplot path.lc { fill: none; stroke-width: 1.8; opacity: .85; } .rpplot path.cur { stroke-width: 3.2; opacity: 1; }

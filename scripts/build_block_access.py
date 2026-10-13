@@ -10,7 +10,14 @@ Method
   Network     OpenStreetMap ways (source/osm/streets.json, from scripts/fetch_osm_streets.py) turned into three graphs:
                 walk  every street and path pedestrians may use (no freeways, no foot=no), both directions, WALK_MPH
                 bike  streets, paths and cycleways (no freeways, no steps, footways only where bikes are allowed),
-                      one-way streets respected unless bikes are exempt, BIKE_MPH, flat (hills ignored)
+                      one-way streets respected unless bikes are exempt. Routes minimise travel time x a stress factor:
+                      the street's class (arterials 1.4-2.5x a residential street, more at 35 mph+ or 4+ lanes) eased
+                      by its bike facility (PBOT's bicycle network, source/pbot, matched to OSM segments; else OSM's
+                      cycleway tags): paths, protected lanes and neighborhood greenways 0.8-0.85, buffered lanes and
+                      bike lanes reduce an arterial's stress but not below a side street's; plus a penalty for climbs
+                      steeper than 3%. Travel time: BIKE_MPH on the flat, slower uphill (10 mph / (1 + 12 x grade)),
+                      up to 1.3x faster downhill, grades from ground elevation (source/elevation; bridges and tunnels
+                      flat); the reported minutes are the time along the chosen route
                 drive streets cars may use, one-way streets respected, posted speed limit or a default by street
                       class; free-flow (no traffic, no signal delay) then scaled by one factor fitted so that
                       school-to-school drive times match the OSRM matrix the explorer already uses
@@ -35,6 +42,9 @@ Outputs (source/block-access/)
                        distance, share within 15 minutes by mode, share whose nearest school is their assigned school
   district-access.json the same rolled up by scenario and band, with changes from Status Quo
   block-school-matrix.npz  block x school travel time for every school and mode (for custom scenarios later)
+  corridors.json       trip corridors by bike and by car for each school and scenario (street segments carrying at
+                       least 3% of the school's residents, by share level, and the named streets carrying the most),
+                       and for each closed school's area to its new schools
 """
 import csv, glob, json, math, os, re, sys, time
 import numpy as np
@@ -198,10 +208,140 @@ def graph(fwd, back, speed):
     return csr_matrix((w, (u, v)), shape=(NN, NN))
 ones = np.ones(len(U))
 seg_mph = RS[R]
+
+# ---------- low-stress, hill-aware bike routing ----------
+# Route choice minimises travel time x a stress factor for the street and its bike facility (PBOT's bicycle network,
+# else OpenStreetMap's bike tags); travel time slows on climbs and speeds up (capped) downhill, from ground elevation.
+# Reported bike minutes are the travel time along the chosen route.
+WTAGS = [w['tags'] for w in S['ways'] if rules(w['tags']) and any(rules(w['tags'])[:5])]   # same order as rule_list
+assert len(WTAGS) == len(rule_list)
+HW = np.array([t.get('highway', '') for t in WTAGS]); SEGW = R   # way index per segment
+BIKE_STRESS_BASE = {'trunk': 3.5, 'trunk_link': 2.5, 'primary': 2.5, 'primary_link': 2.0, 'secondary': 2.0, 'secondary_link': 1.6,
+                    'tertiary': 1.4, 'tertiary_link': 1.2, 'unclassified': 1.05, 'residential': 1.0, 'living_street': 0.95,
+                    'service': 1.1, 'road': 1.2, 'track': 1.3, 'cycleway': 0.8, 'path': 0.9, 'footway': 1.15, 'pedestrian': 1.2,
+                    'bridleway': 1.3}
+# facility: multiplier on the street's stress, and a floor (a bike lane on an arterial is still busier than a side street)
+FAC = {'TRL': (None, 0.8), 'PBL': (None, 0.85), 'SIR': (None, 0.85), 'NG': (None, 0.85), 'BBL': (0.55, 1.0), 'BBBL': (0.55, 1.0),
+       'SBBL': (0.55, 1.0), 'BL': (0.7, 1.05), 'ABL': (0.8, 1.05), 'ESR': (0.85, 0.95), 'SHARED': (0.9, 1.0)}
+FAC_RANK = ['TRL', 'PBL', 'SIR', 'NG', 'SBBL', 'BBBL', 'BBL', 'BL', 'ABL', 'ESR', 'SHARED']
+def osm_fac(t):
+    hw, bk = t.get('highway', ''), t.get('bicycle', '')
+    vals = [t.get(k, '') for k in ('cycleway', 'cycleway:left', 'cycleway:right', 'cycleway:both')]
+    if hw == 'cycleway' or (hw == 'path' and bk == 'designated') or t.get('bicycle_road') == 'yes' or t.get('cyclestreet') == 'yes': return 'TRL' if hw in ('cycleway', 'path') else 'NG'
+    if any(v == 'track' for v in vals): return 'PBL'
+    if any(v in ('lane', 'opposite_lane') for v in vals):
+        sep = t.get('cycleway:right:separation', '') or t.get('cycleway:left:separation', '')
+        return 'PBL' if sep and sep not in ('no', 'solid_line', 'dashed_line') else 'BL'
+    if any(v in ('shared_lane', 'share_busway') for v in vals): return 'SHARED'
+    return ''
+seg_fac = np.array([osm_fac(t) for t in WTAGS], dtype=object)[SEGW]
+PBOT = os.path.join(ROOT, 'source', 'pbot', 'bicycle-network.geojson')
+if os.path.exists(PBOT):
+    # PBOT bikeway lines, densified to points every 5 m with their bearing; an OSM segment takes the facility of a
+    # bikeway point within 9 m of its midpoint running the same way (within 25 degrees), so cross streets don't match
+    px_, py_, pb_, pf_ = [], [], [], []
+    for f in json.load(open(PBOT, encoding='utf-8'))['features']:
+        fc = f['properties'].get('Facility') or ''
+        if fc not in FAC or not f.get('geometry'): continue
+        g = f['geometry']; cs = g['coordinates']
+        lines = cs if cs and isinstance(cs[0][0], list) else [cs]
+        for ln in lines:
+            a = np.array([q[:2] for q in ln if isinstance(q, list) and len(q) >= 2], float)
+            if a.ndim != 2 or len(a) < 2: continue
+            x, y = proj(a[:, 0], a[:, 1])
+            for i in range(len(x) - 1):
+                dx, dy = x[i + 1] - x[i], y[i + 1] - y[i]; n = max(1, int(math.hypot(dx, dy) // 5))
+                tt = (np.arange(n) + .5) / n
+                px_.append(x[i] + dx * tt); py_.append(y[i] + dy * tt); pb_.append(np.full(n, math.atan2(dy, dx) % math.pi)); pf_.append(np.full(n, FAC_RANK.index(fc)))
+    px_, py_, pb_, pf_ = map(np.concatenate, (px_, py_, pb_, pf_))
+    ptree = cKDTree(np.c_[px_, py_])
+    mx, my = (NX[U] + NX[V]) / 2, (NY[U] + NY[V]) / 2
+    sb = np.arctan2(NY[V] - NY[U], NX[V] - NX[U]) % math.pi
+    bikeable = RL[R, 1] | RL[R, 2]
+    best = np.full(len(U), 99)
+    dd, ii = ptree.query(np.c_[mx, my], k=6, distance_upper_bound=9.0)
+    for c in range(6):
+        ok = np.isfinite(dd[:, c]) & bikeable
+        j = np.where(ok, ii[:, c], 0)
+        diff = np.abs(pb_[j] - sb); diff = np.minimum(diff, math.pi - diff)
+        ok &= diff < math.radians(25)
+        best = np.where(ok, np.minimum(best, pf_[j]), best)
+    has = best < 99
+    pbf = np.array(FAC_RANK, dtype=object)[np.where(has, best, 0)]
+    # the better of PBOT's and OSM's facility
+    seg_fac = np.where(has & ((seg_fac == '') | np.array([FAC_RANK.index(a) < FAC_RANK.index(b) if b else True for a, b in zip(pbf, seg_fac)])), pbf, seg_fac)
+    log(f'bike facilities: PBOT matched {has.sum():,} segments ({L[has].sum() / 1000:,.0f} km); with OSM tags {(seg_fac != "").sum():,} segments')
+base_stress = np.array([BIKE_STRESS_BASE.get(h, 1.2) for h in HW])[SEGW]
+fast_road = (seg_mph >= 35) & np.isin(HW[SEGW], ['primary', 'secondary', 'tertiary', 'trunk', 'primary_link', 'secondary_link'])
+lanes = np.array([int(re.match(r'\d+', t.get('lanes', '0') or '0').group()) if re.match(r'\d+', t.get('lanes', '') or '') else 0 for t in WTAGS])[SEGW]
+stress = base_stress * np.where(fast_road, 1.2, 1.0) * np.where(lanes >= 4, 1.15, 1.0)
+for fc, (mult, floor) in FAC.items():
+    sel = seg_fac == fc
+    stress[sel] = floor if mult is None else np.maximum(floor, stress[sel] * mult)
+unpaved = np.array([t.get('surface', '') in ('gravel', 'dirt', 'ground', 'unpaved', 'grass', 'mud', 'sand', 'fine_gravel', 'compacted') for t in WTAGS])[SEGW]
+stress *= np.where(unpaved, 1.25, 1.0)
+# ground elevation at every node (terrarium tiles, scripts/fetch_elevation.py), bilinear
+EL = os.path.join(ROOT, 'source', 'elevation')
+NZ = np.zeros(NN)
+if os.path.exists(os.path.join(EL, 'index.json')):
+    from PIL import Image
+    ei = json.load(open(os.path.join(EL, 'index.json'))); z = ei['z']; (x0, x1), (y0, y1) = ei['x'], ei['y']
+    mos = np.zeros(((y1 - y0 + 1) * 256, (x1 - x0 + 1) * 256), np.float32)
+    for tx_ in range(x0, x1 + 1):
+        for ty_ in range(y0, y1 + 1):
+            a = np.asarray(Image.open(os.path.join(EL, f'z{z}_{tx_}_{ty_}.png')).convert('RGB'), np.float32)
+            mos[(ty_ - y0) * 256:(ty_ - y0 + 1) * 256, (tx_ - x0) * 256:(tx_ - x0 + 1) * 256] = a[..., 0] * 256 + a[..., 1] + a[..., 2] / 256 - 32768
+    lon_ = np.array([S['nodes'][k][0] for k in ids]); lat_ = np.array([S['nodes'][k][1] for k in ids])
+    fx = (lon_ + 180) / 360 * 2 ** z * 256 - x0 * 256
+    fy = (1 - np.log(np.tan(np.radians(lat_)) + 1 / np.cos(np.radians(lat_))) / math.pi) / 2 * 2 ** z * 256 - y0 * 256
+    ix, iy = np.clip(np.floor(fx - .5).astype(int), 0, mos.shape[1] - 2), np.clip(np.floor(fy - .5).astype(int), 0, mos.shape[0] - 2)
+    ax, ay = np.clip(fx - .5 - ix, 0, 1), np.clip(fy - .5 - iy, 0, 1)
+    NZ = (mos[iy, ix] * (1 - ax) * (1 - ay) + mos[iy, ix + 1] * ax * (1 - ay) + mos[iy + 1, ix] * (1 - ax) * ay + mos[iy + 1, ix + 1] * ax * ay).astype(float)
+    log(f'elevation: {NZ.min():.0f} to {NZ.max():.0f} m at street nodes')
+flat = np.array([t.get('bridge', 'no') not in ('no', '') or t.get('tunnel', 'no') not in ('no', '') for t in WTAGS])[SEGW]
+# grades from elevation smoothed along each way (mean over +/- GRADE_WIN m), since the ground model's ~13 m pixels make
+# short segments noisy; a way's segments are consecutive in U / V / R
+GRADE_WIN = 40.0
+grade = np.zeros(len(U))
+bounds = np.r_[0, np.nonzero(R[1:] != R[:-1])[0] + 1, len(R)]
+for a0, b0 in zip(bounds[:-1], bounds[1:]):
+    nd = np.r_[U[a0:b0], V[b0 - 1]]; z_ = NZ[nd]
+    s_ = np.r_[0, np.cumsum(L[a0:b0])]
+    if s_[-1] < 1: continue
+    cz = np.r_[0, np.cumsum((z_[1:] + z_[:-1]) / 2 * np.diff(s_))]   # integral of elevation along the way
+    lo, hi = np.maximum(s_ - GRADE_WIN, 0), np.minimum(s_ + GRADE_WIN, s_[-1])
+    zs = np.where(hi - lo > 1, (np.interp(hi, s_, cz) - np.interp(lo, s_, cz)) / np.maximum(hi - lo, 1e-9), z_)
+    grade[a0:b0] = np.diff(zs) / np.maximum(L[a0:b0], 1)
+grade = np.clip(np.where(flat | (L < 1), 0, grade), -0.2, 0.2)   # U -> V
+def bike_speed(g):   # m/s: slower uphill, faster downhill (capped at 1.3x)
+    return BIKE_MPH * MPH * np.where(g > 0, 1 / (1 + 12 * g), np.minimum(1.3, 1 - 6 * g))
+def climb(g): return 1 + 4 * np.maximum(0, g - 0.03)   # aversion to steep climbs beyond the time they take
+BT_F, BT_B = L / bike_speed(grade), L / bike_speed(-grade)          # seconds, U->V and V->U
+BC_F, BC_B = BT_F * stress * climb(grade), BT_B * stress * climb(-grade)
+log(f'bike stress: median {np.median(stress[RL[R, 1]]):.2f}, arterials without facility {np.median(stress[(seg_fac == "") & np.isin(HW[SEGW], ["primary", "secondary"])]):.2f}; '
+    f'grade beyond 5% on {(np.abs(grade) > .05).mean():.1%} of segments')
+
+def graph_edges(fwd, back, cf, cb, tf, tb):
+    """unique directed edges (the cheapest where two ways join the same nodes): cost csr, and sorted keys / times for
+    looking up the travel time of a tree edge"""
+    u = np.concatenate([U[fwd], V[back]]); v = np.concatenate([V[fwd], U[back]])
+    c = np.concatenate([cf[fwd], cb[back]]) + 1e-3; t = np.concatenate([tf[fwd], tb[back]]) + 1e-3
+    seg = np.concatenate([np.nonzero(fwd)[0], np.nonzero(back)[0]])
+    key = u.astype(np.int64) * NN + v
+    o = np.lexsort((c, key)); key, u, v, c, t, seg = key[o], u[o], v[o], c[o], t[o], seg[o]
+    first = np.r_[True, key[1:] != key[:-1]]
+    key, u, v, c, t, seg = key[first], u[first], v[first], c[first], t[first], seg[first]
+    return csr_matrix((c, (u, v)), shape=(NN, NN)), key, t, seg
+EDGES = {}
+G_bike, *EDGES['bike'] = graph_edges(RL[R, 1], RL[R, 2], BC_F, BC_B, BT_F, BT_B)
+dt = L / (seg_mph * MPH)
+G_drive, *EDGES['drive'] = graph_edges(RL[R, 3], RL[R, 4], dt, dt, dt, dt)
+wt = L / (WALK_MPH * MPH)
+_, *EDGES['walk'] = graph_edges(RL[R, 0], RL[R, 0], wt, wt, wt, wt)   # lookups only: walk times use the walk graph below
 MODES = {
     'walk': graph(RL[R, 0], RL[R, 0], ones * WALK_MPH * MPH),
-    'bike': graph(RL[R, 1], RL[R, 2], ones * BIKE_MPH * MPH),
-    'drive': graph(RL[R, 3], RL[R, 4], seg_mph * MPH),
+    'bike': G_bike,
+    'drive': G_drive,
 }
 
 # snapping targets: nodes in the graph's largest strongly connected piece (and, for driving, not on a freeway)
@@ -224,16 +364,44 @@ SXm, SYm = proj([s['lng'] for s in SCHOOLS], [s['lat'] for s in SCHOOLS])
 SPEED = {'walk': WALK_MPH * MPH, 'bike': BIKE_MPH * MPH, 'drive': WALK_MPH * MPH}   # the snap leg is on foot
 
 # ---------- travel time, every point to every school ----------
+def tree_sum(pred, val):
+    """sum of val along each node's path to the root of a shortest-path tree (pointer doubling); unreached -> inf"""
+    P = np.where(pred < 0, -1, pred); acc = np.where(P >= 0, val, 0.0); Q = P.copy()
+    while (Q >= 0).any():
+        m_ = Q >= 0
+        acc[m_] += acc[Q[m_]]; Q[m_] = Q[Q[m_]]
+    return acc
+def edge_lookup(m, n, p):
+    """travel time and segment index of tree edges n -> p (p = next node toward the school)"""
+    key, t, seg = EDGES[m]
+    k = n.astype(np.int64) * NN + p; j = np.clip(np.searchsorted(key, k), 0, len(key) - 1)
+    ok = key[j] == k
+    return np.where(ok, t[j], 0.0), np.where(ok, seg[j], -1)
 TT = {}   # mode -> (NS, NP) float32 seconds
 SS = {}   # mode -> (NS, NS) seconds school -> school
+PRED = {}   # mode -> (NS, NN) int32: next node toward each school (for the trip corridors)
+PNODE, SNODE = {}, {}
 for m, G in MODES.items():
     cand, tree = TREES[m]
     pd_, pi = tree.query(np.c_[PXm, PYm]); pnode = cand[pi]
     sd_, si = tree.query(np.c_[SXm, SYm]); snode = cand[si]
+    PNODE[m], SNODE[m] = pnode, snode
     Gt = G.T.tocsr()
     out = np.empty((NS, NP), np.float32); ss = np.empty((NS, NS))
+    if m in EDGES: PRED[m] = np.empty((NS, NN), np.int32)
     for b0 in range(0, NS, 8):
-        dist = dijkstra(Gt, directed=True, indices=snode[b0:b0 + 8])   # node -> school
+        if m in EDGES:
+            dist, pred = dijkstra(Gt, directed=True, indices=snode[b0:b0 + 8], return_predecessors=True)   # node -> school
+            PRED[m][b0:b0 + 8] = pred
+            if m == 'bike':   # route chosen on cost; time measured along it
+                nodes = np.arange(NN)
+                for r_ in range(len(pred)):
+                    et, _ = edge_lookup(m, nodes, np.maximum(pred[r_], 0))
+                    tsum = tree_sum(pred[r_], np.where(pred[r_] >= 0, et, 0.0))
+                    tsum[~np.isfinite(dist[r_])] = np.inf
+                    dist[r_] = tsum
+        else:
+            dist = dijkstra(Gt, directed=True, indices=snode[b0:b0 + 8])   # node -> school
         out[b0:b0 + 8] = dist[:, pnode] + pd_ / SPEED[m] + sd_[b0:b0 + 8, None] / SPEED[m]
         ss[b0:b0 + 8] = (dist[:, snode] + sd_[None, :] / SPEED[m] + sd_[b0:b0 + 8, None] / SPEED[m])
     TT[m], SS[m] = out, ss
@@ -261,12 +429,14 @@ block_rows, school_rows, district = [], [], {}
 ACC_T = {'k5': ('ES', 'K8'), '68': ('MS', 'K8'), '912': ('HS',)}
 TAKERS = {b: sorted({k for s_ in D['types'] for k, t in D['types'][s_].items() if t in ACC_T[b]}) for b in BANDS}
 PAIRS = {}
+ASSIGN = {}
 for sc in SCENS:
     for band in BANDS:
         areas = AREAS[sc, band]
         assign = np.full(NP, -1)
         for k, polys in areas.items():
             assign[inside(PX, PY, polys) & (assign < 0)] = sidx[k]
+        ASSIGN[sc, band] = assign
         cands = np.array(sorted(sidx[k] for k in areas))
         nearest = cands[np.argmin(WALK_M[cands], axis=0)]
         has = assign >= 0; ai = np.where(has, assign, 0)
@@ -363,3 +533,172 @@ wsum = np.bincount(PB, PW[:, 0], NB)
 mat = {m: np.stack([np.bincount(PB, PW[:, 0] * np.nan_to_num(TT[m][i] / 60, posinf=999), NB) / np.maximum(wsum, 1e-9) for i in range(NS)]).astype(np.float32) for m in TT}
 np.savez_compressed(os.path.join(OUT, 'block-school-matrix.npz'), geoid=np.array(BG), school=np.array(SK), weights=BW.astype(np.float32), **{f'{m}_min': v for m, v in mat.items()})
 log(f'wrote {len(block_rows):,} block rows, {len(school_rows)} school rows -> {os.path.relpath(OUT, ROOT)}')
+
+# ---------- trip corridors: where each school's trips would run, by bike and by car ----------
+# Each resident point's band-age residents follow the shortest-path tree (bike: the low-stress route; drive: the
+# fastest) to their assigned school; summing them along the tree gives how many of the school's residents would use
+# each street segment. Kept: segments carrying at least CORR_MIN of the school's residents, as polylines by share
+# level, plus the named streets carrying the most. For each school a scenario closes, the same for its Status Quo area's
+# residents going to their new schools.
+CORR_MIN, CORR_LEVELS = 0.03, [0.03, 0.1, 0.25, 0.5]
+TB = {'ES': ['k5'], 'K8': ['k5', '68'], 'MS': ['68'], 'HS': ['912']}
+STREET_CLASS = {'trunk': 'A', 'trunk_link': 'A', 'primary': 'A', 'primary_link': 'A', 'secondary': 'A', 'secondary_link': 'A', 'tertiary': 'C', 'tertiary_link': 'C'}
+LON_ = np.array([S['nodes'][k][0] for k in ids]); LAT_ = np.array([S['nodes'][k][1] for k in ids])
+WAYNAME = [t.get('name', '') for t in WTAGS]
+def dp(xy, tol):
+    """Douglas-Peucker on an (n, 2) metre array; returns kept indices"""
+    keep = np.zeros(len(xy), bool); keep[[0, -1]] = True; st = [(0, len(xy) - 1)]
+    while st:
+        a, b = st.pop()
+        if b <= a + 1: continue
+        p, q = xy[a], xy[b]; d = q - p; n = math.hypot(*d) or 1e-9
+        e_ = xy[a + 1:b] - p; dist = np.abs(d[0] * e_[:, 1] - d[1] * e_[:, 0]) / n
+        i = int(dist.argmax())
+        if dist[i] > tol: keep[a + 1 + i] = True; st += [(a, a + 1 + i), (a + 1 + i, b)]
+    return np.nonzero(keep)[0]
+def enc(nodes):
+    xy = np.c_[NX[nodes], NY[nodes]]; kp = nodes[dp(xy, 6.0)]
+    la, lo = np.round(LAT_[kp] * 1e5).astype(int), np.round(LON_[kp] * 1e5).astype(int)
+    out = [int(la[0]), int(lo[0])]
+    for i in range(1, len(kp)): out += [int(la[i] - la[i - 1]), int(lo[i] - lo[i - 1])]
+    return out
+# arterial hazards on bike and walk corridors: where a route crosses a major arterial (trunk, primary, secondary) and
+# stretches that run along one (for bikes, unless on a path or in a protected, separated or buffered bike lane)
+HZ_ART = {'trunk', 'trunk_link', 'primary', 'primary_link', 'secondary', 'secondary_link'}
+SEG_ART = np.isin(HW[R], list(HZ_ART))
+NODE_ART = np.zeros(NN, bool); NODE_ART[U[SEG_ART]] = True; NODE_ART[V[SEG_ART]] = True
+NODE_ART_NAME = np.full(NN, '', dtype=object)
+for sg in np.nonzero(SEG_ART)[0]:
+    nm = WAYNAME[R[sg]] or HW[R[sg]]
+    NODE_ART_NAME[U[sg]] = NODE_ART_NAME[U[sg]] or nm; NODE_ART_NAME[V[sg]] = NODE_ART_NAME[V[sg]] or nm
+# a bike route on an arterial is not a hazard where it rides a path, a protected / separated lane or a buffered lane;
+# standard and advisory bike lanes, shared-lane markings and enhanced shared roadways still are
+PROTECTED = np.isin(seg_fac, ['TRL', 'PBL', 'SIR', 'BBL', 'BBBL', 'SBBL'])
+HZ_MIN_RUN = 40.0   # metres along an arterial before it counts
+def hazards(m, pred, K, sh, kept):
+    _, sg = edge_lookup(m, K, pred[K])
+    ok = sg >= 0
+    along = np.zeros(NN, bool)
+    a = ok & SEG_ART[np.where(ok, sg, 0)]
+    if m == 'bike': a &= ~PROTECTED[np.where(ok, sg, 0)]
+    along[K[a]] = True
+    seg_of = np.full(NN, -1); seg_of[K] = np.where(ok, sg, -1)
+    on_art = np.zeros(NN, bool); on_art[K[ok & SEG_ART[np.where(ok, sg, 0)]]] = True   # on the arterial at all (protected or not)
+    nonart_child = np.zeros(NN, bool); nonart_child[pred[K[~on_art[K]]]] = True
+    art_child = np.zeros(NN, bool); art_child[pred[K[along[K]]]] = True
+    out = []
+    # crossings: the route goes through an arterial intersection on side streets (in and out not along the arterial)
+    xs = sorted(K[NODE_ART[K] & ~on_art[K] & nonart_child[K]], key=lambda p: -sh[p])
+    keep = []   # one point per crossing: merge points within 40 m on the same arterial (divided roads, wide intersections)
+    for p in xs:
+        if any(NODE_ART_NAME[q] == NODE_ART_NAME[p] and math.hypot(NX[p] - NX[q], NY[p] - NY[q]) < 40 for q in keep): continue
+        keep.append(p)
+        out.append(['x', round(float(LAT_[p]), 5), round(float(LON_[p]), 5), round(float(sh[p]), 3), NODE_ART_NAME[p], 0])
+    # stretches along an arterial
+    for n in K[along[K] & ~art_child[K]]:
+        seq, length, cur = [n], 0.0, n
+        while along[cur] and kept[cur]:
+            length += L[seg_of[cur]] if seg_of[cur] >= 0 else 0; cur = pred[cur]; seq.append(cur)
+            if cur < 0: break
+        if length < HZ_MIN_RUN: continue
+        mid = seq[len(seq) // 2]; nm = WAYNAME[R[seg_of[n]]] if seg_of[n] >= 0 else ''
+        out.append(['f', round(float(LAT_[mid]), 5), round(float(LON_[mid]), 5), round(float(sh[seq[-2]]), 3), nm, int(round(length))])
+    return out
+HZN = None
+def corridors(m, si, cols):
+    global HZN
+    """cols: list of (source point indices, weights). Returns per column {w, L: [[level, path]], st: [[name, share]]}"""
+    pred = PRED[m][si].astype(np.int64); has = pred >= 0
+    depth = tree_sum(pred, np.ones(NN))
+    C = len(cols); F = np.zeros((NN, C))
+    for c, (pts, w) in enumerate(cols): np.add.at(F[:, c], PNODE[m][pts], w)
+    srcd = max((depth[PNODE[m][pts]].max() for pts, _ in cols if len(pts)), default=0)
+    nodes = np.nonzero(has & (depth <= srcd))[0]
+    nodes = nodes[np.argsort(-depth[nodes], kind='stable')]
+    dv = depth[nodes]; cut = np.r_[0, np.nonzero(dv[1:] != dv[:-1])[0] + 1, len(nodes)]
+    for a, b in zip(cut[:-1], cut[1:]):
+        idx = nodes[a:b]; np.add.at(F, pred[idx], F[idx])
+    if m in ('bike', 'walk'):   # hazards met on each node's route: arterial stretches and arterial crossings
+        _, sga = edge_lookup(m, np.arange(NN), np.maximum(pred, 0))
+        okk = (pred >= 0) & (sga >= 0); sgs = np.where(okk, sga, 0)
+        anyart = okk & SEG_ART[sgs]
+        al = anyart & (~PROTECTED[sgs] if m == 'bike' else True)
+        ind = (al | (NODE_ART & ~anyart & (pred >= 0))).astype(float)
+        HZN = tree_sum(pred, ind)
+    out = []
+    for c, (pts, w) in enumerate(cols):
+        W = float(np.sum(w))
+        if W <= 0: out.append(None); continue
+        sh = F[:, c] / W
+        kept = has & (sh >= CORR_MIN)
+        K = np.nonzero(kept)[0]
+        lvl = np.searchsorted(CORR_LEVELS, sh, 'right') - 1
+        nchild = np.bincount(pred[K], minlength=NN)
+        child_of = np.full(NN, -1); child_of[pred[K]] = K   # (only meaningful where nchild == 1)
+        starts = [n for n in K if nchild[n] != 1 or lvl[child_of[n]] != lvl[n]]
+        lines = []
+        for n in starts:
+            seq = [n]; cur = n
+            while True:
+                p = pred[cur]; seq.append(p)
+                if not kept[p] or nchild[p] != 1 or lvl[p] != lvl[n]: break
+                cur = p
+            lines.append([int(lvl[n]), enc(np.array(seq))])
+        _, seg = edge_lookup(m, K, pred[K])
+        names = {}   # name -> [max share, metres by street class (A arterial, C collector, L local), metres by bike facility]
+        for n, sg in zip(K, seg):
+            if sg < 0: continue
+            nm = WAYNAME[R[sg]]
+            if not nm: continue
+            e = names.setdefault(nm, [0.0, {}, {}])
+            e[0] = max(e[0], sh[n])
+            cl = STREET_CLASS.get(HW[R[sg]], 'L'); e[1][cl] = e[1].get(cl, 0) + L[sg]
+            e[2][seg_fac[sg]] = e[2].get(seg_fac[sg], 0) + L[sg]
+        top = lambda d: max(d, key=d.get) if d else ''
+        st = [[nm, round(v[0], 3), top(v[1]), top(v[2]) if m == 'bike' else ''] for nm, v in sorted(names.items(), key=lambda kv: -kv[1][0]) if v[0] >= 0.05][:14]
+        res = dict(w=round(W), L=lines, st=st)
+        if m in ('bike', 'walk'):
+            res['H'] = hazards(m, pred, K, sh, kept)
+            res['hx'] = round(float(np.sum(w[HZN[PNODE[m][pts]] > 0]) / W), 3)
+        out.append(res)
+    return out
+CORR = {'levels': CORR_LEVELS, 'min_share': CORR_MIN, 'S': {}, 'F': {}}
+for m in ('bike', 'drive', 'walk'):
+    CORR['S'][m] = {sc: {} for sc in SCENS}; CORR['F'][m] = {sc: {} for sc in SCENS[1:]}
+    for k in SK:
+        i = sidx[k]; cols, tags = [], []
+        prev = None
+        for sc in SCENS:
+            t = D['types'].get(sc, {}).get(k)
+            if not t or D['detail'].get(sc, {}).get(k, {}).get('closed'): continue
+            sel = np.zeros(NP); 
+            for b in TB.get(t, []): sel += PW[:, BCOL[b]] * (ASSIGN[sc, b] == i)
+            pts = np.nonzero(sel > 0)[0]
+            if not len(pts): continue
+            if prev is not None and sc != 'SQ' and len(prev) == len(sel) and np.allclose(prev, sel): continue   # same as Status Quo
+            if sc == 'SQ': prev = sel
+            cols.append((pts, sel[pts])); tags.append(('S', sc, k))
+        # Status Quo areas of schools a scenario closes, going to this school
+        for sc in SCENS[1:]:
+            for c_ in SK:
+                if not D['detail'].get(sc, {}).get(c_, {}).get('closed'): continue
+                sel = np.zeros(NP)
+                for b in TB.get(D['types']['SQ'].get(c_), []): sel += PW[:, BCOL[b]] * (ASSIGN['SQ', b] == sidx[c_]) * (ASSIGN[sc, b] == i)
+                pts = np.nonzero(sel > 0)[0]
+                if len(pts) and sel[pts].sum() >= 5: cols.append((pts, sel[pts])); tags.append(('F', sc, c_))
+        if not cols: continue
+        for (kind, sc, key), res in zip(tags, corridors(m, i, cols)):
+            if not res: continue
+            if kind == 'S': CORR['S'][m][sc][key] = res
+            else: CORR['F'][m][sc].setdefault(key, []).append(dict(to=k, **res))
+    log(f'corridors {m}: ' + ', '.join(f'{sc} {len(CORR["S"][m][sc])} schools' for sc in SCENS))
+CORR['hazards'] = ('Bike and walk corridors: x = the route crosses a major arterial (trunk, primary or secondary road) at an intersection, '
+                   f'f = it runs along one for at least {HZ_MIN_RUN:g} m (bikes: unless on a path or in a protected, separated or buffered bike lane); '
+                   "with the share of the area's residents whose route passes there; hx = share of the area's residents whose route "
+                   "has at least one. Signals and crosswalks are not known.")
+CORR['method'] = ('Shortest-path trees from every resident point to its assigned school; bike routes minimise travel time x street stress '
+                  '(PBOT bicycle network facility, else OpenStreetMap tags; arterial class, speed, lanes) with a climbing penalty from '
+                  'ground elevation; drive routes minimise free-flow time. Residents = 2020 Census residents of the grades\' ages, '
+                  'not PPS students; everyone is assumed to make the trip by that mode.')
+json.dump(CORR, open(os.path.join(OUT, 'corridors.json'), 'w', encoding='utf-8'), separators=(',', ':'))
+log(f'corridors.json {os.path.getsize(os.path.join(OUT, "corridors.json")) / 1e6:.1f} MB')
