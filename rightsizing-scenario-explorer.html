@@ -406,7 +406,7 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
       <a href="https://meetings.boardbook.org/Public/Agenda/915?meeting=769955" target="_blank" rel="noopener">Oct 6, 2026 board meeting materials</a>
       <a href="https://www.youtube.com/watch?v=zOUH2Jq7Owo" target="_blank" rel="noopener">meeting video</a></span>
   </nav>
-  <div class="bar"><div class="seg" id="seg"></div><label class="adjtog" id="adjtogl" title="Uses each K-8 school&#39;s own share of K-5 and 6-8 students (ODE fall 2025 enrollment by grade) instead of the district-wide share, and adds the attendance-area changes PPS drew but its enrollment model does not move (such as Duniway&#39;s southern area to Llewellyn), estimated from 2020 Census residents, splits a closing school&#39;s neighborhood students among its receivers by where they live (Census) where PPS gives no shares, and sends the immersion students of a closing school who live in its own neighborhood to its neighborhood school rather than the program&#39;s new site (PPS enrollment by neighborhood, October 2025). Marked figures differ from PPS&#39;s published values. Uncheck for the original model."><input type="checkbox" id="adjtog"> Modified enrollment model</label><span class="desc" id="desc"></span></div>
+  <div class="bar"><div class="seg" id="seg"></div><label class="adjtog" id="adjtogl" title="Uses each K-8 school&#39;s own share of K-5 and 6-8 students (ODE fall 2025 enrollment by grade) instead of the district-wide share, and adds the attendance-area changes PPS drew but its enrollment model does not move (such as Duniway&#39;s southern area to Llewellyn), estimated from 2020 Census residents, splits a closing school&#39;s neighborhood students among its receivers by where they live (Census) where PPS gives no shares. Marked figures differ from PPS&#39;s published values. Uncheck for the original model."><input type="checkbox" id="adjtog"> Modified enrollment model</label><span class="desc" id="desc"></span></div>
   <div class="kpis" id="kpis"></div>
   <section class="card" id="custompanel"></section>
 
@@ -438,7 +438,7 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
   <section class="card">
     <h2>Scenario impact by region: enrollment and buildings</h2>
     <p class="sub">The closure count and the six sustainability measures (2031-32) are PPS's own figures from its regional summaries and district scenario overview. Building utilization is this analysis's estimate; building costs, school staffing and land value are in the next table. Under each scenario, changes are shown against Status Quo (percentage points for the sustainability measures, closures as a count). "Sustainable" schools are above the size threshold (K-5: 360, K-8 and middle: 500, high: 1,100).</p>
-    <div class="controls tabletools"><button id="expandall">Expand all regions</button><label><input type="checkbox" id="showrec"> Show this analysis's recreated values (feeder model)</label></div>
+    <div class="controls tabletools"><button id="expandall">Expand all regions</button><label><input type="checkbox" id="exclosed"> Closed schools only</label><label><input type="checkbox" id="showrec"> Show this analysis's recreated values (feeder model)</label></div>
     <p class="sub" style="margin-top:-4px">Click a region to see its schools in 2031-32, using this analysis's enrollment projection. Each school shows its status under the scenario; whether it is above its size threshold (<span class="ok">&#10003;</span> counted as sustainable, <span class="no">&#10007;</span> not); its projected enrollment and change from Status Quo; and its students in each group. Bold group counts are in a sustainable school and count toward the region's share; struck-through counts do not. Region share = bold counts &divide; all counts. Building utilization uses the 2021 Long-Range Facility Plan's functional capacity, which reflects 2021 grade configurations, so utilization for converted K-8s and for buildings taking new grades is indicative only.</p>
     <div class="tablewrap" id="endpoints"></div>
   </section>
@@ -1976,9 +1976,13 @@ function staffKPI() {
     `Teachers &amp; direct support: <b>${f1(s.tFte)}</b>${pcS(s.tFte, s.base.tFte)}<br>` +
     `Cost: about <b>${pos(s.usd)}</b> a year${pcS(s.usd, s.base.usd)} (salary + benefits, 2026-27 $)</div></div>`;
 }
+// closed schools only (scripts/patch_impact_closed_filter.py)
+let exClosed = false;
+try { exClosed = localStorage.getItem('rsExClosed') === '1'; } catch (e) {}
 function schoolRows(rn) {
   const det = D.detail[scen], sqd = D.detail.SQ;
-  const names = Object.keys(D.region_of).filter(n => D.region_of[n] === rn);
+  const names = Object.keys(D.region_of).filter(n => D.region_of[n] === rn && (!exClosed || det[n]?.closed));
+  if (exClosed && !names.length) return `<tr class="srow"><td colspan="${endpointCols().length}" class="muted" style="text-align:left">${scen === 'SQ' ? 'No schools close under Status Quo; pick a scenario.' : 'No schools close in this region.'}</td></tr>`;
   const tOf = n => det[n].type || sqd[n].type;
   names.sort(byStatusName);
   let h = '';
@@ -2012,11 +2016,15 @@ function renderEndpoints() {
   let h = `<table class="${showRec ? '' : 'hide-rec'}"><thead><tr><th>Region</th>${MEAS.map(m => `<th>${esc(m.label)}</th>`).join('')}<th>Building utilization<br><span style="font-weight:400">(2031-32 enrollment &divide; 2021 functional capacity)</span></th><th>Students who would change schools</th></tr></thead><tbody>`;
   for (const rn of rows) {
     const E = D.endpoints[rn], cur = E[scen], sq = scen === 'C' ? E.SQmodel : E.SQ, rec = (D.recreated[scen] || {})[rn] || {};
-    const isReg = rn !== 'District', open = expanded.has(rn);
+    const isReg = rn !== 'District', open = exClosed || expanded.has(rn);
     const n = isReg ? Object.values(D.region_of).filter(r => r === rn).length : 0;
     h += `<tr class="${isReg ? '' : 'dist'}"><td>${isReg
       ? `<button class="xbtn" data-r="${esc(rn)}" aria-expanded="${open}"><span class="car">&#9656;</span><span>${esc(rn)}</span></button><span style="display:block;color:var(--text-muted);font-size:11.5px;padding-left:16px">${n} schools</span>`
-      : esc(rn)}</td>`;
+      : `${esc(rn)}${(() => {   // total students, 2031-32 (scripts/patch_impact_district_total.py)
+        const yi = D.years.indexOf('2031-32'), tot = s => Object.keys(D.region_of).reduce((t, k) => t + (D.series[s]?.[k]?.[yi] || 0), 0);
+        const c = tot(scen), q = tot('SQ'), d = Math.round(c - q);
+        return `<span style="display:block;color:var(--text-muted);font-size:11.5px;font-weight:400" title="${esc(`Students in 2031-32 at the ${Object.keys(D.region_of).length} schools on this page, ${LABEL[scen]}${scen === 'SQ' ? '' : `; Status Quo ${Math.round(q).toLocaleString()}`}. Scenarios move students between schools, so the total matches Status Quo (to within rounding). Program schools not on this page are not counted.`)}">${Math.round(c).toLocaleString()} students (2031-32)${scen !== 'SQ' && Math.abs(d) >= 5 ? ` <span class="delta ${d > 0 ? 'up' : 'down'}" style="display:inline">${d > 0 ? '+' : '&minus;'}${Math.abs(d).toLocaleString()} vs SQ</span>` : ''}</span>`;
+      })()}`}</td>`;
     for (const m of MEAS) {
       const v = cur[m.key], d = v - sq[m.key], pct = m.key !== 'closures';
       let cell = `<span class="main">${v}${pct ? '%' : ''}</span>`;
@@ -2048,6 +2056,8 @@ document.getElementById('expandall').onclick = () => {
   renderEndpoints();
 };
 document.getElementById('showrec').onchange = renderEndpoints;
+{ const xc = document.getElementById('exclosed');
+  if (xc) { xc.checked = exClosed; xc.onchange = () => { exClosed = xc.checked; try { localStorage.setItem('rsExClosed', exClosed ? '1' : '0'); } catch (e) {} renderEndpoints(); }; } }
 
 // ---------- enrollment lines ----------
 const regionSel = document.getElementById('region');
@@ -2263,8 +2273,7 @@ function censusSplit(x, base, rs) {
 function reopenWeights(x, base, yi) {
   const rs = D.flows[base].receivers.filter(r => r.from_key === x && byKey[r.to_key] && !r.adj);
   const t = D.types.SQ[x], k5 = k5Of(x, CY[yi]);
-  const live = adjOn && D.progres?.[x]?.imm ? D.progres[x].imm[1] : 0;   // immersion students living in the school's neighborhood stay with it
-  const w = rs.map(r => r.share != null ? r.share : /immersion/i.test(r.group) ? (D.dli[x] || 0) * (1 - live) : /Hearing/i.test(r.group) ? 0
+  const w = rs.map(r => r.share != null ? r.share : /immersion/i.test(r.group) ? (D.dli[x] || 0) : /Hearing/i.test(r.group) ? 0
     : t === 'K8' && /K-5/.test(r.group) ? k5 : t === 'K8' && /middle|6-8/i.test(r.group) ? 1 - k5 : null);
   const fixed = w.reduce((a, v) => a + (v || 0), 0), nb = w.filter(v => v === null).length;
   const cs = adjOn ? censusSplit(x, base, rs) : null;
@@ -2464,31 +2473,6 @@ function applyAdjust(on) {
       touched.add(f); touched.add(t);
       ADJ.moves[sc].push({ f, t, band, n: n31 });
       D.flows[sc].receivers.push({ from: byKey[f].name, to: byKey[t].name, from_key: f, to_key: t, share: null, group: `${ADJ_BL[band]} boundary change (Census estimate)`, adj: true });
-    }
-    // immersion students who live in a closing school's own neighborhood go to its neighborhood receiver(s), not the
-    // program's new site (PPS enrollment by neighborhood, October 2025; scripts/patch_program_residency.py)
-    for (const j of Object.keys(D.progres || {})) {
-      const pr = D.progres[j].imm; if (!pr || !ADJ_BASE.detail[sc][j]?.closed || !D.series.SQ[j]) continue;
-      const rs = ADJ_BASE.recv[sc].filter(r => r.from_key === j && byKey[r.to_key]);
-      const Pk = rs.find(r => /immersion/i.test(r.group))?.to_key, N = rs.filter(r => !/immersion|Hearing/i.test(r.group)).map(r => r.to_key).filter(t => ser[t]);
-      if (!Pk || !ser[Pk] || !N.length || det[Pk]?.closed) continue;
-      const frac = (D.dli[j] || 0) * pr[1];
-      const amt = CY.map((_, i) => {
-        if (i < IMPL_I || D.series.SQ[j][i] == null || ser[Pk][i] == null) return 0;
-        const v = Math.min(Math.round(D.series.SQ[j][i] * frac), ser[Pk][i]); ser[Pk][i] -= v;
-        let left = v; N.forEach((t, q) => { const part = q === N.length - 1 ? left : Math.round(v / N.length); left -= part; if (ser[t][i] != null) ser[t][i] += part; });
-        return v;
-      });
-      const n31 = amt[Y31_I]; if (!n31) continue;
-      const src = D.detail.SQ[j], kk = src.e ? n31 / src.e : 0;
-      for (const g of GRP) if (src.g[g] != null) {
-        if (det[Pk].g[g] != null) det[Pk].g[g] = Math.max(0, det[Pk].g[g] - src.g[g] * kk);
-        for (const t of N) if (det[t].g[g] != null) det[t].g[g] += src.g[g] * kk / N.length;
-      }
-      touched.add(Pk); N.forEach(t => touched.add(t));
-      ADJ.moves[sc].push({ f: Pk, t: N[0], band: 'k5', n: n31, prog: j, lang: pr[0], live: pr[1] });
-      D.flows[sc].receivers.push({ from: byKey[j].name, to: byKey[N[0]].name, from_key: j, to_key: N[0], share: null, adj: true,
-        group: `${pr[0]} immersion students living in ${short(byKey[j].name)}'s neighborhood (${Math.round(100 * pr[1])}%, PPS enrollment by neighborhood, Oct 2025)` });
     }
     // where PPS gives no shares, a closing school's neighborhood students split among its receivers by the Census rather
     // than evenly (scripts/patch_census_split.py)
@@ -4632,7 +4616,7 @@ function linkParams(key) {
   const p = new URLSearchParams();
   if (scen !== 'C') p.set('scenario', scen);
   if (!adjOn) p.set('adj', '0');
-  if (key === 'endpoints') { if (expanded.size) p.set('ex', rIdx(expanded)); if (document.getElementById('showrec')?.checked) p.set('rec', '1'); }
+  if (key === 'endpoints') { if (exClosed) p.set('exc', '1'); if (expanded.size) p.set('ex', rIdx(expanded)); if (document.getElementById('showrec')?.checked) p.set('rec', '1'); }
   if (key === 'bldcosts') { if (bcOpen.size) p.set('bco', rIdx(bcOpen)); if (bcClosedOnly) p.set('bcc', '1'); p.set('sty', staffYear); }
   if (key === 'commute') { p.set('cmy', cmYear); p.set('cmb', cmBand); if (cmOpen.size) p.set('cmo', rIdx(cmOpen)); }
   if (key === 'staffing' || key === 'trend' || key === 'costcurve') {
@@ -4662,6 +4646,7 @@ let LINK_TARGET = null, LINK_MS = null;
   const q = new URLSearchParams(location.search); if (!q.get('t')) return;
   if (q.get('adj') === '0' && adjOn) { applyAdjust(false); const b = document.getElementById('adjtog'); if (b) b.checked = false; }
   if (q.get('ex')) rSet(q.get('ex'), expanded);
+  if (q.has('exc') || q.get('t') === 'endpoints') { exClosed = q.get('exc') === '1'; const xc = document.getElementById('exclosed'); if (xc) xc.checked = exClosed; }
   if (q.get('rec') === '1') { const c = document.getElementById('showrec'); if (c) c.checked = true; }
   if (q.get('bco')) rSet(q.get('bco'), bcOpen);
   if (q.has('bcc')) bcClosedOnly = q.get('bcc') === '1';
