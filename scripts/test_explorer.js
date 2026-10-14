@@ -8,9 +8,9 @@ const el = () => ({ innerHTML: '', textContent: '', style: {}, value: '', checke
 const chain = new Proxy(function () {}, { get: () => chain, apply: () => chain });
 Object.assign(global, { window: global, L: chain, innerWidth: 1200, addEventListener() {}, confirm: () => true,
   document: { getElementById: el, querySelectorAll: () => [], createElement: el, createElementNS: el, documentElement: {} },
-  getComputedStyle: () => ({ getPropertyValue: () => '#000' }), localStorage: { getItem: () => null, setItem() {} },
+  getComputedStyle: () => ({ getPropertyValue: () => '#000' }), localStorage: { getItem: k => k === 'rsPfa' ? '0' : k === 'rsAdj' ? '1' : null, setItem() {} },   // regression checks: PSU's forecast (PFA district-share switch off) with the modified enrollment model on, as written
   location: { hash: '', pathname: '/x.html', search: '', href: '' }, history: { replaceState() {} } });
-const T = new Function(script + `;return { D, P, custom, buildCustom: () => buildCustom(), applyAdjust, ADJ, busScen, busH, alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; }, applyAdjust, k5Of, rpFlow };`)();
+const T = new Function(script + `;return { setPfa: v => { pfaOn = v; applyAdjust(adjOn); }, pfaOn: () => pfaOn, D, P, custom, buildCustom: () => buildCustom(), applyAdjust, ADJ, busScen, busH, alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; }, applyAdjust, k5Of, rpFlow };`)();
 const { D } = T;
 const ok = (c, msg) => { console.log((c ? 'PASS ' : 'FAIL ') + msg); if (!c) process.exitCode = 1; };
 
@@ -185,4 +185,16 @@ T.applyAdjust(false);
   const hq = T.busH('SQ', keys).h, hc = T.busH('C', keys).h;
   ok(isFinite(c.mid) && Math.abs(hc - hq - c.d_h) < 1e-6 && Math.abs(c.d_elig) < 5000, `bus cost: custom (close Woodstock) ${c.d_h >= 0 ? '+' : ''}${Math.round(c.d_h)} bus-minutes a day, $${(c.mid / 1e3).toFixed(0)}k a year`);
   T.setScen('A'); T.applyAdjust(true);
+}
+
+// district share of county population (PFA study): off here (PSU forecast); on lowers enrollment; off again restores exactly
+{
+  const tot31 = () => Object.values(T.D.series.SQ).reduce((a, v) => a + (v?.[T.D.years.indexOf('2031-32')] || 0), 0);
+  const ep = () => JSON.stringify(T.D.endpoints);
+  const off = tot31(), e0 = ep();
+  ok(!T.pfaOn(), 'regression checks run with the PFA district-share switch off');
+  T.setPfa(true); const on = tot31();
+  ok(on < off - 500, `district share of county population lowers 2031-32 Status Quo enrollment (${Math.round(off)} -> ${Math.round(on)})`);
+  T.setPfa(false);
+  ok(tot31() === off && ep() === e0, 'turning the PFA switch off restores the PSU-forecast figures exactly');
 }

@@ -1,5 +1,5 @@
 // What the "County population (PFA study)" switch changes, for the summary section above the school report
-// (scripts/patch_pfa_summary.py). Runs the explorer's own code with the modified enrollment model on, the switch off
+// (scripts/patch_pfa_summary.py). Runs the explorer's own code with the modified enrollment model off (the page's default), the switch off
 // and on, and records: kindergarten paths, scenario measures, schools that fall below or near their size threshold,
 // the largest enrollment drops, measures by region and staffing savings.
 // Usage: node scripts/build_pfa_impact.js   Output: source/pfa-impact.json
@@ -16,7 +16,7 @@ Object.assign(global, { window: global, L: chain, innerWidth: 1200, innerHeight:
   getComputedStyle: () => ({ getPropertyValue: () => '#000' }), localStorage: { getItem: () => null, setItem() {} },
   location: { hash: '', pathname: '/x.html', search: '', href: '' }, history: { replaceState() {} } });
 const T = new Function(script + `;return {
-  set: pfa => { pfaOn = pfa; applyAdjust(true); },
+  set: pfa => { pfaOn = pfa; applyAdjust(false); },
   snap: () => {
     const keys = Object.keys(D.region_of), impl = D.years.indexOf(D.impl_year), o = { series: {}, ep: {}, staff: {}, below: {} };
     for (const s of ['SQ', 'A', 'B']) o.series[s] = Object.fromEntries(keys.map(k => [k, D.series[s][k]?.slice()]));
@@ -31,7 +31,7 @@ const T = new Function(script + `;return {
 T.set(false); const A = T.snap(); T.set(true); const B = T.snap(); T.set(false);
 const M = T.meta(), yi = y => M.years.indexOf(y), typ = (s, k, i) => (i < M.impl ? M.types.SQ[k] : M.types[s][k]) || M.types.SQ[k];
 const isBelow = (v, s, k, i) => v != null && v < M.thr[typ(s, k, i)] - 1e-9;
-const out = { generated: new Date().toISOString().slice(0, 10), basis: 'Modified enrollment model on', pfa: { capture: M.pfa.capture, k_psu: M.pfa.k_psu, k_pfa: M.pfa.k_pfa }, scen: {}, schools: {}, regions: {} };
+const out = { generated: new Date().toISOString().slice(0, 10), basis: 'Modified enrollment model off', pfa: { capture: M.pfa.capture, k_psu: M.pfa.k_psu, k_pfa: M.pfa.k_pfa }, scen: {}, schools: {}, regions: {} };
 for (const s of ['SQ', 'A', 'B']) {
   const E0 = A.ep.District[s], E1 = B.ep.District[s];
   out.scen[s] = { below: ['2031-32', '2035-36'].map(y => [A.below[y + '|' + s], B.below[y + '|' + s]]), schools_above: [E0.schools_above, E1.schools_above], students_above: [E0.students_above, E1.students_above],
