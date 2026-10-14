@@ -1,0 +1,1255 @@
+variant,year,scenario,school,medium,p5,p25,p50,p75,p95
+district,2027-28,SQ,"Abernethy",242,233,237,240,243,248
+district,2027-28,SQ,"Arleta",213,205,209,212,214,218
+district,2027-28,SQ,"Atkinson",363,349,355,361,365,372
+district,2027-28,SQ,"Bridger Creative Science",450,438,444,448,452,458
+district,2027-28,SQ,"Buckman",244,235,239,242,245,250
+district,2027-28,SQ,"Cleveland",1460,1418,1442,1460,1477,1500
+district,2027-28,SQ,"Creston",201,194,197,200,202,205
+district,2027-28,SQ,"Duniway",338,325,331,336,340,346
+district,2027-28,SQ,"Franklin",1689,1640,1669,1689,1709,1735
+district,2027-28,SQ,"Glencoe",311,299,305,309,313,319
+district,2027-28,SQ,"Grout",303,292,297,301,304,310
+district,2027-28,SQ,"Hosford",482,473,478,482,485,490
+district,2027-28,SQ,"Kellogg",513,503,509,513,517,522
+district,2027-28,SQ,"Kelly",402,386,394,399,404,412
+district,2027-28,SQ,"Lane",417,409,414,417,420,424
+district,2027-28,SQ,"Lent",256,246,251,254,257,262
+district,2027-28,SQ,"Lewis",224,215,219,223,225,230
+district,2027-28,SQ,"Llewellyn",312,300,306,310,314,320
+district,2027-28,SQ,"Marysville",300,289,294,298,302,307
+district,2027-28,SQ,"Mt Tabor",406,398,403,406,409,413
+district,2027-28,SQ,"Richmond",504,484,494,501,507,517
+district,2027-28,SQ,"Sellwood",523,513,519,523,527,532
+district,2027-28,SQ,"Sunnyside Environmental",484,471,478,482,486,492
+district,2027-28,SQ,"Whitman",205,197,201,204,206,210
+district,2027-28,SQ,"Winterhaven",311,304,307,310,312,316
+district,2027-28,SQ,"Woodmere",224,215,219,223,225,230
+district,2027-28,SQ,"Woodstock",342,329,335,340,344,351
+district,2027-28,SQ,"Alameda",498,479,488,495,501,510
+district,2027-28,SQ,"Beaumont",410,402,407,410,413,417
+district,2027-28,SQ,"Beverly Cleary",430,419,425,428,432,437
+district,2027-28,SQ,"Clark",360,346,353,358,362,369
+district,2027-28,SQ,"Grant",1935,1879,1912,1935,1957,1988
+district,2027-28,SQ,"Harrison Park",427,419,424,427,430,434
+district,2027-28,SQ,"Irvington",240,231,235,238,241,246
+district,2027-28,SQ,"Laurelhurst",607,593,600,604,609,616
+district,2027-28,SQ,"Lee",245,236,240,243,246,251
+district,2027-28,SQ,"McDaniel",1528,1484,1510,1528,1546,1570
+district,2027-28,SQ,"Rigler",306,295,300,304,307,313
+district,2027-28,SQ,"Rose City Park",391,376,383,388,393,401
+district,2027-28,SQ,"Roseway Heights",554,544,550,554,558,564
+district,2027-28,SQ,"Scott",500,481,490,497,503,512
+district,2027-28,SQ,"Vestal",294,283,288,292,295,301
+district,2027-28,SQ,"Astor",412,401,406,410,414,419
+district,2027-28,SQ,"Beach",284,274,278,282,285,291
+district,2027-28,SQ,"Boise-Eliot/Humboldt",314,303,308,312,315,321
+district,2027-28,SQ,"Chief Joseph",245,236,240,243,246,251
+district,2027-28,SQ,"César Chávez",413,402,407,411,415,420
+district,2027-28,SQ,"Faubion",618,603,610,615,620,628
+district,2027-28,SQ,"George",391,384,388,391,394,398
+district,2027-28,SQ,"Harriet Tubman",457,449,454,457,460,465
+district,2027-28,SQ,"James John",359,345,352,357,361,368
+district,2027-28,SQ,"Jefferson",564,549,558,564,570,579
+district,2027-28,SQ,"MLK Jr",337,324,330,335,339,345
+district,2027-28,SQ,"Ockley Green",442,434,439,442,445,450
+district,2027-28,SQ,"Peninsula",250,240,245,248,251,256
+district,2027-28,SQ,"Roosevelt",1312,1274,1296,1312,1327,1348
+district,2027-28,SQ,"Rosa Parks",159,153,156,158,160,163
+district,2027-28,SQ,"Sabin",236,227,231,234,237,242
+district,2027-28,SQ,"Sitton",333,320,326,331,335,341
+district,2027-28,SQ,"Vernon",492,479,485,490,494,500
+district,2027-28,SQ,"Woodlawn",300,288,294,298,302,307
+district,2027-28,SQ,"Ainsworth",555,534,544,551,558,568
+district,2027-28,SQ,"Bridlemile",414,398,405,411,416,424
+district,2027-28,SQ,"Capitol Hill",310,298,304,308,312,318
+district,2027-28,SQ,"Chapman",316,304,310,314,318,324
+district,2027-28,SQ,"Forest Park",260,250,255,258,261,266
+district,2027-28,SQ,"Gray",427,419,424,427,430,435
+district,2027-28,SQ,"Hayhurst",274,263,268,272,275,281
+district,2027-28,SQ,"Ida B Wells-Barnett",1524,1479,1505,1524,1542,1566
+district,2027-28,SQ,"Jackson",661,649,656,661,666,673
+district,2027-28,SQ,"Lincoln",1598,1551,1579,1598,1617,1642
+district,2027-28,SQ,"Maplewood",278,267,272,276,279,285
+district,2027-28,SQ,"Markham",312,300,306,310,314,320
+district,2027-28,SQ,"Odyssey",220,214,217,219,221,224
+district,2027-28,SQ,"Rieke",252,242,247,250,253,258
+district,2027-28,SQ,"Skyline",196,191,193,195,197,199
+district,2027-28,SQ,"Stephenson",271,260,265,269,272,278
+district,2027-28,SQ,"West Sylvan",687,674,682,687,692,699
+district,2027-28,A,"Abernethy",364,350,357,362,366,373
+district,2027-28,A,"Arleta",513,493,503,510,516,526
+district,2027-28,A,"Atkinson",382,368,374,380,384,391
+district,2027-28,A,"Bridger Creative Science",309,298,303,307,310,316
+district,2027-28,A,"Cleveland",1400,1359,1383,1400,1416,1438
+district,2027-28,A,"Duniway",449,432,440,446,451,460
+district,2027-28,A,"Franklin",1721,1671,1700,1721,1741,1768
+district,2027-28,A,"Glencoe",311,299,305,309,313,318
+district,2027-28,A,"Grout",303,292,297,301,304,310
+district,2027-28,A,"Hosford",731,718,725,731,736,743
+district,2027-28,A,"Kellogg",624,612,619,624,628,635
+district,2027-28,A,"Kelly",402,386,394,399,404,412
+district,2027-28,A,"Lane",634,622,629,634,638,645
+district,2027-28,A,"Lent",438,421,429,435,440,449
+district,2027-28,A,"Llewellyn",425,409,416,422,427,436
+district,2027-28,A,"Mt Tabor",638,626,633,638,642,649
+district,2027-28,A,"Richmond",504,484,494,501,507,517
+district,2027-28,A,"Sunnyside Environmental",413,397,405,410,415,423
+district,2027-28,A,"Whitman",429,412,420,426,431,440
+district,2027-28,A,"Winterhaven",311,304,307,310,312,316
+district,2027-28,A,"Woodstock",442,425,433,439,444,453
+district,2027-28,A,"Alameda",498,479,488,495,501,510
+district,2027-28,A,"Beaumont",583,572,579,583,587,593
+district,2027-28,A,"Beverly Cleary",487,468,477,484,490,499
+district,2027-28,A,"Clark",260,250,255,258,261,266
+district,2027-28,A,"Grant",1935,1879,1912,1935,1957,1988
+district,2027-28,A,"Harrison Park",707,694,702,707,712,719
+district,2027-28,A,"Laurelhurst",375,363,369,373,377,383
+district,2027-28,A,"Lee",245,236,240,243,246,251
+district,2027-28,A,"McDaniel",1556,1511,1537,1556,1574,1599
+district,2027-28,A,"Rigler",529,509,519,526,532,542
+district,2027-28,A,"Roseway Heights",669,656,664,669,674,681
+district,2027-28,A,"Scott",460,442,450,457,462,471
+district,2027-28,A,"Vestal",502,483,492,499,505,514
+district,2027-28,A,"Astor",417,406,411,415,419,424
+district,2027-28,A,"Boise-Eliot/Humboldt",515,496,505,512,517,527
+district,2027-28,A,"Chief Joseph",403,388,395,400,405,413
+district,2027-28,A,"César Chávez",567,545,555,563,570,581
+district,2027-28,A,"Faubion",383,370,376,381,385,391
+district,2027-28,A,"George",714,701,708,714,719,727
+district,2027-28,A,"Harriet Tubman",529,519,525,529,533,538
+district,2027-28,A,"Jefferson",562,547,556,562,568,577
+district,2027-28,A,"MLK Jr",372,358,364,370,374,381
+district,2027-28,A,"Ockley Green",508,499,504,508,511,517
+district,2027-28,A,"Roosevelt",1401,1360,1384,1401,1417,1440
+district,2027-28,A,"Rosa Parks",489,470,479,486,492,501
+district,2027-28,A,"Sitton",425,409,416,422,427,436
+district,2027-28,A,"Vernon",314,302,308,312,316,322
+district,2027-28,A,"Woodlawn",300,288,294,298,302,307
+district,2027-28,A,"Ainsworth",555,534,544,551,558,568
+district,2027-28,A,"Bridlemile",414,398,405,411,416,424
+district,2027-28,A,"Capitol Hill",391,376,383,388,393,401
+district,2027-28,A,"Chapman",316,304,310,314,318,324
+district,2027-28,A,"Forest Park",260,250,255,258,261,266
+district,2027-28,A,"Gray",587,576,582,587,591,597
+district,2027-28,A,"Hayhurst",436,419,427,433,438,447
+district,2027-28,A,"Ida B Wells-Barnett",1533,1488,1514,1533,1551,1576
+district,2027-28,A,"Jackson",504,495,500,504,508,513
+district,2027-28,A,"Lincoln",1502,1458,1484,1502,1519,1543
+district,2027-28,A,"Markham",502,483,492,499,505,514
+district,2027-28,A,"Odyssey",220,214,217,219,221,224
+district,2027-28,A,"Rieke",368,354,360,366,370,377
+district,2027-28,A,"Skyline",196,191,193,195,197,199
+district,2027-28,A,"West Sylvan",684,671,679,684,689,696
+district,2027-28,B,"Abernethy",364,350,357,362,366,373
+district,2027-28,B,"Arleta",513,493,503,510,516,526
+district,2027-28,B,"Atkinson",382,368,374,380,384,391
+district,2027-28,B,"Bridger Creative Science",309,298,303,307,310,316
+district,2027-28,B,"Cleveland",1400,1359,1383,1400,1416,1438
+district,2027-28,B,"Duniway",338,325,331,336,340,346
+district,2027-28,B,"Franklin",1721,1671,1700,1721,1741,1768
+district,2027-28,B,"Glencoe",311,299,305,309,313,318
+district,2027-28,B,"Grout",303,292,297,301,304,310
+district,2027-28,B,"Hosford",664,652,659,664,668,675
+district,2027-28,B,"Kellogg",624,612,619,624,628,635
+district,2027-28,B,"Kelly",402,386,394,399,404,412
+district,2027-28,B,"Lane",701,688,696,701,706,713
+district,2027-28,B,"Lent",438,421,429,435,440,449
+district,2027-28,B,"Lewis",326,313,319,324,328,334
+district,2027-28,B,"Llewellyn",312,300,306,310,314,320
+district,2027-28,B,"Mt Tabor",638,626,633,638,642,649
+district,2027-28,B,"Richmond",504,484,494,501,507,517
+district,2027-28,B,"Sunnyside Environmental",413,397,405,410,415,423
+district,2027-28,B,"Whitman",327,314,320,325,329,335
+district,2027-28,B,"Winterhaven",311,304,307,310,312,316
+district,2027-28,B,"Woodstock",442,425,433,439,444,453
+district,2027-28,B,"Alameda",498,479,488,495,501,510
+district,2027-28,B,"Beaumont",583,572,579,583,587,593
+district,2027-28,B,"Beverly Cleary",487,468,477,484,490,499
+district,2027-28,B,"Clark",260,250,255,258,261,266
+district,2027-28,B,"Grant",1935,1879,1912,1935,1957,1988
+district,2027-28,B,"Harrison Park",707,694,702,707,712,719
+district,2027-28,B,"Laurelhurst",375,363,369,373,377,383
+district,2027-28,B,"Lee",245,236,240,243,246,251
+district,2027-28,B,"McDaniel",1556,1511,1537,1556,1574,1599
+district,2027-28,B,"Rigler",529,509,519,526,532,542
+district,2027-28,B,"Rose City Park",391,376,383,388,393,401
+district,2027-28,B,"Roseway Heights",669,656,664,669,674,681
+district,2027-28,B,"Scott",277,266,271,275,278,284
+district,2027-28,B,"Vestal",294,283,288,292,295,301
+district,2027-28,B,"Astor",417,406,411,415,419,424
+district,2027-28,B,"Boise-Eliot/Humboldt",515,496,505,512,517,527
+district,2027-28,B,"Chief Joseph",403,388,395,400,405,413
+district,2027-28,B,"César Chávez",567,545,555,563,570,581
+district,2027-28,B,"Faubion",383,370,376,381,385,391
+district,2027-28,B,"George",714,701,708,714,719,727
+district,2027-28,B,"Harriet Tubman",529,519,525,529,533,538
+district,2027-28,B,"Jefferson",562,547,556,562,568,577
+district,2027-28,B,"MLK Jr",372,358,364,370,374,381
+district,2027-28,B,"Ockley Green",508,499,504,508,511,517
+district,2027-28,B,"Roosevelt",1401,1360,1384,1401,1417,1440
+district,2027-28,B,"Rosa Parks",489,470,479,486,492,501
+district,2027-28,B,"Sitton",425,409,416,422,427,436
+district,2027-28,B,"Vernon",314,302,308,312,316,322
+district,2027-28,B,"Woodlawn",300,288,294,298,302,307
+district,2027-28,B,"Ainsworth",555,534,544,551,558,568
+district,2027-28,B,"Bridlemile",414,398,405,411,416,424
+district,2027-28,B,"Capitol Hill",310,298,304,308,312,318
+district,2027-28,B,"Chapman",316,304,310,314,318,324
+district,2027-28,B,"Forest Park",260,250,255,258,261,266
+district,2027-28,B,"Gray",587,576,582,587,591,597
+district,2027-28,B,"Hayhurst",436,419,427,433,438,447
+district,2027-28,B,"Ida B Wells-Barnett",1533,1488,1514,1533,1551,1576
+district,2027-28,B,"Jackson",504,495,500,504,508,513
+district,2027-28,B,"Lincoln",1502,1458,1484,1502,1519,1543
+district,2027-28,B,"Markham",312,300,306,310,314,320
+district,2027-28,B,"Odyssey",220,214,217,219,221,224
+district,2027-28,B,"Rieke",368,354,360,366,370,377
+district,2027-28,B,"Skyline",196,191,193,195,197,199
+district,2027-28,B,"Stephenson",271,260,265,269,272,278
+district,2027-28,B,"West Sylvan",684,671,679,684,689,696
+district,2031-32,SQ,"Abernethy",241,215,227,236,243,254
+district,2031-32,SQ,"Arleta",210,187,198,205,212,221
+district,2031-32,SQ,"Atkinson",386,344,363,378,390,406
+district,2031-32,SQ,"Bridger Creative Science",415,384,398,409,417,431
+district,2031-32,SQ,"Buckman",239,214,225,234,241,251
+district,2031-32,SQ,"Cleveland",1318,1255,1290,1317,1342,1380
+district,2031-32,SQ,"Creston",187,170,177,183,189,196
+district,2031-32,SQ,"Duniway",345,308,325,338,348,363
+district,2031-32,SQ,"Franklin",1492,1421,1461,1491,1519,1562
+district,2031-32,SQ,"Glencoe",296,264,278,290,299,312
+district,2031-32,SQ,"Grout",280,252,264,274,282,294
+district,2031-32,SQ,"Hosford",374,362,369,374,378,386
+district,2031-32,SQ,"Kellogg",471,455,464,471,477,486
+district,2031-32,SQ,"Kelly",391,349,368,383,395,412
+district,2031-32,SQ,"Lane",357,345,352,357,362,369
+district,2031-32,SQ,"Lent",274,245,258,268,277,288
+district,2031-32,SQ,"Lewis",201,179,189,197,203,212
+district,2031-32,SQ,"Llewellyn",312,278,293,305,315,328
+district,2031-32,SQ,"Marysville",312,279,294,305,315,328
+district,2031-32,SQ,"Mt Tabor",354,342,349,354,358,365
+district,2031-32,SQ,"Richmond",497,444,467,486,502,523
+district,2031-32,SQ,"Sellwood",350,338,345,350,354,361
+district,2031-32,SQ,"Sunnyside Environmental",475,442,457,468,478,492
+district,2031-32,SQ,"Whitman",223,199,210,218,225,235
+district,2031-32,SQ,"Winterhaven",310,291,299,306,312,320
+district,2031-32,SQ,"Woodmere",225,201,212,220,227,237
+district,2031-32,SQ,"Woodstock",325,290,306,318,328,342
+district,2031-32,SQ,"Alameda",492,439,463,481,497,518
+district,2031-32,SQ,"Beaumont",418,404,412,418,423,431
+district,2031-32,SQ,"Beverly Cleary",389,363,375,384,391,402
+district,2031-32,SQ,"Clark",343,306,323,336,346,361
+district,2031-32,SQ,"Grant",1487,1416,1456,1486,1514,1557
+district,2031-32,SQ,"Harrison Park",417,403,411,417,422,430
+district,2031-32,SQ,"Irvington",223,199,210,218,225,235
+district,2031-32,SQ,"Laurelhurst",525,492,507,518,528,542
+district,2031-32,SQ,"Lee",254,227,239,249,256,267
+district,2031-32,SQ,"McDaniel",1261,1201,1234,1260,1284,1320
+district,2031-32,SQ,"Rigler",321,289,303,314,324,337
+district,2031-32,SQ,"Rose City Park",370,330,348,362,374,389
+district,2031-32,SQ,"Roseway Heights",498,481,491,498,504,514
+district,2031-32,SQ,"Scott",470,419,442,460,474,495
+district,2031-32,SQ,"Vestal",279,251,263,273,281,293
+district,2031-32,SQ,"Astor",418,388,402,412,420,433
+district,2031-32,SQ,"Beach",287,258,271,281,290,301
+district,2031-32,SQ,"Boise-Eliot/Humboldt",308,281,293,303,310,321
+district,2031-32,SQ,"Chief Joseph",238,212,224,233,240,251
+district,2031-32,SQ,"César Chávez",392,364,377,386,394,406
+district,2031-32,SQ,"Faubion",602,561,580,594,605,623
+district,2031-32,SQ,"George",390,377,384,390,395,403
+district,2031-32,SQ,"Harriet Tubman",374,362,369,374,378,385
+district,2031-32,SQ,"James John",352,314,331,344,355,371
+district,2031-32,SQ,"Jefferson",1183,1129,1159,1182,1204,1237
+district,2031-32,SQ,"MLK Jr",337,302,317,330,340,354
+district,2031-32,SQ,"Ockley Green",436,421,430,436,441,450
+district,2031-32,SQ,"Peninsula",236,211,222,231,238,248
+district,2031-32,SQ,"Roosevelt",1117,1063,1093,1116,1138,1170
+district,2031-32,SQ,"Rosa Parks",168,150,158,164,170,177
+district,2031-32,SQ,"Sabin",235,210,221,230,237,247
+district,2031-32,SQ,"Sitton",311,278,293,304,314,327
+district,2031-32,SQ,"Vernon",453,420,435,446,456,470
+district,2031-32,SQ,"Woodlawn",289,258,272,283,292,304
+district,2031-32,SQ,"Ainsworth",557,499,525,545,562,586
+district,2031-32,SQ,"Bridlemile",408,364,384,399,412,429
+district,2031-32,SQ,"Capitol Hill",311,278,293,304,314,327
+district,2031-32,SQ,"Chapman",333,300,315,326,336,349
+district,2031-32,SQ,"Forest Park",258,230,243,252,260,272
+district,2031-32,SQ,"Gray",368,356,363,368,372,379
+district,2031-32,SQ,"Hayhurst",266,237,250,260,269,280
+district,2031-32,SQ,"Ida B Wells-Barnett",1457,1388,1426,1456,1483,1525
+district,2031-32,SQ,"Jackson",515,497,508,515,521,532
+district,2031-32,SQ,"Lincoln",1411,1344,1381,1410,1437,1478
+district,2031-32,SQ,"Maplewood",247,220,232,242,249,260
+district,2031-32,SQ,"Markham",347,311,327,340,350,365
+district,2031-32,SQ,"Odyssey",224,207,215,221,225,233
+district,2031-32,SQ,"Rieke",311,283,295,305,313,325
+district,2031-32,SQ,"Skyline",177,163,170,174,178,184
+district,2031-32,SQ,"Stephenson",261,233,246,255,263,275
+district,2031-32,SQ,"West Sylvan",620,599,611,619,628,640
+district,2031-32,A,"Abernethy",360,322,339,352,363,379
+district,2031-32,A,"Arleta",522,467,491,511,527,549
+district,2031-32,A,"Atkinson",390,349,368,382,394,410
+district,2031-32,A,"Bridger Creative Science",296,267,280,290,299,310
+district,2031-32,A,"Cleveland",1248,1188,1222,1247,1271,1307
+district,2031-32,A,"Duniway",431,385,405,422,435,454
+district,2031-32,A,"Franklin",1537,1464,1505,1536,1565,1609
+district,2031-32,A,"Glencoe",296,265,279,290,299,311
+district,2031-32,A,"Grout",280,252,264,274,282,294
+district,2031-32,A,"Hosford",576,557,568,575,583,594
+district,2031-32,A,"Kellogg",567,548,559,566,574,585
+district,2031-32,A,"Kelly",391,349,368,383,395,412
+district,2031-32,A,"Lane",481,464,474,481,487,497
+district,2031-32,A,"Lent",457,408,430,447,461,481
+district,2031-32,A,"Llewellyn",427,381,402,418,431,449
+district,2031-32,A,"Mt Tabor",542,523,534,541,549,560
+district,2031-32,A,"Richmond",497,444,467,486,502,523
+district,2031-32,A,"Sunnyside Environmental",417,373,393,408,421,439
+district,2031-32,A,"Whitman",448,400,421,438,452,472
+district,2031-32,A,"Winterhaven",310,291,299,306,312,320
+district,2031-32,A,"Woodstock",412,368,388,403,416,434
+district,2031-32,A,"Alameda",492,439,463,481,497,518
+district,2031-32,A,"Beaumont",508,491,501,508,514,524
+district,2031-32,A,"Beverly Cleary",456,407,429,446,460,480
+district,2031-32,A,"Clark",256,228,241,250,258,269
+district,2031-32,A,"Grant",1487,1416,1456,1486,1514,1557
+district,2031-32,A,"Harrison Park",641,619,632,640,649,662
+district,2031-32,A,"Laurelhurst",337,308,321,331,340,351
+district,2031-32,A,"Lee",254,227,239,249,256,267
+district,2031-32,A,"McDaniel",1286,1225,1259,1285,1309,1347
+district,2031-32,A,"Rigler",544,488,513,533,549,572
+district,2031-32,A,"Roseway Heights",643,621,634,642,651,664
+district,2031-32,A,"Scott",407,363,383,398,411,428
+district,2031-32,A,"Vestal",489,438,461,479,493,514
+district,2031-32,A,"Astor",423,393,407,417,425,438
+district,2031-32,A,"Boise-Eliot/Humboldt",504,456,477,494,508,528
+district,2031-32,A,"Chief Joseph",398,356,375,390,402,419
+district,2031-32,A,"César Chávez",561,501,528,549,566,590
+district,2031-32,A,"Faubion",388,351,367,381,391,406
+district,2031-32,A,"George",668,645,658,667,676,690
+district,2031-32,A,"Harriet Tubman",447,432,441,447,452,461
+district,2031-32,A,"Jefferson",1179,1125,1155,1178,1200,1232
+district,2031-32,A,"MLK Jr",376,336,354,368,379,395
+district,2031-32,A,"Ockley Green",508,491,501,508,514,524
+district,2031-32,A,"Roosevelt",1200,1142,1175,1199,1222,1257
+district,2031-32,A,"Rosa Parks",470,419,442,460,474,495
+district,2031-32,A,"Sitton",414,369,389,405,418,436
+district,2031-32,A,"Vernon",301,269,283,295,304,317
+district,2031-32,A,"Woodlawn",289,258,272,283,292,304
+district,2031-32,A,"Ainsworth",557,499,525,545,562,586
+district,2031-32,A,"Bridlemile",408,364,384,399,412,429
+district,2031-32,A,"Capitol Hill",389,347,366,381,393,409
+district,2031-32,A,"Chapman",333,300,315,326,336,349
+district,2031-32,A,"Forest Park",258,230,243,252,260,272
+district,2031-32,A,"Gray",480,464,473,480,486,495
+district,2031-32,A,"Hayhurst",407,363,383,398,411,428
+district,2031-32,A,"Ida B Wells-Barnett",1465,1396,1434,1464,1492,1534
+district,2031-32,A,"Jackson",406,392,400,406,411,419
+district,2031-32,A,"Lincoln",1324,1261,1296,1323,1348,1386
+district,2031-32,A,"Markham",530,475,499,519,535,557
+district,2031-32,A,"Odyssey",224,207,215,221,225,233
+district,2031-32,A,"Rieke",417,377,395,409,420,436
+district,2031-32,A,"Skyline",177,163,170,174,178,184
+district,2031-32,A,"West Sylvan",617,596,608,616,625,637
+district,2031-32,B,"Abernethy",360,322,339,352,363,379
+district,2031-32,B,"Arleta",522,467,491,511,527,549
+district,2031-32,B,"Atkinson",390,349,368,382,394,410
+district,2031-32,B,"Bridger Creative Science",296,267,280,290,299,310
+district,2031-32,B,"Cleveland",1248,1188,1222,1247,1271,1307
+district,2031-32,B,"Duniway",345,308,325,338,348,363
+district,2031-32,B,"Franklin",1537,1464,1505,1536,1565,1609
+district,2031-32,B,"Glencoe",296,265,279,290,299,311
+district,2031-32,B,"Grout",280,252,264,274,282,294
+district,2031-32,B,"Hosford",531,513,524,531,537,548
+district,2031-32,B,"Kellogg",567,548,559,566,574,585
+district,2031-32,B,"Kelly",391,349,368,383,395,412
+district,2031-32,B,"Lane",526,508,518,525,533,543
+district,2031-32,B,"Lent",457,408,430,447,461,481
+district,2031-32,B,"Lewis",311,278,293,304,314,327
+district,2031-32,B,"Llewellyn",312,278,293,305,315,328
+district,2031-32,B,"Mt Tabor",542,523,534,541,549,560
+district,2031-32,B,"Richmond",497,444,467,486,502,523
+district,2031-32,B,"Sunnyside Environmental",417,373,393,408,421,439
+district,2031-32,B,"Whitman",338,302,318,331,341,356
+district,2031-32,B,"Winterhaven",310,291,299,306,312,320
+district,2031-32,B,"Woodstock",412,368,388,403,416,434
+district,2031-32,B,"Alameda",492,439,463,481,497,518
+district,2031-32,B,"Beaumont",508,491,501,508,514,524
+district,2031-32,B,"Beverly Cleary",456,407,429,446,460,480
+district,2031-32,B,"Clark",256,228,241,250,258,269
+district,2031-32,B,"Grant",1487,1416,1456,1486,1514,1557
+district,2031-32,B,"Harrison Park",641,619,632,640,649,662
+district,2031-32,B,"Laurelhurst",337,308,321,331,340,351
+district,2031-32,B,"Lee",254,227,239,249,256,267
+district,2031-32,B,"McDaniel",1286,1225,1259,1285,1309,1347
+district,2031-32,B,"Rigler",544,488,513,533,549,572
+district,2031-32,B,"Rose City Park",370,330,348,362,374,389
+district,2031-32,B,"Roseway Heights",643,621,634,642,651,664
+district,2031-32,B,"Scott",247,220,232,242,249,260
+district,2031-32,B,"Vestal",279,251,263,273,281,293
+district,2031-32,B,"Astor",423,393,407,417,425,438
+district,2031-32,B,"Boise-Eliot/Humboldt",504,456,477,494,508,528
+district,2031-32,B,"Chief Joseph",398,356,375,390,402,419
+district,2031-32,B,"César Chávez",561,501,528,549,566,590
+district,2031-32,B,"Faubion",388,351,367,381,391,406
+district,2031-32,B,"George",668,645,658,667,676,690
+district,2031-32,B,"Harriet Tubman",447,432,441,447,452,461
+district,2031-32,B,"Jefferson",1179,1125,1155,1178,1200,1232
+district,2031-32,B,"MLK Jr",376,336,354,368,379,395
+district,2031-32,B,"Ockley Green",508,491,501,508,514,524
+district,2031-32,B,"Roosevelt",1200,1142,1175,1199,1222,1257
+district,2031-32,B,"Rosa Parks",470,419,442,460,474,495
+district,2031-32,B,"Sitton",414,369,389,405,418,436
+district,2031-32,B,"Vernon",301,269,283,295,304,317
+district,2031-32,B,"Woodlawn",289,258,272,283,292,304
+district,2031-32,B,"Ainsworth",557,499,525,545,562,586
+district,2031-32,B,"Bridlemile",408,364,384,399,412,429
+district,2031-32,B,"Capitol Hill",311,278,293,304,314,327
+district,2031-32,B,"Chapman",333,300,315,326,336,349
+district,2031-32,B,"Forest Park",258,230,243,252,260,272
+district,2031-32,B,"Gray",480,464,473,480,486,495
+district,2031-32,B,"Hayhurst",407,363,383,398,411,428
+district,2031-32,B,"Ida B Wells-Barnett",1465,1396,1434,1464,1492,1534
+district,2031-32,B,"Jackson",406,392,400,406,411,419
+district,2031-32,B,"Lincoln",1324,1261,1296,1323,1348,1386
+district,2031-32,B,"Markham",347,311,327,340,350,365
+district,2031-32,B,"Odyssey",224,207,215,221,225,233
+district,2031-32,B,"Rieke",417,377,395,409,420,436
+district,2031-32,B,"Skyline",177,163,170,174,178,184
+district,2031-32,B,"Stephenson",261,233,246,255,263,275
+district,2031-32,B,"West Sylvan",617,596,608,616,625,637
+district,2035-36,SQ,"Abernethy",223,197,209,217,225,235
+district,2035-36,SQ,"Arleta",203,179,190,198,205,214
+district,2035-36,SQ,"Atkinson",364,321,340,355,368,384
+district,2035-36,SQ,"Bridger Creative Science",403,360,379,394,406,422
+district,2035-36,SQ,"Buckman",222,197,208,217,224,234
+district,2035-36,SQ,"Cleveland",1127,1057,1094,1118,1146,1189
+district,2035-36,SQ,"Creston",167,150,158,163,168,175
+district,2035-36,SQ,"Duniway",325,287,304,317,328,343
+district,2035-36,SQ,"Franklin",1276,1197,1239,1266,1297,1345
+district,2035-36,SQ,"Glencoe",269,237,252,262,272,284
+district,2035-36,SQ,"Grout",255,227,240,249,257,268
+district,2035-36,SQ,"Hosford",370,327,347,361,374,394
+district,2035-36,SQ,"Kellogg",532,467,498,518,538,568
+district,2035-36,SQ,"Kelly",372,328,348,362,376,392
+district,2035-36,SQ,"Lane",372,326,348,362,376,397
+district,2035-36,SQ,"Lent",249,220,233,243,252,263
+district,2035-36,SQ,"Lewis",185,163,173,180,187,195
+district,2035-36,SQ,"Llewellyn",291,257,272,283,294,307
+district,2035-36,SQ,"Marysville",279,247,261,272,282,294
+district,2035-36,SQ,"Mt Tabor",371,325,347,361,375,396
+district,2035-36,SQ,"Richmond",478,422,447,466,483,504
+district,2035-36,SQ,"Sellwood",380,333,356,370,384,406
+district,2035-36,SQ,"Sunnyside Environmental",476,422,446,464,480,501
+district,2035-36,SQ,"Whitman",215,190,201,209,217,227
+district,2035-36,SQ,"Winterhaven",308,273,289,300,311,324
+district,2035-36,SQ,"Woodmere",200,177,187,195,202,211
+district,2035-36,SQ,"Woodstock",301,266,282,293,304,317
+district,2035-36,SQ,"Alameda",461,407,431,449,466,486
+district,2035-36,SQ,"Beaumont",431,379,404,420,436,460
+district,2035-36,SQ,"Beverly Cleary",374,332,351,365,377,394
+district,2035-36,SQ,"Clark",323,285,302,315,326,341
+district,2035-36,SQ,"Grant",1237,1160,1201,1228,1258,1304
+district,2035-36,SQ,"Harrison Park",437,384,409,425,442,466
+district,2035-36,SQ,"Irvington",210,185,196,205,212,221
+district,2035-36,SQ,"Laurelhurst",471,425,446,461,474,492
+district,2035-36,SQ,"Lee",239,211,224,233,241,252
+district,2035-36,SQ,"McDaniel",1157,1085,1123,1148,1177,1220
+district,2035-36,SQ,"Rigler",298,265,280,291,301,313
+district,2035-36,SQ,"Rose City Park",345,305,323,336,348,364
+district,2035-36,SQ,"Roseway Heights",531,465,497,517,537,567
+district,2035-36,SQ,"Scott",424,374,397,413,428,447
+district,2035-36,SQ,"Vestal",262,233,246,256,264,275
+district,2035-36,SQ,"Astor",386,346,364,377,389,404
+district,2035-36,SQ,"Beach",253,225,237,247,255,266
+district,2035-36,SQ,"Boise-Eliot/Humboldt",265,240,251,260,267,277
+district,2035-36,SQ,"Chief Joseph",221,195,207,215,223,233
+district,2035-36,SQ,"César Chávez",376,334,353,367,379,396
+district,2035-36,SQ,"Faubion",558,500,526,545,562,585
+district,2035-36,SQ,"George",388,340,363,378,392,414
+district,2035-36,SQ,"Harriet Tubman",381,337,358,371,385,406
+district,2035-36,SQ,"James John",328,290,307,319,331,346
+district,2035-36,SQ,"Jefferson",1175,1105,1142,1166,1194,1237
+district,2035-36,SQ,"MLK Jr",303,268,284,295,306,319
+district,2035-36,SQ,"Ockley Green",445,391,417,433,450,475
+district,2035-36,SQ,"Peninsula",217,192,203,211,219,229
+district,2035-36,SQ,"Roosevelt",1025,961,995,1017,1042,1081
+district,2035-36,SQ,"Rosa Parks",159,140,149,155,161,168
+district,2035-36,SQ,"Sabin",220,194,206,214,222,232
+district,2035-36,SQ,"Sitton",286,252,267,279,289,302
+district,2035-36,SQ,"Vernon",444,394,416,433,448,467
+district,2035-36,SQ,"Woodlawn",265,234,248,258,268,279
+district,2035-36,SQ,"Ainsworth",516,457,483,503,521,543
+district,2035-36,SQ,"Bridlemile",386,341,361,376,390,407
+district,2035-36,SQ,"Capitol Hill",286,252,267,279,289,302
+district,2035-36,SQ,"Chapman",295,263,277,288,298,310
+district,2035-36,SQ,"Forest Park",243,215,227,237,245,256
+district,2035-36,SQ,"Gray",398,351,373,388,402,424
+district,2035-36,SQ,"Hayhurst",252,222,236,245,255,266
+district,2035-36,SQ,"Ida B Wells-Barnett",1222,1147,1186,1213,1242,1288
+district,2035-36,SQ,"Jackson",544,477,509,529,550,581
+district,2035-36,SQ,"Lincoln",1206,1131,1170,1197,1226,1272
+district,2035-36,SQ,"Maplewood",231,204,216,225,233,244
+district,2035-36,SQ,"Markham",309,274,290,301,312,325
+district,2035-36,SQ,"Odyssey",240,213,225,234,242,252
+district,2035-36,SQ,"Rieke",248,224,235,243,250,259
+district,2035-36,SQ,"Skyline",170,151,159,166,171,179
+district,2035-36,SQ,"Stephenson",242,214,226,236,244,255
+district,2035-36,SQ,"West Sylvan",649,570,608,632,656,692
+district,2035-36,A,"Abernethy",334,295,313,325,337,352
+district,2035-36,A,"Arleta",482,426,451,470,487,508
+district,2035-36,A,"Atkinson",363,322,340,354,367,382
+district,2035-36,A,"Bridger Creative Science",277,247,261,270,280,291
+district,2035-36,A,"Cleveland",1069,1002,1037,1061,1087,1128
+district,2035-36,A,"Duniway",401,354,375,391,405,423
+district,2035-36,A,"Franklin",1313,1232,1274,1303,1335,1384
+district,2035-36,A,"Glencoe",269,239,252,262,272,283
+district,2035-36,A,"Grout",255,227,240,249,257,268
+district,2035-36,A,"Hosford",596,525,559,580,602,635
+district,2035-36,A,"Kellogg",624,547,584,607,631,666
+district,2035-36,A,"Kelly",372,328,348,362,376,392
+district,2035-36,A,"Lane",510,447,477,496,516,545
+district,2035-36,A,"Lent",417,368,390,406,421,440
+district,2035-36,A,"Llewellyn",400,353,374,390,404,422
+district,2035-36,A,"Mt Tabor",552,484,516,537,558,590
+district,2035-36,A,"Richmond",478,422,447,466,483,504
+district,2035-36,A,"Sunnyside Environmental",398,352,373,388,402,419
+district,2035-36,A,"Whitman",415,366,388,404,419,438
+district,2035-36,A,"Winterhaven",308,273,289,300,311,324
+district,2035-36,A,"Woodstock",385,340,360,375,389,406
+district,2035-36,A,"Alameda",461,407,431,449,466,486
+district,2035-36,A,"Beaumont",524,460,491,510,530,559
+district,2035-36,A,"Beverly Cleary",425,375,398,414,429,448
+district,2035-36,A,"Clark",239,211,224,233,241,252
+district,2035-36,A,"Grant",1237,1160,1201,1228,1258,1304
+district,2035-36,A,"Harrison Park",678,595,635,660,685,724
+district,2035-36,A,"Laurelhurst",290,264,276,284,292,302
+district,2035-36,A,"Lee",239,211,224,233,241,252
+district,2035-36,A,"McDaniel",1178,1105,1143,1169,1198,1242
+district,2035-36,A,"Rigler",504,447,473,491,509,530
+district,2035-36,A,"Roseway Heights",681,597,637,663,688,727
+district,2035-36,A,"Scott",366,323,342,357,370,386
+district,2035-36,A,"Vestal",459,407,430,448,463,483
+district,2035-36,A,"Astor",390,349,367,381,393,409
+district,2035-36,A,"Boise-Eliot/Humboldt",449,403,423,439,453,471
+district,2035-36,A,"Chief Joseph",358,317,335,349,362,377
+district,2035-36,A,"César Chávez",521,461,488,508,526,549
+district,2035-36,A,"Faubion",347,311,327,339,350,364
+district,2035-36,A,"George",675,592,632,657,682,721
+district,2035-36,A,"Harriet Tubman",458,404,430,446,463,488
+district,2035-36,A,"Jefferson",1171,1101,1138,1162,1190,1233
+district,2035-36,A,"MLK Jr",339,300,318,330,342,357
+district,2035-36,A,"Ockley Green",509,447,476,495,515,543
+district,2035-36,A,"Roosevelt",1105,1036,1072,1097,1124,1166
+district,2035-36,A,"Rosa Parks",430,380,402,419,434,453
+district,2035-36,A,"Sitton",387,342,362,377,391,408
+district,2035-36,A,"Vernon",284,251,266,277,287,299
+district,2035-36,A,"Woodlawn",265,234,248,258,268,279
+district,2035-36,A,"Ainsworth",516,457,483,503,521,543
+district,2035-36,A,"Bridlemile",386,341,361,376,390,407
+district,2035-36,A,"Capitol Hill",359,317,336,350,363,379
+district,2035-36,A,"Chapman",295,263,277,288,298,310
+district,2035-36,A,"Forest Park",243,215,227,237,245,256
+district,2035-36,A,"Gray",519,457,486,505,525,553
+district,2035-36,A,"Hayhurst",383,338,358,373,387,404
+district,2035-36,A,"Ida B Wells-Barnett",1229,1153,1193,1220,1250,1296
+district,2035-36,A,"Jackson",426,374,399,415,431,455
+district,2035-36,A,"Lincoln",1123,1053,1090,1114,1142,1184
+district,2035-36,A,"Markham",478,423,448,466,483,503
+district,2035-36,A,"Odyssey",240,213,225,234,242,252
+district,2035-36,A,"Rieke",348,312,328,340,351,365
+district,2035-36,A,"Skyline",170,151,159,166,171,179
+district,2035-36,A,"West Sylvan",646,568,605,629,653,689
+district,2035-36,B,"Abernethy",334,295,313,325,337,352
+district,2035-36,B,"Arleta",482,426,451,470,487,508
+district,2035-36,B,"Atkinson",363,322,340,354,367,382
+district,2035-36,B,"Bridger Creative Science",277,247,261,270,280,291
+district,2035-36,B,"Cleveland",1069,1002,1037,1061,1087,1128
+district,2035-36,B,"Duniway",325,287,304,317,328,343
+district,2035-36,B,"Franklin",1313,1232,1274,1303,1335,1384
+district,2035-36,B,"Glencoe",269,239,252,262,272,283
+district,2035-36,B,"Grout",255,227,240,249,257,268
+district,2035-36,B,"Hosford",547,482,513,533,553,583
+district,2035-36,B,"Kellogg",624,547,584,607,631,666
+district,2035-36,B,"Kelly",372,328,348,362,376,392
+district,2035-36,B,"Lane",559,490,523,544,565,597
+district,2035-36,B,"Lent",417,368,390,406,421,440
+district,2035-36,B,"Lewis",292,258,273,284,295,308
+district,2035-36,B,"Llewellyn",291,257,272,283,294,307
+district,2035-36,B,"Mt Tabor",552,484,516,537,558,590
+district,2035-36,B,"Richmond",478,422,447,466,483,504
+district,2035-36,B,"Sunnyside Environmental",398,352,373,388,402,419
+district,2035-36,B,"Whitman",308,272,288,300,311,325
+district,2035-36,B,"Winterhaven",308,273,289,300,311,324
+district,2035-36,B,"Woodstock",385,340,360,375,389,406
+district,2035-36,B,"Alameda",461,407,431,449,466,486
+district,2035-36,B,"Beaumont",524,460,491,510,530,559
+district,2035-36,B,"Beverly Cleary",425,375,398,414,429,448
+district,2035-36,B,"Clark",239,211,224,233,241,252
+district,2035-36,B,"Grant",1237,1160,1201,1228,1258,1304
+district,2035-36,B,"Harrison Park",678,595,635,660,685,724
+district,2035-36,B,"Laurelhurst",290,264,276,284,292,302
+district,2035-36,B,"Lee",239,211,224,233,241,252
+district,2035-36,B,"McDaniel",1178,1105,1143,1169,1198,1242
+district,2035-36,B,"Rigler",504,447,473,491,509,530
+district,2035-36,B,"Rose City Park",345,305,323,336,348,364
+district,2035-36,B,"Roseway Heights",681,597,637,663,688,727
+district,2035-36,B,"Scott",218,192,204,212,220,230
+district,2035-36,B,"Vestal",262,233,246,256,264,275
+district,2035-36,B,"Astor",390,349,367,381,393,409
+district,2035-36,B,"Boise-Eliot/Humboldt",449,403,423,439,453,471
+district,2035-36,B,"Chief Joseph",358,317,335,349,362,377
+district,2035-36,B,"César Chávez",521,461,488,508,526,549
+district,2035-36,B,"Faubion",347,311,327,339,350,364
+district,2035-36,B,"George",675,592,632,657,682,721
+district,2035-36,B,"Harriet Tubman",458,404,430,446,463,488
+district,2035-36,B,"Jefferson",1171,1101,1138,1162,1190,1233
+district,2035-36,B,"MLK Jr",339,300,318,330,342,357
+district,2035-36,B,"Ockley Green",509,447,476,495,515,543
+district,2035-36,B,"Roosevelt",1105,1036,1072,1097,1124,1166
+district,2035-36,B,"Rosa Parks",430,380,402,419,434,453
+district,2035-36,B,"Sitton",387,342,362,377,391,408
+district,2035-36,B,"Vernon",284,251,266,277,287,299
+district,2035-36,B,"Woodlawn",265,234,248,258,268,279
+district,2035-36,B,"Ainsworth",516,457,483,503,521,543
+district,2035-36,B,"Bridlemile",386,341,361,376,390,407
+district,2035-36,B,"Capitol Hill",286,252,267,279,289,302
+district,2035-36,B,"Chapman",295,263,277,288,298,310
+district,2035-36,B,"Forest Park",243,215,227,237,245,256
+district,2035-36,B,"Gray",519,457,486,505,525,553
+district,2035-36,B,"Hayhurst",383,338,358,373,387,404
+district,2035-36,B,"Ida B Wells-Barnett",1229,1153,1193,1220,1250,1296
+district,2035-36,B,"Jackson",426,374,399,415,431,455
+district,2035-36,B,"Lincoln",1123,1053,1090,1114,1142,1184
+district,2035-36,B,"Markham",309,274,290,301,312,325
+district,2035-36,B,"Odyssey",240,213,225,234,242,252
+district,2035-36,B,"Rieke",348,312,328,340,351,365
+district,2035-36,B,"Skyline",170,151,159,166,171,179
+district,2035-36,B,"Stephenson",242,214,226,236,244,255
+district,2035-36,B,"West Sylvan",646,568,605,629,653,689
+school,2027-28,SQ,"Abernethy",242,205,225,239,255,281
+school,2027-28,SQ,"Arleta",213,181,198,210,224,244
+school,2027-28,SQ,"Atkinson",363,307,337,359,382,418
+school,2027-28,SQ,"Bridger Creative Science",450,388,422,446,471,512
+school,2027-28,SQ,"Buckman",244,208,227,241,256,280
+school,2027-28,SQ,"Cleveland",1460,1253,1368,1447,1541,1680
+school,2027-28,SQ,"Creston",201,172,188,199,211,227
+school,2027-28,SQ,"Duniway",338,287,315,335,357,389
+school,2027-28,SQ,"Franklin",1689,1458,1585,1689,1790,1943
+school,2027-28,SQ,"Glencoe",311,266,289,307,328,360
+school,2027-28,SQ,"Grout",303,260,282,298,317,347
+school,2027-28,SQ,"Hosford",482,417,453,479,509,553
+school,2027-28,SQ,"Kellogg",513,440,479,508,541,589
+school,2027-28,SQ,"Kelly",402,341,373,397,423,466
+school,2027-28,SQ,"Lane",417,357,390,415,441,481
+school,2027-28,SQ,"Lent",256,217,237,253,268,295
+school,2027-28,SQ,"Lewis",224,190,209,222,237,259
+school,2027-28,SQ,"Llewellyn",312,263,289,308,328,360
+school,2027-28,SQ,"Marysville",300,256,280,297,316,345
+school,2027-28,SQ,"Mt Tabor",406,349,379,403,430,468
+school,2027-28,SQ,"Richmond",504,429,470,501,532,582
+school,2027-28,SQ,"Sellwood",523,451,491,523,553,598
+school,2027-28,SQ,"Sunnyside Environmental",484,415,453,479,510,556
+school,2027-28,SQ,"Whitman",205,174,191,203,216,236
+school,2027-28,SQ,"Winterhaven",311,267,291,310,328,360
+school,2027-28,SQ,"Woodmere",224,191,207,221,235,258
+school,2027-28,SQ,"Woodstock",342,291,318,339,360,394
+school,2027-28,SQ,"Alameda",498,425,461,492,523,575
+school,2027-28,SQ,"Beaumont",410,356,386,409,434,475
+school,2027-28,SQ,"Beverly Cleary",430,367,400,426,452,495
+school,2027-28,SQ,"Clark",360,304,332,354,378,415
+school,2027-28,SQ,"Grant",1935,1690,1826,1926,2037,2199
+school,2027-28,SQ,"Harrison Park",427,366,401,425,450,495
+school,2027-28,SQ,"Irvington",240,202,223,239,253,278
+school,2027-28,SQ,"Laurelhurst",607,533,571,604,635,684
+school,2027-28,SQ,"Lee",245,207,227,242,258,282
+school,2027-28,SQ,"McDaniel",1528,1321,1437,1521,1612,1759
+school,2027-28,SQ,"Rigler",306,261,285,303,321,349
+school,2027-28,SQ,"Rose City Park",391,330,363,386,410,450
+school,2027-28,SQ,"Roseway Heights",554,477,521,553,587,637
+school,2027-28,SQ,"Scott",500,422,464,495,526,576
+school,2027-28,SQ,"Vestal",294,252,273,291,310,337
+school,2027-28,SQ,"Astor",412,353,386,408,434,472
+school,2027-28,SQ,"Beach",284,242,263,281,298,325
+school,2027-28,SQ,"Boise-Eliot/Humboldt",314,270,293,312,329,357
+school,2027-28,SQ,"Chief Joseph",245,207,227,241,256,282
+school,2027-28,SQ,"César Chávez",413,356,387,409,434,473
+school,2027-28,SQ,"Faubion",618,538,581,613,645,699
+school,2027-28,SQ,"George",391,336,366,390,414,455
+school,2027-28,SQ,"Harriet Tubman",457,393,429,456,483,527
+school,2027-28,SQ,"James John",359,306,334,356,381,414
+school,2027-28,SQ,"Jefferson",564,482,529,563,596,648
+school,2027-28,SQ,"MLK Jr",337,286,315,334,354,389
+school,2027-28,SQ,"Ockley Green",442,380,414,440,469,512
+school,2027-28,SQ,"Peninsula",250,212,232,247,263,288
+school,2027-28,SQ,"Roosevelt",1312,1120,1227,1309,1393,1512
+school,2027-28,SQ,"Rosa Parks",159,134,148,158,168,184
+school,2027-28,SQ,"Sabin",236,199,220,234,248,271
+school,2027-28,SQ,"Sitton",333,282,309,329,351,382
+school,2027-28,SQ,"Vernon",492,419,459,487,519,562
+school,2027-28,SQ,"Woodlawn",300,255,278,297,315,343
+school,2027-28,SQ,"Ainsworth",555,475,514,547,584,634
+school,2027-28,SQ,"Bridlemile",414,351,383,410,435,477
+school,2027-28,SQ,"Capitol Hill",310,263,288,307,327,358
+school,2027-28,SQ,"Chapman",316,270,295,313,333,366
+school,2027-28,SQ,"Forest Park",260,219,240,256,273,298
+school,2027-28,SQ,"Gray",427,366,400,424,450,493
+school,2027-28,SQ,"Hayhurst",274,233,254,270,288,313
+school,2027-28,SQ,"Ida B Wells-Barnett",1524,1315,1432,1518,1605,1749
+school,2027-28,SQ,"Jackson",661,568,621,657,700,758
+school,2027-28,SQ,"Lincoln",1598,1371,1496,1591,1684,1830
+school,2027-28,SQ,"Maplewood",278,235,257,275,294,323
+school,2027-28,SQ,"Markham",312,262,290,308,328,361
+school,2027-28,SQ,"Odyssey",220,188,205,218,232,252
+school,2027-28,SQ,"Rieke",252,212,233,248,265,290
+school,2027-28,SQ,"Skyline",196,166,182,194,207,227
+school,2027-28,SQ,"Stephenson",271,231,252,268,285,314
+school,2027-28,SQ,"West Sylvan",687,593,645,688,726,791
+school,2027-28,A,"Abernethy",364,310,339,360,383,422
+school,2027-28,A,"Arleta",513,436,478,507,539,587
+school,2027-28,A,"Atkinson",382,324,356,378,402,439
+school,2027-28,A,"Bridger Creative Science",309,266,290,305,323,350
+school,2027-28,A,"Cleveland",1400,1202,1312,1388,1478,1611
+school,2027-28,A,"Duniway",449,382,419,445,474,517
+school,2027-28,A,"Franklin",1721,1486,1615,1721,1824,1980
+school,2027-28,A,"Glencoe",311,267,290,307,327,359
+school,2027-28,A,"Grout",303,260,282,298,317,347
+school,2027-28,A,"Hosford",731,631,686,727,772,841
+school,2027-28,A,"Kellogg",624,535,582,618,658,716
+school,2027-28,A,"Kelly",402,341,373,397,423,466
+school,2027-28,A,"Lane",634,543,593,631,671,732
+school,2027-28,A,"Lent",438,371,405,433,458,505
+school,2027-28,A,"Llewellyn",425,358,393,419,447,491
+school,2027-28,A,"Mt Tabor",638,549,596,634,676,735
+school,2027-28,A,"Richmond",504,429,470,501,532,582
+school,2027-28,A,"Sunnyside Environmental",413,352,385,408,434,472
+school,2027-28,A,"Whitman",429,363,399,425,453,495
+school,2027-28,A,"Winterhaven",311,267,291,310,328,360
+school,2027-28,A,"Woodstock",442,376,412,438,466,509
+school,2027-28,A,"Alameda",498,425,461,492,523,575
+school,2027-28,A,"Beaumont",583,506,549,582,617,677
+school,2027-28,A,"Beverly Cleary",487,413,452,481,511,560
+school,2027-28,A,"Clark",260,219,240,256,273,300
+school,2027-28,A,"Grant",1935,1690,1826,1926,2037,2199
+school,2027-28,A,"Harrison Park",707,605,663,703,745,820
+school,2027-28,A,"Laurelhurst",375,332,354,372,390,418
+school,2027-28,A,"Lee",245,207,227,242,258,282
+school,2027-28,A,"McDaniel",1556,1345,1463,1549,1641,1791
+school,2027-28,A,"Rigler",529,449,492,524,555,606
+school,2027-28,A,"Roseway Heights",669,576,629,667,709,770
+school,2027-28,A,"Scott",460,388,427,455,484,530
+school,2027-28,A,"Vestal",502,428,466,497,530,577
+school,2027-28,A,"Astor",417,357,390,413,439,478
+school,2027-28,A,"Boise-Eliot/Humboldt",515,439,479,511,541,589
+school,2027-28,A,"Chief Joseph",403,341,374,396,421,463
+school,2027-28,A,"César Chávez",567,488,530,560,594,648
+school,2027-28,A,"Faubion",383,335,360,379,398,431
+school,2027-28,A,"George",714,614,668,712,756,832
+school,2027-28,A,"Harriet Tubman",529,455,496,528,559,611
+school,2027-28,A,"Jefferson",562,480,527,561,594,646
+school,2027-28,A,"MLK Jr",372,316,347,369,391,429
+school,2027-28,A,"Ockley Green",508,437,476,506,539,589
+school,2027-28,A,"Roosevelt",1401,1196,1311,1398,1488,1614
+school,2027-28,A,"Rosa Parks",489,412,454,485,517,566
+school,2027-28,A,"Sitton",425,361,395,420,448,487
+school,2027-28,A,"Vernon",314,267,292,310,331,358
+school,2027-28,A,"Woodlawn",300,255,278,297,315,343
+school,2027-28,A,"Ainsworth",555,475,514,547,584,634
+school,2027-28,A,"Bridlemile",414,351,383,410,435,477
+school,2027-28,A,"Capitol Hill",391,332,364,387,412,452
+school,2027-28,A,"Chapman",316,270,295,313,333,366
+school,2027-28,A,"Forest Park",260,219,240,256,273,298
+school,2027-28,A,"Gray",587,503,549,583,619,678
+school,2027-28,A,"Hayhurst",436,371,405,430,458,499
+school,2027-28,A,"Ida B Wells-Barnett",1533,1322,1441,1527,1614,1759
+school,2027-28,A,"Jackson",504,433,474,501,534,578
+school,2027-28,A,"Lincoln",1502,1289,1406,1496,1583,1720
+school,2027-28,A,"Markham",502,422,466,495,528,581
+school,2027-28,A,"Odyssey",220,188,205,218,232,252
+school,2027-28,A,"Rieke",368,310,341,363,387,424
+school,2027-28,A,"Skyline",196,166,182,194,207,227
+school,2027-28,A,"West Sylvan",684,591,642,685,723,788
+school,2027-28,B,"Abernethy",364,310,339,360,383,422
+school,2027-28,B,"Arleta",513,436,478,507,539,587
+school,2027-28,B,"Atkinson",382,324,356,378,402,439
+school,2027-28,B,"Bridger Creative Science",309,266,290,305,323,350
+school,2027-28,B,"Cleveland",1400,1202,1312,1388,1478,1611
+school,2027-28,B,"Duniway",338,287,315,335,357,389
+school,2027-28,B,"Franklin",1721,1486,1615,1721,1824,1980
+school,2027-28,B,"Glencoe",311,267,290,307,327,359
+school,2027-28,B,"Grout",303,260,282,298,317,347
+school,2027-28,B,"Hosford",664,573,623,660,701,763
+school,2027-28,B,"Kellogg",624,535,582,618,658,716
+school,2027-28,B,"Kelly",402,341,373,397,423,466
+school,2027-28,B,"Lane",701,601,656,698,742,809
+school,2027-28,B,"Lent",438,371,405,433,458,505
+school,2027-28,B,"Lewis",326,277,303,323,344,377
+school,2027-28,B,"Llewellyn",312,263,289,308,328,360
+school,2027-28,B,"Mt Tabor",638,549,596,634,676,735
+school,2027-28,B,"Richmond",504,429,470,501,532,582
+school,2027-28,B,"Sunnyside Environmental",413,352,385,408,434,472
+school,2027-28,B,"Whitman",327,277,304,324,345,377
+school,2027-28,B,"Winterhaven",311,267,291,310,328,360
+school,2027-28,B,"Woodstock",442,376,412,438,466,509
+school,2027-28,B,"Alameda",498,425,461,492,523,575
+school,2027-28,B,"Beaumont",583,506,549,582,617,677
+school,2027-28,B,"Beverly Cleary",487,413,452,481,511,560
+school,2027-28,B,"Clark",260,219,240,256,273,300
+school,2027-28,B,"Grant",1935,1690,1826,1926,2037,2199
+school,2027-28,B,"Harrison Park",707,605,663,703,745,820
+school,2027-28,B,"Laurelhurst",375,332,354,372,390,418
+school,2027-28,B,"Lee",245,207,227,242,258,282
+school,2027-28,B,"McDaniel",1556,1345,1463,1549,1641,1791
+school,2027-28,B,"Rigler",529,449,492,524,555,606
+school,2027-28,B,"Rose City Park",391,330,363,386,410,450
+school,2027-28,B,"Roseway Heights",669,576,629,667,709,770
+school,2027-28,B,"Scott",277,234,257,274,292,319
+school,2027-28,B,"Vestal",294,252,273,291,310,337
+school,2027-28,B,"Astor",417,357,390,413,439,478
+school,2027-28,B,"Boise-Eliot/Humboldt",515,439,479,511,541,589
+school,2027-28,B,"Chief Joseph",403,341,374,396,421,463
+school,2027-28,B,"César Chávez",567,488,530,560,594,648
+school,2027-28,B,"Faubion",383,335,360,379,398,431
+school,2027-28,B,"George",714,614,668,712,756,832
+school,2027-28,B,"Harriet Tubman",529,455,496,528,559,611
+school,2027-28,B,"Jefferson",562,480,527,561,594,646
+school,2027-28,B,"MLK Jr",372,316,347,369,391,429
+school,2027-28,B,"Ockley Green",508,437,476,506,539,589
+school,2027-28,B,"Roosevelt",1401,1196,1311,1398,1488,1614
+school,2027-28,B,"Rosa Parks",489,412,454,485,517,566
+school,2027-28,B,"Sitton",425,361,395,420,448,487
+school,2027-28,B,"Vernon",314,267,292,310,331,358
+school,2027-28,B,"Woodlawn",300,255,278,297,315,343
+school,2027-28,B,"Ainsworth",555,475,514,547,584,634
+school,2027-28,B,"Bridlemile",414,351,383,410,435,477
+school,2027-28,B,"Capitol Hill",310,263,288,307,327,358
+school,2027-28,B,"Chapman",316,270,295,313,333,366
+school,2027-28,B,"Forest Park",260,219,240,256,273,298
+school,2027-28,B,"Gray",587,503,549,583,619,678
+school,2027-28,B,"Hayhurst",436,371,405,430,458,499
+school,2027-28,B,"Ida B Wells-Barnett",1533,1322,1441,1527,1614,1759
+school,2027-28,B,"Jackson",504,433,474,501,534,578
+school,2027-28,B,"Lincoln",1502,1289,1406,1496,1583,1720
+school,2027-28,B,"Markham",312,262,290,308,328,361
+school,2027-28,B,"Odyssey",220,188,205,218,232,252
+school,2027-28,B,"Rieke",368,310,341,363,387,424
+school,2027-28,B,"Skyline",196,166,182,194,207,227
+school,2027-28,B,"Stephenson",271,231,252,268,285,314
+school,2027-28,B,"West Sylvan",684,591,642,685,723,788
+school,2031-32,SQ,"Abernethy",241,167,202,229,261,317
+school,2031-32,SQ,"Arleta",210,146,178,200,227,275
+school,2031-32,SQ,"Atkinson",386,272,326,369,424,509
+school,2031-32,SQ,"Bridger Creative Science",415,303,359,400,448,531
+school,2031-32,SQ,"Buckman",239,171,202,228,259,304
+school,2031-32,SQ,"Cleveland",1318,961,1157,1293,1449,1714
+school,2031-32,SQ,"Creston",187,139,161,179,201,240
+school,2031-32,SQ,"Duniway",345,242,291,331,375,450
+school,2031-32,SQ,"Franklin",1492,1117,1324,1484,1671,1930
+school,2031-32,SQ,"Glencoe",296,209,249,284,322,390
+school,2031-32,SQ,"Grout",280,198,240,270,305,367
+school,2031-32,SQ,"Hosford",374,277,328,369,415,490
+school,2031-32,SQ,"Kellogg",471,347,410,462,522,614
+school,2031-32,SQ,"Kelly",391,274,332,375,424,513
+school,2031-32,SQ,"Lane",357,260,311,353,398,470
+school,2031-32,SQ,"Lent",274,192,232,261,297,359
+school,2031-32,SQ,"Lewis",201,140,169,193,220,269
+school,2031-32,SQ,"Llewellyn",312,220,264,299,340,404
+school,2031-32,SQ,"Marysville",312,220,264,300,340,403
+school,2031-32,SQ,"Mt Tabor",354,255,307,348,394,465
+school,2031-32,SQ,"Richmond",497,350,422,475,542,651
+school,2031-32,SQ,"Sellwood",350,252,303,342,388,470
+school,2031-32,SQ,"Sunnyside Environmental",475,343,408,459,519,615
+school,2031-32,SQ,"Whitman",223,159,189,215,243,289
+school,2031-32,SQ,"Winterhaven",310,223,265,302,339,399
+school,2031-32,SQ,"Woodmere",225,157,188,214,246,297
+school,2031-32,SQ,"Woodstock",325,230,277,313,353,425
+school,2031-32,SQ,"Alameda",492,344,416,473,536,646
+school,2031-32,SQ,"Beaumont",418,309,368,412,461,552
+school,2031-32,SQ,"Beverly Cleary",389,278,332,375,424,510
+school,2031-32,SQ,"Clark",343,240,287,324,369,445
+school,2031-32,SQ,"Grant",1487,1127,1321,1470,1654,1942
+school,2031-32,SQ,"Harrison Park",417,305,363,409,463,539
+school,2031-32,SQ,"Irvington",223,155,188,212,242,292
+school,2031-32,SQ,"Laurelhurst",525,402,463,512,571,666
+school,2031-32,SQ,"Lee",254,175,212,241,276,329
+school,2031-32,SQ,"McDaniel",1261,937,1100,1245,1400,1656
+school,2031-32,SQ,"Rigler",321,231,272,307,348,414
+school,2031-32,SQ,"Rose City Park",370,260,311,355,402,482
+school,2031-32,SQ,"Roseway Heights",498,364,429,490,556,658
+school,2031-32,SQ,"Scott",470,331,395,451,512,614
+school,2031-32,SQ,"Vestal",279,200,238,267,302,356
+school,2031-32,SQ,"Astor",418,312,363,406,454,534
+school,2031-32,SQ,"Beach",287,203,244,274,310,373
+school,2031-32,SQ,"Boise-Eliot/Humboldt",308,232,270,298,332,389
+school,2031-32,SQ,"Chief Joseph",238,164,198,226,257,309
+school,2031-32,SQ,"César Chávez",392,284,337,384,430,507
+school,2031-32,SQ,"Faubion",602,446,526,585,650,761
+school,2031-32,SQ,"George",390,287,342,382,433,520
+school,2031-32,SQ,"Harriet Tubman",374,283,329,368,412,491
+school,2031-32,SQ,"James John",352,245,297,339,385,467
+school,2031-32,SQ,"Jefferson",1183,882,1037,1156,1300,1539
+school,2031-32,SQ,"MLK Jr",337,238,283,324,367,438
+school,2031-32,SQ,"Ockley Green",436,324,383,430,482,579
+school,2031-32,SQ,"Peninsula",236,163,198,225,256,309
+school,2031-32,SQ,"Roosevelt",1117,824,988,1106,1238,1459
+school,2031-32,SQ,"Rosa Parks",168,119,142,161,183,218
+school,2031-32,SQ,"Sabin",235,165,199,224,256,315
+school,2031-32,SQ,"Sitton",311,218,263,299,339,403
+school,2031-32,SQ,"Vernon",453,322,390,440,494,580
+school,2031-32,SQ,"Woodlawn",289,202,242,275,313,372
+school,2031-32,SQ,"Ainsworth",557,390,470,533,606,725
+school,2031-32,SQ,"Bridlemile",408,289,344,390,439,523
+school,2031-32,SQ,"Capitol Hill",311,221,263,301,343,410
+school,2031-32,SQ,"Chapman",333,241,284,320,362,427
+school,2031-32,SQ,"Forest Park",258,179,216,245,278,339
+school,2031-32,SQ,"Gray",368,271,321,361,409,488
+school,2031-32,SQ,"Hayhurst",266,188,224,253,288,348
+school,2031-32,SQ,"Ida B Wells-Barnett",1457,1089,1277,1430,1613,1883
+school,2031-32,SQ,"Jackson",515,378,449,510,577,672
+school,2031-32,SQ,"Lincoln",1411,1032,1230,1386,1565,1838
+school,2031-32,SQ,"Maplewood",247,173,207,236,270,320
+school,2031-32,SQ,"Markham",347,247,293,331,376,455
+school,2031-32,SQ,"Odyssey",224,160,190,216,246,293
+school,2031-32,SQ,"Rieke",311,233,269,298,335,389
+school,2031-32,SQ,"Skyline",177,124,151,170,195,231
+school,2031-32,SQ,"Stephenson",261,185,219,251,284,338
+school,2031-32,SQ,"West Sylvan",620,460,541,611,687,809
+school,2031-32,A,"Abernethy",360,251,303,343,390,472
+school,2031-32,A,"Arleta",522,365,444,497,564,682
+school,2031-32,A,"Atkinson",390,278,331,374,427,510
+school,2031-32,A,"Bridger Creative Science",296,215,254,284,317,375
+school,2031-32,A,"Cleveland",1248,910,1095,1224,1372,1623
+school,2031-32,A,"Duniway",431,302,364,413,468,562
+school,2031-32,A,"Franklin",1537,1150,1363,1529,1722,1988
+school,2031-32,A,"Glencoe",296,213,251,284,321,386
+school,2031-32,A,"Grout",280,198,240,270,305,367
+school,2031-32,A,"Hosford",576,423,504,567,640,758
+school,2031-32,A,"Kellogg",567,418,493,556,629,740
+school,2031-32,A,"Kelly",391,274,332,375,424,513
+school,2031-32,A,"Lane",481,351,419,475,537,633
+school,2031-32,A,"Lent",457,321,388,436,496,600
+school,2031-32,A,"Llewellyn",427,301,362,409,466,553
+school,2031-32,A,"Mt Tabor",542,391,470,532,602,712
+school,2031-32,A,"Richmond",497,350,422,475,542,651
+school,2031-32,A,"Sunnyside Environmental",417,296,354,401,451,536
+school,2031-32,A,"Whitman",448,318,380,432,489,581
+school,2031-32,A,"Winterhaven",310,223,265,302,339,399
+school,2031-32,A,"Woodstock",412,291,351,396,447,538
+school,2031-32,A,"Alameda",492,344,416,473,536,646
+school,2031-32,A,"Beaumont",508,376,447,501,560,671
+school,2031-32,A,"Beverly Cleary",456,321,383,435,491,595
+school,2031-32,A,"Clark",256,179,214,242,275,332
+school,2031-32,A,"Grant",1487,1127,1321,1470,1654,1942
+school,2031-32,A,"Harrison Park",641,468,558,628,712,830
+school,2031-32,A,"Laurelhurst",337,262,297,327,361,418
+school,2031-32,A,"Lee",254,175,212,241,276,329
+school,2031-32,A,"McDaniel",1286,956,1122,1269,1428,1689
+school,2031-32,A,"Rigler",544,388,459,520,590,706
+school,2031-32,A,"Roseway Heights",643,470,554,633,717,850
+school,2031-32,A,"Scott",407,287,342,390,443,532
+school,2031-32,A,"Vestal",489,347,416,467,531,628
+school,2031-32,A,"Astor",423,315,367,411,459,540
+school,2031-32,A,"Boise-Eliot/Humboldt",504,368,437,486,547,648
+school,2031-32,A,"Chief Joseph",398,276,332,378,430,515
+school,2031-32,A,"César Chávez",561,404,477,545,611,727
+school,2031-32,A,"Faubion",388,288,338,374,415,485
+school,2031-32,A,"George",668,491,586,655,741,891
+school,2031-32,A,"Harriet Tubman",447,337,393,440,493,588
+school,2031-32,A,"Jefferson",1179,880,1034,1152,1296,1534
+school,2031-32,A,"MLK Jr",376,265,316,361,409,489
+school,2031-32,A,"Ockley Green",508,377,446,501,562,675
+school,2031-32,A,"Roosevelt",1200,885,1061,1188,1330,1567
+school,2031-32,A,"Rosa Parks",470,332,398,451,512,610
+school,2031-32,A,"Sitton",414,290,351,398,451,536
+school,2031-32,A,"Vernon",301,213,256,289,326,384
+school,2031-32,A,"Woodlawn",289,202,242,275,313,372
+school,2031-32,A,"Ainsworth",557,390,470,533,606,725
+school,2031-32,A,"Bridlemile",408,289,344,390,439,523
+school,2031-32,A,"Capitol Hill",389,276,329,376,429,512
+school,2031-32,A,"Chapman",333,241,284,320,362,427
+school,2031-32,A,"Forest Park",258,179,216,245,278,339
+school,2031-32,A,"Gray",480,352,417,470,535,639
+school,2031-32,A,"Hayhurst",407,288,343,387,441,533
+school,2031-32,A,"Ida B Wells-Barnett",1465,1095,1284,1437,1622,1893
+school,2031-32,A,"Jackson",406,298,354,402,455,529
+school,2031-32,A,"Lincoln",1324,969,1154,1300,1468,1724
+school,2031-32,A,"Markham",530,375,447,505,575,697
+school,2031-32,A,"Odyssey",224,160,190,216,246,293
+school,2031-32,A,"Rieke",417,307,358,399,450,527
+school,2031-32,A,"Skyline",177,124,151,170,195,231
+school,2031-32,A,"West Sylvan",617,457,539,608,683,805
+school,2031-32,B,"Abernethy",360,251,303,343,390,472
+school,2031-32,B,"Arleta",522,365,444,497,564,682
+school,2031-32,B,"Atkinson",390,278,331,374,427,510
+school,2031-32,B,"Bridger Creative Science",296,215,254,284,317,375
+school,2031-32,B,"Cleveland",1248,910,1095,1224,1372,1623
+school,2031-32,B,"Duniway",345,242,291,331,375,450
+school,2031-32,B,"Franklin",1537,1150,1363,1529,1722,1988
+school,2031-32,B,"Glencoe",296,213,251,284,321,386
+school,2031-32,B,"Grout",280,198,240,270,305,367
+school,2031-32,B,"Hosford",531,390,465,523,590,698
+school,2031-32,B,"Kellogg",567,418,493,556,629,740
+school,2031-32,B,"Kelly",391,274,332,375,424,513
+school,2031-32,B,"Lane",526,383,459,519,587,692
+school,2031-32,B,"Lent",457,321,388,436,496,600
+school,2031-32,B,"Lewis",311,216,261,298,341,416
+school,2031-32,B,"Llewellyn",312,220,264,299,340,404
+school,2031-32,B,"Mt Tabor",542,391,470,532,602,712
+school,2031-32,B,"Richmond",497,350,422,475,542,651
+school,2031-32,B,"Sunnyside Environmental",417,296,354,401,451,536
+school,2031-32,B,"Whitman",338,240,287,326,369,438
+school,2031-32,B,"Winterhaven",310,223,265,302,339,399
+school,2031-32,B,"Woodstock",412,291,351,396,447,538
+school,2031-32,B,"Alameda",492,344,416,473,536,646
+school,2031-32,B,"Beaumont",508,376,447,501,560,671
+school,2031-32,B,"Beverly Cleary",456,321,383,435,491,595
+school,2031-32,B,"Clark",256,179,214,242,275,332
+school,2031-32,B,"Grant",1487,1127,1321,1470,1654,1942
+school,2031-32,B,"Harrison Park",641,468,558,628,712,830
+school,2031-32,B,"Laurelhurst",337,262,297,327,361,418
+school,2031-32,B,"Lee",254,175,212,241,276,329
+school,2031-32,B,"McDaniel",1286,956,1122,1269,1428,1689
+school,2031-32,B,"Rigler",544,388,459,520,590,706
+school,2031-32,B,"Rose City Park",370,260,311,355,402,482
+school,2031-32,B,"Roseway Heights",643,470,554,633,717,850
+school,2031-32,B,"Scott",247,174,208,237,269,323
+school,2031-32,B,"Vestal",279,200,238,267,302,356
+school,2031-32,B,"Astor",423,315,367,411,459,540
+school,2031-32,B,"Boise-Eliot/Humboldt",504,368,437,486,547,648
+school,2031-32,B,"Chief Joseph",398,276,332,378,430,515
+school,2031-32,B,"César Chávez",561,404,477,545,611,727
+school,2031-32,B,"Faubion",388,288,338,374,415,485
+school,2031-32,B,"George",668,491,586,655,741,891
+school,2031-32,B,"Harriet Tubman",447,337,393,440,493,588
+school,2031-32,B,"Jefferson",1179,880,1034,1152,1296,1534
+school,2031-32,B,"MLK Jr",376,265,316,361,409,489
+school,2031-32,B,"Ockley Green",508,377,446,501,562,675
+school,2031-32,B,"Roosevelt",1200,885,1061,1188,1330,1567
+school,2031-32,B,"Rosa Parks",470,332,398,451,512,610
+school,2031-32,B,"Sitton",414,290,351,398,451,536
+school,2031-32,B,"Vernon",301,213,256,289,326,384
+school,2031-32,B,"Woodlawn",289,202,242,275,313,372
+school,2031-32,B,"Ainsworth",557,390,470,533,606,725
+school,2031-32,B,"Bridlemile",408,289,344,390,439,523
+school,2031-32,B,"Capitol Hill",311,221,263,301,343,410
+school,2031-32,B,"Chapman",333,241,284,320,362,427
+school,2031-32,B,"Forest Park",258,179,216,245,278,339
+school,2031-32,B,"Gray",480,352,417,470,535,639
+school,2031-32,B,"Hayhurst",407,288,343,387,441,533
+school,2031-32,B,"Ida B Wells-Barnett",1465,1095,1284,1437,1622,1893
+school,2031-32,B,"Jackson",406,298,354,402,455,529
+school,2031-32,B,"Lincoln",1324,969,1154,1300,1468,1724
+school,2031-32,B,"Markham",347,247,293,331,376,455
+school,2031-32,B,"Odyssey",224,160,190,216,246,293
+school,2031-32,B,"Rieke",417,307,358,399,450,527
+school,2031-32,B,"Skyline",177,124,151,170,195,231
+school,2031-32,B,"Stephenson",261,185,219,251,284,338
+school,2031-32,B,"West Sylvan",617,457,539,608,683,805
+school,2035-36,SQ,"Abernethy",223,139,177,209,248,314
+school,2035-36,SQ,"Arleta",203,129,164,191,228,290
+school,2035-36,SQ,"Atkinson",364,231,292,347,406,505
+school,2035-36,SQ,"Bridger Creative Science",403,268,326,382,441,549
+school,2035-36,SQ,"Buckman",222,144,180,210,245,308
+school,2035-36,SQ,"Cleveland",1127,744,938,1087,1265,1553
+school,2035-36,SQ,"Creston",167,115,138,158,182,227
+school,2035-36,SQ,"Duniway",325,208,261,303,364,453
+school,2035-36,SQ,"Franklin",1276,868,1080,1243,1455,1804
+school,2035-36,SQ,"Glencoe",269,172,214,253,297,382
+school,2035-36,SQ,"Grout",255,168,208,243,285,357
+school,2035-36,SQ,"Hosford",370,241,298,351,410,514
+school,2035-36,SQ,"Kellogg",532,343,423,501,595,755
+school,2035-36,SQ,"Kelly",372,236,297,351,416,525
+school,2035-36,SQ,"Lane",372,237,299,355,421,527
+school,2035-36,SQ,"Lent",249,158,200,235,278,346
+school,2035-36,SQ,"Lewis",185,117,148,175,205,265
+school,2035-36,SQ,"Llewellyn",291,184,235,275,324,410
+school,2035-36,SQ,"Marysville",279,180,226,265,310,388
+school,2035-36,SQ,"Mt Tabor",371,237,300,352,414,522
+school,2035-36,SQ,"Richmond",478,304,383,449,529,665
+school,2035-36,SQ,"Sellwood",380,237,304,361,427,545
+school,2035-36,SQ,"Sunnyside Environmental",476,308,385,451,523,648
+school,2035-36,SQ,"Whitman",215,139,174,206,241,300
+school,2035-36,SQ,"Winterhaven",308,195,248,291,342,426
+school,2035-36,SQ,"Woodmere",200,126,159,189,222,286
+school,2035-36,SQ,"Woodstock",301,192,243,285,333,426
+school,2035-36,SQ,"Alameda",461,296,370,441,514,645
+school,2035-36,SQ,"Beaumont",431,281,349,410,479,598
+school,2035-36,SQ,"Beverly Cleary",374,240,301,356,417,525
+school,2035-36,SQ,"Clark",323,205,256,301,355,446
+school,2035-36,SQ,"Grant",1237,834,1046,1212,1414,1739
+school,2035-36,SQ,"Harrison Park",437,282,352,413,481,604
+school,2035-36,SQ,"Irvington",210,130,167,198,232,303
+school,2035-36,SQ,"Laurelhurst",471,325,397,455,516,626
+school,2035-36,SQ,"Lee",239,147,189,224,265,329
+school,2035-36,SQ,"McDaniel",1157,768,970,1129,1322,1617
+school,2035-36,SQ,"Rigler",298,197,245,287,331,412
+school,2035-36,SQ,"Rose City Park",345,218,274,324,385,481
+school,2035-36,SQ,"Roseway Heights",531,340,427,501,588,741
+school,2035-36,SQ,"Scott",424,267,342,401,471,598
+school,2035-36,SQ,"Vestal",262,169,213,247,292,358
+school,2035-36,SQ,"Astor",386,258,321,370,425,524
+school,2035-36,SQ,"Beach",253,166,206,239,280,355
+school,2035-36,SQ,"Boise-Eliot/Humboldt",265,189,225,255,291,354
+school,2035-36,SQ,"Chief Joseph",221,136,175,207,244,314
+school,2035-36,SQ,"César Chávez",376,242,304,356,421,525
+school,2035-36,SQ,"Faubion",558,380,463,531,608,740
+school,2035-36,SQ,"George",388,246,313,368,432,549
+school,2035-36,SQ,"Harriet Tubman",381,253,312,365,425,531
+school,2035-36,SQ,"James John",328,204,264,313,367,468
+school,2035-36,SQ,"Jefferson",1175,795,986,1136,1315,1652
+school,2035-36,SQ,"MLK Jr",303,192,243,285,336,427
+school,2035-36,SQ,"Ockley Green",445,295,363,425,495,619
+school,2035-36,SQ,"Peninsula",217,135,173,205,241,301
+school,2035-36,SQ,"Roosevelt",1025,698,862,1004,1159,1436
+school,2035-36,SQ,"Rosa Parks",159,103,128,149,178,227
+school,2035-36,SQ,"Sabin",220,139,176,207,244,312
+school,2035-36,SQ,"Sitton",286,180,229,270,320,401
+school,2035-36,SQ,"Vernon",444,285,363,424,493,612
+school,2035-36,SQ,"Woodlawn",265,167,209,246,293,370
+school,2035-36,SQ,"Ainsworth",516,333,414,483,569,712
+school,2035-36,SQ,"Bridlemile",386,244,312,365,427,533
+school,2035-36,SQ,"Capitol Hill",286,182,233,275,322,407
+school,2035-36,SQ,"Chapman",295,191,242,279,324,413
+school,2035-36,SQ,"Forest Park",243,150,193,229,268,345
+school,2035-36,SQ,"Gray",398,258,322,380,447,549
+school,2035-36,SQ,"Hayhurst",252,159,201,238,277,351
+school,2035-36,SQ,"Ida B Wells-Barnett",1222,829,1025,1186,1370,1669
+school,2035-36,SQ,"Jackson",544,345,442,516,611,752
+school,2035-36,SQ,"Lincoln",1206,798,998,1166,1349,1662
+school,2035-36,SQ,"Maplewood",231,145,185,217,260,324
+school,2035-36,SQ,"Markham",309,198,250,290,344,441
+school,2035-36,SQ,"Odyssey",240,153,194,227,267,338
+school,2035-36,SQ,"Rieke",248,173,206,236,270,333
+school,2035-36,SQ,"Skyline",170,106,135,161,190,240
+school,2035-36,SQ,"Stephenson",242,152,193,227,271,335
+school,2035-36,SQ,"West Sylvan",649,420,525,614,719,872
+school,2035-36,A,"Abernethy",334,210,266,314,371,468
+school,2035-36,A,"Arleta",482,310,391,455,540,684
+school,2035-36,A,"Atkinson",363,234,294,346,403,499
+school,2035-36,A,"Bridger Creative Science",277,186,226,262,302,378
+school,2035-36,A,"Cleveland",1069,706,890,1031,1200,1472
+school,2035-36,A,"Duniway",401,256,321,374,449,559
+school,2035-36,A,"Franklin",1313,893,1111,1279,1497,1857
+school,2035-36,A,"Glencoe",269,176,217,254,296,377
+school,2035-36,A,"Grout",255,168,208,243,285,357
+school,2035-36,A,"Hosford",596,384,478,564,662,832
+school,2035-36,A,"Kellogg",624,402,497,588,697,886
+school,2035-36,A,"Kelly",372,236,297,351,416,525
+school,2035-36,A,"Lane",510,325,410,487,577,723
+school,2035-36,A,"Lent",417,265,336,393,465,579
+school,2035-36,A,"Llewellyn",400,253,323,378,445,564
+school,2035-36,A,"Mt Tabor",552,352,446,523,616,777
+school,2035-36,A,"Richmond",478,304,383,449,529,665
+school,2035-36,A,"Sunnyside Environmental",398,259,322,377,437,537
+school,2035-36,A,"Whitman",415,268,336,398,465,579
+school,2035-36,A,"Winterhaven",308,195,248,291,342,426
+school,2035-36,A,"Woodstock",385,246,311,364,426,544
+school,2035-36,A,"Alameda",461,296,370,441,514,645
+school,2035-36,A,"Beaumont",524,341,424,498,583,728
+school,2035-36,A,"Beverly Cleary",425,272,343,404,473,596
+school,2035-36,A,"Clark",239,151,190,223,263,330
+school,2035-36,A,"Grant",1237,834,1046,1212,1414,1739
+school,2035-36,A,"Harrison Park",678,436,546,640,746,938
+school,2035-36,A,"Laurelhurst",290,209,249,280,315,376
+school,2035-36,A,"Lee",239,147,189,224,265,329
+school,2035-36,A,"McDaniel",1178,782,988,1149,1346,1647
+school,2035-36,A,"Rigler",504,328,412,484,562,703
+school,2035-36,A,"Roseway Heights",681,437,548,643,754,951
+school,2035-36,A,"Scott",366,231,295,346,407,516
+school,2035-36,A,"Vestal",459,291,371,433,512,633
+school,2035-36,A,"Astor",390,261,325,373,430,530
+school,2035-36,A,"Boise-Eliot/Humboldt",449,306,373,430,498,615
+school,2035-36,A,"Chief Joseph",358,223,285,335,394,506
+school,2035-36,A,"César Chávez",521,336,422,494,582,726
+school,2035-36,A,"Faubion",347,242,290,330,377,456
+school,2035-36,A,"George",675,429,544,640,752,955
+school,2035-36,A,"Harriet Tubman",458,302,374,439,511,640
+school,2035-36,A,"Jefferson",1171,793,983,1132,1310,1646
+school,2035-36,A,"MLK Jr",339,214,272,319,376,478
+school,2035-36,A,"Ockley Green",509,337,415,486,567,709
+school,2035-36,A,"Roosevelt",1105,752,929,1082,1249,1548
+school,2035-36,A,"Rosa Parks",430,279,346,403,481,613
+school,2035-36,A,"Sitton",387,244,310,365,433,543
+school,2035-36,A,"Vernon",284,182,231,271,314,391
+school,2035-36,A,"Woodlawn",265,167,209,246,293,370
+school,2035-36,A,"Ainsworth",516,333,414,483,569,712
+school,2035-36,A,"Bridlemile",386,244,312,365,427,533
+school,2035-36,A,"Capitol Hill",359,229,292,345,404,511
+school,2035-36,A,"Chapman",295,191,242,279,324,413
+school,2035-36,A,"Forest Park",243,150,193,229,268,345
+school,2035-36,A,"Gray",519,335,419,495,584,718
+school,2035-36,A,"Hayhurst",383,241,306,361,421,534
+school,2035-36,A,"Ida B Wells-Barnett",1229,834,1031,1193,1378,1678
+school,2035-36,A,"Jackson",426,270,346,404,478,588
+school,2035-36,A,"Lincoln",1123,744,930,1085,1256,1548
+school,2035-36,A,"Markham",478,303,386,448,532,685
+school,2035-36,A,"Odyssey",240,153,194,227,267,338
+school,2035-36,A,"Rieke",348,236,286,330,380,474
+school,2035-36,A,"Skyline",170,106,135,161,190,240
+school,2035-36,A,"West Sylvan",646,418,523,611,716,868
+school,2035-36,B,"Abernethy",334,210,266,314,371,468
+school,2035-36,B,"Arleta",482,310,391,455,540,684
+school,2035-36,B,"Atkinson",363,234,294,346,403,499
+school,2035-36,B,"Bridger Creative Science",277,186,226,262,302,378
+school,2035-36,B,"Cleveland",1069,706,890,1031,1200,1472
+school,2035-36,B,"Duniway",325,208,261,303,364,453
+school,2035-36,B,"Franklin",1313,893,1111,1279,1497,1857
+school,2035-36,B,"Glencoe",269,176,217,254,296,377
+school,2035-36,B,"Grout",255,168,208,243,285,357
+school,2035-36,B,"Hosford",547,353,439,518,607,763
+school,2035-36,B,"Kellogg",624,402,497,588,697,886
+school,2035-36,B,"Kelly",372,236,297,351,416,525
+school,2035-36,B,"Lane",559,356,449,534,633,792
+school,2035-36,B,"Lent",417,265,336,393,465,579
+school,2035-36,B,"Lewis",292,185,233,277,324,419
+school,2035-36,B,"Llewellyn",291,184,235,275,324,410
+school,2035-36,B,"Mt Tabor",552,352,446,523,616,777
+school,2035-36,B,"Richmond",478,304,383,449,529,665
+school,2035-36,B,"Sunnyside Environmental",398,259,322,377,437,537
+school,2035-36,B,"Whitman",308,199,249,295,345,430
+school,2035-36,B,"Winterhaven",308,195,248,291,342,426
+school,2035-36,B,"Woodstock",385,246,311,364,426,544
+school,2035-36,B,"Alameda",461,296,370,441,514,645
+school,2035-36,B,"Beaumont",524,341,424,498,583,728
+school,2035-36,B,"Beverly Cleary",425,272,343,404,473,596
+school,2035-36,B,"Clark",239,151,190,223,263,330
+school,2035-36,B,"Grant",1237,834,1046,1212,1414,1739
+school,2035-36,B,"Harrison Park",678,436,546,640,746,938
+school,2035-36,B,"Laurelhurst",290,209,249,280,315,376
+school,2035-36,B,"Lee",239,147,189,224,265,329
+school,2035-36,B,"McDaniel",1178,782,988,1149,1346,1647
+school,2035-36,B,"Rigler",504,328,412,484,562,703
+school,2035-36,B,"Rose City Park",345,218,274,324,385,481
+school,2035-36,B,"Roseway Heights",681,437,548,643,754,951
+school,2035-36,B,"Scott",218,138,176,206,242,308
+school,2035-36,B,"Vestal",262,169,213,247,292,358
+school,2035-36,B,"Astor",390,261,325,373,430,530
+school,2035-36,B,"Boise-Eliot/Humboldt",449,306,373,430,498,615
+school,2035-36,B,"Chief Joseph",358,223,285,335,394,506
+school,2035-36,B,"César Chávez",521,336,422,494,582,726
+school,2035-36,B,"Faubion",347,242,290,330,377,456
+school,2035-36,B,"George",675,429,544,640,752,955
+school,2035-36,B,"Harriet Tubman",458,302,374,439,511,640
+school,2035-36,B,"Jefferson",1171,793,983,1132,1310,1646
+school,2035-36,B,"MLK Jr",339,214,272,319,376,478
+school,2035-36,B,"Ockley Green",509,337,415,486,567,709
+school,2035-36,B,"Roosevelt",1105,752,929,1082,1249,1548
+school,2035-36,B,"Rosa Parks",430,279,346,403,481,613
+school,2035-36,B,"Sitton",387,244,310,365,433,543
+school,2035-36,B,"Vernon",284,182,231,271,314,391
+school,2035-36,B,"Woodlawn",265,167,209,246,293,370
+school,2035-36,B,"Ainsworth",516,333,414,483,569,712
+school,2035-36,B,"Bridlemile",386,244,312,365,427,533
+school,2035-36,B,"Capitol Hill",286,182,233,275,322,407
+school,2035-36,B,"Chapman",295,191,242,279,324,413
+school,2035-36,B,"Forest Park",243,150,193,229,268,345
+school,2035-36,B,"Gray",519,335,419,495,584,718
+school,2035-36,B,"Hayhurst",383,241,306,361,421,534
+school,2035-36,B,"Ida B Wells-Barnett",1229,834,1031,1193,1378,1678
+school,2035-36,B,"Jackson",426,270,346,404,478,588
+school,2035-36,B,"Lincoln",1123,744,930,1085,1256,1548
+school,2035-36,B,"Markham",309,198,250,290,344,441
+school,2035-36,B,"Odyssey",240,153,194,227,267,338
+school,2035-36,B,"Rieke",348,236,286,330,380,474
+school,2035-36,B,"Skyline",170,106,135,161,190,240
+school,2035-36,B,"Stephenson",242,152,193,227,271,335
+school,2035-36,B,"West Sylvan",646,418,523,611,716,868
