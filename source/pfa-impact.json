@@ -1,0 +1,889 @@
+{
+ "generated": "2026-10-14",
+ "basis": "Modified enrollment model on",
+ "pfa": {
+  "capture": 0.7616,
+  "k_psu": {
+   "2026-27": 2969,
+   "2027-28": 3044,
+   "2028-29": 3150,
+   "2029-30": 2948,
+   "2030-31": 2772,
+   "2031-32": 2778,
+   "2032-33": 2697,
+   "2033-34": 2681,
+   "2034-35": 2677,
+   "2035-36": 2683
+  },
+  "k_pfa": {
+   "2026-27": 2787,
+   "2027-28": 2970,
+   "2028-29": 2708,
+   "2029-30": 2726,
+   "2030-31": 2725,
+   "2031-32": 2700,
+   "2032-33": 2695,
+   "2033-34": 2696,
+   "2034-35": 2704,
+   "2035-36": 2721
+  }
+ },
+ "scen": {
+  "SQ": {
+   "below": [
+    [
+     58,
+     59
+    ],
+    [
+     59,
+     61
+    ]
+   ],
+   "schools_above": [
+    26,
+    24
+   ],
+   "students_above": [
+    48,
+    47
+   ],
+   "students": [
+    [
+     34804,
+     33824
+    ],
+    [
+     32545,
+     31724
+    ]
+   ]
+  },
+  "A": {
+   "below": [
+    [
+     18,
+     20
+    ],
+    [
+     23,
+     28
+    ]
+   ],
+   "schools_above": [
+    72,
+    69
+   ],
+   "students_above": [
+    83,
+    81
+   ],
+   "students": [
+    [
+     34803,
+     33820
+    ],
+    [
+     32548,
+     31733
+    ]
+   ],
+   "saved": [
+    [
+     15.2,
+     16.3
+    ],
+    [
+     16.4,
+     16.6
+    ]
+   ]
+  },
+  "B": {
+   "below": [
+    [
+     26,
+     29
+    ],
+    [
+     32,
+     36
+    ]
+   ],
+   "schools_above": [
+    60,
+    56
+   ],
+   "students_above": [
+    76,
+    73
+   ],
+   "students": [
+    [
+     34803,
+     33821
+    ],
+    [
+     32548,
+     31730
+    ]
+   ],
+   "saved": [
+    [
+     13.6,
+     13.3
+    ],
+    [
+     13.6,
+     13.8
+    ]
+   ]
+  }
+ },
+ "schools": {
+  "2031-32|SQ": {
+   "flips": [
+    [
+     "Rose City Park",
+     370,
+     348,
+     360
+    ]
+   ],
+   "near": [
+    [
+     "Atkinson",
+     363,
+     360
+    ],
+    [
+     "Kelly",
+     368,
+     360
+    ],
+    [
+     "Laurelhurst",
+     505,
+     500
+    ]
+   ],
+   "drops": [
+    [
+     "Ainsworth",
+     557,
+     524
+    ],
+    [
+     "Richmond",
+     497,
+     468
+    ],
+    [
+     "Alameda",
+     492,
+     463
+    ],
+    [
+     "Scott",
+     470,
+     442
+    ],
+    [
+     "Bridlemile",
+     408,
+     384
+    ],
+    [
+     "Atkinson",
+     386,
+     363
+    ]
+   ]
+  },
+  "2035-36|SQ": {
+   "flips": [
+    [
+     "Kellogg",
+     532,
+     489,
+     500
+    ],
+    [
+     "Roseway Heights",
+     531,
+     488,
+     500
+    ]
+   ],
+   "near": [
+    [
+     "Atkinson",
+     363,
+     360
+    ],
+    [
+     "Cleveland",
+     1110,
+     1100
+    ],
+    [
+     "Jackson",
+     500,
+     500
+    ]
+   ],
+   "drops": [
+    [
+     "West Sylvan",
+     649,
+     597
+    ],
+    [
+     "Jackson",
+     544,
+     500
+    ],
+    [
+     "Kellogg",
+     532,
+     489
+    ],
+    [
+     "Roseway Heights",
+     531,
+     488
+    ],
+    [
+     "Ockley Green",
+     445,
+     409
+    ],
+    [
+     "Beaumont",
+     431,
+     396
+    ]
+   ]
+  },
+  "2031-32|A": {
+   "flips": [
+    [
+     "Abernethy",
+     360,
+     339,
+     360
+    ],
+    [
+     "MLK Jr",
+     376,
+     354,
+     360
+    ]
+   ],
+   "near": [
+    [
+     "Atkinson",
+     367,
+     360
+    ],
+    [
+     "Kelly",
+     368,
+     360
+    ],
+    [
+     "Faubion",
+     365,
+     360
+    ],
+    [
+     "Capitol Hill",
+     366,
+     360
+    ]
+   ],
+   "drops": [
+    [
+     "César Chávez",
+     561,
+     528
+    ],
+    [
+     "Ainsworth",
+     557,
+     524
+    ],
+    [
+     "Rigler",
+     544,
+     512
+    ],
+    [
+     "Arleta",
+     522,
+     491
+    ],
+    [
+     "Markham",
+     530,
+     499
+    ],
+    [
+     "Boise-Eliot/Humboldt",
+     504,
+     474
+    ]
+   ]
+  },
+  "2035-36|A": {
+   "flips": [
+    [
+     "Lane",
+     510,
+     469,
+     500
+    ],
+    [
+     "Beaumont",
+     524,
+     482,
+     500
+    ],
+    [
+     "Ockley Green",
+     509,
+     468,
+     500
+    ],
+    [
+     "Roosevelt",
+     1105,
+     1088,
+     1100
+    ],
+    [
+     "Gray",
+     519,
+     477,
+     500
+    ]
+   ],
+   "near": [
+    [
+     "Atkinson",
+     362,
+     360
+    ],
+    [
+     "Mt Tabor",
+     507,
+     500
+    ],
+    [
+     "Scott",
+     365,
+     360
+    ],
+    [
+     "Lincoln",
+     1106,
+     1100
+    ]
+   ],
+   "drops": [
+    [
+     "Harrison Park",
+     678,
+     623
+    ],
+    [
+     "Roseway Heights",
+     681,
+     626
+    ],
+    [
+     "George",
+     675,
+     620
+    ],
+    [
+     "West Sylvan",
+     646,
+     594
+    ],
+    [
+     "Kellogg",
+     624,
+     574
+    ],
+    [
+     "Hosford",
+     596,
+     548
+    ]
+   ]
+  },
+  "2031-32|B": {
+   "flips": [
+    [
+     "Abernethy",
+     360,
+     339,
+     360
+    ],
+    [
+     "Rose City Park",
+     370,
+     348,
+     360
+    ],
+    [
+     "MLK Jr",
+     376,
+     354,
+     360
+    ]
+   ],
+   "near": [
+    [
+     "Atkinson",
+     367,
+     360
+    ],
+    [
+     "Kelly",
+     368,
+     360
+    ],
+    [
+     "Faubion",
+     365,
+     360
+    ]
+   ],
+   "drops": [
+    [
+     "César Chávez",
+     561,
+     528
+    ],
+    [
+     "Ainsworth",
+     557,
+     524
+    ],
+    [
+     "Rigler",
+     544,
+     512
+    ],
+    [
+     "Arleta",
+     522,
+     491
+    ],
+    [
+     "Boise-Eliot/Humboldt",
+     504,
+     474
+    ],
+    [
+     "Richmond",
+     497,
+     468
+    ]
+   ]
+  },
+  "2035-36|B": {
+   "flips": [
+    [
+     "Beaumont",
+     524,
+     482,
+     500
+    ],
+    [
+     "Ockley Green",
+     509,
+     468,
+     500
+    ],
+    [
+     "Roosevelt",
+     1105,
+     1088,
+     1100
+    ],
+    [
+     "Gray",
+     519,
+     477,
+     500
+    ]
+   ],
+   "near": [
+    [
+     "Atkinson",
+     362,
+     360
+    ],
+    [
+     "Hosford",
+     503,
+     500
+    ],
+    [
+     "Lane",
+     514,
+     500
+    ],
+    [
+     "Mt Tabor",
+     507,
+     500
+    ],
+    [
+     "Lincoln",
+     1106,
+     1100
+    ]
+   ],
+   "drops": [
+    [
+     "Harrison Park",
+     678,
+     623
+    ],
+    [
+     "Roseway Heights",
+     681,
+     626
+    ],
+    [
+     "George",
+     675,
+     620
+    ],
+    [
+     "West Sylvan",
+     646,
+     594
+    ],
+    [
+     "Kellogg",
+     624,
+     574
+    ],
+    [
+     "Lane",
+     559,
+     514
+    ]
+   ]
+  }
+ },
+ "regions": {
+  "Cleveland / Franklin": {
+   "measures": [
+    [
+     "A",
+     "schools_above",
+     76,
+     71
+    ],
+    [
+     "A",
+     "students_above",
+     85,
+     82
+    ],
+    [
+     "B",
+     "schools_above",
+     59,
+     54
+    ],
+    [
+     "B",
+     "students_above",
+     73,
+     71
+    ]
+   ],
+   "saved": {
+    "A": [
+     [
+      6.8,
+      7.2
+     ],
+     [
+      6.7,
+      6.6
+     ]
+    ],
+    "B": [
+     [
+      6.2,
+      6.3
+     ],
+     [
+      5.9,
+      5.9
+     ]
+    ]
+   }
+  },
+  "Grant / McDaniel": {
+   "measures": [
+    [
+     "SQ",
+     "schools_above",
+     40,
+     33
+    ],
+    [
+     "SQ",
+     "students_above",
+     59,
+     55
+    ],
+    [
+     "A",
+     "students_above",
+     88,
+     89
+    ],
+    [
+     "B",
+     "schools_above",
+     64,
+     57
+    ],
+    [
+     "B",
+     "students_above",
+     81,
+     77
+    ]
+   ],
+   "saved": {
+    "A": [
+     [
+      1.5,
+      1.7
+     ],
+     [
+      1.4,
+      1.6
+     ]
+    ],
+    "B": [
+     [
+      1,
+      0.5
+     ],
+     [
+      0.3,
+      0.5
+     ]
+    ]
+   }
+  },
+  "Jefferson / Roosevelt": {
+   "measures": [
+    [
+     "A",
+     "schools_above",
+     79,
+     73
+    ],
+    [
+     "A",
+     "students_above",
+     88,
+     84
+    ],
+    [
+     "B",
+     "schools_above",
+     79,
+     73
+    ],
+    [
+     "B",
+     "students_above",
+     88,
+     84
+    ]
+   ],
+   "saved": {
+    "A": [
+     [
+      4.9,
+      4.4
+     ],
+     [
+      5,
+      4.8
+     ]
+    ],
+    "B": [
+     [
+      4.9,
+      4.4
+     ],
+     [
+      5,
+      4.8
+     ]
+    ]
+   }
+  },
+  "Ida B. Wells / Lincoln": {
+   "measures": [],
+   "saved": {
+    "A": [
+     [
+      2,
+      3
+     ],
+     [
+      3.3,
+      3.5
+     ]
+    ],
+    "B": [
+     [
+      1.6,
+      2
+     ],
+     [
+      2.5,
+      2.7
+     ]
+    ]
+   }
+  },
+  "District": {
+   "measures": [
+    [
+     "SQ",
+     "schools_above",
+     26,
+     24
+    ],
+    [
+     "SQ",
+     "students_above",
+     48,
+     47
+    ],
+    [
+     "A",
+     "schools_above",
+     72,
+     69
+    ],
+    [
+     "A",
+     "students_above",
+     83,
+     81
+    ],
+    [
+     "B",
+     "schools_above",
+     60,
+     56
+    ],
+    [
+     "B",
+     "students_above",
+     76,
+     73
+    ]
+   ],
+   "saved": null
+  }
+ },
+ "names": {
+  "Abernethy": "Abernethy",
+  "Ainsworth": "Ainsworth",
+  "Alameda": "Alameda",
+  "Arleta": "Arleta",
+  "Astor": "Astor",
+  "Atkinson": "Atkinson",
+  "Beach": "Beach",
+  "Beaumont": "Beaumont",
+  "Beverly Cleary": "Beverly Cleary",
+  "Boise-Eliot/Humboldt": "Boise-Eliot",
+  "Bridger Creative Science": "Bridger Creative Science",
+  "Bridlemile": "Bridlemile",
+  "Buckman": "Buckman",
+  "Capitol Hill": "Capitol Hill",
+  "Chapman": "Chapman",
+  "Chief Joseph": "Chief Joseph",
+  "Clark": "Clark",
+  "Cleveland": "Cleveland",
+  "Creston": "Creston",
+  "César Chávez": "César Chávez",
+  "Duniway": "Duniway",
+  "Faubion": "Faubion",
+  "Forest Park": "Forest Park",
+  "Franklin": "Franklin",
+  "George": "George",
+  "Glencoe": "Glencoe",
+  "Grant": "Grant",
+  "Gray": "Gray",
+  "Grout": "Grout",
+  "Harriet Tubman": "Harriet Tubman",
+  "Harrison Park": "Harrison Park",
+  "Hayhurst": "Hayhurst",
+  "Hosford": "Hosford",
+  "Ida B Wells-Barnett": "Ida B. Wells-Barnett",
+  "Irvington": "Irvington",
+  "Jackson": "Jackson",
+  "James John": "James John",
+  "Jefferson": "Jefferson",
+  "Kellogg": "Kellogg",
+  "Kelly": "Kelly",
+  "Lane": "Brentwood (Lane)",
+  "Laurelhurst": "Laurelhurst",
+  "Lee": "Sunrise (Lee)",
+  "Lent": "Lent",
+  "Lewis": "Lewis",
+  "Lincoln": "Lincoln",
+  "Llewellyn": "Llewellyn",
+  "MLK Jr": "Dr. Martin Luther King Jr.",
+  "Maplewood": "Maplewood",
+  "Markham": "Markham",
+  "Marysville": "Marysville",
+  "McDaniel": "Leodis V. McDaniel",
+  "Mt Tabor": "Mt Tabor",
+  "Ockley Green": "Ockley Green",
+  "Odyssey": "Odyssey",
+  "Peninsula": "Peninsula",
+  "Richmond": "Richmond",
+  "Rieke": "Rieke",
+  "Rigler": "Rigler",
+  "Roosevelt": "Roosevelt",
+  "Rosa Parks": "Rosa Parks",
+  "Rose City Park": "Rose City Park",
+  "Roseway Heights": "Roseway Heights",
+  "Sabin": "Sabin",
+  "Scott": "Scott",
+  "Sellwood": "Sellwood",
+  "Sitton": "Sitton",
+  "Skyline": "Skyline",
+  "Stephenson": "Stephenson",
+  "Sunnyside Environmental": "Sunnyside Environmental",
+  "Vernon": "Vernon",
+  "Vestal": "Vestal",
+  "West Sylvan": "West Sylvan",
+  "Whitman": "Whitman",
+  "Winterhaven": "Winterhaven",
+  "Woodlawn": "Woodlawn",
+  "Woodmere": "Woodmere",
+  "Woodstock": "Woodstock"
+ }
+}
