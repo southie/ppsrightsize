@@ -1,4 +1,4 @@
-"""A "County population (PFA study)" switch beside "Modified enrollment model": rebuilds the page's enrollment projections
+"""A "District share of county population (PFA study)" switch beside "Modified enrollment model": rebuilds the page's enrollment projections
 on PSU's August 2026 Multnomah County single-year-of-age projections (prepared for Preschool for All; Census Vintage
 2025 base; source/demographics/psu-multnomah-ages-0-9.json), instead of the population behind PSU's May 2026 PPS
 forecast.
@@ -103,7 +103,7 @@ function applyAdjust0(on) {'''
 if 'applyPFA' not in html:
     rep("function applyAdjust(on) {", JS)
     rep("""id="adjtog"> Modified enrollment model</label>""",
-        """id="adjtog"> Modified enrollment model</label><label class="adjtog" id="pfatogl" title="Rebuilds enrollment on PSU's August 2026 Multnomah County population projections, prepared for Preschool for All (Census 2025 base: smaller 2021 and 2023 birth cohorts, continued out-migration of young children). Kindergarten = the county's projected 5-year-olds x PPS's share of the county's children x one capture rate that keeps PSU's long-run kindergarten level (about 2,700); the change in each class is carried up the grades and scales every school's enrollment by grade band, from 2026-27, in every scenario. Off: PSU's May 2026 PPS forecast. The enrollment uncertainty section stays on PSU's forecast."><input type="checkbox" id="pfatog"> County population (PFA study)</label>""")
+        """id="adjtog"> Modified enrollment model</label><label class="adjtog" id="pfatogl" title="Uses the PPS district's share of PSU's August 2026 Multnomah County population projections, prepared for Preschool for All. The study projects the whole county (Census 2025 base: smaller 2021 and 2023 birth cohorts, continued out-migration of young children); this page takes the part living in the PPS district: PPS's share of the county's children, 56.7% in 2020 easing to 53.9% by 2030 (2020 Census and PSU's PPS projections). Kindergarten = the county's projected 5-year-olds x that district share x one capture rate that keeps PSU's long-run kindergarten level (about 2,700); the change in each class is carried up the grades and scales every school's enrollment by grade band, from 2026-27, in every scenario. Off: PSU's May 2026 PPS forecast. The enrollment uncertainty section stays on PSU's forecast."><input type="checkbox" id="pfatog"> District share of county population (PFA study)</label>""")
     rep("""adjBox.onchange = () => { try { localStorage.setItem('rsAdj', adjBox.checked ? '1' : '0'); } catch (e) {} applyAdjust(adjBox.checked); if (CS || scen === 'C') buildCustom(); renderAll(); };""",
         """adjBox.onchange = () => { try { localStorage.setItem('rsAdj', adjBox.checked ? '1' : '0'); } catch (e) {} applyAdjust(adjBox.checked); if (CS || scen === 'C') buildCustom(); renderAll(); };
 const pfaBox = document.getElementById('pfatog');
@@ -116,7 +116,7 @@ if (pfaBox) { pfaBox.checked = pfaOn; pfaBox.onchange = () => { pfaOn = pfaBox.c
   if (q.has('pfa') && (q.get('pfa') === '1') !== pfaOn) { pfaOn = q.get('pfa') === '1'; applyAdjust(adjOn); const b = document.getElementById('pfatog'); if (b) b.checked = pfaOn; }""")
     # the uncertainty section says which basis it shows when the switch is on
     rep("Ranges are the middle 90% of the simulations (5th to 95th percentile).`;",
-        "Ranges are the middle 90% of the simulations (5th to 95th percentile).${pfaOn ? ' <b>County population (PFA study) is on:</b> the summary cards, district chart and ranges stay on the simulations around PSU\u2019s forecast; the school table and school charts are centered on this page\u2019s figures with the switch applied.' : ''}`;")
+        "Ranges are the middle 90% of the simulations (5th to 95th percentile).${pfaOn ? ' <b>District share of county population (PFA study) is on:</b> the summary cards, district chart and ranges stay on the simulations around PSU\u2019s forecast; the school table and school charts are centered on this page\u2019s figures with the switch applied.' : ''}`;")
     # uncertainty-section caches depend on the switch too
     html = html.replace("adjOn].join('|')", "adjOn, pfaOn].join('|')")
 open(PAGE, 'w', encoding='utf-8', newline='\n').write(html)
