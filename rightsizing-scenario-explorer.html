@@ -211,6 +211,8 @@ body.rpmax-open { overflow: hidden; }
 .rpplot line.cap { stroke: var(--down); stroke-dasharray: 6 4; } .rpplot text.cap { fill: var(--down); }
 .rpplot line.thr { stroke: var(--text-secondary); stroke-dasharray: 2 4; } .rpplot text.thr { fill: var(--text-secondary); }
 .rpplot .impl { stroke: var(--axis); stroke-dasharray: 3 3; }
+.rpplot path.rng { stroke: none; opacity: .16; } .rpplot path.rng.lsq { fill: var(--none); } .rpplot path.rng.la { fill: var(--change); } .rpplot path.rng.lb { fill: #0f9b78; } .rpplot path.rng.lc { fill: #b0369a; }
+.rplegend .k.rng { height: 9px; border: none; opacity: .3; } .rplegend .k.rng.lsq { background: var(--none); } .rplegend .k.rng.la { background: var(--change); } .rplegend .k.rng.lb { background: #0f9b78; } .rplegend .k.rng.lc { background: #b0369a; }
 .rplegend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 11.5px; color: var(--text-secondary); margin-top: 4px; }
 .rplegend .k { display: inline-block; width: 16px; height: 0; border-top: 2.5px solid; vertical-align: 3px; margin-right: 5px; }
 .rplegend .k.lsq { border-color: var(--none); } .rplegend .k.la { border-color: var(--change); } .rplegend .k.lb { border-color: #0f9b78; } .rplegend .k.lc { border-color: #b0369a; } .rplegend .k.cap { border-top-style: dashed; border-color: var(--down); }
@@ -460,6 +462,10 @@ ul.notes { color: var(--text-secondary); font-size: 13px; padding-left: 20px; }
     <div class="rplegend" id="roomlegend"></div>
     <h3 class="cshead">What would fill the buildings</h3>
     <div id="roomscale"></div>
+    <h3 class="cshead">Steady-state enrollment by school</h3>
+    <p class="sub" id="roomsssub"></p>
+    <div class="controls tabletools"><button id="roomss-shut">Collapse all</button></div>
+    <div class="gfperwrap" id="roomss"></div>
     <h3 class="cshead">By region</h3>
     <div class="controls tabletools"><button id="room-expand">Expand all regions</button></div>
     <div class="tablewrap" id="roomtable"></div>
@@ -3475,12 +3481,52 @@ const RP_LINE = { SQ: 'lsq', A: 'la', B: 'lb', C: 'lc' };
 // marker for figures the modified enrollment model (Census boundary changes, K-8 grade mix) changes in a scenario
 const rpMark = (k, s) => s === 'SQ' || typeof adjMark !== 'function' ? '' : adjMark(k, s);
 const rpMarkTxt = (k, s) => { const m = rpMark(k, s).match(/title="([^"]*)"/); return m ? m[1].replace(/&[a-z#0-9]+;/g, ' ') : ''; };
+// PSU's low and high projections for a school: its projection by grade band x PSU's district low/medium, high/medium
+// ratio for that band and fall (scripts/patch_rp_psu_range.py)
+function rpPsuRange(k, s) {
+  const P = D.mc?.psu, v = D.series[s]?.[k]; if (!P || !v) return null;
+  const B = { k5: 'K-5', m68: '6-8', h912: '9-12' };
+  return D.years.map((yr, i) => {
+    const j = P.falls.indexOf(2025 + i); if (v[i] == null || j < 0) return null;
+    const sp = roomSplit(k, s, i, v[i]), r = (sc2, b) => P[sc2][B[b]][j] / P.medium[B[b]][j];
+    return [Object.keys(sp).reduce((a, b) => a + sp[b] * r('low', b), 0), Object.keys(sp).reduce((a, b) => a + sp[b] * r('high', b), 0)];
+  });
+}
+// what would sustain the school: incoming class, 5-year-olds in its area and fertility rate (scripts/patch_rp_sustain_table.py)
+function rpSustain(k, sc) {
+  if (typeof roomFill !== 'function' || !D.pfa || !D.mc?.params?.capture) return '';
+  const yi = D.years.length - 1, yr = D.years[yi], f = roomFill(sc, yi)[k], dist = roomDist(yi); if (!f || !f.th || !dist) return '';
+  const M = roomMult(), sp = roomSplit(k, sc, yi, f.v), idx = { k5: 1, m68: 2, h912: 3 }, Kproj = dist[0];
+  // the school's entering band: K-5 for elementary and K-8, else its only band
+  const eb = sp.k5 ? 'k5' : sp.m68 ? 'm68' : 'h912', entry = { k5: 0, m68: 6, h912: 9 }[eb], gname = { k5: 'Kindergarten', m68: '6th grade', h912: '9th grade' }[eb];
+  const share = sp[eb] / dist[idx[eb]];                      // the school's share of the district's students in that band
+  const C = D.mc.params.capture, capNow = D.pfa.capture, capHigh = capNow * C.tri.b / C.fall_2025;
+  const n0 = v => Math.round(v).toLocaleString(), tfr = pop5 => (pop5 / share * capNow / (2919 / 4121) / 3650).toFixed(2);
+  // a district kindergarten K -> the school's incoming class and its area's 5-year-olds at a capture rate
+  const inc = K => K * share * M.ch[entry], pop5 = (K, cap) => K * share / cap;
+  const lab = sc === 'SQ' ? 'Status Quo' : LABEL[sc], R = rpPsuRange(k, sc)?.[yi];
+  const rpSustainRows = [[`Projected, ${yr}`, f.v, Kproj], [`Size threshold`, f.th, f.Kt], [`2021 capacity`, f.fc, f.K]];
+  const row = ([l, n, K]) => `<tr><td style="text-align:left">${l}</td><td style="text-align:right">${n0(n)}</td><td style="text-align:right"><b>${n0(inc(K))}</b></td>` +
+    `<td style="text-align:right;border-left:2px solid var(--line)">${n0(pop5(K, capNow))}</td><td style="text-align:right">${tfr(pop5(K, capNow))}</td>` +
+    `<td style="text-align:right;border-left:2px solid var(--line);background:var(--surface-2)">${n0(pop5(K, capHigh))}</td><td style="text-align:right;background:var(--surface-2)">${tfr(pop5(K, capHigh))}</td></tr>`;
+  return `<h4>What would sustain this school (${esc(lab)}, ${yr})</h4><div class="tablewrap"><table style="min-width:0"><thead><tr><th style="text-align:left" rowspan="2"></th><th rowspan="2">Students</th><th rowspan="2">${gname} class needed</th>` +
+    `<th colspan="2" style="text-align:center;border-left:2px solid var(--line);border-bottom:1px solid var(--line)">At today's ${Math.round(100 * capNow)}% capture</th><th colspan="2" style="text-align:center;border-left:2px solid var(--line);background:var(--surface-2);border-bottom:1px solid var(--line)">At a high ${Math.round(100 * capHigh)}% capture</th></tr>` +
+    `<tr><th style="border-left:2px solid var(--line);font-weight:400">5-year-olds in its area</th><th style="font-weight:400">Fertility rate</th><th style="border-left:2px solid var(--line);background:var(--surface-2);font-weight:400">5-year-olds in its area</th><th style="font-weight:400;background:var(--surface-2)">Fertility rate</th></tr></thead><tbody>` +
+    rpSustainRows.map(row).join('') + `</tbody></table></div>` +
+    `<p class="muted rpnote">${f.v >= f.th ? (f.Kt <= Kproj ? 'At or above its size threshold at the projection.' : `Above its size threshold in ${yr}, but below it once today's smaller classes reach every grade (the threshold row is what keeps it there).`) : 'Below its size threshold at the projection.'}` +
+    `${R ? ` PSU's high projection: about ${n0(R[1])} students in ${yr}${R[1] >= f.th ? ', at or above the threshold' : ', still below the threshold'}.` : ''} ` +
+    `Each row at steady state: every grade at the size that ${gname.toLowerCase()} class grows into (PSU's grade progression ratios), at the school's ${yr} share of the district's ${eb === 'k5' ? 'K-5' : eb === 'm68' ? '6-8' : '9-12'} students; boundary or program changes would change that share. ` +
+    `${eb === 'k5' ? '' : `For a ${eb === 'm68' ? 'middle' : 'high'} school, the 5-year-olds are those who grow into the incoming class. `}` +
+    `Capture: kindergartners as a share of the 5-year-olds living in PPS (${Math.round(100 * capNow)}% today; ${Math.round(100 * capHigh)}% matches the pre-COVID high, ${Math.round(100 * C.tri.b)}% of births five years earlier vs ${Math.round(100 * C.fall_2025)}% in fall 2025). ` +
+    `Fertility rate (children per woman): births behind those 5-year-olds if the area's share of the district holds, scaled from about 1.0 in 2024 (PSU, Multnomah County) for about 3,650 births to PPS-area residents in 2025; for comparison the U.S. is about 1.6 and replacement 2.1. A higher capture rate means fewer births are needed for the same class.</p>`;
+}
 function rpPlot(k, sc) {
   const W = 620, H = 230, M = { l: 44, r: 12, t: 12, b: 26 }, Y = D.years;
   const cols = rpCols(sc), ser = Object.fromEntries(cols.map(s => [s, (D.series[s] || {})[k] || []]));
   const sq = ser.SQ, fc = byKey[k]?.fc;
   const t1 = (D.types[sc] || {})[k] || D.types.SQ[k], thr = D.thresholds[t1];
-  const vals = [...cols.flatMap(s => ser[s]), fc, thr].filter(v => v != null);
+  const rgS = cols.includes(sc) && (D.series[sc]?.[k] || []).slice(Y.indexOf(D.impl_year)).some(v => v != null) ? sc : 'SQ', RG = rpPsuRange(k, rgS);
+  const vals = [...cols.flatMap(s => ser[s]), fc, thr, ...(RG || []).flatMap(r => r ? r : [])].filter(v => v != null);
   const ymax = Math.max(...vals) * 1.12 || 1;
   const x = i => M.l + (W - M.l - M.r) * i / (Y.length - 1), y = v => M.t + (H - M.t - M.b) * (1 - v / ymax);
   const line = (s, cls) => { let d = ''; s.forEach((v, i) => { if (v == null) return; d += (d && s[i - 1] != null ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(v).toFixed(1); }); return d ? `<path class="${cls}" d="${d}"/>` : ''; };
@@ -3491,16 +3537,19 @@ function rpPlot(k, sc) {
   const hline = (v, cls, lab) => v == null ? '' : `<line class="${cls}" x1="${M.l}" x2="${W - M.r}" y1="${y(v)}" y2="${y(v)}"/><text class="lab ${cls}" x="${W - M.r - 4}" y="${y(v) - 4}" text-anchor="end">${lab}</text>`;
   // the scenario being viewed is drawn last and thickest; Status Quo's line is shared until changes take effect
   const order = cols.filter(s => s !== sc).concat(cols.includes(sc) ? [sc] : []);
+  const rgPts = RG ? RG.map((r, i) => r && (rgS === 'SQ' || i >= imp - 1) ? [i, r] : null).filter(Boolean) : [];
+  const rng = rgPts.length > 1 ? `<path class="rng ${RP_LINE[rgS]}" d="M${rgPts.map(([i, r]) => x(i).toFixed(1) + ',' + y(r[1]).toFixed(1)).join('L')}L${rgPts.slice().reverse().map(([i, r]) => x(i).toFixed(1) + ',' + y(r[0]).toFixed(1)).join('L')}Z"><title>PSU low to high, ${esc(LABEL[rgS])}</title></path>` : '';
   const dots = s => ser[s].map((v, i) => v == null || (s !== 'SQ' && i < imp) ? '' :
-    `<circle class="d ${RP_LINE[s]}${s === sc ? ' cur' : ''}" cx="${x(i)}" cy="${y(v)}" r="${s === sc ? 3 : 2.2}"><title>${esc(LABEL[s])}, ${Y[i]}: ${Math.round(v)}` +
+    `<circle class="d ${RP_LINE[s]}${s === sc ? ' cur' : ''}" cx="${x(i)}" cy="${y(v)}" r="${s === sc ? 3 : 2.2}"><title>${esc(LABEL[s])}, ${Y[i]}: ${Math.round(v)}${s === rgS && RG?.[i] ? ` (PSU low ${Math.round(RG[i][0])}, high ${Math.round(RG[i][1])})` : ''}` +
     `${i >= imp && rpMarkTxt(k, s) ? ' ◆ modified enrollment model: ' + esc(rpMarkTxt(k, s)) : ''}</title></circle>`).join('');
   return `<svg class="rpplot" viewBox="0 0 ${W} ${H}" role="img" aria-label="Projected enrollment and capacity">${ticks.join('')}${xl}` +
-    `<line class="impl" x1="${x(imp)}" x2="${x(imp)}" y1="${M.t}" y2="${H - M.b}"/>` +
+    `<line class="impl" x1="${x(imp)}" x2="${x(imp)}" y1="${M.t}" y2="${H - M.b}"/>` + rng +
     hline(fc, 'cap', `2021 capacity ${fc ? fc.toLocaleString() : ''}`) + hline(thr, 'thr', `size threshold ${thr}`) +
     order.map(s => line(s === 'SQ' ? ser[s] : ser[s].map((v, i) => i < imp - 1 ? null : v), RP_LINE[s] + (s === sc ? ' cur' : ''))).join('') +
     order.map(dots).join('') + '</svg>' +
     `<div class="rplegend">${cols.map(s => `<span${s === sc ? ' class="cur"' : ''}><i class="k ${RP_LINE[s]}"></i>${esc(LABEL[s])}${rpMark(k, s)}</span>`).join('')}` +
-    `<span><i class="k cap"></i>2021 functional capacity</span><span><i class="k thr"></i>size threshold</span><span><i class="k impl"></i>changes take effect (${D.impl_year})</span></div>` +
+    `${rng ? `<span><i class="k rng ${RP_LINE[rgS]}"></i>PSU low to high, ${esc(LABEL[rgS])}</span>` : ''}<span><i class="k cap"></i>2021 functional capacity</span><span><i class="k thr"></i>size threshold</span><span><i class="k impl"></i>changes take effect (${D.impl_year})</span></div>` +
+    (rng ? `<p class="muted rpnote">Shaded: PSU's low and high projections for ${esc(LABEL[rgS])}${RG?.[Y.length - 1] ? ` (${Y[Y.length - 1]}: ${Math.round(RG[Y.length - 1][0])} to ${Math.round(RG[Y.length - 1][1])})` : ''}. PSU publishes its low and high forecasts for the district by grade band, not by school; each year this school's projection in each band is scaled by the district's low/medium and high/medium ratio for that band${pfaOn ? ', applied to this page\'s projection (district share of county population, PFA study)' : ''}.</p>` : '') + rpSustain(k, sc) +
     (cols.some(s => rpMark(k, s)) ? `<p class="muted rpnote">&#9670; marks a scenario whose figures for this school include the modified enrollment model (each K-8's own grade mix and Census estimates of boundary changes PPS's enrollment figures do not move); hover it for the moves. ${esc(ADJ_OFF)}</p>` : '');
 }
 
@@ -5324,7 +5373,7 @@ function renderMCMethod() {
   const P = D.mc.params.capture, S = D.mc.bt_summary, pre = D.mc.bt_psu_pre || {}, post = D.mc.bt_psu_post || {};
   const row = (per, h) => S[`${per}|K-12|${h}`];
   host.innerHTML = `<p><b>District model.</b> Enrollment by grade from actual fall 2025. Kindergarten = PSU's medium kindergarten forecast scaled by the simulated capture rate relative to PSU's (capture measured against births to district residents five years earlier: ${P.pre_covid_mean.toFixed(3)} on average before COVID, ${P.post_covid_mean.toFixed(3)} since, ${P.fall_2025.toFixed(3)} in fall 2025; PSU's forecast implies about ${P.psu_long_run.toFixed(3)}). Each simulation draws a long-run capture level (triangular, ${P.tri.a.toFixed(3)} to ${P.tri.b.toFixed(3)}, most likely ${P.tri.m.toFixed(3)}), moves toward it at PSU's pace, and adds year-to-year noise (${(100 * P.annual_sd).toFixed(1)}%). Grades 1-12 use PSU's grade progression ratios plus a lasting offset per grade and annual noise, sized from fall 2017-2025 with the COVID years removed. Births are taken as known (they are, for kindergarten classes through fall 2030).</p>` +
-    `<p><b>Schools.</b> Each school's projected enrollment on this page (Status Quo, A, B) is scaled by its grade band's simulated change; students PSU expects from new affordable housing (${D.mc.params.housing.join(', ')} students in ${D.mc.out_years.join(', ')}) are held fixed. The option "plus each school's own forecast error" adds PSU's post-COVID typical school-level miss for the forecast horizon (about 4% a year ahead to 12% four years ahead), keeping district totals. Staffing, General Fund estimates and threshold counts are this page's own formulas.</p>` +
+    `<p><b>Schools.</b> Each school's projected enrollment on this page (Status Quo, A, B) is scaled by its grade band's simulated change; students PSU expects from new affordable housing (${D.mc.params.housing.join(', ')} students in ${D.mc.out_years.join(', ')}) are held fixed. <span class="housing-redistributed">These housing students are moved within the district, not added to it: PSU adds them to the schools serving each development, then reconciles every school to its district total (from births, deaths, migration, kindergarten capture and grade progression, with no housing input) by lowering other schools' capture rates and grade progression ratios. PSU's school forecasts sum exactly to its district total every year through 2035-36; which schools give the students up is not published (PSU enrollment forecast 2026-27, sections 4.1-4.2).</span> The option "plus each school's own forecast error" adds PSU's post-COVID typical school-level miss for the forecast horizon (about 4% a year ahead to 12% four years ahead), keeping district totals. Staffing, General Fund estimates and threshold counts are this page's own formulas.</p>` +
     `<p><b>Backtest.</b> Refitted from each fall 2009-2024 with only the data available then, the model's K-12 forecasts missed by ${[1, 2, 3, 4, 5].map(h => row('pre-COVID', h)).filter(Boolean).map(r => r.mape.toFixed(1) + '%').join(', ')} one to five years ahead before COVID (PSU's own forecasts: ${[1, 2, 3, 4, 5].map(h => pre[h] ?? pre[String(h)]).filter(v => v != null).map(v => v.toFixed(1) + '%').join(', ')}) and ${[1, 2, 3].map(h => row('post-COVID', h)).filter(Boolean).map(r => r.mape.toFixed(1) + '%').join(', ')} since (PSU: ${[1, 2, 3].map(h => post[h] ?? post[String(h)]).filter(Boolean).map(v => v[1].toFixed(1) + '%').join(', ')}); its 90% ranges contained the actual K-12 enrollment in ${[1, 2, 3, 4, 5].map(h => row('pre-COVID', h)).filter(Boolean).map(r => Math.round(r.in90) + '%').join(', ')} of cases. Kindergarten uncertainty was doubled (x${D.mc.bt_cap_scale}) so that its ranges covered past kindergarten outcomes. Before COVID the model ran 2-5% low on kindergarten; since COVID it has run 3-4% high, as PSU's assumed recovery in capture has not yet happened.</p>` +
     `<p><b>Limits.</b> Births after 2025 and migration are not varied separately (migration is reflected in the historical swings of capture and progression, which are drawn independently, so broad moves across grades are understated). A pandemic-type shock is outside the model. Custom scenarios are not simulated. Probabilities describe this model's assumptions, not certainties. Simulated ${D.mc.generated}; scripts/montecarlo_enrollment.js, scripts/montecarlo_backtest.py.</p>`;
 }
@@ -5393,7 +5442,7 @@ function roomMult() {   // students per kindergartner at steady state, from PSU'
   const gpr = g => { let s = 0, n = 0; for (let j = i0; j < F.years.length; j++) { s += F.grades[GR[g]][j] / F.grades[GR[g - 1]][j - 1]; n++; } return s / n; };
   let c = 1; const ch = [1]; for (let g = 1; g <= 12; g++) { c *= gpr(g); ch.push(c); }
   const sum = (a, b) => ch.slice(a, b + 1).reduce((x, y) => x + y, 0);
-  return roomMultCache = { k5: sum(0, 5), m68: sum(6, 8), h912: sum(9, 12) };
+  return roomMultCache = { k5: sum(0, 5), m68: sum(6, 8), h912: sum(9, 12), ch };
 }
 const roomDist = yi => {   // district band totals (all PPS) behind the page's projection in that year: [K, K-5, 6-8, 9-12]
   const f = 2025 + yi;
@@ -5418,9 +5467,63 @@ function roomFill(s, yi) {
   for (const k of Object.keys(D.region_of)) {
     const v = D.series[s]?.[k]?.[yi], fc = byKey[k]?.fc; if (v == null || !fc) continue;
     const sp = roomSplit(k, s, yi, 1), per = Object.entries(sp).filter(([, w]) => w).reduce((a, [b, w]) => a + v * w * M[b] / dist[idx[b]], 0);
-    if (per > 0) out[k] = { K: fc / per, v, fc };
+    const t = (yi < D.years.indexOf(D.impl_year) ? D.types.SQ[k] : D.types[s]?.[k]) || D.types.SQ[k], th = D.thresholds[t] || 0;   // patch_room_threshold
+    if (per > 0) out[k] = { K: fc / per, v, fc, th, Kt: th / per, per, t };
   }
   return out;
+}
+// steady-state enrollment by school, grouped by type (scripts/patch_room_ss_chart.py)
+const roomSSShut = new Set();
+function renderRoomSS(sc, yi) {
+  const host = document.getElementById('roomss'); if (!host) return;
+  const FILL = roomFill(sc, yi), lab = sc === 'SQ' ? 'Status Quo' : LABEL[sc], n0 = v => Math.round(v).toLocaleString();
+  const Klr = D.mc?.medium_bands ? D.mc.medium_bands.slice(6, 11).reduce((a, r) => a + r[0], 0) / 5 : 2700;
+  const TYPES = [['ES', 'K-5'], ['K8', 'K-8'], ['MS', 'Middle (6-8)'], ['HS', 'High (9-12)']];
+  const groups = TYPES.map(([t, gl]) => {
+    const g = Object.entries(FILL).filter(([, f]) => f.t === t).map(([k, f]) => ({ k, ss: Klr * f.per, v: f.v, fc: f.fc, th: f.th })).sort((a, b) => b.ss - a.ss);
+    return g.length ? { t, gl, g, th: D.thresholds[t] } : null;
+  }).filter(Boolean);
+  const W = 900, Lm = 210, R = 60, BH = 17, GH = 40, GAP = 14, T = 8, AX = 30;
+  const xhi = Math.ceil(Math.max(...groups.flatMap(G => G.g.flatMap(r => [r.ss, r.v, r.fc]))) * 1.04 / 250) * 250, step = xhi > 2000 ? 250 : 100;
+  const x = v => Lm + (W - Lm - R) * v / xhi, nRows = G => roomSSShut.has(G.t) ? 0 : G.g.length;
+  const H = T + groups.reduce((a, G) => a + GH + nRows(G) * BH + GAP, 0) + AX, plotBot = H - AX;
+  let s = '', y0 = T;
+  for (let v = 0; v <= xhi + 1e-9; v += step) s += `<line x1="${x(v)}" x2="${x(v)}" y1="${T}" y2="${plotBot}" stroke="var(--line)"/>` + (v % (step * 2) === 0 ? `<text x="${x(v)}" y="${plotBot + 14}" text-anchor="middle" font-size="10.5" fill="var(--text-muted)">${v.toLocaleString()}</text>` : '');
+  s += `<text x="${(Lm + W - R) / 2}" y="${plotBot + 27}" text-anchor="middle" font-size="10.5" fill="var(--text-muted)">Students at steady state (about ${n0(Math.round(Klr / 10) * 10)} kindergartners a year district-wide)</text>`;
+  for (const G of groups) {
+    const shut = roomSSShut.has(G.t), top = y0 + GH, bot = top + nRows(G) * BH, below = G.g.filter(r => r.ss < r.th).length;
+    const sss = G.g.reduce((a, r) => a + r.ss, 0), cap = G.g.reduce((a, r) => a + r.fc, 0), avgSS = sss / G.g.length, avgV = G.g.reduce((a, r) => a + r.v, 0) / G.g.length;   // average school size
+    // first quartile (25th percentile, linear interpolation) of school sizes: a quarter of the schools are smaller
+    const q1 = arr => { const a = arr.slice().sort((p, q) => p - q), i = 0.25 * (a.length - 1), lo = Math.floor(i); return a[lo] + (a[Math.min(lo + 1, a.length - 1)] - a[lo]) * (i - lo); };
+    const q1SS = q1(G.g.map(r => r.ss)), q1V = q1(G.g.map(r => r.v));
+    s += `<g data-rssg="${G.t}" role="button" tabindex="0" aria-expanded="${!shut}" style="cursor:pointer"><title>${shut ? 'Show' : 'Hide'} the ${G.gl} schools</title>` +
+      `<rect x="0" y="${y0 + 2}" width="${W}" height="${GH - 6}" fill="var(--surface-2, rgba(0,0,0,.035))"/>` +
+      `<text x="8" y="${y0 + 18}" font-size="13" font-weight="700" fill="var(--text-primary)">${shut ? '&#9656;' : '&#9662;'} ${G.gl} (${G.g.length} schools)${shut ? ' <tspan font-size="10.5" font-weight="400" fill="var(--text-muted)">click to show</tspan>' : ''}<tspan font-size="11" font-weight="400" fill="var(--text-muted)">  &#183;  </tspan><tspan font-size="11.5" fill="#b45309">average school ${n0(avgSS)} at steady state</tspan><tspan font-size="11" font-weight="400" fill="var(--text-muted)"> (${n0(avgV)} in ${esc(roomYear)})  &#183;  </tspan><tspan font-size="11.5" fill="#0e7490">1st quartile ${n0(q1SS)}</tspan><tspan font-size="11" font-weight="400" fill="var(--text-muted)"> (${n0(q1V)})  &#183;  threshold ${G.th}</tspan></text>` +
+      `<text x="8" y="${y0 + 32}" font-size="10.5"><tspan fill="var(--down)" font-weight="700">${below} below</tspan><tspan fill="var(--text-muted)"> the ${G.th}-student threshold at steady state &middot; ${n0(sss)} students in ${n0(cap)} seats (${Math.round(100 * sss / cap)}% full) &middot; ${G.g.filter(r => r.v < r.th).length} below it in ${esc(roomYear)}</tspan></text></g>`;
+    if (shut) { y0 = bot + GAP; continue; }
+    G.g.forEach((r, j) => {
+      const yy = top + j * BH, nm = short(byKey[r.k]?.name || r.k), ok = r.ss >= r.th, col = ok ? 'var(--up)' : 'var(--down)', bh = BH - 5;
+      s += `<text x="${Lm - 8}" y="${yy + BH / 2 + 3}" text-anchor="end" font-size="11" fill="var(--text-secondary)">${esc(nm)}</text>` +
+        `<rect x="${x(0)}" y="${yy + 2}" width="${Math.max(0.5, x(r.ss) - x(0))}" height="${bh}" fill="${col}" opacity=".78"><title>${esc(`${nm}: about ${n0(r.ss)} students at steady state (${lab}); ${n0(r.v)} projected in ${roomYear}; size threshold ${r.th}${ok ? ` (${n0(r.ss - r.th)} above)` : ` (${n0(r.th - r.ss)} short)`}; 2021 capacity ${n0(r.fc)} (${Math.round(100 * r.ss / r.fc)}% full at steady state)`)}</title></rect>` +
+        `<line x1="${x(r.v)}" x2="${x(r.v)}" y1="${yy + 1}" y2="${yy + bh + 3}" stroke="var(--text-primary)" stroke-width="2"><title>${esc(`${nm}: ${n0(r.v)} projected in ${roomYear}`)}</title></line>` +
+        `<path d="M${x(r.fc) - 3},${yy + 2}H${x(r.fc)}V${yy + bh + 2}H${x(r.fc) - 3}" fill="none" stroke="var(--text-muted)" stroke-width="1.4"><title>${esc(`${nm}: 2021 capacity ${n0(r.fc)}`)}</title></path>` +
+        `<text x="${Math.max(x(r.ss), x(r.fc), x(r.v)) + 5}" y="${yy + 2 + bh / 2 + 3.5}" font-size="9.5" fill="var(--text-muted)">${n0(r.ss)}</text>`;
+    });
+    s += `<line x1="${x(G.th)}" x2="${x(G.th)}" y1="${top - 2}" y2="${bot + 2}" stroke="#6d28d9" stroke-width="2.2" stroke-dasharray="6 3"><title>${G.gl} size threshold: ${G.th} students</title></line>` +
+      `<line x1="${x(avgSS)}" x2="${x(avgSS)}" y1="${top - 2}" y2="${bot + 2}" stroke="#b45309" stroke-width="2.2"><title>${G.gl} average school at steady state: ${n0(avgSS)} students (${n0(avgV)} projected in ${roomYear}; ${G.g.length} schools)</title></line>` +
+      `<line x1="${x(q1SS)}" x2="${x(q1SS)}" y1="${top - 2}" y2="${bot + 2}" stroke="#0e7490" stroke-width="2" stroke-dasharray="3 2"><title>${G.gl} 1st quartile at steady state: ${n0(q1SS)} students; a quarter of the ${G.g.length} schools are smaller (${n0(q1V)} projected in ${roomYear})</title></line>`;
+    y0 = bot + GAP;
+  }
+  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;height:auto" role="img" aria-label="Steady-state enrollment by school, grouped by type">${s}</svg>` +
+    `<div class="rplegend" style="margin-top:2px"><span><i class="k" style="height:9px;width:14px;background:var(--up);opacity:.78;border:none"></i>steady state, at or above threshold</span><span><i class="k" style="height:9px;width:14px;background:var(--down);opacity:.78;border:none"></i>below threshold</span>` +
+    `<span><i class="k" style="border-top:2.2px dashed #6d28d9;width:18px"></i>size threshold</span><span><i class="k" style="border-top:2.2px solid #b45309;width:18px"></i>average school, steady state</span><span><i class="k" style="border-top:2px dashed #0e7490;width:18px"></i>1st quartile (a quarter of schools smaller)</span><span><i class="k" style="border-left:2px solid var(--text-primary);height:10px;width:0;border-top:none"></i> projected, ${esc(roomYear)}</span><span><i class="k" style="border:1.4px solid var(--text-muted);border-left:none;height:9px;width:4px"></i> 2021 capacity</span></div>`;
+  const tog = t => { roomSSShut.has(t) ? roomSSShut.delete(t) : roomSSShut.add(t); renderRoomSS(sc, yi); };
+  host.querySelectorAll('[data-rssg]').forEach(g => { g.onclick = () => tog(g.dataset.rssg); g.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(g.dataset.rssg); } }; });
+  const sb = document.getElementById('roomss-shut');
+  if (sb) { sb.textContent = groups.every(G => roomSSShut.has(G.t)) ? 'Expand all' : 'Collapse all'; sb.onclick = () => { const all = groups.every(G => roomSSShut.has(G.t)); groups.forEach(G => all ? roomSSShut.delete(G.t) : roomSSShut.add(G.t)); renderRoomSS(sc, yi); }; }
+  const nAll = groups.reduce((a, G) => a + G.g.length, 0), nBelow = groups.reduce((a, G) => a + G.g.filter(r => r.ss < r.th).length, 0);
+  const sub = document.getElementById('roomsssub');
+  if (sub) sub.innerHTML = `Each open school's enrollment once every grade is grown from the long-run kindergarten class (about ${n0(Math.round(Klr / 10) * 10)} a year district-wide, the 2031-35 average of this page's projection), at the school's ${esc(roomYear)} share of the district's students in each grade band (PSU's grade progression ratios), ${esc(lab)}. <b>${nBelow} of ${nAll}</b> schools would be below their size threshold. Schools run from largest to smallest within each type; click a heading to collapse it.`;
 }
 function renderRoom() {
   const host = document.getElementById('roomkpis'); if (!host) return;
@@ -5486,7 +5589,9 @@ function renderRoom() {
   // what would fill the buildings: a kindergarten scale with capture and births equivalents
   const P = D.mc?.psu, ih = P ? P.falls.indexOf(2025 + yi) : -1, Khigh = ih >= 0 ? P.high.K[ih] : null, Kpeak = 4277;
   const FILL = roomFill(sc, yi), FK = Object.entries(FILL).sort((a, b) => a[1].K - b[1].K), overNow = FK.filter(([, f]) => Kproj && f.K <= Kproj), firstUp = FK.find(([, f]) => !Kproj || f.K > Kproj);
-  const marks = [...(firstUp ? [[firstUp[1].K, `First school full (${short(byKey[firstUp[0]]?.name || firstUp[0])})`, '#b45309']] : []), [Kthr, 'Schools average their size threshold', 'var(--down)'], [Kproj, 'Projected', 'var(--change)'], [Khigh, 'PSU high scenario', 'var(--text-secondary)'], [Kmax, 'Buildings full', 'var(--text-primary)'], [Kpeak, 'Actual peak (2012)', 'var(--text-muted)']].filter(m => m[0]);
+  const KT = Object.values(FILL).map(f => f.Kt).sort((a, b) => a - b), roomThrQ = p => KT.length ? KT[Math.max(0, Math.ceil(p * KT.length) - 1)] : null;
+  const thrMarks = [[0.5, 'Half of schools at threshold'], [0.9, '9 in 10 schools at threshold']].map(([p, l]) => [roomThrQ(p), l, '#7c3aed']).filter(m => m[0] && (!Kproj || m[0] > Kproj));
+  const marks = [...thrMarks, ...(firstUp ? [[firstUp[1].K, `First school full (${short(byKey[firstUp[0]]?.name || firstUp[0])})`, '#b45309']] : []), [Kthr, 'Schools average their size threshold', 'var(--down)'], [Kproj, 'Projected', 'var(--change)'], [Khigh, 'PSU high scenario', 'var(--text-secondary)'], [Kmax, 'Buildings full', 'var(--text-primary)'], [Kpeak, 'Actual peak (2012)', 'var(--text-muted)']].filter(m => m[0]);
   const lo = 2000, hi = Math.max(5000, ...marks.map(m => m[0])) * 1.04, W = 760, AX = 104, LM = 92, RM = 24, X = v => LM + (W - LM - RM) * (v - lo) / (hi - lo);   // room-scale-labels
   let g = `<line x1="${X(lo)}" x2="${X(hi)}" y1="${AX}" y2="${AX}" stroke="var(--text-secondary)" stroke-width="1.5"/>`;
   for (let v = 2000; v <= hi; v += 500) g += `<line x1="${X(v)}" x2="${X(v)}" y1="${AX - 4}" y2="${AX + 4}" stroke="var(--text-secondary)"/><text x="${X(v)}" y="${AX + 16}" text-anchor="middle" font-size="10" fill="var(--text-muted)">${v.toLocaleString()}</text>` +
@@ -5526,22 +5631,53 @@ function renderRoom() {
     (overNow.length ? `${overNow.map(([k, f]) => `${esc(short(byKey[k]?.name || k))} (${n0(f.v)} of ${n0(f.fc)} seats)`).join(', ')} ${overNow.length === 1 ? 'is' : 'are'} over capacity at the projection already. ` : '') +
     `<ol style="margin:4px 0 4px 18px;padding:0">${FK.filter(([, f]) => !Kproj || f.K > Kproj).slice(0, 6).map(([k, f]) => `<li><b>${esc(short(byKey[k]?.name || k))}</b> <span class="muted">${TYPE_LABEL[(D.types[sc] || {})[k] || D.types.SQ[k]] || ''}, ${n0(f.v)} of ${n0(f.fc)} seats (${pc(f.v, f.fc)})</span>: full at ${cond(f)}</li>`).join('')}</ol>` +
     `Schools at or over capacity as kindergarten grows: ${[3000, 3300, 3600, 4000, 4500].map(th => `${n0(th)}: ${nAt(th)}`).join(' &middot; ')} (of ${FK.length}). A school's own growth is modeled by its grade band; boundary changes could spread students to buildings with room.</div>`;
+  // when schools would reach their size threshold
+  // as a table: district kindergarten, and the 5-year-olds and fertility rate behind it at a low and a high capture (scripts/patch_room_threshold_table.py)
+  const roomThrTable = () => {
+    const C = D.mc?.params?.capture, c0 = D.pfa?.capture; if (!C || !c0) return '';
+    const caps = [['Low', c0 * C.post_covid_mean / C.fall_2025, 'the post-COVID average'], ['High', c0 * C.tri.b / C.fall_2025, 'the pre-COVID high']];
+    const tf = pop5 => (pop5 * c0 / capNow / 3650).toFixed(2), G1 = 'border-left:2px solid var(--line)', G2 = G1 + ';background:var(--surface-2)', bg = ';background:var(--surface-2)';
+    // elementary (K-5) schools on their own: the smallest schools, with the highest cost per student
+    const tyOf = k => (yi < D.years.indexOf(D.impl_year) ? D.types.SQ[k] : D.types[sc]?.[k]) || D.types.SQ[k];
+    const KE = Object.entries(FILL).filter(([k]) => tyOf(k) === 'ES').map(([, f]) => f.Kt).sort((a, b) => a - b), qE = p => KE.length ? KE[Math.max(0, Math.ceil(p * KE.length) - 1)] : null;
+    const rowsT = [['At the projection', Kproj, KT], ['Half of the schools', roomThrQ(0.5), KT], ['3 in 4', roomThrQ(0.75), KT], ['9 in 10', roomThrQ(0.9), KT], ['Every school', roomThrQ(1), KT],
+      ...(KE.length ? [['Elementary (K-5) schools', null, KE], ['At the projection', Kproj, KE, 'es'], ['Half of the elementary schools', qE(0.5), KE, 'es'], ['3 in 4', qE(0.75), KE, 'es'], ['9 in 10', qE(0.9), KE, 'es']] : [])].filter(r => r[1] || r[1] === null);
+    return `<div class="tablewrap" style="margin:6px 0"><table style="min-width:0"><thead><tr><th style="text-align:left" rowspan="2"></th><th rowspan="2">Schools at or above threshold</th><th rowspan="2">District kindergarten class</th>` +
+      caps.map(([l, c, why], i) => `<th colspan="2" style="text-align:center;${i ? G2 : G1};border-bottom:1px solid var(--line)" title="${Math.round(100 * c)}% of 5-year-olds living in PPS: today's ${Math.round(100 * c0)}% scaled by ${why}">${l} capture, ${Math.round(100 * c)}%</th>`).join('') + `</tr><tr>` +
+      caps.map((_, i) => `<th style="${i ? G2 : G1};font-weight:400">5-year-olds in PPS</th><th style="font-weight:400${i ? bg : ''}">Fertility rate</th>`).join('') + `</tr></thead><tbody>` +
+      rowsT.map(([l, K, S, g]) => { if (K === null) return `<tr><td colspan="7" style="text-align:left;font-weight:600;padding-top:10px;border-top:2px solid var(--line)">${l} <span class="muted" style="font-weight:400">(the smallest schools, with the highest cost per student; K-8s not included)</span></td></tr>`;
+        const nAtK = S.filter(x => x <= K + 1e-6).length, reached = Kproj && K <= Kproj && l !== 'At the projection';
+        return `<tr${l === 'At the projection' ? ' class="dist"' : ''}><td style="text-align:left${g ? ';padding-left:14px' : ''}">${l}${reached ? ' <span class="muted">(already at the projection)</span>' : ''}</td><td style="text-align:right">${nAtK} of ${S.length}${g ? ' elementary' : ''}</td>` +
+          `<td style="text-align:right"><b>${n0(K)}</b>${Kproj && l !== 'At the projection' ? ` <span class="muted">(${K >= Kproj ? '+' : '&minus;'}${Math.abs(Math.round(100 * (K / Kproj - 1)))}%)</span>` : ''}</td>` +
+          caps.map(([, c], i) => `<td style="text-align:right;${i ? G2 : G1}">${n0(K / c)}</td><td style="text-align:right${i ? bg : ''}">${tf(K / c)}</td>`).join('') + `</tr>`; }).join('') +
+      `</tbody></table></div><p class="muted" style="font-size:12px;margin:0 0 4px">Each row at steady state (every grade grown from that kindergarten class; PSU's grade progression ratios), each school at its ${esc(roomYear)} share of the district's students in its grade band. Capture: kindergartners as a share of the 5-year-olds living in PPS (today ${Math.round(100 * c0)}%); low and high scale today's by the post-COVID average (${Math.round(100 * C.post_covid_mean)}% of births five years earlier) and the pre-COVID high (${Math.round(100 * C.tri.b)}%) against fall 2025 (${Math.round(100 * C.fall_2025)}%). Fertility rate (children per woman, district-wide): the births behind those 5-year-olds, scaled from about 1.0 in 2024 (PSU, Multnomah County) for about 3,650 births to PPS-area residents in 2025; U.S. about 1.6, replacement 2.1. A higher capture rate takes fewer 5-year-olds, and so a lower fertility rate, for the same class.</p>`;
+  };
+  const thrNow = KT.filter(K => Kproj && K <= Kproj).length, TK = Object.entries(FILL).sort((a, b) => b[1].Kt - a[1].Kt);
+  const condT = K => `kindergarten <b>${n0(K)}</b>${Kproj ? ` (${K >= Kproj ? '+' : '&minus;'}${Math.abs(Math.round(100 * (K / Kproj - 1)))}%)` : ''}${age5 ? `, capture ${Math.round(100 * K / age5)}%` : ''}, births about ${n0(K / capNow)}, fertility rate about ${tfrOf(K)}`;
+  document.getElementById('roomscale').innerHTML += `<div class="sub" style="margin-top:8px"><b>When schools would reach their size threshold</b> (${esc(lab)}, ${roomYear}; ES ${D.thresholds.ES}, K-8 and middle ${D.thresholds.K8}, high ${D.thresholds.HS} students): ` +
+    `${thrNow} of ${KT.length} open schools are at or above it at the projection${Kproj ? ` (kindergarten ${n0(Kproj)})` : ''}.` +
+    roomThrTable() +
+    `Needing the largest kindergarten: ${TK.slice(0, 5).map(([k, f]) => `<b>${esc(short(byKey[k]?.name || k))}</b> <span class="muted">(${n0(f.v)} of ${n0(f.th)})</span> ${n0(f.Kt)} / fertility ${tfrOf(f.Kt)}`).join('; ')}. ` +
+    `Schools at or above threshold as kindergarten grows: ${[3000, 3300, 3600, 4000, 4500].map(th => `${n0(th)}: ${KT.filter(K => K <= th).length}`).join(' &middot; ')} (of ${KT.length}). A school's own growth is modeled by its grade band at today's share of each band; boundary changes could move students between schools.</div>`;
   // region table
   const rows = [...D.region_order, 'District'];
   const cell = (o, b) => { const c = b === 'all' ? tot(o.cap) : o.cap[b], e = b === 'all' ? tot(o.enr) : o.enr[b]; return c ? `<td style="text-align:right">${n0(e)} / ${n0(c)}<span class="muted" style="display:block;font-size:11px">${pc(e, c)} full &middot; ${n0(c - e)} empty</span></td>` : '<td class="muted" style="text-align:right">&ndash;</td>'; };
-  let h = `<table><thead><tr><th style="text-align:left">Region</th><th>Schools open</th>${ROOM_B.map(([, l]) => `<th>${l}<br><span style="font-weight:400">enrolled / seats</span></th>`).join('')}<th>K-12</th><th title="The district kindergarten class at which the school reaches its capacity (each grade band at steady state), with the matching capture of the district's 5-year-olds and births a year at today's capture">Full at<br><span style="font-weight:400">kindergarten / capture / births / fertility</span></th></tr></thead><tbody>`;
+  let h = `<table><thead><tr><th style="text-align:left">Region</th><th>Schools open</th>${ROOM_B.map(([, l]) => `<th>${l}<br><span style="font-weight:400">enrolled / seats</span></th>`).join('')}<th>K-12</th><th title="The district kindergarten class at which the school reaches its capacity (each grade band at steady state), with the matching capture of the district's 5-year-olds and births a year at today's capture">Full at<br><span style="font-weight:400">kindergarten / capture / births / fertility</span></th><th title="The district kindergarten class at which the school reaches its size threshold (each grade band at steady state), with the matching capture, births a year and fertility rate">At threshold<br><span style="font-weight:400">kindergarten / capture / births / fertility</span></th></tr></thead><tbody>`;
   for (const rn of rows) {
     const keys = Object.keys(D.region_of).filter(k => rn === 'District' || D.region_of[k] === rn), o = roomAgg(sc, yi, keys), isReg = rn !== 'District', open = roomOpen.has(rn);
     h += `<tr class="${isReg ? '' : 'dist'}"><td style="text-align:left">${isReg ? `<button class="xbtn room-x" data-r="${esc(rn)}" aria-expanded="${open}"><span class="car">&#9656;</span><span>${esc(rn)}</span></button>` : 'District (this page)'}</td><td style="text-align:right">${o.n}</td>${ROOM_B.map(([b]) => cell(o, b)).join('')}${cell(o, 'all')}${(() => { const fs = keys.filter(k => FILL[k]).sort((a, b) => FILL[a].K - FILL[b].K); const f1 = fs.find(k => !Kproj || FILL[k].K > Kproj); const over = fs.filter(k => Kproj && FILL[k].K <= Kproj).length;
-      return `<td style="text-align:left;font-size:12px">${f1 ? `first: <b>${esc(short(byKey[f1]?.name || f1))}</b> at ${n0(FILL[f1].K)}${age5 ? ` / ${Math.round(100 * FILL[f1].K / age5)}%` : ''} / ${n0(FILL[f1].K / capNow)} / ${tfrOf(FILL[f1].K)}` : '&ndash;'}${over ? `<span class="muted" style="display:block">${over} over capacity now</span>` : ''}</td>`; })()}</tr>`;
+      return `<td style="text-align:left;font-size:12px">${f1 ? `first: <b>${esc(short(byKey[f1]?.name || f1))}</b> at ${n0(FILL[f1].K)}${age5 ? ` / ${Math.round(100 * FILL[f1].K / age5)}%` : ''} / ${n0(FILL[f1].K / capNow)} / ${tfrOf(FILL[f1].K)}` : '&ndash;'}${over ? `<span class="muted" style="display:block">${over} over capacity now</span>` : ''}</td>`; })()}${(() => { const fs = keys.filter(k => FILL[k]), below = fs.filter(k => !Kproj || FILL[k].Kt > Kproj), Ka = fs.length ? Math.max(...fs.map(k => FILL[k].Kt)) : null;
+      return `<td style="text-align:left;font-size:12px">${!fs.length ? '&ndash;' : !below.length ? 'all at threshold now' : `${below.length} of ${fs.length} below; all at ${n0(Ka)}${age5 ? ` / ${Math.round(100 * Ka / age5)}%` : ''} / ${n0(Ka / capNow)} / ${tfrOf(Ka)}`}</td>`; })()}</tr>`;
     if (isReg && open) for (const k of keys.sort((a, b) => short(byKey[a]?.name || a).localeCompare(short(byKey[b]?.name || b)))) {
       const v = D.series[sc]?.[k]?.[yi], fc = byKey[k]?.fc || 0, t = (yi < D.years.indexOf(D.impl_year) ? D.types.SQ[k] : D.types[sc]?.[k]) || D.types.SQ[k];
       h += `<tr class="srow${v == null ? ' closed' : ''}"><td style="text-align:left"><span class="nm">${esc(short(byKey[k]?.name || k))}</span><span class="ty">${TYPE_LABEL[t] || ''}</span></td>` +
-        (v == null ? `<td colspan="6" class="muted" style="text-align:left">closed in ${esc(lab)}</td>` : `<td></td>${ROOM_B.map(([b]) => { const sp = roomSplit(k, sc, yi, 1); return sp[b] ? `<td style="text-align:right">${n0(v * sp[b])} / ${n0(fc * sp[b])}</td>` : '<td></td>'; }).join('')}<td style="text-align:right;${v > fc ? 'color:var(--down);font-weight:600' : ''}">${n0(v)} / ${n0(fc)}<span class="muted" style="display:block;font-size:11px">${pc(v, fc)} full</span></td>${(f => !f ? '<td></td>' : Kproj && f.K <= Kproj ? '<td style="text-align:left;font-size:12px;color:var(--down);font-weight:600">over capacity now</td>' :
-          `<td style="text-align:left;font-size:12px;${Kproj && f.K < Kproj * 1.1 ? 'color:#b45309;font-weight:600' : ''}">K ${n0(f.K)}${Kproj ? ` (+${Math.round(100 * (f.K / Kproj - 1))}%)` : ''}${age5 ? ` &middot; ${Math.round(100 * f.K / age5)}%` : ''} &middot; ${n0(f.K / capNow)} births &middot; ${tfrOf(f.K)}</td>`)(FILL[k])}`) + '</tr>';
+        (v == null ? `<td colspan="7" class="muted" style="text-align:left">closed in ${esc(lab)}</td>` : `<td></td>${ROOM_B.map(([b]) => { const sp = roomSplit(k, sc, yi, 1); return sp[b] ? `<td style="text-align:right">${n0(v * sp[b])} / ${n0(fc * sp[b])}</td>` : '<td></td>'; }).join('')}<td style="text-align:right;${v > fc ? 'color:var(--down);font-weight:600' : ''}">${n0(v)} / ${n0(fc)}<span class="muted" style="display:block;font-size:11px">${pc(v, fc)} full</span></td>${(f => !f ? '<td></td>' : Kproj && f.K <= Kproj ? '<td style="text-align:left;font-size:12px;color:var(--down);font-weight:600">over capacity now</td>' :
+          `<td style="text-align:left;font-size:12px;${Kproj && f.K < Kproj * 1.1 ? 'color:#b45309;font-weight:600' : ''}">K ${n0(f.K)}${Kproj ? ` (+${Math.round(100 * (f.K / Kproj - 1))}%)` : ''}${age5 ? ` &middot; ${Math.round(100 * f.K / age5)}%` : ''} &middot; ${n0(f.K / capNow)} births &middot; ${tfrOf(f.K)}</td>`)(FILL[k])}${(f => !f || !f.th ? '<td></td>' : Kproj && f.Kt <= Kproj ? '<td style="text-align:left;font-size:12px;color:var(--up)">at threshold now</td>' :
+          `<td style="text-align:left;font-size:12px">K ${n0(f.Kt)}${Kproj ? ` (+${Math.round(100 * (f.Kt / Kproj - 1))}%)` : ''}${age5 ? ` &middot; ${Math.round(100 * f.Kt / age5)}%` : ''} &middot; ${n0(f.Kt / capNow)} births &middot; ${tfrOf(f.Kt)}</td>`)(FILL[k])}`) + '</tr>';
     }
   }
   const tb = document.getElementById('roomtable'); tb.innerHTML = h + '</tbody></table>';
+  renderRoomSS(sc, yi);
   tb.querySelectorAll('.room-x').forEach(b => b.onclick = () => { const r = b.dataset.r; roomOpen.has(r) ? roomOpen.delete(r) : roomOpen.add(r); renderRoom(); });
   const ex = document.getElementById('room-expand');
   if (ex) { ex.textContent = D.region_order.every(r => roomOpen.has(r)) ? 'Collapse all regions' : 'Expand all regions'; ex.onclick = () => { if (D.region_order.every(r => roomOpen.has(r))) roomOpen.clear(); else D.region_order.forEach(r => roomOpen.add(r)); renderRoom(); }; }
