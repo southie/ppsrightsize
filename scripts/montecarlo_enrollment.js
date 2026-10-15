@@ -1,3 +1,5 @@
+// Baseline: the page's default projection: PSU's May 2026 forecast with the district share of PSU's August 2026 county
+// population projections (PFA study) for kindergarten from fall 2026, modified enrollment model off (see BASIS below).
 // Monte Carlo enrollment simulation: uncertainty in the kindergarten capture rate and in grade progression ratios
 // (GPRs), from Portland State University's PPS enrollment forecast (2026-27 edition), carried through the explorer's
 // own staffing formula and sustainability-threshold measures for Status Quo and Scenarios A and B.
@@ -48,7 +50,7 @@ Object.assign(global, { window: global, L: chain, innerWidth: 1200, addEventList
   document: { getElementById: el, querySelectorAll: () => [], createElement: el, createElementNS: el, documentElement: {} },
   getComputedStyle: () => ({ getPropertyValue: () => '#000' }), localStorage: { getItem: () => null, setItem() {} },
   location: { hash: '', pathname: '/x.html', search: '', href: '' }, history: { replaceState() {} } });
-const T = new Function(script + ';return { D, staffAgg, staffCost, staffGF, staffGFRatio, k5Of };')();
+const T = new Function(script + ';return { D, staffAgg, staffCost, staffGF, staffGFRatio, k5Of, pfaOn: () => pfaOn, adjOn: () => adjOn };')();
 const { D } = T;
 
 // ---------- PSU inputs ----------
@@ -71,6 +73,22 @@ const MED = JSON.parse(fs.readFileSync(path.join(ROOT, 'source', 'pps-forecast',
 const GR = ['K', ...Array.from({ length: 12 }, (_, i) => String(i + 1))];
 const SIM_YEARS = Array.from({ length: 10 }, (_, i) => 2026 + i);              // fall 2026 ... fall 2035
 const syLabel = y => `${y}-${String((y + 1) % 100).padStart(2, '0')}`;
+const PSU_MED = JSON.parse(JSON.stringify(MED.grades));   // PSU's own medium forecast, kept for reference
+// Baseline = the page's default projection. With "District share of county population (PFA study)" on (the default),
+// each kindergarten class from fall 2026 is the page's district-share kindergarten (D.pfa.k_pfa) and the change from
+// PSU's is carried up the grades with PSU's medium grade progression ratios, exactly as the page does it
+// (scripts/patch_pfa_population.py), so the zero-shock path reproduces the page.
+const BASIS = T.pfaOn() && T.D.pfa ? 'pfa' : 'psu';
+if (BASIS === 'pfa') {
+  const idx = y => MED.years.indexOf(syLabel(y)), psu = (g, y) => PSU_MED[GR[g]][idx(y)];
+  for (const [lab, k] of Object.entries(T.D.pfa.k_pfa)) {
+    const y0 = +lab.slice(0, 4); let v = k - T.D.pfa.k_psu[lab];
+    for (let g = 0; g <= 12 && y0 + g <= 2035; g++) {
+      const y = y0 + g; if (g) v = v * psu(g, y) / psu(g - 1, y - 1);
+      MED.grades[GR[g]][idx(y)] += v;
+    }
+  }
+}
 const medAt = (g, y) => MED.grades[GR[g]][MED.years.indexOf(syLabel(y))];
 
 // ---------- distributions from the history ----------
@@ -262,7 +280,7 @@ function src(X, y) {   // standardized regression coefficients by least squares 
 }
 const INPUTS = ['capture_long_run', 'capture_noise_mean', 'gpr_k5', 'gpr_68', 'gpr_912', 'gpr_common'];
 const metrics = Object.keys(baseOut).filter(m => !m.endsWith('belowset') && !m.endsWith('enrollset'));
-const summary = { generated: new Date().toISOString(), n: N, seed: SEED, runtime_s: (Date.now() - t0) / 1000,
+const summary = { generated: new Date().toISOString(), n: N, seed: SEED, basis: BASIS, modified_model: T.adjOn(), runtime_s: (Date.now() - t0) / 1000,
   parameters: { capture: { history: Object.fromEntries(H_YEARS.map((y, i) => [y, +capHist[i].toFixed(4)])), pre_covid_mean: mean(preCap), post_covid_mean: mean(postCap),
       fall_2025: CAP_2025, psu_path: CAP_MED, psu_long_run: CAP_LONG, convergence_lambda: LAMBDA, long_run_triangular: CAP_TRI, annual_relative_sd: CAP_NOISE },
     gpr: Object.fromEntries(GPR.slice(1).map((p, i) => [`grade ${i + 1}`, { hist_mean: p.histMean, last3_mean: p.last3, sd_annual: p.sdAnnual, sd_level: p.sdLevel }])), gpr_cross_grade_corr: RHO_COMMON,
@@ -302,8 +320,8 @@ fs.writeFileSync(path.join(OUT, 'mc-draws.csv'), [cols.join(','), ...Object.entr
 // ---------- report ----------
 const M = v => '$' + (v / 1e6).toFixed(1) + 'M', f1 = v => v.toFixed(1), pct = v => v.toFixed(1) + '%';
 const FMT = { students: v => Math.round(v).toLocaleString(), fte: f1, cost: M, gf: M, below: f1, schools_above_pct: pct, students_above_pct: pct, fte_saved: f1, cost_saved: M, gf_saved: M };
-console.log(`Monte Carlo: ${N} simulations per variant, seed ${SEED}, ${summary.runtime_s.toFixed(1)} s`);
-console.log(`Capture rate: fall 2025 ${CAP_2025.toFixed(3)}; PSU long-run ${CAP_LONG.toFixed(3)} (pace ${LAMBDA.toFixed(2)}/yr); long-run draw triangular(${CAP_TRI.a.toFixed(3)}, ${CAP_TRI.m.toFixed(3)}, ${CAP_TRI.b.toFixed(3)}); annual noise ${(100 * CAP_NOISE).toFixed(1)}%`);
+console.log(`Monte Carlo: ${N} simulations per variant, seed ${SEED}, ${summary.runtime_s.toFixed(1)} s | baseline: ${BASIS === 'pfa' ? 'district share of county population (PFA study)' : "PSU's May 2026 forecast"}; modified enrollment model ${T.adjOn() ? 'on' : 'off'}`);
+console.log(`Capture rate: fall 2025 ${CAP_2025.toFixed(3)}; baseline long-run ${CAP_LONG.toFixed(3)} (pace ${LAMBDA.toFixed(2)}/yr); long-run draw triangular(${CAP_TRI.a.toFixed(3)}, ${CAP_TRI.m.toFixed(3)}, ${CAP_TRI.b.toFixed(3)}); annual noise ${(100 * CAP_NOISE).toFixed(1)}%`);
 console.log(`GPR: annual sd by grade ${GPR.slice(1).map(p => (100 * p.sdAnnual).toFixed(1)).join(' ')} (%); level sd ${GPR.slice(1).map(p => (100 * p.sdLevel).toFixed(1)).join(' ')}; cross-grade corr ${RHO_COMMON.toFixed(2)}`);
 const chk = Object.entries(summary.check_medium_vs_page).filter(([, [a, b]]) => Math.abs(a - b) > 1e-6 * Math.max(1, Math.abs(b)));
 console.log(`Affordable housing (held fixed): ${OUT_YEARS.map(y => { const yi = D.years.indexOf(y); return `${y} ${Math.round(Object.values(HOUSE.SQ).reduce((t, a) => t + a[yi], 0))}`; }).join(', ')} students (Status Quo)`);
@@ -327,7 +345,7 @@ if (EXPORT) {
   const bandsOf = e => { const sm = (a, b) => Math.round(e.slice(a, b + 1).reduce((t, v) => t + v, 0)); return [sm(0, 0), sm(0, 5), sm(6, 8), sm(9, 12)]; };
   const pack = bits => { const b = Buffer.alloc(Math.ceil(bits.length / 8)); bits.forEach((v, i) => { if (v) b[i >> 3] |= 1 << (i & 7); }); return b.toString('base64'); };
   const combos = OUT_YEARS.flatMap(y => SCEN.map(s => `${y}|${s}`));
-  const E = { generated: summary.generated, n: N, seed: SEED, years: D.years, out_years: OUT_YEARS, scen: SCEN, schools: keys, combos, metric_keys: MK,
+  const E = { generated: summary.generated, n: N, seed: SEED, basis: BASIS, years: D.years, out_years: OUT_YEARS, scen: SCEN, schools: keys, combos, metric_keys: MK,
     units: 'cost, gf: $ thousands; *_pct: tenths of a percent', medium: Object.fromEntries(MK.map(m => [m, enc(m, baseOut[m])])),
     medium_bands: [2025, ...SIM_YEARS].map(y => bandsOf(zero.E[y])),
     params: { capture: { fall_2025: CAP_2025, psu_long_run: CAP_LONG, tri: CAP_TRI, annual_sd: CAP_NOISE, pre_covid_mean: mean(preCap), post_covid_mean: mean(postCap) },

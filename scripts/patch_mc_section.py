@@ -45,6 +45,7 @@ D['mc'] = dict(n=MC['n'], generated=MC['generated'][:10], years=MC['years'], out
                mk=MC['metric_keys'], medium=MC['medium'], medium_bands=MC['medium_bands'], params=MC['params'], variants=MC['variants'],
                house=MC.get('house'), hband=MC.get('hband'), school_sd=MC.get('school_sd'),
                house_all=MC.get('house_all'), hband_all=MC.get('hband_all'), school_sd_all=MC.get('school_sd_all'),
+               basis=MC.get('basis', 'psu'),
                hist=dict(falls=HG['falls'], bands=hist), psu=dict(falls=list(range(2021, 2041)), **psu), bt=bt, bt_summary=bts,
                bt_psu_pre=BT.get('psu_pre_covid_k12_table44'), bt_psu_post=BT.get('psu_district_error', {}).get('post'), bt_cap_scale=BT.get('cap_scale'))
 html = html[:m.start(1)] + json.dumps(D, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + html[m.end(1):]
