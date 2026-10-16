@@ -9,7 +9,7 @@ changes take effect. Output: source/pps-powerbi/receiving.json
     only receives: no rule sends any of its students to another school (or to neighborhood schools), and its grades,
       program type and immersion language are the same as in Status Quo; it only takes in students from elsewhere.
   totals: arriving students, students at receiving schools, Status Quo 2027-28 students at the schools that close.
-  shrink: open schools whose 2027-28 enrollment falls by more than a third from Status Quo.
+  shrink: open schools whose 2027-28 enrollment falls by more than 25% from Status Quo.
 """
 import json, os, re, sys, unicodedata, collections
 sys.stdout.reconfigure(encoding='utf-8')
@@ -49,10 +49,10 @@ for sc, run in RUNS.items():
     out['runs'][sc] = {'run': run, 'receivers': rows, 'arriving': sum(r[2] for r in rows), 'at_receivers': sum(r[3] for r in rows),
                        'closing_students': round(sum(num(U27[('Status Quo', s)]['projected enrollment after changes']) for s in closing)),
                        'only': [r[0] for r in rows if r[5]], 'off_page': [r[0] for r in rows if r[0] not in D['region_of']],
-                       # open schools whose 2027-28 enrollment falls by more than a third from Status Quo: [key, before, after]
+                       # open schools whose 2027-28 enrollment falls by more than 25% from Status Quo: [key, before, after]
                        'shrink': [[key(s) or s, round(num(a['projected enrollment before changes'])), round(num(a['projected enrollment after changes']))]
                                   for (rn, s), a in sorted(U27.items()) if rn == run and act(a) and num(a['projected enrollment before changes']) > 0
-                                  and num(a['projected enrollment after changes']) < num(a['projected enrollment before changes']) * 2 / 3]}
+                                  and num(a['projected enrollment after changes']) < num(a['projected enrollment before changes']) * 0.75]}
 json.dump(out, open(os.path.join(ROOT, 'source', 'pps-powerbi', 'receiving.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 for sc, o in out['runs'].items():
     print(f"{sc}: {len(o['receivers'])} receivers, {o['arriving']:,} arriving, {o['at_receivers']:,} students at them, closing schools {o['closing_students']:,}; only receive {len(o['only'])}: {', '.join(o['only'])}; off page {o['off_page']}")
