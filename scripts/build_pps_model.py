@@ -70,7 +70,9 @@ for sc, run in RUNS.items():
         for y in range(2027, 2036):
             r = by.get((run, k, y))
             if r is None: row.append(base[YEARS.index(f'{y}-{(y + 1) % 100:02d}')]); continue
-            if not r['Is_Active_School'] or r['Column1'] == 'School Closed': row.append(None); closed = True
+            # PPS flags a school closed in every year of a run; it closes in the year its students move (Sellwood and
+            # Marysville move in 2028-29 and still have students in 2027-28)
+            if (not r['Is_Active_School'] or r['Column1'] == 'School Closed') and r['projected enrollment after changes'] <= 0: row.append(None); closed = True
             else: row.append(float(r['projected enrollment after changes']))
         ser[k] = row
         r31 = by.get((run, k, 2031)); s31 = by.get(('Status Quo', k, 2031))

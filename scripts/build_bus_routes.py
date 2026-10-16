@@ -19,6 +19,14 @@ Scenarios are compared with the generated Status Quo for the same year, so the g
 6. Heuristic. A school's bus-minutes a day are fitted on every generated school and scenario (see fit() below) so the
    explorer can estimate any scenario, year or custom scenario from its eligible students and their walking miles.
 
+Neighborhood routes (default): riders are bus-eligible neighborhood students only, each school's students x its share of
+neighborhood residents attending its neighborhood program (source/pps-powerbi/neighborhood-share.json, scripts/
+build_nbhd_share.py: Status Quo by year from PPS's projections; A and B from PPS's 2027-28 results after the changes), and
+A and B use PPS's own enrollment results (source/pps-powerbi/pps-model.json). Immersion, transfer and special-program
+students are left out (immersion routes are estimated separately; transfers are not bused). The calibration on the
+posted routes uses every student, as the posted general routes do. --all-students: the earlier basis (all enrollment,
+the explorer's reconstruction for A and B).
+
 Outputs: source/pps-bus/generated-routes.json (calibration, totals and every generated run by scenario and school)
 Usage: python scripts/build_bus_routes.py [--year 2027-28] [--quick]   (--fit-only: refit the heuristic on the routes already generated)
 """
@@ -48,6 +56,26 @@ D, R, runs, geo, G, node_at, MILE, stu, school_at, mins = (g[k] for k in ('D', '
 RIDE_SHARE, BUFFER_MIN = g['RIDE_SHARE']['central'], g['BUFFER_MIN']
 log = g['log']
 SCH = {s['key']: s for s in school_at.values()}
+
+# ---------- neighborhood routes: riders are neighborhood students; A and B from PPS's model ----------
+NB = '--all-students' not in sys.argv
+NB_ON = False   # off during calibration on the posted routes (they carry every student), on for the scenarios
+if NB:
+    NBS = json.load(open(os.path.join(ROOT, 'source', 'pps-powerbi', 'neighborhood-share.json'), encoding='utf-8'))
+    PM = json.load(open(os.path.join(ROOT, 'source', 'pps-powerbi', 'pps-model.json'), encoding='utf-8'))
+    for _sc in ('A', 'B'):
+        D['series'][_sc] = PM['scen'][_sc]['series']; D['types'][_sc] = PM['scen'][_sc]['types']; D['detail'][_sc] = PM['scen'][_sc]['detail']
+    def nb_share(sc, k, b, yr):
+        yi = D['years'].index(yr); pre = yi < D['years'].index(D['impl_year'])
+        if not pre and sc != 'SQ':
+            v = NBS.get(sc, {}).get(k, {}).get(b)
+            if v is not None: return v
+        S = NBS['SQ'].get(k, {}).get(b)
+        if not S: return 1.0
+        v = S[yi] if S[yi] is not None else S[D['years'].index(D['impl_year'])]
+        return v if v is not None else next((x for x in S if x is not None), 1.0)
+    _stu_all = stu
+    def stu(sc, k, b, yr): return _stu_all(sc, k, b, yr) * (nb_share(sc, k, b, yr) if NB_ON else 1.0)
 
 # ---------- run-time model from the posted morning runs ----------
 mr = [x for x in runs if x['period'] == 'morning' and x['school_t'] and x['stop_t']]
@@ -242,6 +270,7 @@ def fit(runs_by, yr):
                                      for sc in runs_by if sc != 'SQ'})
     return out
 if '--fit-only' in sys.argv:   # refit on the routes already generated, without solving them again
+    NB_ON = NB
     J = json.load(open(os.path.join(ROOT, 'source', 'pps-bus', 'generated-routes.json'), encoding='utf-8'))
     J['heuristic'] = fit(J['runs'], J['year'])
     json.dump(J, open(os.path.join(ROOT, 'source', 'pps-bus', 'generated-routes.json'), 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, separators=(',', ':'))
@@ -269,11 +298,12 @@ MAX_RIDE = min(RIDE_GRID, key=lambda mx: abs(cal[mx]['runs'] - post['runs']))
 log(f'-> max ride {MAX_RIDE} min')
 
 # ---------- scenarios ----------
+NB_ON = NB
 res, tot = {}, {}
 for sc in ('SQ', 'A', 'B'):
     t0 = time.time(); res[sc] = generate(sc, YEAR, MERGE_M, MAX_RIDE); tot[sc] = totals(res[sc], sc)
     log(f'{sc} {YEAR}: {tot[sc]} ({time.time() - t0:.0f}s)')
-J = dict(built=time.strftime('%Y-%m-%d'), year=YEAR, note=__doc__.split('Outputs')[0].strip(),
+J = dict(built=time.strftime('%Y-%m-%d'), year=YEAR, note=__doc__.split('Outputs')[0].strip(), riders='neighborhood' if NB else 'all',
          params=dict(capacity=CAPACITY, max_stops=MAX_STOPS, max_walk_m=MAX_WALK_M, ride_share=RIDE_SHARE, buffer_min=BUFFER_MIN, merge_m=MERGE_M, max_ride_min=MAX_RIDE,
                      min_per_road_mile=round(A_MIN_MI, 3), min_per_stop=round(B_MIN_STOP, 3)),
          calibration=dict(year=CAL_YEAR, posted=post, generated={str(k): v for k, v in cal.items()}, stops_by_merge=stop_counts,

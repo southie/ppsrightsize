@@ -17,7 +17,7 @@ html = open(PAGE, encoding='utf-8').read()
 m = re.search(r'const D = (\{.*?\});\nconst esc', html, re.S)
 D = json.loads(m.group(1))
 R = json.load(open(os.path.join(ROOT, 'source', 'pps-powerbi', 'receiving.json'), encoding='utf-8'))
-D['recv'] = {'source': R['source'], 'runs': {k: R['runs'][k] for k in ('A', 'B')}}
+D['recv'] = {'source': R['source'], 'waves': R['waves'], 'year': R['waves'][-1], 'runs': {k: R['runs'][k] for k in ('A', 'B')}}   # year: enrollment after both waves
 html = html[:m.start(1)] + json.dumps(D, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + html[m.end(1):]
 
 CARD = r'''
@@ -29,11 +29,11 @@ function recvBigKPI() {
   if (!R) return `<div class="kpi" data-go="recv"><div class="v">&ndash;<span class="vt">Schools whose population changes by more than 20%</span></div><div class="l">No school's population changes under ${esc(LABEL[sc] || 'this scenario')}</div></div>`;
   const big = R.receivers.filter(p => p[4] > 0.20), sh = R.shrink || [], f = v => Math.round(v).toLocaleString();
   // students who attend those schools after the change, as a share of all PPS students (PSU's district total that year)
-  const F = D.forecast52, fi = F ? F.years.indexOf(D.impl_year) : -1, pps = fi < 0 ? null : Object.values(F.grades).reduce((a, g) => a + g[fi], 0);
+  const F = D.forecast52, fi = F ? F.years.indexOf(D.recv.year || D.impl_year) : -1, pps = fi < 0 ? null : Object.values(F.grades).reduce((a, g) => a + g[fi], 0);
   const stu = big.reduce((a, p) => a + p[3], 0) + sh.reduce((a, s) => a + s[2], 0);
   const top = big.slice().sort((p, q) => q[4] - p[4]).slice(0, 4).map(p => `${esc(rcvName(p[0]))} ${Math.round(100 * p[4])}%`).join(', ');
   return `<div class="kpi" data-go="recv"><div class="v">${big.length + sh.length}<span class="vt">Schools whose population changes by more than 20%</span></div>` +
-    `<div class="l">2027-28, PPS's model${scen === 'C' ? ` <span class="pcs">(${esc(LABEL[sc])})</span>` : ''}</div>` +
+    `<div class="l">Changes in ${D.recv.waves[0]} and ${D.recv.waves[1]}, PPS's model${scen === 'C' ? ` <span class="pcs">(${esc(LABEL[sc])})</span>` : ''}</div>` +
     `<div class="s"><b>${f(stu)}</b> students attend them${pps ? ` (<b>${Math.round(100 * stu / pps)}%</b> of PPS students)` : ''}<br>` +
     `<b>${big.length}</b> receiving schools where over 20% of students are new: <b>${f(big.reduce((a, p) => a + p[2], 0))}</b> new among ${f(big.reduce((a, p) => a + p[3], 0))} students (most: ${top})` +
     (sh.length ? `<br><b>${sh.length}</b> open school${sh.length === 1 ? '' : 's'} losing over 20%: ${sh.map(([k, b0, a0]) => `${esc(rcvName(k))} ${f(b0)} &rarr; ${f(a0)}`).join(', ')}` : '') + `</div></div>`;
@@ -84,12 +84,12 @@ function recvKPI() {
   if (!R) return `<div class="kpi" data-go="recv"><div class="v">&ndash;<span class="vt">Additional schools affected</span></div><div class="l">No school receives students under ${esc(LABEL[sc] || 'this scenario')}</div></div>`;
   const n = R.receivers.length, f = v => Math.round(v).toLocaleString();
   // share of all PPS students (PSU's district total for the year the changes take effect)
-  const F = D.forecast52, fi = F ? F.years.indexOf(D.impl_year) : -1, pps = fi < 0 ? null : Object.values(F.grades).reduce((a, g) => a + g[fi], 0);
+  const F = D.forecast52, fi = F ? F.years.indexOf(D.recv.year || D.impl_year) : -1, pps = fi < 0 ? null : Object.values(F.grades).reduce((a, g) => a + g[fi], 0);
   const pc = v => Math.round(100 * v / pps) + '%', onlyN = R.receivers.filter(p => p[5]).reduce((a, p) => a + p[3], 0);
   return `<div class="kpi" data-go="recv"><div class="v">${R.only.length}<span class="vt">Additional schools affected</span></div>` +
-    `<div class="l">2027-28, PPS's model: they take in students from other schools but have no closure, boundary, grade or program change of their own (${n} receiving schools in all)${scen === 'C' ? ` <span class="pcs">(${esc(LABEL[sc])})</span>` : ''}</div>` +
+    `<div class="l">Changes in ${D.recv.waves[0]} and ${D.recv.waves[1]}, PPS's model: they take in students from other schools but have no closure, boundary, grade or program change of their own (${n} receiving schools in all)${scen === 'C' ? ` <span class="pcs">(${esc(LABEL[sc])})</span>` : ''}</div>` +
     `<div class="s"><b>${f(onlyN)}</b> students attend these ${R.only.length} schools${pps ? ` (<b>${pc(onlyN)}</b> of PPS students)` : ''}` +
-    `<br><b>${f(R.arriving)}</b> students move to the ${n} receiving schools (<b>${f(R.at_receivers)}</b> students in all); ${f(R.closing_students)} from closing schools` +
+    `<br><b>${f(R.arriving)}</b> students move to the ${n} receiving schools: ${f(R.arriving_waves[0])} in ${D.recv.waves[0]} + ${f(R.arriving_waves[1])} in ${D.recv.waves[1]} (<b>${f(R.at_receivers)}</b> students in all after both); ${f(R.closing_students)} from closing schools` +
     (pps ? `<br>In all, <b>${pc(R.at_receivers + R.closing_students)}</b> of PPS students attend a receiving or closing school` : '') + `</div></div>`;
 }
 // schools whose population changes by more than 20% in 2027-28: receiving schools where over 20% of students are new,
@@ -100,11 +100,11 @@ function recvBigKPI() {
   if (!R) return `<div class="kpi" data-go="recv"><div class="v">&ndash;<span class="vt">Schools whose population changes by more than 20%</span></div><div class="l">No school's population changes under ${esc(LABEL[sc] || 'this scenario')}</div></div>`;
   const big = R.receivers.filter(p => p[4] > 0.20), sh = R.shrink || [], f = v => Math.round(v).toLocaleString();
   // students who attend those schools after the change, as a share of all PPS students (PSU's district total that year)
-  const F = D.forecast52, fi = F ? F.years.indexOf(D.impl_year) : -1, pps = fi < 0 ? null : Object.values(F.grades).reduce((a, g) => a + g[fi], 0);
+  const F = D.forecast52, fi = F ? F.years.indexOf(D.recv.year || D.impl_year) : -1, pps = fi < 0 ? null : Object.values(F.grades).reduce((a, g) => a + g[fi], 0);
   const stu = big.reduce((a, p) => a + p[3], 0) + sh.reduce((a, s) => a + s[2], 0);
   const top = big.slice().sort((p, q) => q[4] - p[4]).slice(0, 4).map(p => `${esc(rcvName(p[0]))} ${Math.round(100 * p[4])}%`).join(', ');
   return `<div class="kpi" data-go="recv"><div class="v">${big.length + sh.length}<span class="vt">Schools whose population changes by more than 20%</span></div>` +
-    `<div class="l">2027-28, PPS's model${scen === 'C' ? ` <span class="pcs">(${esc(LABEL[sc])})</span>` : ''}</div>` +
+    `<div class="l">Changes in ${D.recv.waves[0]} and ${D.recv.waves[1]}, PPS's model${scen === 'C' ? ` <span class="pcs">(${esc(LABEL[sc])})</span>` : ''}</div>` +
     `<div class="s"><b>${f(stu)}</b> students attend them${pps ? ` (<b>${Math.round(100 * stu / pps)}%</b> of PPS students)` : ''}<br>` +
     `<b>${big.length}</b> receiving schools where over 20% of students are new: <b>${f(big.reduce((a, p) => a + p[2], 0))}</b> new among ${f(big.reduce((a, p) => a + p[3], 0))} students (most: ${top})` +
     (sh.length ? `<br><b>${sh.length}</b> open school${sh.length === 1 ? '' : 's'} losing over 20%: ${sh.map(([k, b0, a0]) => `${esc(rcvName(k))} ${f(b0)} &rarr; ${f(a0)}`).join(', ')}` : '') + `</div></div>`;
@@ -131,16 +131,16 @@ function renderRecv() {
     });
     const x3 = L0 + (W - L0) * 2 / NB;   // 20%
     g += `<line x1="${x3}" x2="${x3}" y1="${T0}" y2="${H}" stroke="var(--text-muted)" stroke-dasharray="3 3"/><text x="${x3 + 3}" y="${T0 - 4}" font-size="11" fill="var(--text-muted)">20%</text>` +
-      `<text x="${L0 + (W - L0) / 2}" y="${H + 27}" font-size="11" text-anchor="middle" fill="var(--text-muted)">Share of the school's ${D.impl_year} students who are new (%)</text>`;
+      `<text x="${L0 + (W - L0) / 2}" y="${H + 27}" font-size="11" text-anchor="middle" fill="var(--text-muted)">Share of the school's ${D.recv.year} students who are new (%)</text>`;
     return `<div class="rcvh"><div class="hd">${esc(LABEL[k])}${k === sc ? ' <span class="s">(Viewing)</span>' : ''} <span class="s">&middot; Receiving schools: ${R.receivers.length} &middot; Median new: ${pct(med(R.receivers))} &middot; Additional schools affected: ${R.only.length}</span></div>` +
       `<svg viewBox="0 0 ${W} ${H + B0}" role="img" aria-label="${esc(LABEL[k])}: receiving schools by share of new students">${g}</svg></div>`;
   }).join('') + `<div class="cmleg" style="grid-column:1/-1">Number of receiving schools in each band: <span class="sw" style="background:var(--text-secondary);opacity:.85"></span>20% or more new <span class="sw" style="background:var(--text-secondary);opacity:.3"></span>Under 20%. Dashed line: 20%, the summary card's threshold. Hover a bar for its schools.</div>`;
   const R = D.recv.runs[sc];
-  document.getElementById('recvsub').innerHTML = `Schools that take in students from another school under PPS's model (closing schools' areas and programs, boundary changes, K-8s becoming K-5), by the share of their students in ${D.impl_year}, the year the changes take effect, who are new. Scenarios A and B side by side${R ? `` : ''}. Hover a bar for its schools.`;
-  const F = D.forecast52, fi = F.years.indexOf(D.impl_year), pps = fi < 0 ? null : Object.values(F.grades).reduce((a, g) => a + g[fi], 0);   // all PPS students (PSU)
+  document.getElementById('recvsub').innerHTML = `Schools that take in students from another school under PPS's model (closing schools' areas and programs, boundary changes, K-8s becoming K-5), by the share of their students who are new once both waves of changes are in place: most changes in ${D.recv.waves[0]}, and Sellwood's and Marysville's students in ${D.recv.waves[1]}, each counted from its own enrollment changes and summed. Scenarios A and B side by side${R ? `` : ''}. Hover a bar for its schools.`;
+  const F = D.forecast52, fi = F.years.indexOf(D.recv.year || D.impl_year), pps = fi < 0 ? null : Object.values(F.grades).reduce((a, g) => a + g[fi], 0);   // all PPS students (PSU)
   const tot = k => { const r = D.recv.runs[k];
-    return `<b>${esc(LABEL[k])}:</b> <b>${f(r.arriving)}</b> students move to ${r.receivers.length} receiving schools, including about ${f(r.closing_students)} from the schools that close. The receiving schools together have <b>${f(r.at_receivers)}</b> students in ${D.impl_year}${pps ? ` (${Math.round(100 * r.at_receivers / pps)}% of PPS students)` : ''}. <b>${r.only.length}</b> of them are additional schools affected, taking in students with no closure, boundary, grade or program change of their own: ${r.only.map(rcvName).join(', ')}.`; };
-  document.getElementById('recvnote').innerHTML = runs.map(tot).join('<br>') + `<br>Students moving: each receiving school's increase over its Status Quo projection, by grade and student group (a school that gains and loses students in the same grade counts only its net gain, so this is a floor), in PPS's ${D.impl_year} model results. High-school boundary changes phase in with new 9th graders, so few high-school students move in the first year. Closing schools: their Status Quo ${D.impl_year} enrollment. Source: ${esc(D.recv.source)}.`;
+    return `<b>${esc(LABEL[k])}:</b> <b>${f(r.arriving)}</b> students move to ${r.receivers.length} receiving schools: <b>${f(r.arriving_waves[0])}</b> in ${D.recv.waves[0]} and <b>${f(r.arriving_waves[1])}</b> in ${D.recv.waves[1]} (${r.closing_schools[1].map(rcvName).join(' and ')}). That includes about ${f(r.closing_students)} from the schools that close (${f(r.closing_waves[0])} + ${f(r.closing_waves[1])}). The receiving schools together have <b>${f(r.at_receivers)}</b> students after both${pps ? ` (${Math.round(100 * r.at_receivers / pps)}% of PPS students)` : ''}. <b>${r.only.length}</b> of them are additional schools affected, taking in students with no closure, boundary, grade or program change of their own: ${r.only.map(rcvName).join(', ')}.`; };
+  document.getElementById('recvnote').innerHTML = runs.map(tot).join('<br>') + `<br>Students moving, ${D.recv.waves[0]}: each receiving school's increase over its Status Quo projection by grade and student group in PPS's ${D.recv.waves[0]} results (a school that gains and loses students in the same grade counts only its net gain, so this is a floor). ${D.recv.waves[1]}: PPS's move rules that take effect in 2028 times the students they move (PPS's ${D.recv.waves[1]} Status Quo projection by group and grade). The two are summed. High-school boundary changes phase in with new 9th graders, so few high-school students move at first. Closing schools: their Status Quo enrollment in the year they close. Source: ${esc(D.recv.source)}.`;
   const keys = [...new Set(runs.flatMap(k => D.recv.runs[k].receivers.map(p => p[0])))].sort((a, b) => rcvName(a).localeCompare(rcvName(b)));
   document.getElementById('recvtable').innerHTML = `<table style="min-width:0"><thead><tr><th style="text-align:left">School</th>${runs.map(k => `<th>${esc(LABEL[k])}<br><span style="font-weight:400">new of total (share)</span></th>`).join('')}</tr></thead><tbody>` +
     keys.map(x => `<tr><td style="text-align:left">${esc(rcvName(x))}</td>${runs.map(k => { const p = D.recv.runs[k].receivers.find(q => q[0] === x);

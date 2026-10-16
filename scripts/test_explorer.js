@@ -217,3 +217,16 @@ T.applyAdjust(false);
      `PPS model runs: Sixty Percent closes ${n60}, Balanced ${nb} (receivers ${T.D.flows.BAL.receivers.length})`);
   T.setPfa(pfa0);
 }
+
+// closure timing (scripts/patch_closure_timing.py, scripts/build_pps_model.py): Sellwood and Marysville close in 2028-29,
+// the year PPS moves their students; every other closure in 2027-28. Both the reconstruction and PPS's model results.
+{
+  const Y = T.D.years, y27 = Y.indexOf('2027-28'), y28 = Y.indexOf('2028-29'), pps0 = T.ppsOn();
+  for (const on of [false, true]) {
+    T.setPps(on);
+    const ok27 = ['A', 'B'].every(s => T.D.series[s].Sellwood[y27] > 400 && T.D.series[s].Marysville[y27] > 200 && T.D.series[s].Sellwood[y28] == null && T.D.series[s].Marysville[y28] == null);
+    const early = ['A', 'B'].every(s => T.D.series[s].Buckman[y27] == null && T.D.series[s].Creston[y27] == null);
+    ok(ok27 && early, `closure timing (${on ? 'PPS model results' : 'reconstruction'}): Sellwood and Marysville open in 2027-28 and closed from 2028-29; Buckman and Creston closed from 2027-28`);
+  }
+  T.setPps(pps0);
+}
