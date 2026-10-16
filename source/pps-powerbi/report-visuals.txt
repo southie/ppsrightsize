@@ -1,0 +1,219 @@
+
+=== PAGE Jefferson/ Roosevelt
+  lineChart 'Percent of Sustainable Middle Schools' Category:Dim_Calendar.Normed Year | Series:2027 utilization before and after.eval_scenario | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  cardVisual  Data:2027 utilization before and after.Average Utilization 31-32 | Data:2027 utilization before and after.KPI _ Avg Utilization Percent (2031-32) | Data:2027 utilization before and after.KPI % Students in Well Resourced Schools (2031-32 Target) 
+  pivotTable 'K-5 Projected Enrollment with Scenario' Columns:2027 utilization before and after.year | Rows:School Mapping.standardized_school | Values:Sum(2027 utilization before and after.projected enrollment after changes) 
+  barChart 'Enrollment Ranges by Middle School' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  pivotTable 'K-5 Projected Enrollment with Scenario' Rows:School Mapping.standardized_school | Values:Min(scenarios.note) 
+  pageNavigator   
+  cardVisual  Data:Min(HS Cluster Lookup.HS_group) 
+  shape 'Link to School One Pagers'  
+  barChart 'Enrollment Ranges by K8' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  lineChart 'Percent of Sustainable Elementary Schools' Category:Dim_Calendar.Normed Year | Series:2027 utilization before and after.eval_scenario | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  pageNavigator   
+  barChart 'Enrollment Ranges by ES' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  pageNavigator   
+  shape   
+  lineChart 'Percent of Sustainable K8 Schools' Category:Dim_Calendar.Normed Year | Series:2027 utilization before and after.eval_scenario | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  cardVisual 'Number of K-5 Schools Closed' Data:2027 utilization before and after.Scenario Closed Schools 
+  slicer  Values:Scenario Norming.Normed Name 
+
+=== PAGE 9-12 Overall
+  actionButton   
+  pageNavigator   
+  pageNavigator   
+  shape 'Link to School One Pagers'  
+  slicer  Values:Scenario Norming.Normed Name 
+  cardVisual  Data:2027 utilization before and after.Average Utilization 31-32 | Data:2027 utilization before and after.KPI _ Avg Utilization Percent (2031-32) | Data:2027 utilization before and after.KPI % Students in Well Resourced Schools (2031-32 Target) 
+  cardVisual 'Number of 9-12 Schools Closed' Data:2027 utilization before and after.Scenario Closed Schools 
+  shape   
+  pivotTable  Columns:Report Timeline.Timeline Label | Rows:Enrollment Buckets.Enrollment Bucket | Values:2027 utilization before and after.Unified Enrollment Count HS 
+  pageNavigator   
+  actionButton 'High Level Methodology (Hover here)'  
+  lineClusteredColumnComboChart '% of 9-12 schools with 1100 or more students' Category:Report Timeline.Timeline Label | Y:2027 utilization before and after.% Well Resourced ES | Y:2027 utilization before and after.KPI % Well Resourced (Status Quo) | Y2:2027 utilization before and after.KPI Target Goal 
+  pivotTable '9-12 Projected Enrollment with Scenario' Columns:2027 utilization before and after.year | Rows:School Mapping.standardized_school | Values:Sum(2027 utilization before and after.projected enrollment after changes) 
+  actionButton   
+
+=== PAGE 6-8 Overall
+  pivotTable  Columns:Report Timeline.Timeline Label | Rows:Enrollment Buckets.Enrollment Bucket | Values:2027 utilization before and after.Unified Enrollment Count MS 
+  shape 'Link to School One Pagers'  
+  slicer  Values:Scenario Norming.Normed Name 
+  pageNavigator   
+  actionButton   
+  lineClusteredColumnComboChart '% of 6-8 schools with 500 or more students' Category:Report Timeline.Timeline Label | Y:2027 utilization before and after.% Well Resourced ES | Y:2027 utilization before and after.KPI % Well Resourced (Status Quo) | Y2:2027 utilization before and after.KPI Target Goal 
+  shape   
+  cardVisual 'Number of 6-8 Schools Closed' Data:2027 utilization before and after.Scenario Closed Schools 
+  pageNavigator   
+  pivotTable '6-8 Projected Enrollment with Scenario' Columns:2027 utilization before and after.year | Rows:School Mapping.standardized_school | Values:Sum(2027 utilization before and after.projected enrollment after changes) 
+  actionButton   
+  cardVisual  Data:residents attending Pct 1 mi and Pct 1 5 mile.Pct Over 1 Mile | Data:residents attending Pct 1 mi and Pct 1 5 mile.Pct Over 1.5 Miles 
+  cardVisual  Data:2027 utilization before and after.Average Utilization 31-32 | Data:2027 utilization before and after.KPI _ Avg Utilization Percent (2031-32) | Data:2027 utilization before and after.KPI % Students in Well Resourced Schools (2031-32 Target) 
+  pageNavigator   
+  actionButton 'High Level Methodology (Hover here)'  
+
+=== PAGE Cleveland/ Franklin
+  barChart 'Enrollment Ranges by Middle School' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  pageNavigator   
+  lineChart 'Percent of Sustainable K8 Schools' Category:Dim_Calendar.Normed Year | Series:2027 utilization before and after.eval_scenario | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  pageNavigator   
+  cardVisual  Data:Min(HS Cluster Lookup.HS_group) 
+  cardVisual  Data:2027 utilization before and after.Average Utilization 31-32 | Data:2027 utilization before and after.KPI _ Avg Utilization Percent (2031-32) | Data:2027 utilization before and after.KPI % Students in Well Resourced Schools (2031-32 Target) 
+  shape 'Link to School One Pagers'  
+  slicer  Values:Scenario Norming.Normed Name 
+  pivotTable 'K-5 Projected Enrollment with Scenario' Rows:School Mapping.standardized_school | Values:Min(scenarios.note) 
+  barChart 'Enrollment Ranges by ES' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  lineChart 'Percent of Sustainable Elementary Schools' Category:Dim_Calendar.Normed Year | Series:2027 utilization before and after.eval_scenario | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  barChart 'Enrollment Ranges by K8' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  shape   
+  cardVisual 'Number of K-5 Schools Closed' Data:2027 utilization before and after.Scenario Closed Schools 
+  pivotTable 'K-5 Projected Enrollment with Scenario' Columns:2027 utilization before and after.year | Rows:School Mapping.standardized_school | Values:Sum(2027 utilization before and after.projected enrollment after changes) 
+  lineChart 'Percent of Sustainable Middle Schools' Category:Dim_Calendar.Normed Year | Series:2027 utilization before and after.eval_scenario | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  pageNavigator   
+
+=== PAGE Current State KPI
+  lineChart 'K-5 Schools with 360 or more students' Category:Dim_Calendar.Normed Year | Series:2627 Title 1.26-27 Title 1 | Tooltips:projections (2).School Count by Bucket | Y:projections (2).% Schools in Top 2 Buckets 
+  actionButton   
+  barChart 'Enrollment Ranges by K8' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:projections (2).School Count by Bucket 
+  barChart 'Enrollment Ranges by ES' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:projections (2).School Count by Bucket 
+  lineChart '6-8 Projected Enrollment Range (Max - Min)' Category:Dim_Calendar.Normed Year | Y:projections (2).Range of Sum of Count 
+  lineChart '9-12 Schools with 1100 or more students' Category:Dim_Calendar.Normed Year | Y:projections (2).% Schools in Top 2 Buckets 
+  image   
+  lineChart 'K-5 Projected Enrollment Range (Max - Min)' Category:Dim_Calendar.Normed Year | Y:projections (2).Range of Sum of Count 
+  lineChart 'K-8 Schools with 500 or more students' Category:Dim_Calendar.Normed Year | Series:2627 Title 1.26-27 Title 1 | Tooltips:projections (2).School Count by Bucket | Y:projections (2).% Schools in Top 2 Buckets 
+  actionButton 'Click to return to the District Overall Page'  
+  barChart 'Enrollment Ranges by HS' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:projections (2).School Count by Bucket 
+  barChart 'Enrollment Ranges by MS' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:projections (2).School Count by Bucket 
+  lineChart '9-12 Projected Enrollment Range (Max - Min)' Category:Dim_Calendar.Normed Year | Y:projections (2).Range of Sum of Count 
+  lineChart 'K-8 Projected Enrollment Range (Max - Min)' Category:Dim_Calendar.Normed Year | Y:projections (2).Range of Sum of Count 
+  lineChart '6-8 Schools with 500 or more students' Category:Dim_Calendar.Normed Year | Series:2627 Title 1.26-27 Title 1 | Tooltips:projections (2).School Count by Bucket | Y:projections (2).% Schools in Top 2 Buckets 
+
+=== PAGE Version Control
+  image   
+  shape 'Link to School One Pagers'  
+  pageNavigator   
+  textbox   
+  textbox   Initial Launch   
+  image   
+  pageNavigator   
+  image   
+  textbox   Version Control Page 
+  pageNavigator   
+  shape   
+  textbox   Version 1.0. Last updated October 14th, 2026.  
+  shape   
+  shape   
+
+=== PAGE District Overall
+  pageNavigator   
+  actionButton   
+  pageNavigator   
+  actionButton   
+  lineChart 'Actual and Projected Enrollment' Category:Dim_Calendar.Normed Year | Y:Sum(projections (2).count) 
+  slicer  Values:2027 utilization before and after.Grade_Band_Filter 
+  pageNavigator   
+  actionButton   
+  textbox   Click these buttons to access grade band ranges, regional impacts and school level impacts
+  shape   
+  tableEx  Values:Scenario Norming.Normed Name | Values:2027 utilization before and after.Number of Schools Closed | Values:2027 utilization before and after.KPI % Well Resourced (2031-32 Target) | Values:2027 utilization before and after.KPI % Students in Well Resourced Schools (2031-32 Target) | Values:2027  
+  pageNavigator   
+  shape 'Link to School One Pagers'  
+  pivotTable  Columns:Demographic_Moves_Summary.Demographic / Grade Band Segment | Rows:Scenario Norming.Normed Name | Values:Sum(Demographic_Moves_Summary.% Moved) | Values:Sum(Demographic_Moves_Summary.% Stayed) 
+  actionButton   
+  actionButton   
+  image   
+  actionButton   
+
+=== PAGE Grant/ McDaniel
+  lineChart 'Percent of Sustainable Middle Schools' Category:Dim_Calendar.Normed Year | Series:2027 utilization before and after.eval_scenario | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  barChart 'Enrollment Ranges by Middle School' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  barChart 'Enrollment Ranges by ES' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  pivotTable 'K-5 Projected Enrollment with Scenario' Columns:2027 utilization before and after.year | Rows:School Mapping.standardized_school | Values:Sum(2027 utilization before and after.projected enrollment after changes) 
+  lineChart 'Percent of Sustainable Elementary Schools' Category:Dim_Calendar.Normed Year | Series:Scenario Norming.Normed Name | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  shape 'Link to School One Pagers'  
+  pageNavigator   
+  slicer  Values:Scenario Norming.Normed Name 
+  lineChart 'Percent of Sustainable K8 Schools' Category:Dim_Calendar.Normed Year | Series:Scenario Norming.Normed Name | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  pivotTable 'K-5 Projected Enrollment with Scenario' Rows:School Mapping.standardized_school | Values:Min(scenarios.note) 
+  shape   
+  cardVisual 'Number of K-5 Schools Closed' Data:2027 utilization before and after.Scenario Closed Schools 
+  pageNavigator   
+  cardVisual  Data:2027 utilization before and after.Average Utilization 31-32 | Data:2027 utilization before and after.KPI _ Avg Utilization Percent (2031-32) | Data:2027 utilization before and after.KPI % Students in Well Resourced Schools (2031-32 Target) 
+  pageNavigator   
+  barChart 'Enrollment Ranges by K8' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  cardVisual  Data:Min(HS Cluster Lookup.HS_group) 
+
+=== PAGE K-8 Overall
+  lineClusteredColumnComboChart '% of K-8 schools with 500 or more students' Category:Report Timeline.Timeline Label | Y:2027 utilization before and after.% Well Resourced ES | Y:2027 utilization before and after.KPI % Well Resourced (Status Quo) | Y2:2027 utilization before and after.KPI Target Goal 
+  pageNavigator   
+  cardVisual  Data:residents attending Pct 1 mi and Pct 1 5 mile.Pct Over 1 Mile | Data:residents attending Pct 1 mi and Pct 1 5 mile.Pct Over 1.5 Miles 
+  pivotTable 'K-8 Projected Enrollment with Scenario' Columns:2027 utilization before and after.year | Rows:School Mapping.standardized_school | Values:Sum(2027 utilization before and after.projected enrollment after changes) 
+  shape 'Link to School One Pagers'  
+  slicer  Values:Scenario Norming.Normed Name 
+  shape   
+  pageNavigator   
+  pivotTable  Columns:Report Timeline.Timeline Label | Rows:Enrollment Buckets.Enrollment Bucket | Values:2027 utilization before and after.Unified Enrollment Count MS 
+  actionButton 'High Level Methodology (Hover here)'  
+  cardVisual 'Number of K-8 Schools Closed' Data:2027 utilization before and after.Scenario Closed Schools 
+  actionButton   
+  actionButton   
+  cardVisual  Data:2027 utilization before and after.Average Utilization 31-32 | Data:2027 utilization before and after.KPI _ Avg Utilization Percent (2031-32) | Data:2027 utilization before and after.KPI % Students in Well Resourced Schools (2031-32 Target) 
+  pageNavigator   
+
+=== PAGE Regional KPIs
+  slicer  Values:HS Cluster Lookup.HS_group 
+  slicer  Values:2027 utilization before and after.Grade_Band_Filter 
+  tableEx  Values:Scenario Norming.Normed Name | Values:2027 utilization before and after.Number of Schools Closed | Values:2027 utilization before and after.KPI % Well Resourced (2031-32 Target) | Values:2027 utilization before and after.KPI % Students in Well Resourced Schools (2031-32 Target) | Values:2027  
+  actionButton 'Click to return to the District Overall Page'  
+  lineClusteredColumnComboChart 'Who ends up in Sustainable Schools?' Category:Scenario Norming.Normed Name | Y:2027 utilization before and after.% of Students in WRS 31-32 | Y:2027 utilization before and after.% Underserved Race in Well-Resourced Schools | Y:2027 utilization before and after.% IEP in Well-Resourced Schools 31-32 | Y:2027 utilization before and after. 
+
+=== PAGE Welcome Page
+  image   
+  shape   
+  pageNavigator   
+  shape   
+  textbox   Quick Tips for Parents: Hover for Info:  Look for the  i  icon next to chart headers to read short explanations of the data.  Navigating the Pages District Overall:  High-level summary comparing the impact of all scenarios across the whole district.  Building Capacity / Utilization:  Shows which school buildings are operating at optimal student size.  Grade-Level Pages (K-5, K-8, 6-8, 9-12):  Specific enrollment projections and distance metrics for each grade band.  Neighborhood Clusters:  Detailed neighborhood-by-neighborhood maps, program relocations, and boundary changes.   
+  pageNavigator   
+  textbox   Welcome to the District Rightsizing & School Boundary Proposal Dashboard 
+  textbox   Our Goal:  Ensure every student in our district attends a school that is sustainable, safely staffed, and packed with the academic, artistic, and support programs they deserve. 
+  shape 'Link to School One Pagers'  
+  pageNavigator   
+  image   
+  textbox   Key Definitions & Glossary  Sustainable School A school with enough enrolled students to avoid staffing changes, sustain Arts/Music and other pathways and has dedicated Social/Emotional Support Staff Utilization Rate Operating a school building within its ideal capacity (typically 70%-100%).  Prevents both uncomfortable overcrowding and underused, empty classrooms. 100% does not mean every room is filled all the time.  Status Quo Keeping all school boundaries, grade structures, and open buildings exactly as they are today. Serves as the baseline to compare proposed changes against doing nothing. Feeder Pattern The pathway determining which middle and high school students move to after elementary school. Shows your child's long-term academic pathway from K through 12th grade. Split Feeder When students graduating from one elementary school split and go to two different middle schools base
+  image   
+  shape   
+
+=== PAGE K-5 Overall
+  pivotTable  Columns:Report Timeline.Timeline Label | Rows:Enrollment Buckets.Enrollment Bucket | Values:2027 utilization before and after.Unified Enrollment Count 
+  actionButton 'High Level Methodology (Hover here)'  
+  pageNavigator   
+  actionButton   
+  pivotTable 'K-5 Projected Enrollment with Scenario' Columns:2027 utilization before and after.year | Rows:School Mapping.standardized_school | Values:Sum(2027 utilization before and after.projected enrollment after changes) 
+  cardVisual  Data:2027 utilization before and after.Average Utilization 31-32 | Data:2027 utilization before and after.KPI _ Avg Utilization Percent (2031-32) | Data:2027 utilization before and after.KPI % Students in Well Resourced Schools (2031-32 Target) 
+  lineClusteredColumnComboChart '% of K-5 school with 360 or more students' Category:Report Timeline.Timeline Label | Y:2027 utilization before and after.% Well Resourced ES | Y:2027 utilization before and after.KPI % Well Resourced (Status Quo) | Y2:2027 utilization before and after.KPI Target Goal 
+  slicer  Values:Scenario Norming.Normed Name 
+  cardVisual 'Number of K-5 Schools Closed' Data:2027 utilization before and after.Scenario Closed Schools 
+  cardVisual  Data:residents attending Pct 1 mi and Pct 1 5 mile.Pct Over 1 Mile | Data:residents attending Pct 1 mi and Pct 1 5 mile.Pct Over 1.5 Miles 
+  pageNavigator   
+  pageNavigator   
+  shape 'Link to School One Pagers'  
+  shape   
+  actionButton   
+
+=== PAGE Wells/ Lincoln
+  cardVisual  Data:Min(HS Cluster Lookup.HS_group) 
+  lineChart 'Percent of Sustainable K8 Schools' Category:Dim_Calendar.Normed Year | Series:2027 utilization before and after.eval_scenario | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  pageNavigator   
+  pivotTable 'K-5 Projected Enrollment with Scenario' Rows:School Mapping.standardized_school | Values:Min(scenarios.note) 
+  pageNavigator   
+  cardVisual  Data:2027 utilization before and after.Average Utilization 31-32 | Data:2027 utilization before and after.KPI _ Avg Utilization Percent (2031-32) | Data:2027 utilization before and after.KPI % Students in Well Resourced Schools (2031-32 Target) 
+  barChart 'Enrollment Ranges by ES' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  cardVisual 'Number of K-5 Schools Closed' Data:2027 utilization before and after.Scenario Closed Schools 
+  shape 'Link to School One Pagers'  
+  slicer  Values:Scenario Norming.Normed Name 
+  pivotTable 'K-5 Projected Enrollment with Scenario' Columns:2027 utilization before and after.year | Rows:School Mapping.standardized_school | Values:Sum(2027 utilization before and after.projected enrollment after changes) 
+  lineChart 'Percent of Sustainable Elementary Schools' Category:Dim_Calendar.Normed Year | Series:2027 utilization before and after.eval_scenario | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  barChart 'Enrollment Ranges by Middle School' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  lineChart 'Percent of Sustainable Middle Schools' Category:Dim_Calendar.Normed Year | Series:2027 utilization before and after.eval_scenario | Y:2027 utilization before and after.% Schools in Top 2 Buckets 1 
+  shape   
+  barChart 'Enrollment Ranges by K8' Category:Dim_Calendar.Normed Year | Series:Dim_Bucket_Sort.Unique Label | Y:2027 utilization before and after.School Count by Bucket 1 
+  pageNavigator   

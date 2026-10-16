@@ -8,9 +8,9 @@ const el = () => ({ innerHTML: '', textContent: '', style: {}, value: '', checke
 const chain = new Proxy(function () {}, { get: () => chain, apply: () => chain });
 Object.assign(global, { window: global, L: chain, innerWidth: 1200, addEventListener() {}, confirm: () => true,
   document: { getElementById: el, querySelectorAll: () => [], createElement: el, createElementNS: el, documentElement: {} },
-  getComputedStyle: () => ({ getPropertyValue: () => '#000' }), localStorage: { getItem: k => k === 'rsPfa' ? '0' : k === 'rsAdj' ? '1' : null, setItem() {} },   // regression checks: PSU's forecast (PFA district-share switch off) with the modified enrollment model on, as written
+  getComputedStyle: () => ({ getPropertyValue: () => '#000' }), localStorage: { getItem: k => k === 'rsPfa' ? '0' : k === 'rsPps' ? '0' : k === 'rsAdj' ? '1' : null, setItem() {} },   // regression checks: PSU's forecast (PFA district-share switch off, PPS model results off: the reconstruction) with the modified enrollment model on, as written
   location: { hash: '', pathname: '/x.html', search: '', href: '' }, history: { replaceState() {} } });
-const T = new Function(script + `;return { setPfa: v => { pfaOn = v; applyAdjust(adjOn); }, pfaOn: () => pfaOn, D, P, custom, buildCustom: () => buildCustom(), applyAdjust, ADJ, busScen, busH, alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; }, applyAdjust, k5Of, rpFlow };`)();
+const T = new Function(script + `;return { setPps: v => { ppsOn = v; applyAdjust(adjOn); }, ppsOn: () => ppsOn, setPfa: v => { pfaOn = v; applyAdjust(adjOn); }, pfaOn: () => pfaOn, D, P, custom, buildCustom: () => buildCustom(), applyAdjust, ADJ, busScen, busH, alternatives, describeClose, baseState, encodeCustom, decodeCustom, nearestPPS, menuHtml, reopenWeights, renderEndpoints, renderKPIs, setScen: v => { scen = v; }, applyAdjust, k5Of, rpFlow };`)();
 const { D } = T;
 const ok = (c, msg) => { console.log((c ? 'PASS ' : 'FAIL ') + msg); if (!c) process.exitCode = 1; };
 
@@ -197,4 +197,23 @@ T.applyAdjust(false);
   ok(on < off - 500, `district share of county population lowers 2031-32 Status Quo enrollment (${Math.round(off)} -> ${Math.round(on)})`);
   T.setPfa(false);
   ok(tot31() === off && ep() === e0, 'turning the PFA switch off restores the PSU-forecast figures exactly');
+}
+
+// PPS model results (scripts/patch_pps_model.py): off here (the reconstruction); on uses PPS's school-by-year results for
+// A and B; off again restores the reconstruction exactly; the Sixty Percent and Balanced runs are present
+{
+  const Y = T.D.years.indexOf('2031-32'), snap = () => JSON.stringify([T.D.series.A, T.D.series.B, T.D.detail.A, T.D.endpoints, T.D.recreated]);
+  const s0 = snap(), pfa0 = T.pfaOn();
+  T.setPfa(false);
+  ok(!T.ppsOn(), 'regression checks run with PPS model results off (the reconstruction)');
+  T.setPps(true);
+  ok(T.D.series.A.Duniway[Y] === 463 && T.D.series.A.Llewellyn[Y] === 399 && T.D.series.A.Odyssey[Y] == null,
+     `PPS model on: A 2031-32 Duniway ${T.D.series.A.Duniway[Y]}, Llewellyn ${T.D.series.A.Llewellyn[Y]}, Odyssey closed (PPS's Seventy Percent run)`);
+  ok(T.D.endpoints.District.A.closures === 14 && T.D.endpoints.District.B.closures === 11, 'PPS model on: PPS published measures unchanged (A 14 closures, B 11)');
+  T.setPps(false);
+  ok(snap() === s0, 'turning PPS model results off restores the reconstruction exactly');
+  const n60 = Object.values(T.D.detail.S60).filter(d => d.closed).length, nb = Object.values(T.D.detail.BAL).filter(d => d.closed).length;
+  ok(n60 === 14 && nb === 15 && T.D.endpoints.District.S60.closures === 14 && T.D.flows.BAL.receivers.length > 10,
+     `PPS model runs: Sixty Percent closes ${n60}, Balanced ${nb} (receivers ${T.D.flows.BAL.receivers.length})`);
+  T.setPfa(pfa0);
 }
