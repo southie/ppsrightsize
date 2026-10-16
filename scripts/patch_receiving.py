@@ -21,18 +21,22 @@ D['recv'] = {'source': R['source'], 'runs': {k: R['runs'][k] for k in ('A', 'B')
 html = html[:m.start(1)] + json.dumps(D, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + html[m.end(1):]
 
 CARD = r'''
-// schools whose population changes by more than 25% in 2027-28: receiving schools where over 25% of students are new,
-// and open schools that lose over 25% of their students (scripts/patch_receiving.py)
+// schools whose population changes by more than 20% in 2027-28: receiving schools where over 20% of students are new,
+// and open schools that lose over 20% of their students (scripts/patch_receiving.py)
 function recvBigKPI() {
   const sc = scen === 'C' ? custom.base : scen, R = D.recv?.runs?.[sc];
   if (!D.recv) return '';
-  if (!R) return `<div class="kpi" data-go="recv"><div class="v">&ndash;<span class="vt">Schools whose population changes by more than 25%</span></div><div class="l">No school's population changes under ${esc(LABEL[sc] || 'this scenario')}</div></div>`;
-  const big = R.receivers.filter(p => p[4] > 0.25), sh = R.shrink || [], f = v => Math.round(v).toLocaleString();
+  if (!R) return `<div class="kpi" data-go="recv"><div class="v">&ndash;<span class="vt">Schools whose population changes by more than 20%</span></div><div class="l">No school's population changes under ${esc(LABEL[sc] || 'this scenario')}</div></div>`;
+  const big = R.receivers.filter(p => p[4] > 0.20), sh = R.shrink || [], f = v => Math.round(v).toLocaleString();
+  // students who attend those schools after the change, as a share of all PPS students (PSU's district total that year)
+  const F = D.forecast52, fi = F ? F.years.indexOf(D.impl_year) : -1, pps = fi < 0 ? null : Object.values(F.grades).reduce((a, g) => a + g[fi], 0);
+  const stu = big.reduce((a, p) => a + p[3], 0) + sh.reduce((a, s) => a + s[2], 0);
   const top = big.slice().sort((p, q) => q[4] - p[4]).slice(0, 4).map(p => `${esc(rcvName(p[0]))} ${Math.round(100 * p[4])}%`).join(', ');
-  return `<div class="kpi" data-go="recv"><div class="v">${big.length + sh.length}<span class="vt">Schools whose population changes by more than 25%</span></div>` +
+  return `<div class="kpi" data-go="recv"><div class="v">${big.length + sh.length}<span class="vt">Schools whose population changes by more than 20%</span></div>` +
     `<div class="l">2027-28, PPS's model${scen === 'C' ? ` <span class="pcs">(${esc(LABEL[sc])})</span>` : ''}</div>` +
-    `<div class="s"><b>${big.length}</b> receiving schools where over 25% of students are new: <b>${f(big.reduce((a, p) => a + p[2], 0))}</b> new among ${f(big.reduce((a, p) => a + p[3], 0))} students (most: ${top})` +
-    (sh.length ? `<br><b>${sh.length}</b> open school${sh.length === 1 ? '' : 's'} losing over 25%: ${sh.map(([k, b0, a0]) => `${esc(rcvName(k))} ${f(b0)} &rarr; ${f(a0)}`).join(', ')}` : '') + `</div></div>`;
+    `<div class="s"><b>${f(stu)}</b> students attend them${pps ? ` (<b>${Math.round(100 * stu / pps)}%</b> of PPS students)` : ''}<br>` +
+    `<b>${big.length}</b> receiving schools where over 20% of students are new: <b>${f(big.reduce((a, p) => a + p[2], 0))}</b> new among ${f(big.reduce((a, p) => a + p[3], 0))} students (most: ${top})` +
+    (sh.length ? `<br><b>${sh.length}</b> open school${sh.length === 1 ? '' : 's'} losing over 20%: ${sh.map(([k, b0, a0]) => `${esc(rcvName(k))} ${f(b0)} &rarr; ${f(a0)}`).join(', ')}` : '') + `</div></div>`;
 }
 '''
 
@@ -88,25 +92,29 @@ function recvKPI() {
     `<br><b>${f(R.arriving)}</b> students move to the ${n} receiving schools (<b>${f(R.at_receivers)}</b> students in all); ${f(R.closing_students)} from closing schools` +
     (pps ? `<br>In all, <b>${pc(R.at_receivers + R.closing_students)}</b> of PPS students attend a receiving or closing school` : '') + `</div></div>`;
 }
-// schools whose population changes by more than 25% in 2027-28: receiving schools where over 25% of students are new,
-// and open schools that lose over 25% of their students (scripts/patch_receiving.py)
+// schools whose population changes by more than 20% in 2027-28: receiving schools where over 20% of students are new,
+// and open schools that lose over 20% of their students (scripts/patch_receiving.py)
 function recvBigKPI() {
   const sc = scen === 'C' ? custom.base : scen, R = D.recv?.runs?.[sc];
   if (!D.recv) return '';
-  if (!R) return `<div class="kpi" data-go="recv"><div class="v">&ndash;<span class="vt">Schools whose population changes by more than 25%</span></div><div class="l">No school's population changes under ${esc(LABEL[sc] || 'this scenario')}</div></div>`;
-  const big = R.receivers.filter(p => p[4] > 0.25), sh = R.shrink || [], f = v => Math.round(v).toLocaleString();
+  if (!R) return `<div class="kpi" data-go="recv"><div class="v">&ndash;<span class="vt">Schools whose population changes by more than 20%</span></div><div class="l">No school's population changes under ${esc(LABEL[sc] || 'this scenario')}</div></div>`;
+  const big = R.receivers.filter(p => p[4] > 0.20), sh = R.shrink || [], f = v => Math.round(v).toLocaleString();
+  // students who attend those schools after the change, as a share of all PPS students (PSU's district total that year)
+  const F = D.forecast52, fi = F ? F.years.indexOf(D.impl_year) : -1, pps = fi < 0 ? null : Object.values(F.grades).reduce((a, g) => a + g[fi], 0);
+  const stu = big.reduce((a, p) => a + p[3], 0) + sh.reduce((a, s) => a + s[2], 0);
   const top = big.slice().sort((p, q) => q[4] - p[4]).slice(0, 4).map(p => `${esc(rcvName(p[0]))} ${Math.round(100 * p[4])}%`).join(', ');
-  return `<div class="kpi" data-go="recv"><div class="v">${big.length + sh.length}<span class="vt">Schools whose population changes by more than 25%</span></div>` +
+  return `<div class="kpi" data-go="recv"><div class="v">${big.length + sh.length}<span class="vt">Schools whose population changes by more than 20%</span></div>` +
     `<div class="l">2027-28, PPS's model${scen === 'C' ? ` <span class="pcs">(${esc(LABEL[sc])})</span>` : ''}</div>` +
-    `<div class="s"><b>${big.length}</b> receiving schools where over 25% of students are new: <b>${f(big.reduce((a, p) => a + p[2], 0))}</b> new among ${f(big.reduce((a, p) => a + p[3], 0))} students (most: ${top})` +
-    (sh.length ? `<br><b>${sh.length}</b> open school${sh.length === 1 ? '' : 's'} losing over 25%: ${sh.map(([k, b0, a0]) => `${esc(rcvName(k))} ${f(b0)} &rarr; ${f(a0)}`).join(', ')}` : '') + `</div></div>`;
+    `<div class="s"><b>${f(stu)}</b> students attend them${pps ? ` (<b>${Math.round(100 * stu / pps)}%</b> of PPS students)` : ''}<br>` +
+    `<b>${big.length}</b> receiving schools where over 20% of students are new: <b>${f(big.reduce((a, p) => a + p[2], 0))}</b> new among ${f(big.reduce((a, p) => a + p[3], 0))} students (most: ${top})` +
+    (sh.length ? `<br><b>${sh.length}</b> open school${sh.length === 1 ? '' : 's'} losing over 20%: ${sh.map(([k, b0, a0]) => `${esc(rcvName(k))} ${f(b0)} &rarr; ${f(a0)}`).join(', ')}` : '') + `</div></div>`;
 }
 function renderRecv() {
   const host = document.getElementById('recvhists'); if (!host || !D.recv) return;
   const sc = scen === 'C' ? custom.base : scen, NB = 7, f = v => Math.round(v).toLocaleString(), pct = v => Math.round(100 * v) + '%';
   const runs = ['A', 'B'].filter(k => D.recv.runs[k]);
   const counts = Object.fromEntries(runs.map(k => { const c = Array.from({ length: NB }, () => []); D.recv.runs[k].receivers.forEach(p => c[Math.min(NB - 1, Math.floor(p[4] * 10 + 1e-9))].push(p)); return [k, c]; }));
-  // styled like the travel-time histograms: grey bars, darker for buckets at or above 30% new, a dashed line at 25% (the summary card)
+  // styled like the travel-time histograms: grey bars, darker for buckets at or above 20% new (the summary card), a dashed line at 20%
   const top = Math.ceil(Math.max(...Object.values(counts).flatMap(c => c.map(b => b.length))) / 4) * 4;
   const W = 560, H = 170, L0 = 26, B0 = 34, T0 = 16, bw = (W - L0) / NB, y = v => T0 + (H - T0) * (1 - v / top);
   const med = a => { const s = a.map(p => p[4]).sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
@@ -117,16 +125,16 @@ function renderRecv() {
     c.forEach((b, i) => {
       const x = L0 + i * bw + 2, w = bw - 4, bs = b.slice().sort((p, q) => q[4] - p[4]);
       const tip = `${i * 10}-${(i + 1) * 10}% new: ${b.length} school${b.length === 1 ? '' : 's'}${bs.length ? '\n' + bs.map(p => `${rcvName(p[0])}: ${p[2]} of ${p[3]} new${p[5] ? ' (additional school affected)' : ''}`).join('\n') : ''}`;
-      g += `<rect x="${x}" y="${y(b.length)}" width="${w}" height="${Math.max(H - y(b.length), .5)}" fill="var(--text-secondary)" opacity="${i >= 3 ? .85 : i === 2 ? .55 : .3}" tabindex="0" aria-label="${esc(tip.split('\n')[0])}"><title>${esc(tip)}</title></rect>`;
+      g += `<rect x="${x}" y="${y(b.length)}" width="${w}" height="${Math.max(H - y(b.length), .5)}" fill="var(--text-secondary)" opacity="${i >= 2 ? .85 : .3}" tabindex="0" aria-label="${esc(tip.split('\n')[0])}"><title>${esc(tip)}</title></rect>`;
       if (b.length) g += `<text x="${x + w / 2}" y="${y(b.length) - 3}" font-size="10.5" text-anchor="middle" fill="var(--text-primary)">${b.length}</text>`;
       g += `<text x="${x + w / 2}" y="${H + 12}" font-size="10.5" text-anchor="middle" fill="var(--text-muted)">${i * 10}-${(i + 1) * 10}</text>`;
     });
-    const x3 = L0 + (W - L0) * 2.5 / NB;   // 25%
-    g += `<line x1="${x3}" x2="${x3}" y1="${T0}" y2="${H}" stroke="var(--text-muted)" stroke-dasharray="3 3"/><text x="${x3 + 3}" y="${T0 - 4}" font-size="11" fill="var(--text-muted)">25%</text>` +
+    const x3 = L0 + (W - L0) * 2 / NB;   // 20%
+    g += `<line x1="${x3}" x2="${x3}" y1="${T0}" y2="${H}" stroke="var(--text-muted)" stroke-dasharray="3 3"/><text x="${x3 + 3}" y="${T0 - 4}" font-size="11" fill="var(--text-muted)">20%</text>` +
       `<text x="${L0 + (W - L0) / 2}" y="${H + 27}" font-size="11" text-anchor="middle" fill="var(--text-muted)">Share of the school's ${D.impl_year} students who are new (%)</text>`;
     return `<div class="rcvh"><div class="hd">${esc(LABEL[k])}${k === sc ? ' <span class="s">(Viewing)</span>' : ''} <span class="s">&middot; Receiving schools: ${R.receivers.length} &middot; Median new: ${pct(med(R.receivers))} &middot; Additional schools affected: ${R.only.length}</span></div>` +
       `<svg viewBox="0 0 ${W} ${H + B0}" role="img" aria-label="${esc(LABEL[k])}: receiving schools by share of new students">${g}</svg></div>`;
-  }).join('') + `<div class="cmleg" style="grid-column:1/-1">Number of receiving schools in each band: <span class="sw" style="background:var(--text-secondary);opacity:.85"></span>30% or more new <span class="sw" style="background:var(--text-secondary);opacity:.55"></span>20&ndash;30% <span class="sw" style="background:var(--text-secondary);opacity:.3"></span>Under 20%. Dashed line: 25%, the summary card's threshold. Hover a bar for its schools.</div>`;
+  }).join('') + `<div class="cmleg" style="grid-column:1/-1">Number of receiving schools in each band: <span class="sw" style="background:var(--text-secondary);opacity:.85"></span>20% or more new <span class="sw" style="background:var(--text-secondary);opacity:.3"></span>Under 20%. Dashed line: 20%, the summary card's threshold. Hover a bar for its schools.</div>`;
   const R = D.recv.runs[sc];
   document.getElementById('recvsub').innerHTML = `Schools that take in students from another school under PPS's model (closing schools' areas and programs, boundary changes, K-8s becoming K-5), by the share of their students in ${D.impl_year}, the year the changes take effect, who are new. Scenarios A and B side by side${R ? `` : ''}. Hover a bar for its schools.`;
   const F = D.forecast52, fi = F.years.indexOf(D.impl_year), pps = fi < 0 ? null : Object.values(F.grades).reduce((a, g) => a + g[fi], 0);   // all PPS students (PSU)
