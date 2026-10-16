@@ -43,6 +43,9 @@ anywhere on the page must stay at the same place.
 - Add every new section to `LINK_TABLES` (`['key', 'element id']`), so it gets a "Link" button and deep link.
 - If its state matters in a link (open regions, chosen year), add it to `linkParams` and restore it in `applyLink`.
 - If a summary card summarizes it, make the card link to it (`data-go` and `goTo`).
+- A table grouped by region (region rows with a `data-r` expander, then school rows, then a `dist` District row) goes in
+  `RT_HOSTS` (`scripts/patch_region_tables.py`): it gets the region filter and column sorting, keeps the region roll-up
+  when filtered, and keeps the District row for reference.
 
 ### Style
 
